@@ -189,45 +189,50 @@ class CheckButtons():
                 if j.job == "taskbar":
                     Taskbar.destroy(j, uis, c[0])
 
-    def modusChange(i, mColor, m, scale, uis):
-        g = False  
-        if g == True:
-            if m == "STACK":
-                m = "QUEUE"
-            elif m == "QUEUE":
-                m = "STACK"
+    def modusChange(i, mColor, m, scale, uis, sprites): 
+        if m == "STACK":
+            m = "QUEUE"
+        elif m == "QUEUE":
+            m = "STACK"
 
-            uiChanger = {
-                "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
-                "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
-                "CardInspection": "GUI/panel/" + m + "/PANEL.png"
-            }
-            
-            if i.job == "modus":
-                i.image = pg.image.load(mColor.get(m)[1]).convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
-            elif uiChanger.get(i.job):
-                i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
-            
-            if i.job == "CardInspection":
-                UIBase.reinit(i.inspectie, i, scale)
+        uiChanger = {
+            "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
+            "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
+            "CardInspection": "GUI/panel/" + m + "/PANEL.png"
+        }
+        
+        if i.job == "modus":
+            i.image = pg.image.load(mColor.get(m)[1]).convert_alpha()
+            nW = i.rect[2]
+            nH = i.rect[3]
+            i.image = pg.transform.scale(i.image, (nW, nH))
+        elif uiChanger.get(i.job):
+            i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
+            nW = i.rect[2]
+            nH = i.rect[3]
+            i.image = pg.transform.scale(i.image, (nW, nH))
+        
+        for sprite in sprites:
+            sprite.image = pg.image.load("GUI/cards/" + m + "/CAPTA.png").convert_alpha()
+            captchacards.CaptchaCards.kindIcon(sprite, scale, "d")
+            nW = sprite.rect[2]
+            nH = sprite.rect[3]
+            sprite.image = pg.transform.scale(sprite.image, (nW, nH))
 
-            FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
+        if i.job == "CardInspection":
+            UIBase.reinit(i.inspectie, i, scale)
 
-            sylladexText = FONT.render('SYLLADEX' , True , WHITE)
-            modusText = FONT.render('fetch modus' , True , mColor.get(m)[0])
-            modusName = FONT.render(m, True, mColor.get(m)[0])
-            
-            for i in uis:
-                if i.job == "SylladexPanel":
-                    i.image.blit(sylladexText, [12*scale, 0*scale])
-                    i.image.blit(modusText, [12*scale, 366*scale])
-                    i.image.blit(modusName, [84*scale, 504*scale])
+        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
+
+        sylladexText = FONT.render('SYLLADEX' , True , WHITE)
+        modusText = FONT.render('fetch modus' , True , mColor.get(m)[0])
+        modusName = FONT.render(m, True, mColor.get(m)[0])
+        
+        for i in uis:
+            if i.job == "SylladexPanel":
+                i.image.blit(sylladexText, [12*scale, 0*scale])
+                i.image.blit(modusText, [12*scale, 366*scale])
+                i.image.blit(modusName, [84*scale, 504*scale])
             
         return m
 

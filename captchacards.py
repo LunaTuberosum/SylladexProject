@@ -97,7 +97,7 @@ class CaptchaCards(pg.sprite.Sprite):
         parent.image = pg.transform.scale(parent.image, (nW, nH))
 
 ### PROLLY FINE
-    def move(self, velocity, stack, area, scale, modus):
+    def move(self, velocity, stack, area, scale, modus, layers, sprites):
 
         if self.child == None and self.parent == None:
             self.rect.move_ip(velocity)
@@ -107,11 +107,18 @@ class CaptchaCards(pg.sprite.Sprite):
             parent = self
             parent_all = self
             move = 48* scale
+            x = 0
             for s in stack:
+                for sprite in sprites:
+                    if s == sprite.cardID:
+                        layers.change_layer(sprite, x)
+                        x += 1
+
+
                 if parent.child != None:
-                    child = parent.child
-                    CaptchaCards.moveChild(child, parent_all, velocity, move, modus, scale)
-                    parent = child
+
+                    CaptchaCards.moveChild(parent.child, parent_all, velocity, move, modus, scale)
+                    parent = parent.child
                     move += 48 * scale
 
 ### SIMPLIFIED
@@ -154,7 +161,15 @@ class CaptchaCards(pg.sprite.Sprite):
         stack.append(toCombi.cardID)
         baseCombi.child = toCombi
         toCombi.parent = baseCombi
-        layer.change_layer(toCombi, len(stack))
+
+        x = 0
+        for s in stack:
+            for sprite in sprites:
+                if s == sprite.cardID:
+
+                    layer.change_layer(toCombi, x)
+                    x += 1
+
         toCombi.rect = outline.rect
         baseCombi.rect = basePos
 
@@ -182,13 +197,26 @@ class CaptchaCards(pg.sprite.Sprite):
 class QueueCards(CaptchaCards):
 
     ### FINE
-    def createCard(scale, sprite, layer, text, name, stack, tier):
-        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "QUEUE")
+    def createCard(scale, sprite, layer, text, name, stack, tier, cardIDs):
+        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "QUEUE", cardIDs)
         sprite.add(entity)
         layer.add(entity)
         CaptchaCards.checkCode(entity)
 
         CaptchaCards.kindIcon(entity, scale, "d")
+
+    def disconnect(toDis, baseDis, stack, sprites):
+        stack.remove(toDis.cardID)
+        if len(stack) <= 1:
+            stack.clear()
+        with open("data/list.txt", "w") as f:
+            for s in stack:    
+                for sprite in sprites:
+                    if s == sprite.cardID:
+                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+        
+        baseDis.parent = None
+        toDis.child = None
 
     
 class CaptaOutline(pg.sprite.Sprite):

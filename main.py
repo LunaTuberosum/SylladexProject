@@ -167,10 +167,10 @@ def main():
                 parent.child = entity
 
             parent = entity
-            z += 1
 
             ## Make them stack proprly
             layers.change_layer(entity, z)
+            z += 1
 
             a += 48
 
@@ -395,7 +395,7 @@ def main():
 
                                 ## Calls the func
                                 for j in uis:
-                                    modus = uiElements.get(i.job).get(1)(j,atrabuites[1],atrabuites[2], scale,uis)
+                                    modus = uiElements.get(i.job).get(1)(j,atrabuites[1],atrabuites[2], scale,uis, sprites)
 
                             elif i.job == "help":
 
@@ -487,8 +487,6 @@ def main():
                                         ## Temp var
                                         x = 1
 
-                                        ## Puts the first sprite at the highest area
-                                        layers.change_layer(sprite, x)
 
                                         ## Can move the card now
                                         moveCard = True
@@ -507,7 +505,6 @@ def main():
                                                     nW = s.rect[2]
                                                     nH = s.rect[3]
                                                     s.image = pg.transform.scale(s.image, (nW, nH))
-                                                    layers.change_layer(s, x)
 
                                     ## If the sprite is by its self
                                     else:
@@ -543,22 +540,41 @@ def main():
                         if sprite.rect.collidepoint(event.pos):
                             selectedd = sprite
                             
-                            ## Cheaking if the card has no child but has a parent
-                            if selectedd.parent != None and selectedd.child == None:
+                            if modus == "STACK":
+                                ## Cheaking if the card has no child but has a parent
+                                if selectedd.parent != None and selectedd.child == None:
 
-                                ## If it is the top on the stack
-                                if layers.get_layer_of_sprite(selectedd) == len(currentStack):
+                                    ## If it is the top on the stack
+                                    if layers.get_layer_of_sprite(selectedd) == len(currentStack)-1:
 
-                                    ## Be able to move the card
-                                    moveCard = True
+                                        ## Be able to move the card
+                                        moveCard = True
 
-                                    ## Disconnect it
-                                    captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
-                                    
-                                else:
+                                        ## Disconnect it
+                                        captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
+                                        
+                                    else:
 
-                                    ## Sets selected to none
-                                    selected = None
+                                        ## Sets selected to none
+                                        selected = None
+                            elif modus == "QUEUE":
+                                ## Cheaking if the card has no child but has a parent
+                                if selectedd.parent == None and selectedd.child != None:
+
+                                    ## If it is the top on the stack
+                                    if layers.get_layer_of_sprite(selectedd) == 0:
+
+                                        ## Be able to move the card
+                                        moveCard = True
+
+                                        ## Disconnect it
+                                        captchacards.QueueCards.disconnect(selectedd,selectedd.child,currentStack, sprites)
+
+                                        
+                                    else:
+
+                                        ## Sets selected to none
+                                        selected = None
                                 
                             
             ## Checking if the mouse buttons is up
@@ -631,7 +647,7 @@ def main():
                     if moveCard == True:
 
                         ## Move card based on mouse
-                        selected.move(event.rel, currentStack, area, scale, modus)
+                        selected.move(event.rel, currentStack, area, scale, modus, layers, sprites)
                         
                         ## Makes a list of all sprites that can have an outline
                         avalible_sprites.empty()
