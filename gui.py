@@ -217,8 +217,6 @@ class UIBase(pg.sprite.Sprite):
         uis.add(entity)
         layers.add(entity)
         layers.change_layer(entity, 998)
-        if job == "modus":
-            entity.active == False
         if parent != None:
             parent.children.append(entity)
 
@@ -227,7 +225,8 @@ class UIBase(pg.sprite.Sprite):
         if modus == "STACK":
             captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
         elif modus == "QUEUE":
-            captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier)
+            captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
+            
 
     ### LABEL FUNCTIONS ###
 
