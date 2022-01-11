@@ -222,12 +222,12 @@ class UIBase(pg.sprite.Sprite):
         if parent != None:
             parent.children.append(entity)
 
-    def captaButton(sprites, layers, text, name, stack, tier, scale, modus):
+    def captaButton(sprites, layers, text, name, stack, tier, scale, modus, cardIDs):
 
         if modus == "STACK":
-            captchacards.StackCards.createStackCard(scale, sprites, layers,text, name, stack, tier)
+            captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
         elif modus == "QUEUE":
-            captchacards.QueueCards.createQueueCard(scale, sprites, layers,text, name, stack, tier)
+            captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier)
 
     ### LABEL FUNCTIONS ###
 
