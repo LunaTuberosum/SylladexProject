@@ -48,7 +48,7 @@ class CaptchaCards(pg.sprite.Sprite):
 
         self.cardID = len(cardIDs)
         cardIDs.append(self.cardID)
-        print(self.cardID)
+        
 
 ### FINE
     def kindIcon(entity, scale, style):
@@ -132,7 +132,6 @@ class CaptchaCards(pg.sprite.Sprite):
                         all_dis.append(distance)
                         for d in all_dis:
                             if len(all_dis) == 1 or distance < d:
-                                selected = c
                                 y = 48 * scale
                                 outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
             if len(all_dis) != 0:
@@ -140,7 +139,7 @@ class CaptchaCards(pg.sprite.Sprite):
 
         else:
             for c in sprites:
-                print(c.cardID)
+                
                 if c.cardID == stack[len(stack)-1]:
                     y = 48 * scale
                     outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
@@ -150,14 +149,11 @@ class CaptchaCards(pg.sprite.Sprite):
     def combine(toCombi, baseCombi, outline, stack, layer, sprites):
 
         basePos = baseCombi.rect
-
         if len(stack) == 0:
             stack.append(baseCombi.cardID)
         stack.append(toCombi.cardID)
         baseCombi.child = toCombi
         toCombi.parent = baseCombi
-        print(stack)
-        layer.change_layer(baseCombi, len(stack)-1)
         layer.change_layer(toCombi, len(stack))
         toCombi.rect = outline.rect
         baseCombi.rect = basePos
@@ -171,12 +167,9 @@ class CaptchaCards(pg.sprite.Sprite):
 
 ### PROLLY FINE
     def disconnect(toDis, baseDis, stack, sprites):
-        print(stack)
         stack.remove(toDis.cardID)
-        print(stack)
-        if len(stack) == 0:
+        if len(stack) <= 1:
             stack.clear()
-        r = 0
         with open("data/list.txt", "w") as f:
             for s in stack:    
                 for sprite in sprites:
@@ -196,60 +189,6 @@ class QueueCards(CaptchaCards):
         CaptchaCards.checkCode(entity)
 
         CaptchaCards.kindIcon(entity, scale, "d")
-
-    def combine(toCombi, baseCombi, outline, stack, layer, sprites):
-
-        basePos = baseCombi.rect
-
-        if len(stack) == 0:
-            stack.append(baseCombi.captaCode)
-        stack.insert(0, toCombi.captaCode)
-        baseCombi.child = baseCombi
-        toCombi.parent = toCombi
-        layer.change_layer(baseCombi, len(stack))
-        layer.change_layer(toCombi, len(stack)-1)
-        toCombi.rect = outline.rect
-        baseCombi.rect = basePos
-
-        with open("data/list.txt", "w") as f:
-            for sprite in sprites:
-                for s in stack:    
-                    if s == sprite.captaCode:
-                                    
-                        f.writelines((str(sprite.tier) + " " + s + " " + sprite.name +" \n"))
-
-    def distance(self, sprites, stack, scale):
-        
-        if len(stack) == 0:
-            all_dis= []
-            for c in sprites:
-                if c.child == None:
-                    x = self.rect.x
-                    y = self.rect.y
-                    x2 = c.rect.x
-                    y2 = c.rect.y
-                    distance = int(sqrt((x2 - x)**2+(y2 -y)**2))
-
-                    if len(all_dis) == 0 :
-                        selected = c
-                    for d in all_dis:
-                        if distance != 0:
-                            if d != None:
-                                if distance < d:
-                                    selected = c
-                    if distance != 0:
-                        all_dis.append(distance)
-
-            y = -48 * scale
-            outline = CaptaOutline((selected.rect.x, selected.rect.y + y), (255, 255, 255), selected, scale)
-            return outline
-
-        else:
-            for c in sprites:
-                if c.captaCode == stack[len(stack)-1]:
-                    y = 48 * scale
-                    outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
-                    return outline
 
     
 class CaptaOutline(pg.sprite.Sprite):

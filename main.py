@@ -604,7 +604,7 @@ def main():
                             
                             if selectedM.rect.colliderect(out) and selectedM.rect.colliderect(area): 
                                 
-                                captchacards.CaptchaCards.combine(selectedM, out.parent, out, cardIDs, layers, sprites)
+                                captchacards.CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
                                 layers.change_layer(selectedM, len(currentStack))
                                 outlines.empty()
 
@@ -646,10 +646,8 @@ def main():
                         ## If the list is longer than one make outline
                         if avalible_sprites.__len__() >= 1 and selected.child == None and selected.parent == None:
 
-                            if modus == "STACK":
-                                outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
-                            elif modus == "QUEUE":
-                                outlines.add(captchacards.QueueCards.distance(selected, avalible_sprites, currentStack, scale))
+                            
+                            outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
                     
                        
             ## Checking if keys are being pressed
