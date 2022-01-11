@@ -1,6 +1,7 @@
 import pygame as pg
 
 import codeDatabase
+import captchacards
 
 import time
 
@@ -207,7 +208,7 @@ class UIBase(pg.sprite.Sprite):
             UIBase.createUI((pos[0]+buttonPos[x],pos[1]+buttonPos[x+1]), "GUI/button/CHECK_BOX.png", "inspect"+buttonPos[x+2], "button", entity, scale, (16, 16), layers, uis, [])
             x += 3
 
-        UIBase.createUI((pos[0]+276,pos[1]), "GUI/icon/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
+        UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
 
     ### BUTTON FUNCTIONS ###
 
@@ -221,9 +222,12 @@ class UIBase(pg.sprite.Sprite):
         if parent != None:
             parent.children.append(entity)
 
-    def captaButton(capta, sprites, layers, text, name, stack, tier, scale, modus):
-        
-        capta.createC(scale, sprites, layers,text, name, stack, tier, modus)
+    def captaButton(sprites, layers, text, name, stack, tier, scale, modus):
+
+        if modus == "STACK":
+            captchacards.StackCards.createStackCard(scale, sprites, layers,text, name, stack, tier)
+        elif modus == "QUEUE":
+            captchacards.QueueCards.createQueueCard(scale, sprites, layers,text, name, stack, tier)
 
     ### LABEL FUNCTIONS ###
 

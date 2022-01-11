@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame.locals import *
-from captchacards import CaptchaCards
+import captchacards
 from gui import UIBase, InputBox, TextLabel
 import sys
 from functions import CheckButtons, CheckTextboxes, MakingUI
@@ -148,10 +148,10 @@ def main():
         for v in currentStack:
 
             ## Makes cards based of capta codes from file
-            entity = CaptchaCards((300, a), WHITE, v, nameStart[z], tierStart[z], scale, modus)
+            entity = captchacards.StackCards((300, a), WHITE, v, nameStart[z], tierStart[z], scale, modus)
             sprites.add(entity)
             layers.add(entity)
-            CaptchaCards.kindIcon(entity, scale, "d")
+            captchacards.CaptchaCards.kindIcon(entity, scale, "d")
 
             ## If stack is 2 or longer make parents and children
             if z >= 1:
@@ -472,7 +472,7 @@ def main():
 
                                         ## Changes the sprite to be up
                                         sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                        CaptchaCards.kindIcon(sprite, scale, "u")
+                                        captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
                                         nW = sprite.rect[2]
                                         nH = sprite.rect[3]
                                         sprite.image = pg.transform.scale(sprite.image, (nW, nH))
@@ -496,7 +496,7 @@ def main():
                                                     ## Sets every child in assending order in the stack
                                                     x += 1
                                                     s.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                                    CaptchaCards.kindIcon(s, scale, "u")
+                                                    captchacards.CaptchaCards.kindIcon(s, scale, "u")
                                                     nW = s.rect[2]
                                                     nH = s.rect[3]
                                                     s.image = pg.transform.scale(s.image, (nW, nH))
@@ -507,7 +507,7 @@ def main():
 
                                         ## Picks up image and places it above all
                                         sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                        CaptchaCards.kindIcon(sprite, scale, "u")
+                                        captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
                                         nW = sprite.rect[2]
                                         nH = sprite.rect[3]
                                         sprite.image = pg.transform.scale(sprite.image, (nW, nH))
@@ -522,7 +522,7 @@ def main():
                     ## Checks which sprite is be
                     for s in sprites:
                         if s.rect.collidepoint(pg.mouse.get_pos()):
-                            CaptchaCards.checkCode(s)
+                            captchacards.CaptchaCards.checkCode(s)
                             UIBase.createUI((648,42), uisImageDict, "CardInspection", "panel", None, scale, (312,420), layers, uis, s)
 
                             # Panel.create(scale, uis, (612, 42), (360, 540), uisImageDict, None, layers, "CardInspection", s)     
@@ -546,7 +546,7 @@ def main():
                                     moveCard = True
 
                                     ## Disconnect it
-                                    CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
+                                    captchacards.StackCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
                                     
                                 else:
 
@@ -561,7 +561,7 @@ def main():
                     for c in sprites:
 
                         c.image = pg.image.load("GUI/cards/" + modus +"/CAPTA.png").convert_alpha()
-                        CaptchaCards.kindIcon(c, scale, "d")
+                        captchacards.CaptchaCards.kindIcon(c, scale, "d")
                         nW = c.rect[2]
                         nH = c.rect[3]
                         c.image = pg.transform.scale(c.image, (nW, nH))
@@ -597,7 +597,7 @@ def main():
                             
                             if selectedM.rect.colliderect(out) and selectedM.rect.colliderect(area): 
                                 
-                                CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
+                                captchacards.StackCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
                                 layers.change_layer(selectedM, len(currentStack))
                                 outlines.empty()
 
@@ -605,7 +605,7 @@ def main():
                                 outlines.empty()
 
                     ## Destroys card if its touching Trash
-                    CaptchaCards.destroy(sprite, uis, layers, sprites)
+                    captchacards.CaptchaCards.destroy(sprite, uis, layers, sprites)
 
                 ## Reseting the cards sprites
                 
@@ -615,7 +615,7 @@ def main():
 
                 for i in uis:
                     if i.job == "codePanel":
-                        CaptchaCards.cardBorder(i, sprites, event.rel)
+                        captchacards.CaptchaCards.cardBorder(i, sprites, event.rel)
 
                 ## Checking and moving a sprite
                 if selected:
@@ -639,7 +639,7 @@ def main():
                         ## If the list is longer than one make outline
                         if avalible_sprites.__len__() >= 1 and selected.child == None and selected.parent == None:
                             
-                            outlines.add(CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
+                            outlines.add(captchacards.StackCards.distance(selected, avalible_sprites, currentStack, scale))
                     
                        
             ## Checking if keys are being pressed

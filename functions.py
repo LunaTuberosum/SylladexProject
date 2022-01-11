@@ -1,5 +1,5 @@
 import pygame as pg
-from captchacards import CaptchaCards
+import captchacards
 from gui import UIBase, InputBox, TextLabel, Taskbar
 import math, textwrap
 
@@ -52,7 +52,7 @@ class CheckButtons():
                         i.text = ""
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         s.image = pg.image.load("GUI/cards/STACK/CAPTA.png").convert_alpha()
-                        CaptchaCards.kindIcon(s, scale, "d")
+                        captchacards.CaptchaCards.kindIcon(s, scale, "d")
                     elif i.job == "tier":
                         s.tier = i.text
                         i.text = ""
@@ -124,7 +124,7 @@ class CheckButtons():
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
         
-            UIBase.captaButton(CaptchaCards, groups[0], groups[1], boxs[1].text, boxs[0].text, groups[2], int(boxs[2].text), groups[4], groups[5])
+            UIBase.captaButton(groups[0], groups[1], boxs[1].text, boxs[0].text, groups[2], int(boxs[2].text), groups[4], groups[5])
 
             boxs[1].text = ''
             boxs[1].txt_surface = groups[3].render(boxs[1].text, True, boxs[1].color)
