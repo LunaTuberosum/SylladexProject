@@ -103,6 +103,8 @@ def main():
 
     bool1 = False
 
+    cardIDs = []
+
     screenNew = pg.display.set_mode((960*scale, 540*scale))
     
     info = pg.Rect(0, 0, 0, 0)
@@ -113,13 +115,18 @@ def main():
     ## Open stack file
     with open("data/list.txt", "r") as f:
 
+        count = 0
+        startingStackCodes = []
+
         ## Search through and splt based on " "
         for x in f:
 
             y = x.split()
 
             ## Add the capta code to stack variable
-            currentStack.append(y[1])
+            startingStackCodes.append(y[1])
+            currentStack.append(count)
+            count+=1
 
             ## Adds name to a temp array
             name = y[2]
@@ -145,10 +152,10 @@ def main():
         parent = None
 
         ## Checks all codes in stack
-        for v in currentStack:
+        for v in startingStackCodes:
 
             ## Makes cards based of capta codes from file
-            entity = captchacards.StackCards((300, a), WHITE, v, nameStart[z], tierStart[z], scale, modus)
+            entity = captchacards.CaptchaCards((300, a), WHITE, v, nameStart[z], tierStart[z], scale, modus, cardIDs)
             sprites.add(entity)
             layers.add(entity)
             captchacards.CaptchaCards.kindIcon(entity, scale, "d")
@@ -260,7 +267,7 @@ def main():
 
                                 "cardCreate": {
                                     1 : CheckButtons.cardCreate,
-                                    2 : [i, [sprites,layers, currentStack, FONT, scale, modus], [input_box1, input_box2, input_box3]]
+                                    2 : [i, [sprites,layers, currentStack, FONT, scale, modus, cardIDs], [input_box1, input_box2, input_box3]]
                                     },
                             
                                 "closePanel": {
@@ -546,7 +553,7 @@ def main():
                                     moveCard = True
 
                                     ## Disconnect it
-                                    captchacards.StackCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
+                                    captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
                                     
                                 else:
 
@@ -597,7 +604,7 @@ def main():
                             
                             if selectedM.rect.colliderect(out) and selectedM.rect.colliderect(area): 
                                 
-                                captchacards.StackCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
+                                captchacards.CaptchaCards.combine(selectedM, out.parent, out, cardIDs, layers, sprites)
                                 layers.change_layer(selectedM, len(currentStack))
                                 outlines.empty()
 
@@ -638,8 +645,11 @@ def main():
 
                         ## If the list is longer than one make outline
                         if avalible_sprites.__len__() >= 1 and selected.child == None and selected.parent == None:
-                            
-                            outlines.add(captchacards.StackCards.distance(selected, avalible_sprites, currentStack, scale))
+
+                            if modus == "STACK":
+                                outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
+                            elif modus == "QUEUE":
+                                outlines.add(captchacards.QueueCards.distance(selected, avalible_sprites, currentStack, scale))
                     
                        
             ## Checking if keys are being pressed
@@ -704,10 +714,6 @@ def main():
                         elif codeBox == "box3":
 
                             input_box3.text = input_box3.text[:-1]
-
-                    # if event.key == pg.K_TAB:
-                    #     if input_box1.active == True or input_box2.active == True or input_box3.active == True:
-                    #         CheckTextboxes.TabTextBoxes([input_box1, input_box2, input_box3])                    
 
                     ## When any key but backspace is being pressed add text
                     else:

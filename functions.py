@@ -124,7 +124,7 @@ class CheckButtons():
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
         
-            UIBase.captaButton(groups[0], groups[1], boxs[1].text, boxs[0].text, groups[2], int(boxs[2].text), groups[4], groups[5])
+            UIBase.captaButton(groups[0], groups[1], boxs[1].text, boxs[0].text, groups[2], int(boxs[2].text), groups[4], groups[5], groups[6])
 
             boxs[1].text = ''
             boxs[1].txt_surface = groups[3].render(boxs[1].text, True, boxs[1].color)

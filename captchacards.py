@@ -6,7 +6,7 @@ WHITE = (255, 255, 255)
 
 class CaptchaCards(pg.sprite.Sprite):
 
-    def __init__(self, pos, color, text, name, tier, scale, modus):
+    def __init__(self, pos, color, text, name, tier, scale, modus, cardIDs):
         super().__init__()
         self.image = pg.Surface((64, 64))
         self.image.fill(color)
@@ -46,6 +46,10 @@ class CaptchaCards(pg.sprite.Sprite):
         self.action3 = "No Action"
         self.action4 = "No Action"
 
+        self.cardID = len(cardIDs)
+        cardIDs.append(self.cardID)
+        print(self.cardID)
+
 ### FINE
     def kindIcon(entity, scale, style):
         CaptchaCards.checkCode(entity)
@@ -73,14 +77,12 @@ class CaptchaCards(pg.sprite.Sprite):
     def checkCode(self):
         codeDatabase.readCode(self.captaCode, codeDatabase.code, "NA", self.tier, self)
 
-class StackCards(CaptchaCards):
-
     ### FINE
-    def createStackCard(scale, sprite, layer, text, name, stack, tier):
-        entity = StackCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK")
+    def createCard(scale, sprite, layer, text, name, stack, tier, cardIDs):
+        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK", cardIDs)
         sprite.add(entity)
         layer.add(entity)
-        StackCards.checkCode(entity)
+        CaptchaCards.checkCode(entity)
 
         CaptchaCards.kindIcon(entity, scale, "d")
 
@@ -108,11 +110,114 @@ class StackCards(CaptchaCards):
             for s in stack:
                 if parent.child != None:
                     child = parent.child
-                    StackCards.moveChild(child, parent_all, velocity, move, modus, scale)
+                    CaptchaCards.moveChild(child, parent_all, velocity, move, modus, scale)
                     parent = child
                     move += 48 * scale
 
 ### SIMPLIFIED
+    def distance(self, sprites, stack, scale):
+        
+        if len(stack) == 0:
+            all_dis= []
+            for c in sprites:
+                if c.child == None:
+                    x = self.rect.x
+                    y = self.rect.y
+                    x2 = c.rect.x
+                    y2 = c.rect.y
+                    distance = int(sqrt((x2 - x)**2+(y2 -y)**2))
+                    
+
+                    if distance != 0:
+                        all_dis.append(distance)
+                        for d in all_dis:
+                            if len(all_dis) == 1 or distance < d:
+                                selected = c
+                                y = 48 * scale
+                                outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
+            if len(all_dis) != 0:
+                return outline
+
+        else:
+            for c in sprites:
+                print(c.cardID)
+                if c.cardID == stack[len(stack)-1]:
+                    y = 48 * scale
+                    outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
+                    return outline
+
+### PROLLY FINE
+    def combine(toCombi, baseCombi, outline, stack, layer, sprites):
+
+        basePos = baseCombi.rect
+
+        if len(stack) == 0:
+            stack.append(baseCombi.cardID)
+        stack.append(toCombi.cardID)
+        baseCombi.child = toCombi
+        toCombi.parent = baseCombi
+        print(stack)
+        layer.change_layer(baseCombi, len(stack)-1)
+        layer.change_layer(toCombi, len(stack))
+        toCombi.rect = outline.rect
+        baseCombi.rect = basePos
+
+        with open("data/list.txt", "w") as f:
+            for sprite in sprites:
+                for s in stack:    
+                    if s == sprite.cardID:
+                                    
+                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+
+### PROLLY FINE
+    def disconnect(toDis, baseDis, stack, sprites):
+        print(stack)
+        stack.remove(toDis.cardID)
+        print(stack)
+        if len(stack) == 0:
+            stack.clear()
+        r = 0
+        with open("data/list.txt", "w") as f:
+            for s in stack:    
+                for sprite in sprites:
+                    if s == sprite.cardID:
+                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+        
+        baseDis.child = None
+        toDis.parent = None
+
+class QueueCards(CaptchaCards):
+
+    ### FINE
+    def createCard(scale, sprite, layer, text, name, stack, tier):
+        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "QUEUE")
+        sprite.add(entity)
+        layer.add(entity)
+        CaptchaCards.checkCode(entity)
+
+        CaptchaCards.kindIcon(entity, scale, "d")
+
+    def combine(toCombi, baseCombi, outline, stack, layer, sprites):
+
+        basePos = baseCombi.rect
+
+        if len(stack) == 0:
+            stack.append(baseCombi.captaCode)
+        stack.insert(0, toCombi.captaCode)
+        baseCombi.child = baseCombi
+        toCombi.parent = toCombi
+        layer.change_layer(baseCombi, len(stack))
+        layer.change_layer(toCombi, len(stack)-1)
+        toCombi.rect = outline.rect
+        baseCombi.rect = basePos
+
+        with open("data/list.txt", "w") as f:
+            for sprite in sprites:
+                for s in stack:    
+                    if s == sprite.captaCode:
+                                    
+                        f.writelines((str(sprite.tier) + " " + s + " " + sprite.name +" \n"))
+
     def distance(self, sprites, stack, scale):
         
         if len(stack) == 0:
@@ -135,7 +240,7 @@ class StackCards(CaptchaCards):
                     if distance != 0:
                         all_dis.append(distance)
 
-            y = 48 * scale
+            y = -48 * scale
             outline = CaptaOutline((selected.rect.x, selected.rect.y + y), (255, 255, 255), selected, scale)
             return outline
 
@@ -145,43 +250,6 @@ class StackCards(CaptchaCards):
                     y = 48 * scale
                     outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
                     return outline
-
-### PROLLY FINE
-    def combine(toCombi, baseCombi, outline, stack, layer, sprites):
-
-        basePos = baseCombi.rect
-
-        if len(stack) == 0:
-            stack.append(baseCombi.captaCode)
-        stack.append(toCombi.captaCode)
-        baseCombi.child = toCombi
-        toCombi.parent = baseCombi
-        layer.change_layer(baseCombi, len(stack)-1)
-        layer.change_layer(toCombi, len(stack))
-        toCombi.rect = outline.rect
-        baseCombi.rect = basePos
-
-        with open("data/list.txt", "w") as f:
-            for sprite in sprites:
-                for s in stack:    
-                    if s == sprite.captaCode:
-                                    
-                        f.writelines((str(sprite.tier) + " " + s + " " + sprite.name +" \n"))
-
-### PROLLY FINE
-    def disconnect(toDis, baseDis, stack, sprites):
-        stack.remove(toDis.captaCode)
-        if len(stack) == 1:
-            stack.clear()
-        r = 0
-        with open("data/list.txt", "w") as f:
-            for s in stack:    
-                for sprite in sprites:
-                    if s == sprite.captaCode:
-                        f.writelines((str(sprite.tier) + " " + s + " " + sprite.name +" \n"))
-        
-        baseDis.child = None
-        toDis.parent = None
 
     
 class CaptaOutline(pg.sprite.Sprite):
@@ -201,14 +269,3 @@ class CaptaOutline(pg.sprite.Sprite):
             self.rect.w = nW
             self.rect.h = nH
         self.parent = p
-
-class QueueCards(CaptchaCards):
-
-    ### FINE
-    def createQueueCard(scale, sprite, layer, text, name, stack, tier):
-        entity = StackCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "QUEUE")
-        sprite.add(entity)
-        layer.add(entity)
-        StackCards.checkCode(entity)
-
-        CaptchaCards.kindIcon(entity, scale, "d")
