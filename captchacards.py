@@ -46,6 +46,43 @@ class CaptchaCards(pg.sprite.Sprite):
         self.action3 = "No Action"
         self.action4 = "No Action"
 
+### FINE
+    def kindIcon(entity, scale, style):
+        CaptchaCards.checkCode(entity)
+        entityImage = pg.Surface((16, 16))
+        entityImage.fill(WHITE)
+        entityImage = pg.image.load(codeDatabase.kind.get(entity.wKind)).convert_alpha()
+        nW = 64*scale
+        nH = 64*scale
+        entityImage = pg.transform.scale(entityImage, (nW, nH))
+
+        if style == "d":
+            entity.image.blit(entityImage, [5*scale, 30*scale])
+        else:
+            entity.image.blit(entityImage, [15*scale, 30*scale])
+        
+### FINE
+    def destroy(sel, uis, layers, sprites):
+        for i in uis:
+            if i.job == "trash" and i.active == True:
+                if sel.rect.colliderect(i.rect) and sel.parent == None and sel.child == None:
+                    sprites.remove(sel)
+                    layers.remove(sel)
+
+### FINE
+    def checkCode(self):
+        codeDatabase.readCode(self.captaCode, codeDatabase.code, "NA", self.tier, self)
+
+class StackCards(CaptchaCards):
+
+    ### FINE
+    def createStackCard(scale, sprite, layer, text, name, stack, tier):
+        entity = StackCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK")
+        sprite.add(entity)
+        layer.add(entity)
+        StackCards.checkCode(entity)
+
+        CaptchaCards.kindIcon(entity, scale, "d")
 
 ### PROLLY FINE
     def moveChild(self, parent, velocity, move, modus, scale):
@@ -71,7 +108,7 @@ class CaptchaCards(pg.sprite.Sprite):
             for s in stack:
                 if parent.child != None:
                     child = parent.child
-                    CaptchaCards.moveChild(child, parent_all, velocity, move, modus, scale)
+                    StackCards.moveChild(child, parent_all, velocity, move, modus, scale)
                     parent = child
                     move += 48 * scale
 
@@ -146,41 +183,6 @@ class CaptchaCards(pg.sprite.Sprite):
         baseDis.child = None
         toDis.parent = None
 
-### FINE
-    def checkCode(self):
-        codeDatabase.readCode(self.captaCode, codeDatabase.code, "NA", self.tier, self)
-
-### FINE
-    def createC(scale, sprite, layer, text, name, stack, tier, modus):
-        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, modus)
-        sprite.add(entity)
-        layer.add(entity)
-        CaptchaCards.checkCode(entity)
-
-        CaptchaCards.kindIcon(entity, scale, "d")
-
-### FINE
-    def kindIcon(entity, scale, style):
-        CaptchaCards.checkCode(entity)
-        entityImage = pg.Surface((16, 16))
-        entityImage.fill(WHITE)
-        entityImage = pg.image.load(codeDatabase.kind.get(entity.wKind)).convert_alpha()
-        nW = 64*scale
-        nH = 64*scale
-        entityImage = pg.transform.scale(entityImage, (nW, nH))
-
-        if style == "d":
-            entity.image.blit(entityImage, [5*scale, 30*scale])
-        else:
-            entity.image.blit(entityImage, [15*scale, 30*scale])
-        
-### FINE
-    def destroy(sel, uis, layers, sprites):
-        for i in uis:
-            if i.job == "trash" and i.active == True:
-                if sel.rect.colliderect(i.rect) and sel.parent == None and sel.child == None:
-                    sprites.remove(sel)
-                    layers.remove(sel)
     
 class CaptaOutline(pg.sprite.Sprite):
 
@@ -200,3 +202,13 @@ class CaptaOutline(pg.sprite.Sprite):
             self.rect.h = nH
         self.parent = p
 
+class QueueCards(CaptchaCards):
+
+    ### FINE
+    def createQueueCard(scale, sprite, layer, text, name, stack, tier):
+        entity = StackCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "QUEUE")
+        sprite.add(entity)
+        layer.add(entity)
+        StackCards.checkCode(entity)
+
+        CaptchaCards.kindIcon(entity, scale, "d")
