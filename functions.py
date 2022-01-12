@@ -68,7 +68,7 @@ class CheckButtons():
         editing = False
         return editing
 
-    def toggleHelp(helpT, uis):
+    def toggleHelp(helpT, uis, modus):
         
         if helpT == False:
             cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE_HELP.png").convert_alpha()
@@ -83,7 +83,7 @@ class CheckButtons():
                     i.active = False
             helpT = True
         else:
-            cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE.png").convert_alpha()
+            cursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
             for i in uis:
                 if i.job == "trash":
                     i.active = True
@@ -153,7 +153,7 @@ class CheckButtons():
         UIBase.destroy(i.parent, uis, layers)
 
     def settings(i, uis, c):
-        UIBase.settingPanel(uis, c[0], c[1])    
+        UIBase.settingPanel(uis, c[0], c[1], c[2])    
 
     def clear(currentStack, c, sprites):
         if c[1].active == True:
@@ -201,7 +201,7 @@ class CheckButtons():
             "CardInspection": "GUI/panel/" + m + "/PANEL.png"
         }
         
-        MakingUI.updateAll(uis, sprites, m)
+        MakingUI.updateAll(uis, sprites, m, scale)
 
         if i.job == "CardInspection":
             UIBase.reinit(i.inspectie, i, scale)
@@ -439,12 +439,24 @@ class CheckTextboxes():
 
 class MakingUI():
 
-    def updateAll(uis, sprites, m):
+    def updateAll(uis, sprites, m, scale):
 
         uiChanger = {
             "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
             "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
-            "CardInspection": "GUI/panel/" + m + "/PANEL.png"
+            "CardInspection": "GUI/panel/" + m + "/PANEL.png",
+            "help": "GUI/icon/" + m + "/HELP.png",
+            "cardCreate": "GUI/button/" + m + "/ADD.png",
+            "sylSettings": "GUI/icon/" + m + "/flip.png",
+            "nameLabel": "GUI/label/" + m + "/NAMELABEL.png",
+            "codeLabel": "GUI/label/" + m + "/CODELABEL.png",
+            "tierLabel": "GUI/label/" + m + "/TIERLABEL.png",
+            "name": "GUI/textbox/" + m + "/TEXTBOX.png",
+            "code": "GUI/textbox/" + m + "/TEXTBOX_MEDIUM.png",
+            "tier": "GUI/textbox/" + m + "/TEXTBOX_SMALL.png",
+            "modus": "GUI/panel/" + m + "/MODUSLABEL.png",
+            "taskbarOpen": "GUI/icon/" + m + "/ARROW.png",
+            
         }
 
         for i in uis:
@@ -453,8 +465,15 @@ class MakingUI():
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
 
-    def captaInputbox(scale, uis, layers, FONT, labImg, func, x, y, x1, y1, modus, size="l"):
-        TextLabel.create(scale, x, y, labImg, (64, 32), uis, layers)
+        for s in sprites:
+            s.image = pg.image.load("GUI/cards/" + m + "/CAPTA.png").convert_alpha()
+            captchacards.CaptchaCards.kindIcon(s, scale, "d")
+            nW = s.rect[2]
+            nH = s.rect[3]
+            s.image = pg.transform.scale(s.image, (nW, nH))
+
+    def captaInputbox(scale, uis, layers, FONT, labImg, func, x, y, x1, y1, modus, job, size="l"):
+        TextLabel.create(scale, x, y, labImg, (64, 32), uis, layers, job, )
         entity = InputBox(scale, x1, y1, 64, 32, FONT, func,modus, size)
         uis.add(entity)
         layers.add(entity)
@@ -492,11 +511,11 @@ class MakingUI():
         
 
         ## Making the capta input boxes
-        input_box1 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/NAMELABEL.png", "name", 40, 60, 30, 98, modus)
+        input_box1 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/NAMELABEL.png", "name", 40, 60, 30, 98, modus, "nameLabel")
 
-        input_box2 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/CODELABEL.png", 'code', 40, 142, 30, 180, modus, 'm')
+        input_box2 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/CODELABEL.png", 'code', 40, 142, 30, 180, modus, "codeLabel", 'm')
 
-        input_box3 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/TIERLABEL.png", 'tier', 40, 224, 30, 262, modus, 's')
+        input_box3 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/TIERLABEL.png", 'tier', 40, 224, 30, 262, modus, "tierLabel", 's')
 
 
         UIBase.createUI((12, 391), modusColor.get(modus)[1], "modus", "button", None, scale, (214, 113), layers, uis, [])

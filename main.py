@@ -58,8 +58,8 @@ def main():
     
 
     modusColor = {
-        "STACK": [stackColor, "GUI/panel/STACK/STACK_LABEL.png"],
-        "QUEUE": [queueColor, "GUI/panel/QUEUE/QUEUE_LABEL.png"]
+        "STACK": [stackColor, "GUI/panel/STACK/MODUSLABEL.png"],
+        "QUEUE": [queueColor, "GUI/panel/QUEUE/MODUSLABEL.png"]
     }
 
     uisImageDict = {
@@ -277,7 +277,7 @@ def main():
 
                                 "sylSettings": {
                                     1: CheckButtons.settings,
-                                    2 : [i, uis, [layers, scale]]
+                                    2 : [i, uis, [layers, scale, modus]]
                                     },
                                     
                                 "clear": {
@@ -401,7 +401,7 @@ def main():
 
                                 atrabuites = uiElements.get(i.job).get(2)
 
-                                helpT, mouseCursor = uiElements.get(i.job).get(1)(atrabuites[0], atrabuites[1])
+                                helpT, mouseCursor = uiElements.get(i.job).get(1)(atrabuites[0], atrabuites[1], modus)
 
                             elif i.job == "edit" or i.job == "endEdit":
 
@@ -527,7 +527,7 @@ def main():
                     for s in sprites:
                         if s.rect.collidepoint(pg.mouse.get_pos()):
                             captchacards.CaptchaCards.checkCode(s)
-                            UIBase.createUI((648,42), uisImageDict, "CardInspection", "panel", None, scale, (312,420), layers, uis, s)
+                            UIBase.createUI((648,42), uisImageDict, "CardInspection", "panel", None, scale, (312,420), layers, uis, [s, modus])
 
                             # Panel.create(scale, uis, (612, 42), (360, 540), uisImageDict, None, layers, "CardInspection", s)     
 
