@@ -436,56 +436,7 @@ class CheckTextboxes():
 
 class MakingUI():
 
-    def updateAll(uis, sprites, m, scale):
-
-        uiChanger = {
-            "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
-            "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
-            "help": "GUI/icon/" + m + "/HELP.png",
-            "cardCreate": "GUI/button/" + m + "/ADD.png",
-            "sylSettings": "GUI/icon/" + m + "/FLIP.png",
-            "nameLabel": "GUI/label/" + m + "/NAMELABEL.png",
-            "codeLabel": "GUI/label/" + m + "/CODELABEL.png",
-            "tierLabel": "GUI/label/" + m + "/TIERLABEL.png",
-            "name": "GUI/textbox/" + m + "/TEXTBOX.png",
-            "code": "GUI/textbox/" + m + "/TEXTBOX_MEDIUM.png",
-            "tier": "GUI/textbox/" + m + "/TEXTBOX_SMALL.png",
-            "modus": "GUI/panel/" + m + "/MODUSLABEL.png",
-            "taskbarOpen": "GUI/icon/" + m + "/ARROW.png",
-            "inspecttrait1": "GUI/button/CHECK_BOX.png",
-            "inspecttrait2": "GUI/button/CHECK_BOX.png",
-            "inspectaction1": "GUI/button/CHECK_BOX.png",
-            "inspectaction2": "GUI/button/CHECK_BOX.png",
-            "inspectaction3": "GUI/button/CHECK_BOX.png",
-            "inspectaction4": "GUI/button/CHECK_BOX.png",
-            "closePanel": "GUI/icon/" + m + "/ALT_X.png",
-            "taskbarClose": "GUI/icon/" + m + "/ARROW_ACTIVE.png",
-            "taskbar": "GUI/panel/" + m + "/TASKBAR.png",
-            "trash": "GUI/icon/" + m + "/TRASH.png",
-            "clear": "GUI/icon/" + m + "/TRASH_ALL.png",
-            "edit": "GUI/icon/" + m + "/EDIT.png"
-            
-        }
-
-        for i in uis:
-            if i.job == "CardInspection":
-                i.image = pg.image.load("GUI/panel/" + m + "/PANEL.png").convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
-                UIBase.reinit(i.inspectie[0], i, scale)
-            else:
-                i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
-
-        for s in sprites:
-            s.image = pg.image.load("GUI/cards/" + m + "/CAPTA.png").convert_alpha()
-            captchacards.CaptchaCards.kindIcon(s, scale, "d")
-            nW = s.rect[2]
-            nH = s.rect[3]
-            s.image = pg.transform.scale(s.image, (nW, nH))
+    
 
     def captaInputbox(scale, uis, layers, FONT, labImg, func, x, y, x1, y1, modus, job, size="l"):
         TextLabel.create(scale, x, y, labImg, (64, 32), uis, layers, job, )
