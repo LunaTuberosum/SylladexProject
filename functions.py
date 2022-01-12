@@ -463,7 +463,7 @@ class MakingUI():
             "taskbar": "GUI/panel/" + m + "/TASKBAR.png",
             "trash": "GUI/icon/" + m + "/TRASH.png",
             "clear": "GUI/icon/" + m + "/TRASH_ALL.png",
-            "edit": "GUI/icon/" + m + "/EDIT.png",
+            "edit": "GUI/icon/" + m + "/EDIT.png"
             
         }
 

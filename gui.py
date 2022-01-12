@@ -358,7 +358,7 @@ class Taskbar(pg.sprite.Sprite):
         self.job = "taskbar"
 
     def create(scale, x, y, image, uis, layers, modus):
-        entity = Taskbar(scale, x, y, image)
+        entity = Taskbar(scale, x, y, image,)
         
         uis.add(entity)
         layers.add(entity)

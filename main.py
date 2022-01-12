@@ -68,7 +68,7 @@ def main():
         "CardInspection": "GUI/panel/" + modus + "/PANEL.png",
 
         "closePanel": "GUI/icon/" + modus + "/ALT_X.png",
-        "taskbarOpen": "GUI/icon/" + modus + "/ARROW.png"
+        "taskbarOpen": "GUI/icon/" + modus + "/ARROW.png",
         }   
 
 

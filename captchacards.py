@@ -79,7 +79,7 @@ class CaptchaCards(pg.sprite.Sprite):
 
     ### FINE
     def createCard(scale, sprite, layer, text, name, stack, tier, cardIDs):
-        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK", cardIDs)
+        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK", cardIDs,)
         sprite.add(entity)
         layer.add(entity)
         CaptchaCards.checkCode(entity)
