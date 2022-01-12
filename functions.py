@@ -10,22 +10,22 @@ class CheckButtons():
 
     def editToggle(i, uis, editing):
         if i.active == True:
-            i.image = pg.image.load("GUI/icon/ALT_X.png").convert_alpha()
+            i.image = pg.image.load("GUI/icon/" + modus + "/ALT_X.png").convert_alpha()
             i.job = "endEdit"
             for j in uis:
                 if j.job == "cardCreate":
-                    j.image = pg.image.load("GUI/button/STACK/SET.png").convert_alpha()
+                    j.image = pg.image.load("GUI/button/" + modus + "/SET.png").convert_alpha()
                     j.job = "set"
             editing = True
         return editing
 
     def editEnd(i, uis, editing):
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
-        i.image = pg.image.load("GUI/icon/EDIT.png").convert_alpha()
+        i.image = pg.image.load("GUI/icon/" + modus + "/EDIT.png").convert_alpha()
         i.job = "edit"
         for j in uis:
             if j.job == "set":
-                j.image = pg.image.load("GUI/button/STACK/ADD.png").convert_alpha()
+                j.image = pg.image.load("GUI/button/" + modus + "/ADD.png").convert_alpha()
                 j.job = "cardCreate"
             iBox = ["name", "code", "tier"]
             for l in iBox:
@@ -51,19 +51,19 @@ class CheckButtons():
                         stack.append(i.text)
                         i.text = ""
                         i.txt_surface = FONT.render(i.text, True, i.color)
-                        s.image = pg.image.load("GUI/cards/STACK/CAPTA.png").convert_alpha()
+                        s.image = pg.image.load("GUI/cards/" + modus + "/CAPTA.png").convert_alpha()
                         captchacards.CaptchaCards.kindIcon(s, scale, "d")
                     elif i.job == "tier":
                         s.tier = i.text
                         i.text = ""
                         i.txt_surface = FONT.render(i.text, True, i.color)
                     if i.job == "endEdit":
-                        i.image = pg.image.load("GUI/icon/EDIT.png").convert_alpha()
+                        i.image = pg.image.load("GUI/icon/" + modus + "/EDIT.png").convert_alpha()
                         i.job = "edit"
                     for j in uis:
                         if j.job == "set":
                             
-                            j.image = pg.image.load("GUI/button/STACK/ADD.png").convert_alpha()
+                            j.image = pg.image.load("GUI/button/" + modus + "/ADD.png").convert_alpha()
                             j.job = "cardCreate"
         editing = False
         return editing
@@ -71,7 +71,7 @@ class CheckButtons():
     def toggleHelp(helpT, uis):
         
         if helpT == False:
-            cursor =  pg.image.load("GUI/icon/MOUSE_HELP.png").convert_alpha()
+            cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE_HELP.png").convert_alpha()
             for i in uis:
                 if i.job == "trash":
                     i.active = False
@@ -83,7 +83,7 @@ class CheckButtons():
                     i.active = False
             helpT = True
         else:
-            cursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
+            cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE.png").convert_alpha()
             for i in uis:
                 if i.job == "trash":
                     i.active = True
@@ -129,21 +129,21 @@ class CheckButtons():
             boxs[1].text = ''
             boxs[1].txt_surface = groups[3].render(boxs[1].text, True, boxs[1].color)
             boxs[1].active = False
-            boxs[1].image = pg.image.load("GUI/textbox/TEXTBOX_MEDIUM.png").convert_alpha()
+            boxs[1].image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png").convert_alpha()
             nW = boxs[1].rect[2]
             nH = boxs[1].rect[3]
             boxs[1].image = pg.transform.scale(boxs[1].image, (nW, nH))
             boxs[0].text = ''
             boxs[0].txt_surface = groups[3].render(boxs[0].text, True, boxs[0].color)
             boxs[0].active = False
-            boxs[0].image = pg.image.load("GUI/textbox/TEXTBOX.png").convert_alpha()
+            boxs[0].image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
             nW = boxs[0].rect[2]
             nH = boxs[0].rect[3]
             boxs[0].image = pg.transform.scale(boxs[0].image, (nW, nH))
             boxs[2].text = ''
             boxs[2].txt_surface = groups[3].render(boxs[2].text, True, boxs[2].color)
             boxs[2].active = False
-            boxs[2].image = pg.image.load("GUI/textbox/TEXTBOX_SMALL.png").convert_alpha()
+            boxs[2].image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_SMALL.png").convert_alpha()
             nW = boxs[2].rect[2]
             nH = boxs[2].rect[3]
             boxs[2].image = pg.transform.scale(boxs[2].image, (nW, nH))
@@ -167,18 +167,18 @@ class CheckButtons():
     
     def taskbarOpen(i, uis, c):
         if i.active == True:
-            i.image = pg.image.load("GUI/icon/ARROW_ACTIVE.png").convert_alpha()
+            i.image = pg.image.load("GUI/icon/" + modus + "/ARROW_ACTIVE.png").convert_alpha()
             nW = i.rect[2]
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
             i.job = "taskbarClose"
             i.rect.y -= 40*c[1]
             
-            Taskbar.create(c[1], 382, 492, "GUI/panel/STACK/TASKBAR.png", uis, c[0])
+            Taskbar.create(c[1], 382, 492, "GUI/panel/" + modus + "/TASKBAR.png", uis, c[0])
     
     def taskbarClose(i, uis , c):
         if i.active == True:
-            i.image = pg.image.load("GUI/icon/ARROW.png").convert_alpha()
+            i.image = pg.image.load("GUI/icon/" + modus + "/ARROW.png").convert_alpha()
             nW = i.rect[2]
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
@@ -201,23 +201,7 @@ class CheckButtons():
             "CardInspection": "GUI/panel/" + m + "/PANEL.png"
         }
         
-        if i.job == "modus":
-            i.image = pg.image.load(mColor.get(m)[1]).convert_alpha()
-            nW = i.rect[2]
-            nH = i.rect[3]
-            i.image = pg.transform.scale(i.image, (nW, nH))
-        elif uiChanger.get(i.job):
-            i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
-            nW = i.rect[2]
-            nH = i.rect[3]
-            i.image = pg.transform.scale(i.image, (nW, nH))
-        
-        for sprite in sprites:
-            sprite.image = pg.image.load("GUI/cards/" + m + "/CAPTA.png").convert_alpha()
-            captchacards.CaptchaCards.kindIcon(sprite, scale, "d")
-            nW = sprite.rect[2]
-            nH = sprite.rect[3]
-            sprite.image = pg.transform.scale(sprite.image, (nW, nH))
+        MakingUI.updateAll(uis, sprites, m)
 
         if i.job == "CardInspection":
             UIBase.reinit(i.inspectie, i, scale)
@@ -238,7 +222,7 @@ class CheckButtons():
 
     def inspect(i, b, c):
 
-        i.parent.image = pg.image.load("GUI/panel/STACK/PANEL.png").convert_alpha()
+        i.parent.image = pg.image.load("GUI/panel/" + modus + "/PANEL.png").convert_alpha()
         nW = i.parent.rect[2]
         nH = i.parent.rect[3]
         i.parent.image = pg.transform.scale(i.parent.image, (nW, nH))
@@ -423,8 +407,8 @@ class CheckTextboxes():
         box[0].image = pg.transform.scale(box[0].image, (nW, nH))
     
     def TabTextBoxes(boxs):
-        images = ["GUI/textbox/TEXTBOX.png", "GUI/textbox/TEXTBOX_MEDIUM.png", "GUI/textbox/TEXTBOX_SMALL.png"]
-        imagesActive = ["GUI/textbox/TEXTBOX_ACTIVE.png", "GUI/textbox/TEXTBOX_MEDIUM_ACTIVE.png", "GUI/textbox/TEXTBOX_SMALL_ACTIVE.png"]
+        images = ["GUI/textbox/" + modus + "/TEXTBOX.png", "GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png", "GUI/textbox/" + modus + "/TEXTBOX_SMALL.png"]
+        imagesActive = ["GUI/textbox/" + modus + "/TEXTBOX_ACTIVE.png", "GUI/textbox/" + modus + "/TEXTBOX_MEDIUM_ACTIVE.png", "GUI/textbox/" + modus + "/TEXTBOX_SMALL_ACTIVE.png"]
 
         x = -1
         for b in boxs:
@@ -455,9 +439,23 @@ class CheckTextboxes():
 
 class MakingUI():
 
-    def captaInputbox(scale, uis, layers, FONT, labImg, func, x, y, x1, y1, size="l"):
+    def updateAll(uis, sprites, m):
+
+        uiChanger = {
+            "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
+            "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
+            "CardInspection": "GUI/panel/" + m + "/PANEL.png"
+        }
+
+        for i in uis:
+            i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
+            nW = i.rect[2]
+            nH = i.rect[3]
+            i.image = pg.transform.scale(i.image, (nW, nH))
+
+    def captaInputbox(scale, uis, layers, FONT, labImg, func, x, y, x1, y1, modus, size="l"):
         TextLabel.create(scale, x, y, labImg, (64, 32), uis, layers)
-        entity = InputBox(scale, x1, y1, 64, 32, FONT, func,size)
+        entity = InputBox(scale, x1, y1, 64, 32, FONT, func,modus, size)
         uis.add(entity)
         layers.add(entity)
         layers.change_layer(entity, 999)
@@ -487,18 +485,18 @@ class MakingUI():
         ## Create the main ui buttons
         UIBase.createUI((120, 260), "GUI/button/" + modus + "/ADD.png", "cardCreate", "button", None, scale, (68, 36), layers, uis, [])
 
-        UIBase.createUI((215, 12), "GUI/icon/FLIP.png", "sylSettings", "button", None, scale, (27, 29), layers, uis, [])
+        UIBase.createUI((215, 12), "GUI/icon/" + modus + "/FLIP.png", "sylSettings", "button", None, scale, (27, 29), layers, uis, [])
 
         
 
         
 
         ## Making the capta input boxes
-        input_box1 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/NAMELABEL.png", "name", 40, 60, 30, 98)
+        input_box1 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/NAMELABEL.png", "name", 40, 60, 30, 98, modus)
 
-        input_box2 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/CODELABEL.png", 'code', 40, 142, 30, 180, 'm')
+        input_box2 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/CODELABEL.png", 'code', 40, 142, 30, 180, modus, 'm')
 
-        input_box3 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/TIERLABEL.png", 'tier', 40, 224, 30, 262, 's')
+        input_box3 = MakingUI.captaInputbox(scale, uis, layers, FONT, "GUI/label/" + modus + "/TIERLABEL.png", 'tier', 40, 224, 30, 262, modus, 's')
 
 
         UIBase.createUI((12, 391), modusColor.get(modus)[1], "modus", "button", None, scale, (214, 113), layers, uis, [])
