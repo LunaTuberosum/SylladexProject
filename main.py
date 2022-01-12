@@ -287,12 +287,12 @@ def main():
 
                                 "taskbarOpen": {
                                     1: CheckButtons.taskbarOpen,
-                                    2: [i, uis, [layers, scale]]
+                                    2: [i, uis, [layers, scale, modus]]
                                 },
 
                                 "taskbarClose": {
                                     1: CheckButtons.taskbarClose,
-                                    2: [i, uis, [layers, scale]]
+                                    2: [i, uis, [layers, scale, modus]]
                                 },
 
                                 "edit": {
@@ -322,34 +322,33 @@ def main():
 
                                 "inspecttrait1": {
                                     1: CheckButtons.inspect,
-                                    2: [i, codeDatabase.trait1Desc, [0, uis, layers, scale]]
+                                    2: [i, codeDatabase.trait1Desc, [0, uis, layers, scale, modus]]
                                 },
 
                                 "inspecttrait2": {
                                     1: CheckButtons.inspect,
-                                    2: [i, codeDatabase.trait2Desc, [1, uis, layers, scale]]
+                                    2: [i, codeDatabase.trait2Desc, [1, uis, layers, scale, modus]]
                                 },
 
                                 "inspectaction1": {
                                     1: CheckButtons.inspect,
-                                    2: [i, codeDatabase.actionData, [2, uis, layers, scale]]
+                                    2: [i, codeDatabase.actionData, [2, uis, layers, scale, modus]]
                                 },
 
                                 "inspectaction2": {
                                     1: CheckButtons.inspect,
-                                    2: [i, codeDatabase.actionData, [3, uis, 
-                                    layers, scale]]
+                                    2: [i, codeDatabase.actionData, [3, uis, layers, scale, modus]]
                                 },
 
                                 "inspectaction3": {
                                     1: CheckButtons.inspect,
-                                    2: [i, codeDatabase.actionData, [4, uis, layers, scale]]
+                                    2: [i, codeDatabase.actionData, [4, uis, layers, scale, modus]]
                                 },
                                 
 
                                 "inspectaction4": {
                                     1: CheckButtons.inspect,
-                                    2: [i, codeDatabase.actionData, [5, uis, layers, scale]]
+                                    2: [i, codeDatabase.actionData, [5, uis, layers, scale, modus]]
                                 },
 
                                 "sylPanel": {
