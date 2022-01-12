@@ -467,7 +467,7 @@ class MakingUI():
             
         }
 
-        for i in uis:0
+        for i in uis:
             if i.job == "CardInspection":
                 i.image = pg.image.load("GUI/panel/" + m + "/PANEL.png").convert_alpha()
                 nW = i.rect[2]
