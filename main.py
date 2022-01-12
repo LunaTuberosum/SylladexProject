@@ -67,8 +67,8 @@ def main():
         "StackingArea": "GUI/panel/" + modus + "/STACK_AREA.png",
         "CardInspection": "GUI/panel/" + modus + "/PANEL.png",
 
-        "closePanel": "GUI/icon/ALT_X.png",
-        "taskbarOpen": "GUI/icon/ARROW.png"
+        "closePanel": "GUI/icon/" + modus + "/ALT_X.png",
+        "taskbarOpen": "GUI/icon/" + modus + "/ARROW.png"
         }   
 
 
@@ -85,7 +85,7 @@ def main():
         if i.job == "StackingArea":
             area = i.rect
 
-    UIBase.createUI((925, 20), "GUI/icon/HELP.png", "help", "button", None, scale, (32, 32), layers, uis, [])
+    UIBase.createUI((925, 20), "GUI/icon/" + modus + "/HELP.png", "help", "button", None, scale, (32, 32), layers, uis, [])
     
     input_box1, input_box2, input_box3 = MakingUI.sylladexMain(uis,uisImageDict, layers, modus, modusColor, scale)
 
@@ -215,8 +215,8 @@ def main():
             "StackingArea": "GUI/panel/" + modus + "/STACK_AREA.png",
             "CardInspection": "GUI/panel/" + modus + "/PANEL.png",
 
-            "closePanel": "GUI/icon/ALT_X.png",
-            "taskbarOpen": "GUI/icon/ARROW.png"
+            "closePanel": "GUI/icon/" + modus + "/ALT_X.png",
+            "taskbarOpen": "GUI/icon/" + modus + "/ARROW.png"
         }   
 
         ## Checking for inputs
@@ -237,19 +237,19 @@ def main():
                         MakingUI.placeInfo(infoRects,uis, layers, scale)
 
                     input_box1.active = False
-                    input_box1.image = pg.image.load("GUI/textbox/TEXTBOX.png").convert_alpha()
+                    input_box1.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
                     nW = input_box1.rect[2]
                     nH = input_box1.rect[3]
                     input_box1.image = pg.transform.scale(input_box1.image, (nW, nH))
 
                     input_box2.active = False
-                    input_box2.image = pg.image.load("GUI/textbox/TEXTBOX_MEDIUM.png").convert_alpha()
+                    input_box2.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png").convert_alpha()
                     nW = input_box2.rect[2]
                     nH = input_box2.rect[3]
                     input_box2.image = pg.transform.scale(input_box2.image, (nW, nH))
 
                     input_box3.active = False
-                    input_box3.image = pg.image.load("GUI/textbox/TEXTBOX_SMALL.png").convert_alpha()
+                    input_box3.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_SMALL.png").convert_alpha()
                     nW = input_box3.rect[2]
                     nH = input_box3.rect[3]
                     input_box3.image = pg.transform.scale(input_box3.image, (nW, nH))
@@ -371,19 +371,19 @@ def main():
 
                                 "name": {
                                     1: CheckTextboxes.nameBox,
-                                    2: [[input_box1, input_box2, input_box3], BLACK, ["GUI/textbox/TEXTBOX_ACTIVE.png", "GUI/textbox/TEXTBOX_MEDIUM.png", "GUI/textbox/TEXTBOX_SMALL.png"]],
+                                    2: [[input_box1, input_box2, input_box3], BLACK, ["GUI/textbox/" + modus + "/TEXTBOX_ACTIVE.png", "GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png", "GUI/textbox/" + modus + "/TEXTBOX_SMALL.png"]],
                                     3: "box1"
                                 },
 
                                 "code": {
                                     1: CheckTextboxes.nameBox,
-                                    2: [[input_box2, input_box1, input_box3], BLACK, ["GUI/textbox/TEXTBOX_MEDIUM_ACTIVE.png", "GUI/textbox/TEXTBOX.png", "GUI/textbox/TEXTBOX_SMALL.png"]],
+                                    2: [[input_box2, input_box1, input_box3], BLACK, ["GUI/textbox/" + modus + "/TEXTBOX_MEDIUM_ACTIVE.png", "GUI/textbox/" + modus + "/TEXTBOX.png", "GUI/textbox/" + modus + "/TEXTBOX_SMALL.png"]],
                                     3: "box2"
                                 },
 
                                 "tier": {
                                     1: CheckTextboxes.nameBox,
-                                    2: [[input_box3, input_box2, input_box1], BLACK, ["GUI/textbox/TEXTBOX_SMALL_ACTIVE.png","GUI/textbox/TEXTBOX_MEDIUM.png", "GUI/textbox/TEXTBOX.png"]],
+                                    2: [[input_box3, input_box2, input_box1], BLACK, ["GUI/textbox/" + modus + "/TEXTBOX_SMALL_ACTIVE.png","GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png", "GUI/textbox/" + modus + "/TEXTBOX.png"]],
                                     3: "box3"
                                 }
                             }
@@ -683,7 +683,7 @@ def main():
 
                             ## Sets input box 1 inactive and resets code box
                             input_box1.active = False
-                            input_box1.image = pg.image.load("GUI/textbox/TEXTBOX.png").convert_alpha()
+                            input_box1.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
                             nW = input_box1.rect[2]
                             nH = input_box1.rect[3]
                             input_box1.image = pg.transform.scale(input_box1.image, (nW, nH))
@@ -694,7 +694,7 @@ def main():
 
                             ## Sets input box 2 inactive and resets code box
                             input_box2.active = False
-                            input_box2.image = pg.image.load("GUI/textbox/TEXTBOX_MEDIUM.png").convert_alpha()
+                            input_box2.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png").convert_alpha()
                             nW = input_box2.rect[2]
                             nH = input_box2.rect[3]
                             input_box2.image = pg.transform.scale(input_box2.image, (nW, nH))
@@ -705,7 +705,7 @@ def main():
 
                             ## Sets input box 3 inactive and resets code box
                             input_box3.active = False
-                            input_box3.image = pg.image.load("GUI/textbox/TEXTBOX_SMALL.png").convert_alpha()
+                            input_box3.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_SMALL.png").convert_alpha()
                             nW = input_box3.rect[2]
                             nH = input_box3.rect[3]
                             input_box3.image = pg.transform.scale(input_box3.image, (nW, nH))

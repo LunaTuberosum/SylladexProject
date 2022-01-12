@@ -90,7 +90,7 @@ class UIBase(pg.sprite.Sprite):
 
         panel.image.blit(entityText, [135*scale, 366*scale])
         
-        UIBase.createUI((1, 12), "GUI/icon/FLIP_ALT.png", "sylPanel", "button", None, scale, (16, 16), layers, uis, [])
+        UIBase.createUI((1, 12), "GUI/icon/" + modus + "/FLIP_ALT.png", "sylPanel", "button", None, scale, (16, 16), layers, uis, [])
 
         resImage = ["GUI/icon/960x540_SELECTED.png", "GUI/icon/1920x1080.png", "GUI/icon/960x540.png", "GUI/icon/1920x1080_SELECTED.png"]
 
@@ -208,7 +208,7 @@ class UIBase(pg.sprite.Sprite):
             UIBase.createUI((pos[0]+buttonPos[x],pos[1]+buttonPos[x+1]), "GUI/button/CHECK_BOX.png", "inspect"+buttonPos[x+2], "button", entity, scale, (16, 16), layers, uis, [])
             x += 3
 
-        UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
+        UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/" + modus + "/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
 
     ### BUTTON FUNCTIONS ###
 
@@ -264,19 +264,19 @@ class UIBase(pg.sprite.Sprite):
 
 class InputBox(pg.sprite.Sprite):
 
-    def __init__(self, scale, x, y, w, h, FONT, job, size='l', text=''):
+    def __init__(self, scale, x, y, w, h, FONT, job, modus, size='l', text=''):
         
         super().__init__()
         self.image = pg.Surface((128, 32))
         self.image.fill(white)
         if size == 's':
-            self.image = pg.image.load("GUI/textbox/TEXTBOX_SMALL.png").convert_alpha()
+            self.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_SMALL.png").convert_alpha()
             
         elif size == 'm':
-            self.image = pg.image.load("GUI/textbox/TEXTBOX_MEDIUM.png").convert_alpha()
+            self.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png").convert_alpha()
         else:
             
-            self.image = pg.image.load("GUI/textbox/TEXTBOX.png").convert_alpha()
+            self.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
         self.rect = self.image.get_rect(topleft=(x,y))
         if scale == 1:
             pass
@@ -365,11 +365,11 @@ class Taskbar(pg.sprite.Sprite):
         layers.add(entity)
         layers.change_layer(entity, 0)
 
-        UIBase.createUI((425, 505), "GUI/icon/TRASH.png", "trash", "label", None, scale, (20, 28), layers, uis, [])
+        UIBase.createUI((425, 505), "GUI/icon/" + modus + "/TRASH.png", "trash", "label", None, scale, (20, 28), layers, uis, [])
 
-        UIBase.createUI((513, 505), "GUI/icon/TRASH_ALL.png", "clear", "button", None, scale, (20, 29), layers, uis, [])
+        UIBase.createUI((513, 505), "GUI/icon/" + modus + "/TRASH_ALL.png", "clear", "button", None, scale, (20, 29), layers, uis, [])
 
-        UIBase.createUI((616, 510), "GUI/icon/EDIT.png", "edit", "button", None, scale, (24, 24), layers, uis, [])
+        UIBase.createUI((616, 510), "GUI/icon/" + modus + "/EDIT.png", "edit", "button", None, scale, (24, 24), layers, uis, [])
 
     def destroy(taskbar, uis, layers):
         uis.remove(taskbar)
