@@ -1,1 +1,1 @@
-QUEUE 1
+STACK 1

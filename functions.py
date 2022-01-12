@@ -167,18 +167,18 @@ class CheckButtons():
     
     def taskbarOpen(i, uis, c):
         if i.active == True:
-            i.image = pg.image.load("GUI/icon/" + modus + "/ARROW_ACTIVE.png").convert_alpha()
+            i.image = pg.image.load("GUI/icon/" + c[2] + "/ARROW_ACTIVE.png").convert_alpha()
             nW = i.rect[2]
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
             i.job = "taskbarClose"
             i.rect.y -= 40*c[1]
             
-            Taskbar.create(c[1], 382, 492, "GUI/panel/" + modus + "/TASKBAR.png", uis, c[0])
+            Taskbar.create(c[1], 382, 492, "GUI/panel/" + c[2] + "/TASKBAR.png", uis, c[0], c[2])
     
     def taskbarClose(i, uis , c):
         if i.active == True:
-            i.image = pg.image.load("GUI/icon/" + modus + "/ARROW.png").convert_alpha()
+            i.image = pg.image.load("GUI/icon/" + c[2] + "/ARROW.png").convert_alpha()
             nW = i.rect[2]
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
@@ -203,9 +203,6 @@ class CheckButtons():
         
         MakingUI.updateAll(uis, sprites, m, scale)
 
-        if i.job == "CardInspection":
-            UIBase.reinit(i.inspectie, i, scale)
-
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
 
         sylladexText = FONT.render('SYLLADEX' , True , WHITE)
@@ -222,11 +219,11 @@ class CheckButtons():
 
     def inspect(i, b, c):
 
-        i.parent.image = pg.image.load("GUI/panel/" + modus + "/PANEL.png").convert_alpha()
+        i.parent.image = pg.image.load("GUI/panel/" + c[4] + "/PANEL.png").convert_alpha()
         nW = i.parent.rect[2]
         nH = i.parent.rect[3]
         i.parent.image = pg.transform.scale(i.parent.image, (nW, nH))
-        UIBase.reinit(i.parent.inspectie, i.parent, c[3])
+        UIBase.reinit(i.parent.inspectie[0], i.parent, c[3])
         inspectList = ["trait1", "trait2", "action1", "action2", "action3", "action4"]
         
         font = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 14*c[3])
@@ -245,7 +242,7 @@ class CheckButtons():
             i.checked = True
 
             if c[0] == 0:
-                codies = [i.parent.inspectie.trait1, i.parent.inspectie.trait2, i.parent.inspectie.action1 ,i.parent.inspectie.action2 ,i.parent.inspectie.action3, i.parent.inspectie.action4]
+                codies = [i.parent.inspectie[0].trait1, i.parent.inspectie[0].trait2, i.parent.inspectie[0].action1 ,i.parent.inspectie[0].action2 ,i.parent.inspectie[0].action3, i.parent.inspectie[0].action4]
 
                 textPoses = [297*c[3], 312*c[3], 327*c[3], 342*c[3]]
             
@@ -255,7 +252,7 @@ class CheckButtons():
                 i.image = pg.transform.scale(i.image, (nW, nH))
                 
             
-                tier = math.ceil(int(i.parent.inspectie.tier)/4)
+                tier = math.ceil(int(i.parent.inspectie[0].tier)/4)
                 if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier))) >= 33:
                     string = math.ceil(len(b.get(codies[c[0]]).get("WEAPON").get(str(tier))) /33)
                     text = textwrap.wrap(b.get(codies[c[0]]).get("WEAPON").get(str(tier)), 33)
@@ -278,7 +275,7 @@ class CheckButtons():
                     i.parent.image.blit(entityText, [wN, hN])
 
             elif c[0] == 1:
-                codies = [i.parent.inspectie.trait1, i.parent.inspectie.trait2, i.parent.inspectie.action1 ,i.parent.inspectie.action2 ,i.parent.inspectie.action3, i.parent.inspectie.action4]
+                codies = [i.parent.inspectie[0].trait1, i.parent.inspectie[0].trait2, i.parent.inspectie[0].action1 ,i.parent.inspectie[0].action2 ,i.parent.inspectie[0].action3, i.parent.inspectie[0].action4]
 
                 textPoses = [297*c[3], 314*c[3], 327*c[3], 342*c[3]]
             
@@ -287,10 +284,10 @@ class CheckButtons():
                 nH = i.rect[3]
                 i.image = pg.transform.scale(i.image, (nW, nH))
             
-                tier = math.ceil(int(i.parent.inspectie.tier)/4)
-                if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType)) >= 33:
-                    string = math.ceil(len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType)) /33)
-                    text = textwrap.wrap(b.get(codies[c[0]]).get("WEAPON").get(str (tier)).get(i.parent.inspectie.wType), 33)
+                tier = math.ceil(int(i.parent.inspectie[0].tier)/4)
+                if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie[0].wType)) >= 33:
+                    string = math.ceil(len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie[0].wType)) /33)
+                    text = textwrap.wrap(b.get(codies[c[0]]).get("WEAPON").get(str (tier)).get(i.parent.inspectie[0].wType), 33)
                     x = 0
                     for j in range(string):
                         entityText = font.render(text[x], 1, BLACK)
@@ -301,7 +298,7 @@ class CheckButtons():
                         i.parent.image.blit(entityText, [wN, hN])
                         x+=1
                 else:
-                    entityText = font.render(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType), 1, BLACK)
+                    entityText = font.render(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie[0].wType), 1, BLACK)
 
                     w = entityText.get_width()
                     wN = 168*c[3] - w/2
@@ -310,7 +307,7 @@ class CheckButtons():
                     i.parent.image.blit(entityText, [wN, hN])
 
             else:
-                codies = [i.parent.inspectie.trait1, i.parent.inspectie.trait2, i.parent.inspectie.action1 ,i.parent.inspectie.action2 ,i.parent.inspectie.action3, i.parent.inspectie.action4]
+                codies = [i.parent.inspectie[0].trait1, i.parent.inspectie[0].trait2, i.parent.inspectie[0].action1 ,i.parent.inspectie[0].action2 ,i.parent.inspectie[0].action3, i.parent.inspectie[0].action4]
 
                 textPoses = [297*c[3], 314*c[3], 327*c[3], 342*c[3]]
             
@@ -444,10 +441,9 @@ class MakingUI():
         uiChanger = {
             "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
             "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
-            "CardInspection": "GUI/panel/" + m + "/PANEL.png",
             "help": "GUI/icon/" + m + "/HELP.png",
             "cardCreate": "GUI/button/" + m + "/ADD.png",
-            "sylSettings": "GUI/icon/" + m + "/flip.png",
+            "sylSettings": "GUI/icon/" + m + "/FLIP.png",
             "nameLabel": "GUI/label/" + m + "/NAMELABEL.png",
             "codeLabel": "GUI/label/" + m + "/CODELABEL.png",
             "tierLabel": "GUI/label/" + m + "/TIERLABEL.png",
@@ -456,14 +452,33 @@ class MakingUI():
             "tier": "GUI/textbox/" + m + "/TEXTBOX_SMALL.png",
             "modus": "GUI/panel/" + m + "/MODUSLABEL.png",
             "taskbarOpen": "GUI/icon/" + m + "/ARROW.png",
+            "inspecttrait1": "GUI/button/CHECK_BOX.png",
+            "inspecttrait2": "GUI/button/CHECK_BOX.png",
+            "inspectaction1": "GUI/button/CHECK_BOX.png",
+            "inspectaction2": "GUI/button/CHECK_BOX.png",
+            "inspectaction3": "GUI/button/CHECK_BOX.png",
+            "inspectaction4": "GUI/button/CHECK_BOX.png",
+            "closePanel": "GUI/icon/" + m + "/ALT_X.png",
+            "taskbarClose": "GUI/icon/" + m + "/ARROW_ACTIVE.png",
+            "taskbar": "GUI/panel/" + m + "/TASKBAR.png",
+            "trash": "GUI/icon/" + m + "/TRASH.png",
+            "clear": "GUI/icon/" + m + "/TRASH_ALL.png",
+            "edit": "GUI/icon/" + m + "/EDIT.png",
             
         }
 
         for i in uis:
-            i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
-            nW = i.rect[2]
-            nH = i.rect[3]
-            i.image = pg.transform.scale(i.image, (nW, nH))
+            if i.job == "CardInspection":
+                i.image = pg.image.load("GUI/panel/" + m + "/PANEL.png").convert_alpha()
+                nW = i.rect[2]
+                nH = i.rect[3]
+                i.image = pg.transform.scale(i.image, (nW, nH))
+                UIBase.reinit(i.inspectie[0], i, scale)
+            else:
+                i.image = pg.image.load(uiChanger.get(i.job, "")).convert_alpha()
+                nW = i.rect[2]
+                nH = i.rect[3]
+                i.image = pg.transform.scale(i.image, (nW, nH))
 
         for s in sprites:
             s.image = pg.image.load("GUI/cards/" + m + "/CAPTA.png").convert_alpha()
