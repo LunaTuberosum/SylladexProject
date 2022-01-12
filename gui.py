@@ -57,9 +57,9 @@ class UIBase(pg.sprite.Sprite):
             
     ### PANEL FUNCTIONS ###
 
-    def settingPanel(uis, layers, scale):
+    def settingPanel(uis, layers, scale, modus):
 
-        toBeRemoved = ["sylSettings", "cardCreate", "name", "code", "tier", "modus", "textLabel"]
+        toBeRemoved = ["sylSettings", "cardCreate", "name", "code", "tier", "modus", "nameLabel", "codeLabel", "tierLabel",]
         for i in uis:
             
             if i.job == "SylladexPanel":
@@ -191,15 +191,14 @@ class UIBase(pg.sprite.Sprite):
         for i in uis:
             if i.job == "CardInspection":
                 UIBase.destroy(i, uis, layers)
-
-        entity = UIBase(pos, image.get(job), job , typeing, parent, scale, size, opt)
+        entity = UIBase(pos, image.get(job), job , typeing, parent, scale, size, opt[0])
         uis.add(entity)
         layers.add(entity)
         layers.change_layer(entity, 998)
 
         entity.inspectie = opt
 
-        UIBase.reinit(opt, entity, scale)
+        UIBase.reinit(opt[0], entity, scale)
 
         buttonPos = [12, 72, "trait1", 96, 72, "trait2", 12, 204, "action1",  144, 204, "action2", 12, 228, "action3",  144, 228, "action4"]
 
@@ -208,7 +207,7 @@ class UIBase(pg.sprite.Sprite):
             UIBase.createUI((pos[0]+buttonPos[x],pos[1]+buttonPos[x+1]), "GUI/button/CHECK_BOX.png", "inspect"+buttonPos[x+2], "button", entity, scale, (16, 16), layers, uis, [])
             x += 3
 
-        UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/" + modus + "/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
+        UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/" + opt[1] + "/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
 
     ### BUTTON FUNCTIONS ###
 
@@ -304,7 +303,7 @@ class InputBox(pg.sprite.Sprite):
             
 class TextLabel(pg.sprite.Sprite):
 
-    def __init__(self, scale, x, y, image, size):
+    def __init__(self, scale, x, y, image, size, job):
         super().__init__()
 
         self.image = pg.Surface(size)
@@ -324,11 +323,11 @@ class TextLabel(pg.sprite.Sprite):
             self.rect.w = nW
             self.rect.h = nH
         self.type = "textLabel"
-        self.job = 'textLabel'
+        self.job = job
         
 
-    def create(scale, x, y, image, size, gui, l):
-        entity = TextLabel(scale, x, y, image, size)
+    def create(scale, x, y, image, size, gui, l, job):
+        entity = TextLabel(scale, x, y, image, size, job)
         
         gui.add(entity)
         l.add(entity)
