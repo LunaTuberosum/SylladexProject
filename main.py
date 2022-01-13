@@ -87,14 +87,15 @@ def main():
     Label.create(scale, modus, layers, uis, "NAMELABEL", "nameLabel", (40, 60))
     Label.create(scale, modus, layers, uis, "CODELABEL", "codeLabel", (40, 142))
     Label.create(scale, modus, layers, uis, "TIERLABEL", "tierLabel", (40, 224))
-    input_box1 = Textbox.create(scale, modus, layers, uis, "TEXTBOX", "name", (30, 98), "TEXTBOX_ACTIVE", "box1")
-    input_box2 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_MEDIUM", "code", (30, 180), "TEXTBOX_MEDIUM_ACTIVE",  "box2")
-    input_box3 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_SMALL", "tier", (30, 262), "TEXTBOX_SMALL_ACTIVE",  "box3")
+    input_box1 = Textbox.create(scale, modus, layers, uis, "TEXTBOX", "name", (30, 98), "TEXTBOX_ACTIVE", "TEXTBOX")
+    input_box2 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_MEDIUM", "code", (30, 180), "TEXTBOX_MEDIUM_ACTIVE", "TEXTBOX_MEDIUM")
+    input_box3 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_SMALL", "tier", (30, 262), "TEXTBOX_SMALL_ACTIVE", "TEXTBOX_SMALL")
+    AddButton.create(scale, modus, layers, uis, "cardCreate", (120, 260))
 
     cardInput = [input_box1, input_box2, input_box3]
 
     for i in uis:
-        if i.job == "StackingArea":
+        if i.job == "stackingArea":
             area = i.rect
 
     # UIBase.createUI((925, 20), "GUI/icon/" + modus + "/HELP.png", "help", "button", None, scale, (32, 32), layers, uis, [])
@@ -215,7 +216,7 @@ def main():
 
         # infoRects = [syl_cus, nam_txt, cod_txt, tir_txt, add_set, flp_syl, tsk_bar, mod_res, stk_ara, tsh_but, clr_but, edt_but, hlp_but]
 
-        
+        bool1 = True
         
 
         screen = screenNew
@@ -248,7 +249,7 @@ def main():
                         if b.rect.collidepoint(event.pos):
                             for bm in cardInput:
                                 bm.modus = modus
-                            codeBox = Textbox.nameBox(b, cardInput, BLACK, b.codeBox)
+                            Textbox.nameBox(b, cardInput, BLACK)
                     
                     # if helpT == True:
                         
@@ -279,6 +280,16 @@ def main():
                         if i.rect.collidepoint(event.pos):
                             if i.job == "modusChanger":
                                 modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites)
+                            if i.job == "cardCreate":
+                                i.modus = modus
+                                AddButton.cardCreate(i, cardInput, sprites, layers, currentStack, scale, cardIDs)
+                            if i.job == "closePanel":
+                                CardInspector.closePanel(uis, layers)
+                            
+                            for ins in [ "inspecttrait1","inspecttrait2", "inspectaction1","inspectaction2","inspectaction3","inspectaction4",]:
+                                if i.job == ins:
+                                    CheckBox.inspect(i, i.insAtr, [i.insNum, uis, layers, scale, modus] )
+
 
                         #     ## Makes switch case to exacute uis funcs
                         #     uiElements = {
@@ -476,7 +487,7 @@ def main():
                         
                         if sprite.rect.collidepoint(event.pos):
 
-                            bool1 = True
+                            
                             
                             ## Defining which sprite it is
                             selected = sprite
@@ -539,14 +550,14 @@ def main():
                                     ## Can move card
                                     moveCard = True
                                    
-                # ## If middle click
-                # elif event.button == 2:
+                ## If middle click
+                elif event.button == 2:
 
-                #     ## Checks which sprite is be
-                #     for s in sprites:
-                #         if s.rect.collidepoint(pg.mouse.get_pos()):
-                #             captchacards.CaptchaCards.checkCode(s)
-                #             UIBase.createUI((648,42), uisImageDict, "CardInspection", "panel", None, scale, (312,420), layers, uis, [s, modus])
+                    ## Checks which sprite is be
+                    for s in sprites:
+                        if s.rect.collidepoint(pg.mouse.get_pos()):
+                            captchacards.CaptchaCards.checkCode(s)
+                            CardInspector.create(scale, modus, layers, uis, (648, 66), s)
 
                 #             # Panel.create(scale, uis, (612, 42), (360, 540), uisImageDict, None, layers, "CardInspection", s)     
 
@@ -565,12 +576,10 @@ def main():
 
                                     ## If it is the top on the stack
                                     if layers.get_layer_of_sprite(selectedd) == len(currentStack)-1:
-
-                                        ## Be able to move the card
-                                        moveCard = True
-
+                                        
+                                        
                                         ## Disconnect it
-                                        captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites)
+                                        captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites, scale)
                                         
                                     else:
 
@@ -583,11 +592,8 @@ def main():
                                     ## If it is the top on the stack
                                     if layers.get_layer_of_sprite(selectedd) == 0:
 
-                                        ## Be able to move the card
-                                        moveCard = True
-
                                         ## Disconnect it
-                                        captchacards.QueueCards.disconnect(selectedd,selectedd.child,currentStack, sprites)
+                                        captchacards.QueueCards.disconnect(selectedd,selectedd.child,currentStack, sprites, scale)
 
                                         
                                     else:
@@ -691,51 +697,25 @@ def main():
                 if event.key == pg.K_ESCAPE:
                     menu()
 
+                if event.key == pg.K_RETURN:
+                    for b in cardInput:
+                        if b.active:
+                            b.active = False
+                            b.image = pg.image.load("GUI/textbox/" + modus + "/" + b.inactiveImage + ".png").convert_alpha()
+
                 ## Checking if the input boxs are active                
                 if input_box1.active or input_box2.active or input_box3.active:
-                        
-                    ## Checking if the backspace is being pressed
-                    if event.key == pg.K_BACKSPACE:
-
-                        ## Checking if box1 and deletes text
-                        if codeBox == "box1":
-
-                            input_box1.text = input_box1.text[:-1]
-
-                        ## Checking if box2 and deletes text
-                        elif codeBox == "box2":
-
-                            input_box2.text = input_box2.text[:-1]
-
-                        ## Checking if box3 and deletes text
-                        elif codeBox == "box3":
-
-                            input_box3.text = input_box3.text[:-1]
-
-                    ## When any key but backspace is being pressed add text
-                    else:
+                    
+                    for b in cardInput:
+                        if b.active == True:
+                            if event.key == pg.K_BACKSPACE:
+                                b.text = b.text[:-1]
 
                         ## Checking if box1 and adds text
-                        if codeBox == "box1":
-
-                            if event.key != pg.K_RETURN:
-
-                                input_box1.text += event.unicode
-
-                        ## Checking if box2 and adds text
-                        elif codeBox == "box2":
-
-                            if event.key != pg.K_RETURN:
-
-                                input_box2.text += event.unicode
-
-                        ## Checking if box3 and deletes text
-                        elif codeBox == "box3":
-
-                            if event.key != pg.K_RETURN:
-
-                                input_box3.text += event.unicode
-                            
+                            else:
+                                if event.key != pg.K_RETURN:
+                                    b.text += event.unicode
+                        
                     ## If box 1 has more than 12 letters delete it
                     if len(input_box1.text) >= 13:
 

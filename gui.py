@@ -4,6 +4,8 @@ import codeDatabase
 import captchacards
 
 import time
+import math
+import textwrap
 
 WHITE = (255, 255, 255)
 COLOR_INACTIVE = pg.Color('lightskyblue3')
@@ -12,7 +14,7 @@ BLACK = pg.Color('black')
 
 class UIBase(pg.sprite.Sprite):
 
-    def __init__(self, pos, image, job, typeing, scale, modus, size, activeI="", codeBox=""):
+    def __init__(self, pos, image, job, typeing, scale, modus, size):
         super().__init__()
 
         self.image = pg.Surface(size)
@@ -37,7 +39,9 @@ class UIBase(pg.sprite.Sprite):
         self.job = job
         self.active = True
         self.children = []
+        self.parent = None
 
+        self.fontSmall = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 12*scale)
         self.font = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 15*scale)
         self.fontBig = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
 
@@ -45,15 +49,17 @@ class UIBase(pg.sprite.Sprite):
         self.text = ""
         self.txt_surface = self.fontBig.render("", True, self.color)
         self.active = False
-        self.activeImage = activeI
-        self.inactiveImage = image
-        self.codeBox = codeBox
+        self.activeImage = ""
+        self.inactiveImage = ""
         
         self.modus = modus
 
         self.checked = False
 
         self.inspectie = None
+
+        self.insAtr = None
+        self.insNum = None
 
     def updateAll(i, sprites, scale, uis, mColor, inputBox):
         if i.job == "CardInspection":
@@ -69,6 +75,7 @@ class UIBase(pg.sprite.Sprite):
         uiChanger = {
             "sylladexPanel": "GUI/panel/" + i.modus + "/SYLLADEXPANEL.png",
             "stackingArea": "GUI/panel/" + i.modus + "/STACK_AREA.png",
+            "cardInspection": "GUI/panel/" + i.modus + "/PANEL.png",
             "help": "GUI/icon/" + i.modus + "/HELP.png",
             "cardCreate": "GUI/button/" + i.modus + "/ADD.png",
             "sylSettings": "GUI/icon/" + i.modus + "/FLIP.png",
@@ -86,7 +93,7 @@ class UIBase(pg.sprite.Sprite):
             "inspectaction2": "GUI/button/CHECK_BOX.png",
             "inspectaction3": "GUI/button/CHECK_BOX.png",
             "inspectaction4": "GUI/button/CHECK_BOX.png",
-            "closePanel": "GUI/icon/" + i.modus + "/ALT_X.png",
+            "closePanel": "GUI/button/" + i.modus + "/ARROW.png",
             "taskbarClose": "GUI/icon/" + i.modus + "/ARROW_ACTIVE.png",
             "taskbar": "GUI/panel/" + i.modus + "/TASKBAR.png",
             "trash": "GUI/icon/" + i.modus + "/TRASH.png",
@@ -110,6 +117,8 @@ class UIBase(pg.sprite.Sprite):
             i.image.blit(sylladexText, [12*scale, 0*scale])
             i.image.blit(modusText, [12*scale, 366*scale])
             i.image.blit(modusName, [84*scale, 504*scale])
+        elif i.job == "cardInspection":
+            CardInspector.reinit(i.inspectie, i, scale)
 
         for s in sprites:
             s.image = pg.image.load("GUI/cards/" + i.modus + "/CAPTA.png").convert_alpha()
@@ -186,8 +195,10 @@ class Label(UIBase):
 
 class Textbox(UIBase):
     
-    def create(scale, modus, layers, uis, box, job, pos, active, codeBox):
-        entity = StackingArea(pos, "GUI/textbox/"+modus+"/"+box+".png", job, "textbox", scale, modus, (0,0), active, codeBox)
+    def create(scale, modus, layers, uis, box, job, pos, active, inactive):
+        entity = Textbox(pos, "GUI/textbox/"+modus+"/"+box+".png", job, "textbox", scale, modus, (0,0))
+        entity.activeImage = active
+        entity.inactiveImage = inactive
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -198,10 +209,10 @@ class Textbox(UIBase):
         # Blit the text.
         screen.blit(box.txt_surface, (box.rect.x+5, box.rect.y))
 
-    def nameBox(curBox, otherBox, color, codeBox):
+    def nameBox(curBox, otherBox, color):
         for b in otherBox:
             b.active = False
-            b.image = pg.image.load(b.inactiveImage).convert_alpha()
+            b.image = pg.image.load("GUI/textbox/" + b.modus + "/" + b.inactiveImage + ".png").convert_alpha()
             nW = b.rect[2]
             nH = b.rect[3]
             b.image = pg.transform.scale(b.image, (nW, nH))
@@ -211,8 +222,334 @@ class Textbox(UIBase):
         curBox.image = pg.image.load("GUI/textbox/" + curBox.modus + "/" + curBox.activeImage + ".png").convert_alpha()
         nW = curBox.rect[2]
         nH = curBox.rect[3]
-        return codeBox
+
+class AddButton(UIBase):
+    
+    def create(scale, modus, layers, uis, job, pos):
+        entity = AddButton(pos, "GUI/button/"+modus+"/ADD.png", job, "button", scale, modus, (68, 36))
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)   
+
+    def captaButton(sprites, layers, text, name, stack, tier, scale, modus, cardIDs):
+
+        if modus == "STACK":
+            captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
+        elif modus == "QUEUE":
+            captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
+
+    def cardCreate(i, textboxs,   sprites, layers, currentStack, scale, cardIDs):
+
+        i.image = pg.image.load("GUI/button/" + i.modus + "/ADD_DOWN.png").convert_alpha()
         
+        for b in textboxs:
+            if b.text == "":
+                return
+    
+        AddButton.captaButton(sprites, layers, textboxs[1].text, textboxs[0].text, currentStack, int(textboxs[2].text), scale, i.modus, cardIDs)
+
+        for b in textboxs:
+            b.text = ""
+            b.txt_surface = i.fontBig.render(b.text, True, b.color)
+            b.active = False
+            b.image = pg.image.load("GUI/textbox/" + i.modus + "/" + b.inactiveImage + ".png").convert_alpha()
+
+class CheckBox(UIBase):
+
+    def create(pos, job,  scale, modus, layers, uis, parent, insAtr, insNum):
+        entity = CheckBox(pos, "GUI/button/CHECK_BOX.png", job, "button", scale, modus, (0,0))
+        parent.children.append(entity)
+        entity.parent = parent
+        entity.insAtr = insAtr
+        entity.insNum = insNum
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)
+       
+    def inspect(i, b, c):
+
+        i.parent.image = pg.image.load("GUI/panel/" + c[4] + "/PANEL.png").convert_alpha()
+        nW = i.parent.rect[2]
+        nH = i.parent.rect[3]
+        i.parent.image = pg.transform.scale(i.parent.image, (nW, nH))
+        CardInspector.reinit(i.parent.inspectie, i.parent, c[3])
+        inspectList = ["trait1", "trait2", "action1", "action2", "action3", "action4"]
+        
+        font = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 14*c[3])
+        
+
+        if i.checked == False:
+            for l in c[1]:
+                for j in inspectList:
+                    if l.job == "inspect"+j:
+                        l.image = pg.image.load("GUI/button/CHECK_BOX.png").convert_alpha()
+                        nW = l.rect[2]
+                        nH = l.rect[3]
+                        l.image = pg.transform.scale(l.image, (nW, nH))
+                        l.checked = False
+
+            i.checked = True
+
+            if c[0] == 0:
+                codies = [i.parent.inspectie.trait1, i.parent.inspectie.trait2, i.parent.inspectie.action1 ,i.parent.inspectie.action2 ,i.parent.inspectie.action3, i.parent.inspectie.action4]
+
+                textPoses = [297*c[3], 312*c[3], 327*c[3], 342*c[3]]
+            
+                i.image = pg.image.load("GUI/button/CHECKED_BOX.png").convert_alpha()
+                nW = i.rect[2]
+                nH = i.rect[3]
+                i.image = pg.transform.scale(i.image, (nW, nH))
+                
+            
+                tier = math.ceil(int(i.parent.inspectie.tier)/4)
+                if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier))) >= 33:
+                    string = math.ceil(len(b.get(codies[c[0]]).get("WEAPON").get(str(tier))) /33)
+                    text = textwrap.wrap(b.get(codies[c[0]]).get("WEAPON").get(str(tier)), 33)
+                    x = 0
+                    for j in range(string):
+                        entityText = font.render(text[x], 1, BLACK)
+                        w = entityText.get_width()
+                        wN = 168*c[3] - w/2
+                        h = entityText.get_height()
+                        hN = textPoses[x] - h/2
+                        i.parent.image.blit(entityText, [wN, hN])
+                        x+=1
+                else:
+                    entityText = font.render(b.get(codies[c[0]]).get("WEAPON").get(str(tier)), 1, BLACK)
+
+                    w = entityText.get_width()
+                    wN = 168*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 345*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+
+            elif c[0] == 1:
+                codies = [i.parent.inspectie.trait1, i.parent.inspectie.trait2, i.parent.inspectie.action1 ,i.parent.inspectie.action2 ,i.parent.inspectie.action3, i.parent.inspectie.action4]
+
+                textPoses = [297*c[3], 314*c[3], 327*c[3], 342*c[3]]
+            
+                i.image = pg.image.load("GUI/button/CHECKED_BOX.png").convert_alpha()
+                nW = i.rect[2]
+                nH = i.rect[3]
+                i.image = pg.transform.scale(i.image, (nW, nH))
+            
+                tier = math.ceil(int(i.parent.inspectie.tier)/4)
+                if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType)) >= 33:
+                    string = math.ceil(len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType)) /33)
+                    text = textwrap.wrap(b.get(codies[c[0]]).get("WEAPON").get(str (tier)).get(i.parent.inspectie.wType), 33)
+                    x = 0
+                    for j in range(string):
+                        entityText = font.render(text[x], 1, BLACK)
+                        w = entityText.get_width()
+                        wN = 168*c[3] - w/2
+                        h = entityText.get_height()
+                        hN = textPoses[x] - h/2
+                        i.parent.image.blit(entityText, [wN, hN])
+                        x+=1
+                else:
+                    entityText = font.render(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType), 1, BLACK)
+
+                    w = entityText.get_width()
+                    wN = 168*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 345*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+
+            else:
+                codies = [i.parent.inspectie.trait1, i.parent.inspectie.trait2, i.parent.inspectie.action1 ,i.parent.inspectie.action2 ,i.parent.inspectie.action3, i.parent.inspectie.action4]
+
+                textPoses = [297*c[3], 314*c[3], 327*c[3], 342*c[3]]
+            
+                i.image = pg.image.load("GUI/button/CHECKED_BOX.png").convert_alpha()
+                nW = i.rect[2]
+                nH = i.rect[3]
+                i.image = pg.transform.scale(i.image, (nW, nH))
+
+            
+                if len(b.get(codies[c[0]])[2]) >= 33:
+                    string = math.ceil(len(b.get(codies[c[0]])[2])/33)
+                    text = textwrap.wrap(b.get(codies[c[0]])[2], 33)
+                    x = 0
+                    for j in range(string):
+                        entityText = font.render(text[x], 1, BLACK)
+                        w = entityText.get_width()
+                        wN = 168*c[3] - w/2
+                        h = entityText.get_height()
+                        hN = textPoses[x] - h/2
+                        i.parent.image.blit(entityText, [wN, hN])
+                        x+=1
+                    entityText = font.render(b.get(codies[c[0]])[0], 1, BLACK)
+                    w = entityText.get_width()
+                    wN = 48*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 302*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+
+                    entityText = font.render(b.get(codies[c[0]])[1], 1, BLACK)
+                    w = entityText.get_width()
+                    wN = 48*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 332*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+                else:
+                    entityText = font.render(b.get(codies[c[0]])[2], 1, BLACK)
+
+                    w = entityText.get_width()
+                    wN = 168*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 321*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+
+                    entityText = font.render(b.get(codies[c[0]])[0], 1, BLACK)
+                    w = entityText.get_width()
+                    wN = 48*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 302*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+
+                    entityText = font.render(b.get(codies[c[0]])[1], 1, BLACK)
+                    w = entityText.get_width()
+                    wN = 48*c[3] - w/2
+                    h = entityText.get_height()
+                    hN = 332*c[3] - h/2
+                    i.parent.image.blit(entityText, [wN, hN])
+        else:
+            i.image = pg.image.load("GUI/button/CHECK_BOX.png").convert_alpha()
+            nW = i.rect[2]
+            nH = i.rect[3]
+            i.image = pg.transform.scale(i.image, (nW, nH))
+            i.checked = False
+
+class CloseButton(UIBase):
+
+    def create(pos, modus, job, parent, scale, layers, uis):
+        entity = CloseButton(pos, "GUI/button/" + modus + "/ARROW.png", job, "button", scale, modus, (16,16))
+        parent.children.append(entity)
+        entity.parent = parent
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)
+
+    def closePanel(i, uis, layers):
+        UIBase.destroy(i.parent, uis, layers)
+
+class CardInspector(UIBase):
+    
+    def create(scale, modus, layers, uis, pos, sprite):
+        for i in uis:
+            if i.job == "cardInspection":
+                CardInspector.closePanel(uis, layers)
+        entity = CardInspector(pos, "GUI/panel/"+modus+"/PANEL.png","cardInspection", "label", scale, modus, (16,16))
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)
+
+        entity.inspectie = sprite
+
+        CardInspector.reinit(sprite, entity, scale)
+
+        buttonPos = [12, 72, "trait1", 96, 72, "trait2", 12, 204, "action1",  144, 204, "action2", 12, 228, "action3",  144, 228, "action4"]
+
+        x = 0
+        y = 0
+        insAtr = [codeDatabase.trait1Desc, codeDatabase.trait2Desc, codeDatabase.actionData, codeDatabase.actionData, codeDatabase.actionData, codeDatabase.actionData]
+        for b in range(6):
+            CheckBox.create((pos[0]+buttonPos[x],pos[1]+buttonPos[x+1]), "inspect"+buttonPos[x+2], scale, modus, layers, uis, entity, insAtr[y], y)
+            x += 3
+            y += 1
+
+        CloseButton.create((pos[0]-38,pos[1]+194), modus, "closePanel", entity, scale, layers, uis)
+
+    def closePanel(uis, layer):
+        for i in uis:
+            if i.job == "cardInspection":
+                for c in i.children:
+                    uis.remove(c)
+                    layer.remove(c)
+                uis.remove(i)
+                layer.remove(i)
+
+    def reinit(text, panel, scale):
+
+        def makeText(label, text, x, y, scale, name):
+
+            z = 1
+            for c in ["CUSTOM TRAIT 1", "CUSTOM TRAIT 2", "CUSTOM TRAIT 3" ,"CUSTOM TRAIT 4" ]:
+                if c == text:
+                    text = "CUSTOM " + str(z)
+                    break
+                else:
+                    z += 1
+
+            if text == "INSPECT INFORMATION" or text == name or text == "INEFFECTIVE" or text == "GRIST TYPE":
+
+                entityText = panel.font.render(text, 1, BLACK)
+
+            elif len(text) >= 10:
+                
+                entityText = panel.fontSmall.render(text, 1, BLACK)
+            
+            else:
+                entityText = panel.font.render(text, 1, BLACK)
+
+            H = entityText.get_height()
+            label.image.blit(entityText, [x*scale, y*scale - H/2])
+
+        def makeImage(label, image, x, y, scale):
+
+            n = 0
+
+            for c in [text.wKind, text.grist, text.eff[0], text.eff[1], text.eff[2], text.eff[3], text.deff[0], text.deff[1], text.deff[2], text.deff[3], ""]:
+            
+                if image == c:
+
+                    entityImage = pg.Surface((16, 16))
+                    entityImage.fill(WHITE)
+
+                    if image == text.wKind:
+                        inImage = codeDatabase.kind.get(image)
+                    else:
+                        inImage = codeDatabase.grist.get(image)
+
+                    entityImage = pg.image.load(inImage).convert_alpha()
+
+                    nW = 32*scale
+                    nH = 32*scale
+                    entityImage = pg.transform.scale(entityImage, (nW, nH))
+
+                    label.image.blit(entityImage, [x*scale, y*scale])
+                    break
+                else:
+                    n += 1
+
+                if n == 10:
+                    entityImage = pg.Surface((16, 16))
+                    entityImage.fill(WHITE)
+                    entityImage = pg.image.load(codeDatabase.action.get(image)).convert_alpha()
+                    nW = 108*scale
+                    nH = 24*scale
+                    entityImage = pg.transform.scale(entityImage, (nW, nH))
+
+                    label.image.blit(entityImage, [x*scale, y*scale])
+
+
+        textRef = ["CODE", 40, 372, text.captaCode, 94, 372,"TIER",174, 372, str(text.tier), 216, 372, "GRIST TYPE", 16, 132 , text.grist, 123, 132, "NAME", 16, 48, text.name,  54, 48, "ITEMKIND" , 16 , 108 , text.wKind, 99, 108, text.trait1, 39, 84, text.trait2, 123, 84, text.wType, 231, 72, "EFFECTIVE", 16, 156, "INEFFECTIVE", 16, 180, "INSPECT INFORMATION", 78, 276, "CST", 14, 303, "DMG", 12, 333, "1", 214, 108, "2", 214, 132, "3", 214, 156, "BD", 210, 180, codeDatabase.damgeNum.get(int(text.tier)).get("1"), 244, 108, codeDatabase.damgeNum.get(int(text.tier)).get("2"), 244, 132, codeDatabase.damgeNum.get(int(text.tier)).get("3"), 244, 156, codeDatabase.damgeNum.get(int(text.tier)).get("BD"), 240, 181]        
+    
+        x = 0
+        for z in range(int(len(textRef)/3)):
+
+            makeText(panel, textRef[x], textRef[x+1], textRef[x+2], scale, text.name)
+            x += 3
+
+        entityText = panel.fontBig.render("CAPTCHALOGUE CARD", 2, WHITE)
+        panel.image.blit(entityText, [12*scale, 0*scale])
+
+        imageRef = [text.grist, 91, 116, text.eff[0], 91, 140, text.eff[1], 115, 140, text.eff[2], 139, 140, text.eff[3], 163, 140, text.deff[0], 91 ,164, text.deff[1], 115, 164, text.deff[2], 139, 164, text.deff[3], 163, 164, text.wKind, 67 ,92, text.action1, 36, 204, text.action2, 36, 228, text.action3, 168, 204, text.action4, 168, 228]
+        x = 0
+        for z in range(int(len(imageRef)/3)):
+            
+            makeImage(panel, imageRef[x], imageRef[x+1], imageRef[x+2], scale)
+            x += 3
 
 #     ### PANEL FUNCTIONS ###
 
@@ -359,12 +696,7 @@ class Textbox(UIBase):
 
 #         UIBase.reinit(opt[0], entity, scale)
 
-#         buttonPos = [12, 72, "trait1", 96, 72, "trait2", 12, 204, "action1",  144, 204, "action2", 12, 228, "action3",  144, 228, "action4"]
-
-#         x = 0
-#         for b in range(6):
-#             UIBase.createUI((pos[0]+buttonPos[x],pos[1]+buttonPos[x+1]), "GUI/button/CHECK_BOX.png", "inspect"+buttonPos[x+2], "button", entity, scale, (16, 16), layers, uis, [])
-#             x += 3
+#         
 
 #         UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/" + opt[1] + "/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
 
@@ -377,13 +709,6 @@ class Textbox(UIBase):
 #         layers.change_layer(entity, 998)
 #         if parent != None:
 #             parent.children.append(entity)
-
-#     def captaButton(sprites, layers, text, name, stack, tier, scale, modus, cardIDs):
-
-#         if modus == "STACK":
-#             captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
-#         elif modus == "QUEUE":
-#             captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
             
 
 #     ### LABEL FUNCTIONS ###
