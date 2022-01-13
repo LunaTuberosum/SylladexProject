@@ -255,6 +255,44 @@ class AddButton(UIBase):
             b.active = False
             b.image = pg.image.load("GUI/textbox/" + i.modus + "/" + b.inactiveImage + ".png").convert_alpha()
 
+    def setEdit(sprites, uis, editing, stack, scale, modus):
+        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
+        for s in sprites:
+            if s.edited == True:
+                for i in uis:
+                    if i.job == "name":
+                        s.name = i.text
+                        i.text = ""
+                        i.txt_surface = FONT.render(i.text, True, i.color)
+                        i.active = False
+                        i.image = pg.image.load("GUI/textbox/" + i.modus + "/" + i.inactiveImage + ".png").convert_alpha()
+                    elif i.job == "code":
+                        s.captaCode = i.text
+                        stack.pop(len(stack)-1)
+                        stack.append(i.text)
+                        i.text = ""
+                        i.txt_surface = FONT.render(i.text, True, i.color)
+                        i.active = False
+                        i.image = pg.image.load("GUI/textbox/" + i.modus + "/" + i.inactiveImage + ".png").convert_alpha()
+                        s.image = pg.image.load("GUI/cards/" + modus + "/CAPTA.png").convert_alpha()
+                        captchacards.CaptchaCards.kindIcon(s, scale, "d")
+                    elif i.job == "tier":
+                        s.tier = i.text
+                        i.text = ""
+                        i.txt_surface = FONT.render(i.text, True, i.color)
+                        i.active = False
+                        i.image = pg.image.load("GUI/textbox/" + i.modus + "/" + i.inactiveImage + ".png").convert_alpha()
+                    if i.job == "endEdit":
+                        i.image = pg.image.load("GUI/icon/" + modus + "/EDIT.png").convert_alpha()
+                        i.job = "edit"
+                    for j in uis:
+                        if j.job == "set":
+                            
+                            j.image = pg.image.load("GUI/button/" + modus + "/ADD.png").convert_alpha()
+                            j.job = "cardCreate"
+        editing = False
+        return editing
+
 class CheckBox(UIBase):
 
     def create(pos, job,  scale, modus, layers, uis, parent, insAtr, insNum):
@@ -561,30 +599,11 @@ class HelpButton(UIBase):
         uis.add(entity)
 
     def toggleHelp(helpT, uis, modus):
-        print(helpT)
         if helpT == False:
             cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE_HELP.png").convert_alpha()
-            for i in uis:
-                if i.job == "trash":
-                    i.active = False
-                elif i.job == "clear":
-                    i.active = False
-                elif i.job == "edit":
-                    i.active = False
-                elif i.job == "taskbarOpen" or i.job == "taskbarClose":
-                    i.active = False
             helpT = True
         else:
             cursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
-            for i in uis:
-                if i.job == "trash":
-                    i.active = True
-                elif i.job == "clear":
-                    i.active = True
-                elif i.job == "edit":
-                    i.active = True
-                elif i.job == "taskbarOpen" or i.job == "taskbarClose":
-                    i.active = True
             helpT = False
 
         return helpT, cursor
@@ -598,9 +617,18 @@ class HelpButton(UIBase):
         return entity
 
     def placeInfo(rects, uis, layers, scale):
-        info = ["An area to put info to create CAPTCHALOUGE CARDS.", "An area to input the name of the CAPTCHALOUGE CARD.", "An area to input an 8 digit code tha changes what the CAPTCHALOUGE CARD is.", "An area to input a number between 1 and 16 to decied the strength of the CAPTCHALOUGE CARD.", "A button that creates cards or changes what info is in a card when editing.", "A button that flips the main SYLLADEX card show the settings and flips it back.", "A button that opens a task bar to let you delete, clear, edit, and [WORK IN PROGRESS].","A button that would change you fetch moudes but this feture is currently disabled.", "In this area you can stack and move CAPTCHALOUGE CARDS.", "When a CAPTCHALOUGE CARD is brought over this symbol it will delete it.", "This button destroys all CAPTCHALOUGE CARDS on the screen.", "This button lets you edit the contents of a CAPTCHALOUGE CARD."]
-
-        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
+        info = [
+            "An area to put info to create CAPTCHALOUGE CARDS.", 
+            "An area to input the name of the CAPTCHALOUGE CARD.", 
+            "An area to input an 8 digit code tha changes what the CAPTCHALOUGE CARD is.", 
+            "An area to input a number between 1 and 16 to decied the strength of the CAPTCHALOUGE CARD.", 
+            "A button that creates cards or changes what info is in a card when editing.", 
+            "A button that opens a task bar to let you delete, clear, edit, and [WORK IN PROGRESS].",
+            "A button that would change you fetch moudes.", 
+            "In this area you can stack and move CAPTCHALOUGE CARDS.", 
+            "When a CAPTCHALOUGE CARD is brought over this symbol it will delete it.", 
+            "This button destroys all CAPTCHALOUGE CARDS on the screen.", 
+            "This button lets you edit the contents of a CAPTCHALOUGE CARD."]
 
         z = 0
         for i in rects:
@@ -635,316 +663,105 @@ class HelpButton(UIBase):
         uis.remove(i)
         layer.remove(i)
 
-#     ### PANEL FUNCTIONS ###
+class MenuButtons(UIBase):
 
-#     def settingPanel(uis, layers, scale, modus):
+    def create(pos, image, job, scale, layers, ui, modus):
+        entity = StackingArea(pos, image, job, "button", scale, modus, (16, 32))
+        layers.add(entity)
+        layers.change_layer(entity, -1)
 
-#         toBeRemoved = ["sylSettings", "cardCreate", "name", "code", "tier", "modus", "nameLabel", "codeLabel", "tierLabel",]
-#         for i in uis:
-            
-#             if i.job == "SylladexPanel":
-#                 panel = i
-#                 panel.job = "Options"
-                
-#                 # i.rect.w = nW
-#                 # i.rect.h = nH
+class Taskbar(UIBase):
 
-#             for t in toBeRemoved:
-#                 if i.job == t:
-#                     uis.remove(i)
-#                     layers.remove(i)
-#                     if i.job == "name" or i.job == "code" or i.job == "tier":
-#                         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
-#                         i.text = ""
-#                         i.txt_surface = FONT.render(i.text, True, i.color)
-#         panel.image = pg.image.load("GUI/panel/OPTIONSPANEL.png")
-#         nW = panel.rect[2]
-#         nH = panel.rect[3]
-#         panel.image = pg.transform.scale(panel.image, (nW, nH))
+    def create(scale, pos, uis, layers, modus):
+        entity = Taskbar(pos, "GUI/panel/"+modus+"/TASKBAR.png", "taskbar", "panel", scale, modus, (0,0))
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)
 
-#         entityText = panel.fontBig.render("SETTINGS", True, white)
+        Taskbar.createButton(scale, "TRASH", modus, "trash", layers, uis, (425, 505), entity)
 
-#         panel.image.blit(entityText, [136*scale, 0*scale])
+        Taskbar.createButton(scale ,  "TRASH_ALL", modus, "clear", layers, uis, (513, 505), entity)
 
-#         entityText = panel.fontBig.render("CREDITS", True, white)
-
-#         panel.image.blit(entityText, [135*scale, 366*scale])
-        
-#         UIBase.createUI((1, 12), "GUI/icon/" + modus + "/FLIP_ALT.png", "sylPanel", "button", None, scale, (16, 16), layers, uis, [])
-
-#         resImage = ["GUI/icon/960x540_SELECTED.png", "GUI/icon/1920x1080.png", "GUI/icon/960x540.png", "GUI/icon/1920x1080_SELECTED.png"]
-
-#         rX = 1
-#         rZ = 1
-#         for r in range(int(len(resImage)/2)):
-#             if scale == rX:
-
-#                 UIBase.createUI((144, 48), resImage[rZ-1], "960x540", "button", None, scale, (72, 24), layers, uis, [])
-
-#                 UIBase.createUI((144, 72), resImage[rZ], "1920x1080", "button", None, scale, (72, 24), layers, uis, [])
-#             rX += 1
-#             rZ+= 2
-
-#     def reinit(text, panel, scale):
-
-#         font = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 15*scale)
-#         fontBig = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
-
-#         def makeText(label, text, x, y, scale):
-
-#             z = 1
-#             for c in ["CUSTOM TRAIT 1", "CUSTOM TRAIT 2", "CUSTOM TRAIT 3" ,"CUSTOM TRAIT 4" ]:
-#                 if c == text:
-#                     text = "CUSTOM " + str(z)
-#                     break
-#                 else:
-#                     z += 1
-#             entityText = font.render(text, 1, BLACK)
-
-#             H = entityText.get_height()
-#             label.image.blit(entityText, [x*scale, y*scale - H/2])
-
-#         def makeImage(label, image, x, y, scale):
-
-#             n = 0
-
-#             for c in [text.wKind, text.grist, text.eff[0], text.eff[1], text.eff[2], text.eff[3], text.deff[0], text.deff[1], text.deff[2], text.deff[3], ""]:
-                
-#                 if image == c:
-
-#                     entityImage = pg.Surface((16, 16))
-#                     entityImage.fill(white)
-
-#                     if image == text.wKind:
-#                         inImage = codeDatabase.kind.get(image)
-#                     else:
-#                         inImage = codeDatabase.grist.get(image)
-
-#                     entityImage = pg.image.load(inImage).convert_alpha()
-
-#                     nW = 32*scale
-#                     nH = 32*scale
-#                     entityImage = pg.transform.scale(entityImage, (nW, nH))
-
-#                     label.image.blit(entityImage, [x*scale, y*scale])
-#                     break
-#                 else:
-#                     n += 1
-
-#                 if n == 10:
-#                     entityImage = pg.Surface((16, 16))
-#                     entityImage.fill(white)
-#                     entityImage = pg.image.load(codeDatabase.action.get(image)).convert_alpha()
-#                     nW = 108*scale
-#                     nH = 24*scale
-#                     entityImage = pg.transform.scale(entityImage, (nW, nH))
-
-#                     label.image.blit(entityImage, [x*scale, y*scale])
-
-
-#         textRef = ["CODE", 40, 372, text.captaCode, 94, 372,"TIER",174, 372, str(text.tier), 216, 372, "GRIST TYPE", 24, 132 , text.grist, 123, 132, "NAME", 16, 48, text.name,  54, 48, "ITEMKIND" , 16 , 108 , text.wKind, 99, 108, text.trait1, 42, 84, text.trait2, 126, 84, text.wType, 231, 72, "EFFECTIVE", 24, 156, "INEFFECTIVE", 18, 180, "INSPECT INFORMATION", 78, 276, "CST", 14, 303, "DMG", 12, 333, "1", 214, 108, "2", 214, 132, "3", 214, 156, "BD", 210, 180, codeDatabase.damgeNum.get(int(text.tier)).get("1"), 244, 108, codeDatabase.damgeNum.get(int(text.tier)).get("2"), 244, 132, codeDatabase.damgeNum.get(int(text.tier)).get("3"), 244, 156, codeDatabase.damgeNum.get(int(text.tier)).get("BD"), 240, 181]        
-        
-#         x = 0
-#         for z in range(int(len(textRef)/3)):
-
-#             makeText(panel, textRef[x], textRef[x+1], textRef[x+2], scale)
-#             x += 3
-
-#         entityText = fontBig.render("CAPTCHALOGUE CARD", 2, white)
-#         panel.image.blit(entityText, [12*scale, 0*scale])
-
-#         imageRef = [text.grist, 91, 116, text.eff[0], 91, 140, text.eff[1], 115, 140, text.eff[2], 139, 140, text.eff[3], 163, 140, text.deff[0], 91 ,164, text.deff[1], 115, 164, text.deff[2], 139, 164, text.deff[3], 163, 164, text.wKind, 67 ,92, text.action1, 36, 204, text.action2, 36, 228, text.action3, 168, 204, text.action4, 168, 228]
-
-#         x = 0
-#         for z in range(int(len(imageRef)/3)):
-#             makeImage(panel, imageRef[x], imageRef[x+1], imageRef[x+2], scale)
-#             x += 3
-
-#     def panel(pos, image, job, typeing, parent, scale, size, layers, uis, opt):
-        
-#         entity = UIBase(pos, image.get(job), job, typeing, parent, scale, size, opt)
-#         layers.add(entity)
-#         layers.change_layer(entity, opt)
-#         uis.add(entity)
-
-#     def cardInsPanel(pos, image, job, typeing, parent, scale, size, layers, uis, opt):
-#         for i in uis:
-#             if i.job == "CardInspection":
-#                 UIBase.destroy(i, uis, layers)
-#         entity = UIBase(pos, image.get(job), job , typeing, parent, scale, size, opt[0])
-#         uis.add(entity)
-#         layers.add(entity)
-#         layers.change_layer(entity, 998)
-
-#         entity.inspectie = opt
-
-#         UIBase.reinit(opt[0], entity, scale)
-
-#         
-
-#         UIBase.createUI((pos[0]+288,pos[1]+24), "GUI/icon/" + opt[1] + "/ALT_X.png", "closePanel", "button", entity, scale, (16, 16), layers, uis, [])
-
-#     ### BUTTON FUNCTIONS ###
-
-#     def button(pos, image, job, typeing, parent, scale, size, layers, uis, opt):
-#         entity = UIBase(pos, image, job , typeing, parent, scale, size, opt)
-#         uis.add(entity)
-#         layers.add(entity)
-#         layers.change_layer(entity, 998)
-#         if parent != None:
-#             parent.children.append(entity)
-            
-
-#     ### LABEL FUNCTIONS ###
-
-#     def label(pos, image, job, typeing, parent, scale, size, layers, uis, opt):
-        
-#         entity = UIBase(pos, image, job, typeing, parent, scale, size, opt)
-#         layers.add(entity)
-#         layers.change_layer(entity, 1000)
-#         uis.add(entity)
-
-
-#     ### MAIN FUNCTIONS ###
-
-#     def createUI(pos, image, job, typeing, parent, scale, size, layers, uis, opt):
-
-#         uiRedirct = {
-#             "CardInspection": UIBase.cardInsPanel,
-#         }
-
-#         if typeing == "panel":
-#             uiRedirct.get(job, UIBase.panel)(pos, image, job, typeing, parent, scale, size, layers, uis, opt)
-#         elif typeing == "button":
-#             UIBase.button(pos, image, job, typeing, parent, scale, size, layers, uis, opt)
-#         elif typeing == "label":
-#             UIBase.label(pos, image, job, typeing, parent, scale, size, layers, uis, opt)
-
-#     def destroy(i, uis, layer):
-        
-#         uis.remove(i)
-#         layer.remove(i)
-#         if len(i.children) >= 1:
-#             for s in i.children:
-#                 uis.remove(s)
-#                 layer.remove(s)
-
-# class InputBox(pg.sprite.Sprite):
-
-#     def __init__(self, scale, x, y, w, h, FONT, job, modus, size='l', text=''):
-        
-#         super().__init__()
-#         self.image = pg.Surface((128, 32))
-#         self.image.fill(white)
-#         if size == 's':
-#             self.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_SMALL.png").convert_alpha()
-            
-#         elif size == 'm':
-#             self.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png").convert_alpha()
-#         else:
-            
-#             self.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
-#         self.rect = self.image.get_rect(topleft=(x,y))
-#         if scale == 1:
-#             pass
-#         else:
-#             nW = self.rect[2]*scale
-#             nH = self.rect[3]*scale
-#             nX = self.rect[0]*scale
-#             nY = self.rect[1]*scale
-#             self.rect.x = nX
-#             self.rect.y = nY
-#             self.image = pg.transform.scale(self.image, (nW, nH))
-#             self.rect.w = nW
-#             self.rect.h = nH
-#         self.color = BLACK
-#         self.text = text
-#         self.txt_surface = FONT.render(text, True, self.color)
-#         self.active = False
-        
-#         self.type = "inputBox"
-#         self.job = job
-
-
-            
-# class TextLabel(pg.sprite.Sprite):
-
-#     def __init__(self, scale, x, y, image, size, job):
-#         super().__init__()
-
-#         self.image = pg.Surface(size)
-#         self.image.fill(white)
-#         self.image = pg.image.load(image).convert_alpha()
-#         self.rect = self.image.get_rect(topleft=((x, y)))
-#         if scale == 1:
-#             pass
-#         else:
-#             nW = self.rect[2]*scale
-#             nH = self.rect[3]*scale
-#             nX = self.rect[0]*scale
-#             nY = self.rect[1]*scale
-#             self.rect.x = nX
-#             self.rect.y = nY
-#             self.image = pg.transform.scale(self.image, (nW, nH))
-#             self.rect.w = nW
-#             self.rect.h = nH
-#         self.type = "textLabel"
-#         self.job = job
-        
-
-#     def create(scale, x, y, image, size, gui, l, job):
-#         entity = TextLabel(scale, x, y, image, size, job)
-        
-#         gui.add(entity)
-#         l.add(entity)
-#         l.change_layer(entity, 998)
+        Taskbar.createButton(scale, "EDIT", modus, "edit", layers, uis, (616, 510), entity)
     
-# class Taskbar(pg.sprite.Sprite):
+    def createButton(scale, image, modus, job, layers, uis, pos, parent=None):
+        entity = Taskbar(pos, "GUI/icon/"+modus+"/"+image+".png", job, "label", scale, modus, (0,0))
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)
+        if job != "taskbarOpen":
+            parent.children.append(entity)
 
-#     def __init__(self,scale, x, y, image):
-#         super().__init__()
-
-#         self.image = pg.Surface((390, 32))
-#         self.image.fill(white)
-#         self.image = pg.image.load(image).convert_alpha()
-#         self.rect = self.image.get_rect(topleft=((x, y)))
-#         if scale == 1:
-#             pass
-#         else:
-#             nW = self.rect[2]*scale
-#             nH = self.rect[3]*scale
-#             nX = self.rect[0]*scale
-#             nY = self.rect[1]*scale
-#             self.rect.x = nX
-#             self.rect.y = nY
-#             self.image = pg.transform.scale(self.image, (nW, nH))
-#             self.rect.w = nW
-#             self.rect.h = nH
-#         self.type = "taskbar"
-#         self.job = "taskbar"
-
-#     def create(scale, x, y, image, uis, layers, modus):
-#         entity = Taskbar(scale, x, y, image,)
+    def taskbarOpen(i, uis, layers, scale, modus):
+        i.image = pg.image.load("GUI/icon/" + modus + "/ARROW_ACTIVE.png").convert_alpha()
+        nW = i.rect[2]
+        nH = i.rect[3]
+        i.image = pg.transform.scale(i.image, (nW, nH))
+        i.job = "taskbarClose"
+        i.rect.y -= 40*scale
         
-#         uis.add(entity)
-#         layers.add(entity)
-#         layers.change_layer(entity, 0)
+        Taskbar.create(scale, (382, 492), uis, layers, modus)
 
-#         UIBase.createUI((425, 505), "GUI/icon/" + modus + "/TRASH.png", "trash", "label", None, scale, (20, 28), layers, uis, [])
+    def taskbarClose(i, uis , layers, scale, modus):
+        i.image = pg.image.load("GUI/icon/" + modus + "/ARROW.png").convert_alpha()
+        nW = i.rect[2]
+        nH = i.rect[3]
+        i.image = pg.transform.scale(i.image, (nW, nH))
+        i.job = "taskbarOpen"
+        i.rect.y += 40*scale
 
-#         UIBase.createUI((513, 505), "GUI/icon/" + modus + "/TRASH_ALL.png", "clear", "button", None, scale, (20, 29), layers, uis, [])
+        for j in uis:
+            if j.job == "taskbar":
+                for c in j.children:
+                    uis.remove(c)
+                    layers.remove(c)
+                uis.remove(j)
+                layers.remove(j)
+    
+    def editToggle(i, uis, editing, modus):
+        i.image = pg.image.load("GUI/icon/" + modus + "/ALT_X.png").convert_alpha()
+        i.job = "endEdit"
+        for j in uis:
+            if j.job == "cardCreate":
+                j.image = pg.image.load("GUI/button/" + modus + "/SET.png").convert_alpha()
+                j.job = "set"
+        editing = True
+        return editing
 
-#         UIBase.createUI((616, 510), "GUI/icon/" + modus + "/EDIT.png", "edit", "button", None, scale, (24, 24), layers, uis, [])
+    def editEnd(i, uis, editing, modus):
+        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
+        i.image = pg.image.load("GUI/icon/" + modus + "/EDIT.png").convert_alpha()
+        i.job = "edit"
+        for j in uis:
+            if j.job == "set":
+                j.image = pg.image.load("GUI/button/" + modus + "/ADD.png").convert_alpha()
+                j.job = "cardCreate"
+            iBox = ["name", "code", "tier"]
+            for l in iBox:
+                if j.job == l:
+                    
+                    j.text = ""
+                    j.txt_surface = FONT.render(j.text, True, j.color)
+        editing = False
+        return editing
 
-#     def destroy(taskbar, uis, layers):
-#         uis.remove(taskbar)
-#         layers.remove(taskbar)
+    def captaEdit(sprite, t1, t2, t3):
+        t1.text = sprite.name
+        t1.txt_surface = t1.fontBig.render(t1.text, True, t1.color)
+        t2.text = sprite.captaCode
+        t2.txt_surface = t2.fontBig.render(t2.text, True, t2.color)
+        t3.text = sprite.tier
+        t3.txt_surface = t3.fontBig.render(t3.text, True, t3.color)
 
-#         jobs = ["trash", "clear", "edit"]
+        sprite.edited = True
 
-#         for i in uis:
-#             for j in jobs:
-#                 if i.job == j:
-#                     uis.remove(i)
-#                     layers.remove(i)
+    def clear(currentStack, layers, sprites):
+        for s in sprites:
+            layers.remove(s)
+            sprites.remove(s)
+        currentStack.clear()
+        
+        with open("data/list.txt", "w") as f:
+            f.writelines("")
 
+            

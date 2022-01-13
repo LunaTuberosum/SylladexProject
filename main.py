@@ -3,7 +3,6 @@ from pygame.locals import *
 import captchacards
 from gui import *
 import sys
-# from functions import CheckButtons, CheckTextboxes, MakingUI
 import codeDatabase
 
 ## Colors
@@ -62,16 +61,6 @@ def main():
         "QUEUE": [queueColor, "GUI/panel/QUEUE/MODUSLABEL.png"]
     }
 
-    # uisImageDict = {
-    #     "SylladexPanel": "GUI/panel/" + modus + "/SYLLADEXPANEL.png",
-    #     "StackingArea": "GUI/panel/" + modus + "/STACK_AREA.png",
-    #     "CardInspection": "GUI/panel/" + modus + "/PANEL.png",
-
-    #     "closePanel": "GUI/icon/" + modus + "/ALT_X.png",
-    #     "taskbarOpen": "GUI/icon/" + modus + "/ARROW.png",
-    #     }   
-
-
     ## Making stack and starting arrays
     currentStack = []
     nameStart = []
@@ -90,6 +79,7 @@ def main():
     input_box3 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_SMALL", "tier", (30, 262), "TEXTBOX_SMALL_ACTIVE", "TEXTBOX_SMALL")
     AddButton.create(scale, modus, layers, uis, "cardCreate", (120, 260))
     HelpButton.create(scale, modus, layers, uis, (925, 20))
+    Taskbar.createButton(scale, "ARROW", modus, "taskbarOpen", layers, uis, (565, 503))
 
     cardInput = [input_box1, input_box2, input_box3]
 
@@ -189,12 +179,10 @@ def main():
         for i in uis:
             if i.job == "SylladexPanel":
                 flp_syl = pg.Rect(215, 12, 27, 29)
-            # elif i.job == "Options": 
-            #     flp_syl = pg.Rect(1, 12, 27, 29)
-            # if i.job == "taskbarOpen":
-            #     tsk_bar = pg.Rect(565, 503, 25, 24)
-            # elif i.job == "taskbarClose":
-            #     tsk_bar = pg.Rect(565, 463, 25, 24)
+            if i.job == "taskbarOpen":
+                tsk_bar = pg.Rect(565, 503, 25, 24)
+            elif i.job == "taskbarClose":
+                tsk_bar = pg.Rect(565, 463, 25, 24)
         mod_res = pg.Rect(0, 365, 252, 175)
 
         stk_ara = pg.Rect(252, 0, 708, 540)
@@ -204,7 +192,7 @@ def main():
         edt_but = pg.Rect(616, 510, 24, 24)
         hlp_but = pg.Rect(925, 20, 32, 32)
 
-        infoRects = [syl_cus, nam_txt, cod_txt, tir_txt, add_set, mod_res, stk_ara, tsh_but, clr_but, edt_but, hlp_but]
+        infoRects = [syl_cus, nam_txt, cod_txt, tir_txt, add_set, tsk_bar, mod_res, stk_ara, tsh_but, clr_but, edt_but]
 
         bool1 = True
         
@@ -233,26 +221,6 @@ def main():
                     if helpT == True:
                         HelpButton.placeInfo(infoRects,uis, layers, scale)
 
-
-                    # input_box1.active = False
-                    # input_box1.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
-                    # nW = input_box1.rect[2]
-                    # nH = input_box1.rect[3]
-                    # input_box1.image = pg.transform.scale(input_box1.image, (nW, nH))
-
-                    # input_box2.active = False
-                    # input_box2.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png").convert_alpha()
-                    # nW = input_box2.rect[2]
-                    # nH = input_box2.rect[3]
-                    # input_box2.image = pg.transform.scale(input_box2.image, (nW, nH))
-
-                    # input_box3.active = False
-                    # input_box3.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX_SMALL.png").convert_alpha()
-                    # nW = input_box3.rect[2]
-                    # nH = input_box3.rect[3]
-                    # input_box3.image = pg.transform.scale(input_box3.image, (nW, nH))
-
-
                     ## Checking which ui element is being pressed
                     for i in uis:
 
@@ -269,203 +237,23 @@ def main():
                                 for i in uis:
                                     if i.job == "infoUIs":
                                         HelpButton.destroy(i, uis, layers)
+                            elif i.job == "taskbarOpen" and helpT == False:
+                                Taskbar.taskbarOpen(i, uis,layers, scale, modus)
+                            elif i.job == "taskbarClose" and helpT == False:
+                                Taskbar.taskbarClose(i, uis,layers, scale, modus)
+                            elif i.job == "edit":
+                                editing = Taskbar.editToggle(i, uis, editing, modus)
+                            elif i.job == "endEdit":
+                                editing = Taskbar.editEnd(i, uis, editing, modus)
+                            elif i.job == "set":
+                                editing = AddButton.setEdit(sprites, uis, editing, currentStack, scale, modus)
+                            elif i.job == "clear":
+                                Taskbar.clear(currentStack, layers, sprites)
                             
                             for ins in [ "inspecttrait1","inspecttrait2", "inspectaction1","inspectaction2","inspectaction3","inspectaction4",]:
                                 if i.job == ins:
                                     CheckBox.inspect(i, i.insAtr, [i.insNum, uis, layers, scale, modus] )
-
-
-                        #     ## Makes switch case to exacute uis funcs
-                        #     uiElements = {
-
-                        #         ## Buttons
-
-                        #         "cardCreate": {
-                        #             1 : CheckButtons.cardCreate,
-                        #             2 : [i, [sprites,layers, currentStack, FONT, scale, modus, cardIDs], [input_box1, input_box2, input_box3]]
-                        #             },
-                            
-                        #         "closePanel": {
-                        #             1: CheckButtons.closePanel, 
-                        #             2 : [i, uis, layers]
-                        #             },
-
-                        #         "sylSettings": {
-                        #             1: CheckButtons.settings,
-                        #             2 : [i, uis, [layers, scale, modus]]
-                        #             },
-                                    
-                        #         "clear": {
-                        #             1: CheckButtons.clear,
-                        #             2: [currentStack, [layers, i], sprites]
-                        #         },
-
-                        #         "taskbarOpen": {
-                        #             1: CheckButtons.taskbarOpen,
-                        #             2: [i, uis, [layers, scale, modus]]
-                        #         },
-
-                        #         "taskbarClose": {
-                        #             1: CheckButtons.taskbarClose,
-                        #             2: [i, uis, [layers, scale, modus]]
-                        #         },
-
-                        #         "edit": {
-                        #             1: CheckButtons.editToggle,
-                        #             2: [i, uis, editing]
-                        #         },
-
-                        #         "endEdit": {
-                        #             1: CheckButtons.editEnd,
-                        #             2: [i, uis, editing]
-                        #         },
-
-                        #         "set": {
-                        #             1: CheckButtons.setEdit,
-                        #             2: [sprites, uis, editing, currentStack, scale]
-                        #         },
-
-                        #         "help": {
-                        #             1: CheckButtons.toggleHelp,
-                        #             2: [helpT, uis]
-                        #         },
-
-                        #         "modus": {
-                        #             1: CheckButtons.modusChange,
-                        #             2: [uis, modusColor, modus]
-                        #         },
-
-                        #         "inspecttrait1": {
-                        #             1: CheckButtons.inspect,
-                        #             2: [i, codeDatabase.trait1Desc, [0, uis, layers, scale, modus]]
-                        #         },
-
-                        #         "inspecttrait2": {
-                        #             1: CheckButtons.inspect,
-                        #             2: [i, codeDatabase.trait2Desc, [1, uis, layers, scale, modus]]
-                        #         },
-
-                        #         "inspectaction1": {
-                        #             1: CheckButtons.inspect,
-                        #             2: [i, codeDatabase.actionData, [2, uis, layers, scale, modus]]
-                        #         },
-
-                        #         "inspectaction2": {
-                        #             1: CheckButtons.inspect,
-                        #             2: [i, codeDatabase.actionData, [3, uis, layers, scale, modus]]
-                        #         },
-
-                        #         "inspectaction3": {
-                        #             1: CheckButtons.inspect,
-                        #             2: [i, codeDatabase.actionData, [4, uis, layers, scale, modus]]
-                        #         },
-                                
-
-                        #         "inspectaction4": {
-                        #             1: CheckButtons.inspect,
-                        #             2: [i, codeDatabase.actionData, [5, uis, layers, scale, modus]]
-                        #         },
-
-                        #         "sylPanel": {
-                        #             1: MakingUI.sylladexMain,
-                        #             2: [uis,uisImageDict, layers, modus, modusColor]
-                        #         },
-
-                        #         "960x540": {
-                        #             1: MakingUI.changeRes,
-                        #             2: [1, uis, sprites]
-                        #         },
-
-                        #         "1920x1080": {
-                        #             1: MakingUI.changeRes,
-                        #             2: [2, uis, sprites]
-                        #         },
-                                
-                        #         ## Textboxes
-
-                        #         "name": {
-                        #             1: CheckTextboxes.nameBox,
-                        #             2: [[input_box1, input_box2, input_box3], BLACK, ["GUI/textbox/" + modus + "/TEXTBOX_ACTIVE.png", "GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png", "GUI/textbox/" + modus + "/TEXTBOX_SMALL.png"]],
-                        #             3: "box1"
-                        #         },
-
-                        #         "code": {
-                        #             1: CheckTextboxes.nameBox,
-                        #             2: [[input_box2, input_box1, input_box3], BLACK, ["GUI/textbox/" + modus + "/TEXTBOX_MEDIUM_ACTIVE.png", "GUI/textbox/" + modus + "/TEXTBOX.png", "GUI/textbox/" + modus + "/TEXTBOX_SMALL.png"]],
-                        #             3: "box2"
-                        #         },
-
-                        #         "tier": {
-                        #             1: CheckTextboxes.nameBox,
-                        #             2: [[input_box3, input_box2, input_box1], BLACK, ["GUI/textbox/" + modus + "/TEXTBOX_SMALL_ACTIVE.png","GUI/textbox/" + modus + "/TEXTBOX_MEDIUM.png", "GUI/textbox/" + modus + "/TEXTBOX.png"]],
-                        #             3: "box3"
-                        #         }
-                        #     }
-
-                        #     ## If its a button
-                        #     if i.job == 'modus':
-                        #         ## Finds the variable to parse thro
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         ## Calls the func
-                        #         for j in uis:
-                        #             modus = uiElements.get(i.job).get(1)(j,atrabuites[1],atrabuites[2], scale,uis, sprites)
-
-                        #     elif i.job == "help":
-
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         helpT, mouseCursor = uiElements.get(i.job).get(1)(atrabuites[0], atrabuites[1], modus)
-
-                        #     elif i.job == "edit" or i.job == "endEdit":
-
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         editing = uiElements.get(i.job).get(1)(atrabuites[0],atrabuites[1], atrabuites[2])
-                            
-                        #     elif i.job == "set":
-
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         editing = uiElements.get(i.job).get(1)(atrabuites[0],atrabuites[1], atrabuites[2], atrabuites[3],  atrabuites[4])
-
-                        #     elif i.job == "960x540" or i.job == "1920x1080":
-
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         screenNew, scale = uiElements.get(i.job).get(1)(atrabuites[0],atrabuites[1], atrabuites[2])
-
-                        #     elif i.job == "sylPanel":
-
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         input_box1.text = ""
-                        #         input_box2.text = "" 
-                        #         input_box3.tex = ""
-
-                        #         input_box1, input_box2, input_box3 = uiElements.get(i.job).get(1)(atrabuites[0],atrabuites[1],atrabuites[2],atrabuites[3],atrabuites[4], scale)
-
-                        #     elif i.type == 'button':
-
-                        #         ## Finds the variable to parse thro
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         ## Calls the func
-                        #         uiElements.get(i.job).get(1)(atrabuites[0],atrabuites[1],atrabuites[2])
-
-                        #     ## If its a textbox
-                        #     elif i.type == 'inputBox':
-
-                        #         ## Finds the variable to parse thro
-                        #         atrabuites = uiElements.get(i.job).get(2)
-
-                        #         ## Calls the func
-                        #         uiElements.get(i.job).get(1)(atrabuites[0],atrabuites[1],atrabuites[2])
-
-                        #         ## Assigns which level of codebox
-                        #         codeBox = uiElements.get(i.job).get(3)
                 
-                                
                     ## Checking which card is being touched
                     for sprite in sprites:
                         
@@ -476,12 +264,8 @@ def main():
                             ## Defining which sprite it is
                             selected = sprite
 
-                            # if editing == True:
-                            #     CheckButtons.captaEdit(selected, input_box1, input_box2, input_box3, FONT)
-
-                                
-                            
-                        
+                            if editing == True:
+                                Taskbar.captaEdit(selected, input_box1, input_box2, input_box3)
 
                             ### Checking how to move sprite
                             
@@ -722,34 +506,7 @@ def main():
 
         ## Buch of updating stuff
         sprites.update()
-        screen.fill((102, 102, 102))
-
-        # if helpT == True:
-        #     pg.draw.rect(screen, GRAY, info, 0)
-        #     for i in uis:
-                
-        #         if i.job == "SylladexPanel":
-        #             pg.draw.rect(screen, queueColor, nam_txt, 2)
-        #             pg.draw.rect(screen, queueColor, cod_txt, 2)
-        #             pg.draw.rect(screen, queueColor, tir_txt, 2)
-        #             pg.draw.rect(screen, queueColor, add_set, 2)
-
-        #         if i.job == "taskbarClose":
-        #             pg.draw.rect(screen, queueColor, tsh_but, 2)
-        #             pg.draw.rect(screen, queueColor, clr_but, 2)
-        #             pg.draw.rect(screen, queueColor, edt_but, 2)
-
-        #     pg.draw.rect(screen, queueColor, syl_cus, 2)
-
-        #     pg.draw.rect(screen, queueColor, flp_syl, 2)
-
-        #     pg.draw.rect(screen, queueColor, mod_res, 2)
-
-        #     pg.draw.rect(screen, queueColor, stk_ara, 2)
-
-        #     pg.draw.rect(screen, queueColor, tsk_bar, 2)
-
-        #     pg.draw.rect(screen, queueColor, hlp_but, 2)       
+        screen.fill((102, 102, 102))   
         
         uis.draw(screen)
         sprites.draw(screen)
@@ -777,64 +534,70 @@ def main():
         scaleD = scale
 
 
-# def menu():
-#     mouseCursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
-#     running = True
+def menu():
+    mouseCursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
+    running = True
 
-#     layer = pg.sprite.LayeredUpdates()
-#     ui = pg.sprite.Group()
+    layer = pg.sprite.LayeredUpdates()
+    ui = pg.sprite.Group()
 
-#     while running:
-#         screen.fill((0,0,0))
+    while running:
+        screen.fill((0,0,0))
 
-#         image = pg.image.load("MAINSCREEN/TITLE.png").convert_alpha()
-#         screen.blit(image, (0,0))
+        image = pg.image.load("MAINSCREEN/TITLE.png").convert_alpha()
+        screen.blit(image, (0,0))
 
-#         image = pg.image.load("MAINSCREEN/ICON.png").convert_alpha()
-#         nW = 128
-#         nH = 128
-#         entityImage = pg.transform.scale(image, (nW, nH))
+        image = pg.image.load("MAINSCREEN/ICON.png").convert_alpha()
+        nW = 128
+        nH = 128
+        entityImage = pg.transform.scale(image, (nW, nH))
 
-#         screen.blit(entityImage, (214, 268))
+        screen.blit(entityImage, (214, 268))
 
-#         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 60)
+        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 60)
 
-#         titleText = FONT.render('SYLLADEX TEST' , True , WHITE)
+        titleText = FONT.render('SYLLADEX TEST' , True , WHITE)
 
-#         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
+        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
 
-#         versionText = FONT.render('ALPHA VERSION 0.1' , True , WHITE)
+        versionText = FONT.render('ALPHA VERSION 0.1' , True , WHITE)
 
-#         screen.blit(titleText, (110, 78))
-#         screen.blit(versionText, (504, 96))
+        screen.blit(titleText, (110, 78))
+        screen.blit(versionText, (504, 96))
 
-#         UIBase.createUI((592, 226), "MAINSCREEN/START.png", "start", "button", None, 1, (16, 16), layer, ui, [])
-#         UIBase.createUI((592, 314), "MAINSCREEN/QUIT.png", "quit", "button", None, 1, (16, 16), layer, ui, [])
+        MenuButtons.create((592, 226), "MAINSCREEN/START.png", "start", 1, layer, ui, "")
+
+        MenuButtons.create((592, 314), "MAINSCREEN/QUIT.png", "quit", 1, layer, ui, "")
         
-#         for event in pg.event.get():
-#             if event.type == pg.MOUSEBUTTONDOWN:
-#                 for i in ui:
-#                     if i.job == "start":
-#                         if i.rect.collidepoint(pg.mouse.get_pos()):
-#                             i.image = pg.image.load("MAINSCREEN/START_ACTIVE.png").convert_alpha()
-#                             running = False
-#                     if i.job == "quit":
-#                         if i.rect.collidepoint(pg.mouse.get_pos()):
-#                             i.image = pg.image.load("MAINSCREEN/QUIT_ACTIVE.png").convert_alpha()
-#                             pg.quit()
-#                             sys.exit()
+        for event in pg.event.get():
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    for i in ui:
+                        print(1)
+                        if i.job == "start":
+                            print(2)
+                            if i.rect.collidepoint(pg.mouse.get_pos()):
+                                print(3)
+                                i.image = pg.image.load("MAINSCREEN/START_ACTIVE.png").convert_alpha()
+                                running = False
+                        if i.job == "quit":
+                            if i.rect.collidepoint(pg.mouse.get_pos()):
+                                i.image = pg.image.load("MAINSCREEN/QUIT_ACTIVE.png").convert_alpha()
+                                pg.quit()
+                                sys.exit()
 
-#             if event.type == pg.QUIT:
-#                 pg.quit()
-#                 sys.exit()
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
         
         
-#         ui.draw(screen)
-#         layer.draw(screen)
-#         screen.blit(mouseCursor, pg.mouse.get_pos())
+        ui.draw(screen)
+        layer.draw(screen)
+        x, y = pg.mouse.get_pos()
+        screen.blit(mouseCursor, (x-15 , y-10))
 
-#         pg.display.update()
-#         clock.tick(60)
+        pg.display.update()
+        clock.tick(60)
         
 
 ## Running main loop
