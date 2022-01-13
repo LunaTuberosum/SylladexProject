@@ -181,8 +181,10 @@ class CaptchaCards(pg.sprite.Sprite):
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
 
 ### PROLLY FINE
-    def disconnect(toDis, baseDis, stack, sprites):
+    def disconnect(toDis, baseDis, stack, sprites, scale):
         stack.remove(toDis.cardID)
+        toDis.image = pg.image.load("GUI/cards/STACK/CAPTA_UP.png").convert_alpha()
+        CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
         with open("data/list.txt", "w") as f:
@@ -205,8 +207,10 @@ class QueueCards(CaptchaCards):
 
         CaptchaCards.kindIcon(entity, scale, "d")
 
-    def disconnect(toDis, baseDis, stack, sprites):
+    def disconnect(toDis, baseDis, stack, sprites, scale):
         stack.remove(toDis.cardID)
+        toDis.image = pg.image.load("GUI/cards/QUEUE/CAPTA_UP.png").convert_alpha()
+        CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
         with open("data/list.txt", "w") as f:
