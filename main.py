@@ -79,8 +79,6 @@ def main():
 
     ## Making code input panel
 
-    # UIBase.createUI((252,0), uisImageDict, "StackingArea", "panel", None, scale, (708,540), layers, uis, -1)
-
     StackingArea.create(scale, modus, layers, uis)
     SylladexPanel.create(scale, modus, layers, uis, modusColor)
     ModusChanger.create(scale, modus, layers, uis)
@@ -91,21 +89,13 @@ def main():
     input_box2 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_MEDIUM", "code", (30, 180), "TEXTBOX_MEDIUM_ACTIVE", "TEXTBOX_MEDIUM")
     input_box3 = Textbox.create(scale, modus, layers, uis, "TEXTBOX_SMALL", "tier", (30, 262), "TEXTBOX_SMALL_ACTIVE", "TEXTBOX_SMALL")
     AddButton.create(scale, modus, layers, uis, "cardCreate", (120, 260))
+    HelpButton.create(scale, modus, layers, uis, (925, 20))
 
     cardInput = [input_box1, input_box2, input_box3]
 
     for i in uis:
         if i.job == "stackingArea":
             area = i.rect
-
-    # UIBase.createUI((925, 20), "GUI/icon/" + modus + "/HELP.png", "help", "button", None, scale, (32, 32), layers, uis, [])
-    
-    # input_box1, input_box2, input_box3 = MakingUI.sylladexMain(uis,uisImageDict, layers, modus, modusColor, scale)
-
-    # UIBase.createUI((565, 503), uisImageDict.get("taskbarOpen"), "taskbarOpen", "button", None, scale, (25, 24), layers, uis, [])
-    
-
-    codeBox = ""
 
     ## Defining import variables
     moveCard = False 
@@ -190,47 +180,36 @@ def main():
     ## Programs start
     while True:
 
-        # ## Making the Card area
-        # syl_cus = pg.Rect(0, 0, 252, 353)
-        # nam_txt = pg.Rect(30, 98, 160, 32)
-        # cod_txt = pg.Rect(30, 180, 110, 32)
-        # tir_txt = pg.Rect(30, 262, 80, 32)
-        # add_set = pg.Rect(120, 260, 68, 36)
-        # for i in uis:
-        #     if i.job == "SylladexPanel":
-        #         flp_syl = pg.Rect(215, 12, 27, 29)
-        #     elif i.job == "Options": 
-        #         flp_syl = pg.Rect(1, 12, 27, 29)
-        #     if i.job == "taskbarOpen":
-        #         tsk_bar = pg.Rect(565, 503, 25, 24)
-        #     elif i.job == "taskbarClose":
-        #         tsk_bar = pg.Rect(565, 463, 25, 24)
-        # mod_res = pg.Rect(0, 365, 252, 175)
+        ## Making the Card area
+        syl_cus = pg.Rect(0, 0, 252, 353)
+        nam_txt = pg.Rect(30, 98, 160, 32)
+        cod_txt = pg.Rect(30, 180, 110, 32)
+        tir_txt = pg.Rect(30, 262, 80, 32)
+        add_set = pg.Rect(120, 260, 68, 36)
+        for i in uis:
+            if i.job == "SylladexPanel":
+                flp_syl = pg.Rect(215, 12, 27, 29)
+            # elif i.job == "Options": 
+            #     flp_syl = pg.Rect(1, 12, 27, 29)
+            # if i.job == "taskbarOpen":
+            #     tsk_bar = pg.Rect(565, 503, 25, 24)
+            # elif i.job == "taskbarClose":
+            #     tsk_bar = pg.Rect(565, 463, 25, 24)
+        mod_res = pg.Rect(0, 365, 252, 175)
 
-        # stk_ara = pg.Rect(252, 0, 708, 540)
+        stk_ara = pg.Rect(252, 0, 708, 540)
         
-        # tsh_but = pg.Rect(425, 505, 20, 28)
-        # clr_but = pg.Rect(513, 505, 20, 29)
-        # edt_but = pg.Rect(616, 510, 24, 24)
-        # hlp_but = pg.Rect(925, 20, 32, 32)
+        tsh_but = pg.Rect(425, 505, 20, 28)
+        clr_but = pg.Rect(513, 505, 20, 29)
+        edt_but = pg.Rect(616, 510, 24, 24)
+        hlp_but = pg.Rect(925, 20, 32, 32)
 
-        # infoRects = [syl_cus, nam_txt, cod_txt, tir_txt, add_set, flp_syl, tsk_bar, mod_res, stk_ara, tsh_but, clr_but, edt_but, hlp_but]
+        infoRects = [syl_cus, nam_txt, cod_txt, tir_txt, add_set, mod_res, stk_ara, tsh_but, clr_but, edt_but, hlp_but]
 
         bool1 = True
         
 
-        screen = screenNew
-
-        # FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
-        
-        # uisImageDict = {
-        #     "SylladexPanel": "GUI/panel/" + modus + "/SYLLADEXPANEL.png",
-        #     "StackingArea": "GUI/panel/" + modus + "/STACK_AREA.png",
-        #     "CardInspection": "GUI/panel/" + modus + "/PANEL.png",
-
-        #     "closePanel": "GUI/icon/" + modus + "/ALT_X.png",
-        #     "taskbarOpen": "GUI/icon/" + modus + "/ARROW.png"
-        # }   
+        screen = screenNew  
 
         ## Checking for inputs
         for event in pg.event.get():
@@ -251,9 +230,9 @@ def main():
                                 bm.modus = modus
                             Textbox.nameBox(b, cardInput, BLACK)
                     
-                    # if helpT == True:
-                        
-                    #     MakingUI.placeInfo(infoRects,uis, layers, scale)
+                    if helpT == True:
+                        HelpButton.placeInfo(infoRects,uis, layers, scale)
+
 
                     # input_box1.active = False
                     # input_box1.image = pg.image.load("GUI/textbox/" + modus + "/TEXTBOX.png").convert_alpha()
@@ -278,13 +257,18 @@ def main():
                     for i in uis:
 
                         if i.rect.collidepoint(event.pos):
-                            if i.job == "modusChanger":
+                            if i.job == "modusChanger" and helpT == False:
                                 modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites)
-                            if i.job == "cardCreate":
+                            elif i.job == "cardCreate" and helpT == False:
                                 i.modus = modus
                                 AddButton.cardCreate(i, cardInput, sprites, layers, currentStack, scale, cardIDs)
-                            if i.job == "closePanel":
+                            elif i.job == "closePanel":
                                 CardInspector.closePanel(uis, layers)
+                            elif i.job == "help":
+                                helpT, mouseCursor = HelpButton.toggleHelp(helpT, uis, modus)
+                                for i in uis:
+                                    if i.job == "infoUIs":
+                                        HelpButton.destroy(i, uis, layers)
                             
                             for ins in [ "inspecttrait1","inspecttrait2", "inspectaction1","inspectaction2","inspectaction3","inspectaction4",]:
                                 if i.job == ins:
@@ -773,7 +757,12 @@ def main():
         outlines.draw(screen)
         for b in cardInput:
             Textbox.draw(b, screen)
-        screen.blit(mouseCursor, pg.mouse.get_pos())
+        x, y = pg.mouse.get_pos()
+        if helpT == True:
+
+            screen.blit(mouseCursor, (x-5 , y-5))
+        else:
+            screen.blit(mouseCursor, (x-15 , y-10))
 
         pg.display.flip()
         clock.tick(60)

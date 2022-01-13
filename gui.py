@@ -98,7 +98,8 @@ class UIBase(pg.sprite.Sprite):
             "taskbar": "GUI/panel/" + i.modus + "/TASKBAR.png",
             "trash": "GUI/icon/" + i.modus + "/TRASH.png",
             "clear": "GUI/icon/" + i.modus + "/TRASH_ALL.png",
-            "edit": "GUI/icon/" + i.modus + "/EDIT.png"
+            "edit": "GUI/icon/" + i.modus + "/EDIT.png",
+            "infoUIs": "GUI/panel/LABEL.png"
             
         }
 
@@ -263,7 +264,7 @@ class CheckBox(UIBase):
         entity.insAtr = insAtr
         entity.insNum = insNum
         layers.add(entity)
-        layers.change_layer(entity, -1)
+        layers.change_layer(entity, 1000)
         uis.add(entity)
        
     def inspect(i, b, c):
@@ -427,7 +428,7 @@ class CloseButton(UIBase):
         parent.children.append(entity)
         entity.parent = parent
         layers.add(entity)
-        layers.change_layer(entity, -1)
+        layers.change_layer(entity, 1000)
         uis.add(entity)
 
     def closePanel(i, uis, layers):
@@ -441,7 +442,7 @@ class CardInspector(UIBase):
                 CardInspector.closePanel(uis, layers)
         entity = CardInspector(pos, "GUI/panel/"+modus+"/PANEL.png","cardInspection", "label", scale, modus, (16,16))
         layers.add(entity)
-        layers.change_layer(entity, -1)
+        layers.change_layer(entity, 1000)
         uis.add(entity)
 
         entity.inspectie = sprite
@@ -550,6 +551,89 @@ class CardInspector(UIBase):
             
             makeImage(panel, imageRef[x], imageRef[x+1], imageRef[x+2], scale)
             x += 3
+
+class HelpButton(UIBase):
+    
+    def create(scale, modus, layers, uis, pos):
+        entity = StackingArea(pos, "GUI/icon/"+modus+"/HELP.png", "help", "button", scale, modus, (16,16))
+        layers.add(entity)
+        layers.change_layer(entity, -1)
+        uis.add(entity)
+
+    def toggleHelp(helpT, uis, modus):
+        print(helpT)
+        if helpT == False:
+            cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE_HELP.png").convert_alpha()
+            for i in uis:
+                if i.job == "trash":
+                    i.active = False
+                elif i.job == "clear":
+                    i.active = False
+                elif i.job == "edit":
+                    i.active = False
+                elif i.job == "taskbarOpen" or i.job == "taskbarClose":
+                    i.active = False
+            helpT = True
+        else:
+            cursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
+            for i in uis:
+                if i.job == "trash":
+                    i.active = True
+                elif i.job == "clear":
+                    i.active = True
+                elif i.job == "edit":
+                    i.active = True
+                elif i.job == "taskbarOpen" or i.job == "taskbarClose":
+                    i.active = True
+            helpT = False
+
+        return helpT, cursor
+
+    def createLabel(pos, job, typeing, scale, size, layers, uis):
+        entity = UIBase(pos, "GUI/panel/LABEL.png", job, "label", scale, "", size)
+        layers.add(entity)
+        layers.change_layer(entity, 1000)
+        uis.add(entity)
+
+        return entity
+
+    def placeInfo(rects, uis, layers, scale):
+        info = ["An area to put info to create CAPTCHALOUGE CARDS.", "An area to input the name of the CAPTCHALOUGE CARD.", "An area to input an 8 digit code tha changes what the CAPTCHALOUGE CARD is.", "An area to input a number between 1 and 16 to decied the strength of the CAPTCHALOUGE CARD.", "A button that creates cards or changes what info is in a card when editing.", "A button that flips the main SYLLADEX card show the settings and flips it back.", "A button that opens a task bar to let you delete, clear, edit, and [WORK IN PROGRESS].","A button that would change you fetch moudes but this feture is currently disabled.", "In this area you can stack and move CAPTCHALOUGE CARDS.", "When a CAPTCHALOUGE CARD is brought over this symbol it will delete it.", "This button destroys all CAPTCHALOUGE CARDS on the screen.", "This button lets you edit the contents of a CAPTCHALOUGE CARD."]
+
+        FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
+
+        z = 0
+        for i in rects:
+            if i.collidepoint(pg.mouse.get_pos()):
+
+                if z != 12:
+                    if z >= 9 or z == 8:
+                        x, y = pg.mouse.get_pos()
+                        y -= 126
+                    else:
+                        x, y = pg.mouse.get_pos()
+                    for i in uis:
+                        if i.job == "infoUIs":
+                            HelpButton.destroy(i, uis, layers)
+                    panel = HelpButton.createLabel((x, y), "infoUIs", "label", scale, (68, 36), layers, uis,)
+                    text = textwrap.wrap(info[z], 22)
+                    k = 0
+                    for g in range(len(text)):
+
+                        entityText = panel.fontBig.render(text[g], 2, WHITE)
+                        panel.image.blit(entityText, [6*scale, 6+k*scale])
+                        k+= 24
+                else:
+                    for i in uis:
+                        if i.job == "infoUIs":
+                            HelpButton.destroy(i, uis, layers)
+                    return
+            z += 1
+
+    def destroy(i, uis, layer):
+        
+        uis.remove(i)
+        layer.remove(i)
 
 #     ### PANEL FUNCTIONS ###
 
