@@ -454,7 +454,7 @@ code = {
             },  
         "8": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             }, 
@@ -532,7 +532,7 @@ code = {
             }, 
         "6": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             },  
@@ -784,7 +784,7 @@ code = {
             },  
         "8": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             }, 
@@ -886,7 +886,7 @@ code = {
         "4": "SCIENTIFIC", 
         "5": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             }, 
@@ -922,7 +922,7 @@ code = {
             }, 
         "6": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             },  
@@ -1018,7 +1018,7 @@ code = {
             },  
         "7": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             },  
@@ -1686,7 +1686,7 @@ code = {
             },  
         "8": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             }, 
@@ -1704,7 +1704,7 @@ code = {
             }, 
         "6": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             },  
@@ -1788,7 +1788,7 @@ code = {
         "4": "TRICKSTER", 
         "5": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             }, 
@@ -1830,7 +1830,7 @@ code = {
             },  
         "7": {
             "MELEE": "ASPIRE",
-            "RANGED": "ARBORIZE",
+            "RANGED": "ARBORIVE",
             "MAGIC": "ACCELERATE",
             "NA": "No Action"
             },  
@@ -2127,7 +2127,7 @@ trait1Desc = {
             "4": "WHEN HIT, 1d6 CHANCE TO INFLICT STUN ON ATTACKER"
         },
     },
-    "IRRADAITED": {
+    "IRRADIATED": {
         "WEAPON": {
             "1": "ON HIT, 1d12 CHANCE TO INFLICT POISON ON TARGET",
             "2": "ON HIT, 1d10 CHANCE TO INFLICT POISON ON TARGET",

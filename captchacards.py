@@ -79,7 +79,7 @@ class CaptchaCards(pg.sprite.Sprite):
 
     ### FINE
     def createCard(scale, sprite, layer, text, name, stack, tier, cardIDs):
-        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK", cardIDs,)
+        entity = CaptchaCards((randint(205, 620), randint(40, 360)), WHITE, text, name, tier, scale, "STACK", cardIDs)
         sprite.add(entity)
         layer.add(entity)
         CaptchaCards.checkCode(entity)
@@ -181,10 +181,8 @@ class CaptchaCards(pg.sprite.Sprite):
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
 
 ### PROLLY FINE
-    def disconnect(toDis, baseDis, stack, sprites, scale):
+    def disconnect(toDis, baseDis, stack, sprites):
         stack.remove(toDis.cardID)
-        toDis.image = pg.image.load("GUI/cards/STACK/CAPTA_UP.png").convert_alpha()
-        CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
         with open("data/list.txt", "w") as f:
@@ -207,10 +205,8 @@ class QueueCards(CaptchaCards):
 
         CaptchaCards.kindIcon(entity, scale, "d")
 
-    def disconnect(toDis, baseDis, stack, sprites, scale):
+    def disconnect(toDis, baseDis, stack, sprites):
         stack.remove(toDis.cardID)
-        toDis.image = pg.image.load("GUI/cards/QUEUE/CAPTA_UP.png").convert_alpha()
-        CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
         with open("data/list.txt", "w") as f:
