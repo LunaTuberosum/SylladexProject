@@ -33,6 +33,9 @@ class CaptchaCards(pg.sprite.Sprite):
         self.edited = False
         self.type = modus
 
+        self.left = None
+        self.right = None
+
         self.name = name
         self.wKind = "Artifactkind"
         self.wType = "NA"
@@ -221,6 +224,63 @@ class QueueCards(CaptchaCards):
         
         baseDis.parent = None
         toDis.child = None
+
+class TreeCards(CaptchaCards):
+
+    def addTree(current, value, nodeNum,screen):
+
+        if value.name[0] < current.name[0]:
+            if current.left == None:
+                current.left =  value
+                value.rect.y = current.rect.y +(48 * nodeNum) 
+                value.rect.x = current.rect.x
+                value.rect.x -= (current.rect.w/2) * nodeNum
+                pg.draw.line(screen, (151, 255, 0), (current.rect.x, current.rect.y ), (current.rect.x,value.rect.y), 5)
+                pg.display.flip()
+
+
+            else:
+                TreeCards.addTree(current.left, value, nodeNum,screen)
+        else:
+            if current.right == None:
+                current.right = value
+                value.rect.y = current.rect.y + (48 * nodeNum) 
+                value.rect.x = current.rect.x
+                value.rect.x += (current.rect.w/2) * nodeNum
+                pg.draw.line(screen, (151, 255, 0), (current.rect.x, current.rect.y ), (current.rect.x,value.rect.y), 5)
+                pg.display.flip()
+
+
+            else:
+                TreeCards.addTree(current.right, value,nodeNum, screen)
+
+    def debugPrintTree(current, root):
+        
+        if current == root:
+            print("root:", current.name)
+        if current.left:
+            print(current.name + "'s'","l branch:", current.left.name)
+            TreeCards.debugPrintTree(current.left, root)
+        if current.right:
+            print(current.name + "'s'","r branch:", current.right.name)
+            TreeCards.debugPrintTree(current.right, root)
+        
+
+    def startTree(root, stack, sprites, screen):
+        for s in sprites:
+            if s.cardID == stack[0]:
+                root = s
+        stack.pop(0)
+        current = root
+        for c in stack:
+            for s in sprites:
+                print("stack",c)
+                print("ID",s.cardID)
+                if s.cardID == c:
+                    TreeCards.addTree(root, s, len(stack)/2, screen)
+                    break
+        TreeCards.debugPrintTree(root, root)
+        
 
     
 class CaptaOutline(pg.sprite.Sprite):
