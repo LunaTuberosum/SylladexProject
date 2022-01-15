@@ -19,6 +19,8 @@ COLOR_ACTIVE = pg.Color('black')
 
 stackColor = (255, 0, 220)
 queueColor = (255, 96, 0)
+treeColor = (150, 255, 0)
+
 
 ## Initalizations
 pg.init()
@@ -58,7 +60,8 @@ def main():
 
     modusColor = {
         "STACK": [stackColor, "GUI/panel/STACK/MODUSLABEL.png"],
-        "QUEUE": [queueColor, "GUI/panel/QUEUE/MODUSLABEL.png"]
+        "QUEUE": [queueColor, "GUI/panel/QUEUE/MODUSLABEL.png"],
+        "TREE": [treeColor, "GUI/panel/TREE/MODUSLABEL.png"]
     }
 
     ## Making stack and starting arrays
@@ -95,6 +98,9 @@ def main():
     helpT = False
 
     bool1 = False
+
+    root = None
+
 
     cardIDs = []
 
@@ -226,7 +232,8 @@ def main():
 
                         if i.rect.collidepoint(event.pos):
                             if i.job == "modusChanger" and helpT == False:
-                                modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites)
+                                modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites, root, currentStack, screen)
+
                             elif i.job == "cardCreate" and helpT == False:
                                 i.modus = modus
                                 AddButton.cardCreate(i, cardInput, sprites, layers, currentStack, scale, cardIDs)

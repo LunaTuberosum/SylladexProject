@@ -160,17 +160,14 @@ class ModusChanger(UIBase):
         layers.change_layer(entity, -1)
         uis.add(entity)
 
-    def modusChange(i, mColor, m, scale, uis, sprites): 
+    def modusChange(i, mColor, m, scale, uis, sprites, root, stack, screen): 
         if m == "STACK":
             m = "QUEUE"
         elif m == "QUEUE":
+            m = "TREE"
+            captchacards.TreeCards.startTree(root, stack, sprites, screen)
+        elif m == "TREE":
             m = "STACK"
-
-        uiChanger = {
-            "SylladexPanel": "GUI/panel/" + m + "/SYLLADEXPANEL.png",
-            "StackingArea": "GUI/panel/" + m + "/STACK_AREA.png",
-            "CardInspection": "GUI/panel/" + m + "/PANEL.png"
-        }
 
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
 
