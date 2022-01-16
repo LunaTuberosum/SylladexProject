@@ -173,9 +173,8 @@ def main():
             a += 48
 
     if modus == "TREE":
-        print(currentStack)
         global screen
-        lines = captchacards.TreeCards.startTree(currentStack, sprites, lines)
+        captchacards.TreeCards.startTree(currentStack, sprites)
 
 
     ## Programs start
@@ -241,8 +240,7 @@ def main():
                             if i.job == "modusChanger" and helpT == False:
                                 modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites, layers, cardIDs)
                                 if modus == "TREE":
-                                    print(currentStack)
-                                    lines = captchacards.TreeCards.startTree(currentStack, sprites, lines)
+                                    captchacards.TreeCards.startTree(currentStack, sprites)
 
                             elif i.job == "cardCreate" and helpT == False:
                                 i.modus = modus
@@ -285,7 +283,8 @@ def main():
                                 Taskbar.captaEdit(selected, input_box1, input_box2, input_box3)
 
                             ### Checking how to move sprite
-                            
+                            if len(currentStack) == 0:
+                                moveing = True
                             for s in currentStack:
                                 if s != sprite.cardID:
                                     moveing = True
@@ -396,7 +395,7 @@ def main():
                             if selectedM.rect.colliderect(out) and selectedM.rect.colliderect(area): 
                                 
                                 if modus == "TREE":
-                                    lines = captchacards.TreeCards.combine(selectedM, out.parent, currentStack, lines, sprites)
+                                    captchacards.TreeCards.combine(selectedM, out.parent, currentStack, sprites)
                                 else:
                                     captchacards.CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
                                 outlines.empty()
@@ -433,8 +432,12 @@ def main():
 
                         if modus == "TREE":
                             for c in sprites:
-                                if c.cardID == currentStack[0]:
-                                    outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
+                                if len(currentStack) == 0:
+                                    if c != selected:
+                                        outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
+                                else:
+                                    if c.cardID == currentStack[0]:
+                                        outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
                         else:
                             for s in sprites:
 
@@ -570,11 +573,8 @@ def menu():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     for i in ui:
-                        print(1)
                         if i.job == "start":
-                            print(2)
                             if i.rect.collidepoint(pg.mouse.get_pos()):
-                                print(3)
                                 i.image = pg.image.load("MAINSCREEN/START_ACTIVE.png").convert_alpha()
                                 running = False
                         if i.job == "quit":

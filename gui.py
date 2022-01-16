@@ -584,7 +584,6 @@ class CardInspector(UIBase):
         imageRef = [text.grist, 91, 116, text.eff[0], 91, 140, text.eff[1], 115, 140, text.eff[2], 139, 140, text.eff[3], 163, 140, text.deff[0], 91 ,164, text.deff[1], 115, 164, text.deff[2], 139, 164, text.deff[3], 163, 164, text.wKind, 67 ,92, text.action1, 36, 204, text.action2, 36, 228, text.action3, 168, 204, text.action4, 168, 228]
         x = 0
         for z in range(int(len(imageRef)/3)):
-            print(imageRef[x])
             makeImage(panel, imageRef[x], imageRef[x+1], imageRef[x+2], scale)
             x += 3
 

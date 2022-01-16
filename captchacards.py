@@ -235,8 +235,8 @@ class QueueCards(CaptchaCards):
 
 class TreeCards(CaptchaCards):
 
-    def combine(toCombi, baseCombi, stack, lines, sprites):
-        lines = TreeCards.addTree(baseCombi, toCombi, len(stack)/2, lines)
+    def combine(toCombi, baseCombi, stack, sprites):
+        TreeCards.addTree(baseCombi, toCombi, len(stack)/2)
         stack.append(toCombi.cardID)
 
         with open("data/list.txt", "w") as f:
@@ -245,8 +245,6 @@ class TreeCards(CaptchaCards):
                     if s == sprite.cardID:
                                     
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
-        
-        return lines
 
     def disconnect(toDis, stack, layers):
         if toDis.parent.left == toDis:
@@ -261,41 +259,50 @@ class TreeCards(CaptchaCards):
             if s == toDis.cardID:
                 stack.remove(toDis.cardID)
 
-    def drawLines(value, lines):
+    def drawLines(value, lines, nodeNum):
+        temp = nodeNum
         if value.left:
+            value.left.rect.y = value.rect.y + 100
+            value.left.rect.x = value.rect.x
+            if nodeNum > 1:
+                value.left.rect.x -= value.rect.w * nodeNum
+            else:
+                value.left.rect.x -= value.rect.w/2
             line = ((value.rect.x+(value.rect.w/2), value.rect.y+(value.rect.h/2) ), (value.left.rect.x+(value.rect.w/2),value.rect.y+(value.rect.h/2)), (value.left.rect.x+(value.rect.w/2), value.left.rect.y))
             lines.append(line)
+            TreeCards.drawLines(value.left, lines, nodeNum-1)
+        nodeNum = temp
         if value.right:
+            value.right.rect.y = value.rect.y + 100
+            value.right.rect.x = value.rect.x
+            if nodeNum > 1:
+                value.right.rect.x += value.rect.w * nodeNum
+            else:
+                value.right.rect.x += value.rect.w/2
             line = ((value.rect.x+(value.rect.w/2), value.rect.y+(value.rect.h/2) ), (value.right.rect.x+(value.rect.w/2),value.rect.y+(value.rect.h/2)), (value.right.rect.x+(value.rect.w/2), value.right.rect.y))
             lines.append(line)
+            TreeCards.drawLines(value.right, lines, nodeNum-1)
         return lines
 
     def startLines(sprites, stack, lines):
-        for c in stack:
-            for s in sprites:
-                if s.cardID == c:
-                    lines = TreeCards.drawLines(s, lines)
-                
+        for sprite in sprites:
+            if sprite.cardID == stack[0]:
+                root = sprite
+        lines = TreeCards.drawLines(root, lines, len(stack)/2)
+
+
         return lines
 
-    def addTree(current, value, nodeNum, lines):
+    def addTree(current, value, nodeNum):
     
         if value.name[0].lower() < current.name[0].lower():
             if current.left == None:
                 current.left =  value
-                value.rect.y = current.rect.y + 100
-                value.rect.x = current.rect.x
                 value.parent = current
                 current.child = value
-                if nodeNum > 1:
-                    value.rect.x -= current.rect.w * nodeNum
-                else:
-                    value.rect.x -= current.rect.w/2
-
-                return lines
 
             else:
-                return TreeCards.addTree(current.left, value, nodeNum-1,lines)
+                TreeCards.addTree(current.left, value, nodeNum-1)
         else:
             if current.right == None:
                 current.right = value
@@ -303,19 +310,10 @@ class TreeCards(CaptchaCards):
                 value.rect.x = current.rect.x
                 value.parent = current
                 current.child = value
-                if nodeNum > 1:
-                    value.rect.x += current.rect.w * nodeNum
-                    line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
-                    pg.display.flip()
-                    lines.append(line)
-                else:
-                    value.rect.x += current.rect.w/2
-
-                return lines
 
 
             else:
-                return TreeCards.addTree(current.right, value,nodeNum-1,lines)
+                TreeCards.addTree(current.right, value,nodeNum-1)
 
     def debugPrintTree(current, root):
         
@@ -329,21 +327,21 @@ class TreeCards(CaptchaCards):
             TreeCards.debugPrintTree(current.right, root)
         
 
-    def startTree(stack, sprites, lines):
-        for s in sprites:
-            if s.cardID == stack[0]:
-                root = s
-        stack.pop(0)
-        current = root
-        for c in stack:
+    def startTree(stack, sprites):
+        if len(stack) > 0:
             for s in sprites:
-                if s.cardID == c:
-                    TreeCards.addTree(root, s, len(stack)/2, lines)
-                    break
-        
-        TreeCards.debugPrintTree(root, root)
-        stack.insert(0, root.cardID)
-        return lines
+                if s.cardID == stack[0]:
+                    root = s
+            stack.pop(0)
+            current = root
+            for c in stack:
+                for s in sprites:
+                    if s.cardID == c:
+                        TreeCards.addTree(root, s, len(stack)/2)
+                        break
+            
+            # TreeCards.debugPrintTree(root, root)
+            stack.insert(0, root.cardID)
         
 
     
