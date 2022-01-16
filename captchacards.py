@@ -52,6 +52,72 @@ class CaptchaCards(pg.sprite.Sprite):
         self.cardID = len(cardIDs)
         cardIDs.append(self.cardID)
         
+    def revert(sprites, layers, scale, modus, cardIDs):
+        sprites.empty()
+        layers.empty()
+        cardIDs.clear()
+
+        with open("data/list.txt", "r") as f:
+            count = 0
+            startingStackCodes = []
+            nameStart = []
+            tierStart = []
+
+            ## Search through and splt based on " "
+            for x in f:
+
+                y = x.split()
+
+                ## Add the capta code to stack variable
+                startingStackCodes.append(y[1])
+                count+=1
+
+                ## Adds name to a temp array
+                name = y[2]
+
+                ## If name has a space in it
+                if len(y) > 3:
+
+                    ## Added all extra parts of the name
+                    for j in range(len(y)-3):
+
+                        name += (" " + y[j+3])
+
+                ## Adds name and tier to start up arrays
+                nameStart.append(name)
+                tierStart.append(y[0])
+
+        ## if the stack variable is long enough make new stack
+        if len(startingStackCodes) >= 1:
+
+            ## temp variables
+            z = 0
+            a = 50
+            parent = None
+
+            ## Checks all codes in stack
+            for v in startingStackCodes:
+
+                ## Makes cards based of capta codes from file
+                entity = CaptchaCards((500, a), WHITE, v, nameStart[z], tierStart[z], scale, modus, cardIDs)
+                sprites.add(entity)
+                layers.add(entity)
+                CaptchaCards.kindIcon(entity, scale, "d")
+                ## If stack is 2 or longer make parents and children
+                if z >= 1:
+                    if parent:
+                        parent.child = entity
+
+                parent = entity
+
+                ## Make them stack proprly
+                layers.change_layer(entity, z)
+                z += 1
+
+                a += 48
+        
+        
+
 
 ### FINE
     def kindIcon(entity, scale, style):
@@ -103,11 +169,11 @@ class CaptchaCards(pg.sprite.Sprite):
         if self.child == None and self.parent == None:
             self.rect.move_ip(velocity)
             return
-        elif self.parent:
-            current = self
-            while current.parent:
-                current = current.parent
-            parentAll = current
+        # elif self.parent:
+        #     current = self
+        #     while current.parent:
+        #         current = current.parent
+        #     parentAll = current
         else:
             parentAll = self
         parent = parentAll
@@ -317,8 +383,9 @@ class TreeCards(CaptchaCards):
             TreeCards.debugPrintTree(current.right, root)
         
 
-    def startTree(root, stack, sprites, lines):
+    def startTree(stack, sprites, lines):
         for s in sprites:
+            print(s.cardID)
             if s.cardID == stack[0]:
                 root = s
         stack.pop(0)
@@ -330,6 +397,7 @@ class TreeCards(CaptchaCards):
                     break
         
         TreeCards.debugPrintTree(root, root)
+        stack.insert(0, root.cardID)
         return lines
         
 
