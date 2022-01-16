@@ -3234,7 +3234,7 @@ action = {
     "ARGUFY": "GUI/action/ARGUFY.png",
     "ARISE": "GUI/action/ARISE.png",
     "ARITHMETIZE": "GUI/action/ARITHMETIZE.png",
-    "ARMAMENTFY": "GUI/action/ARMAMENTFY.png",
+    "ARMAMENTIFY": "GUI/action/ARMAMENTIFY.png",
     "ARRAIGN": "GUI/action/ARRAIGN.png",
     "ARRANGE": "GUI/action/ARRANGE.png",
     "ARREST": "GUI/action/ARREST.png",

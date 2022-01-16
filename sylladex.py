@@ -100,6 +100,7 @@ def main():
     bool1 = False
     lines = []
 
+    moveAllCard = False
 
     cardIDs = []
 
@@ -162,7 +163,7 @@ def main():
                 if z >= 1:
                     if parent:
                         parent.child = entity
-
+                        entity.parent = parent
                 parent = entity
 
             ## Make them stack proprly
@@ -221,6 +222,8 @@ def main():
 
                 ## Checking if its left mouse button
                 if event.button == 1:
+
+                    moveAllCard = True
 
                     for b in cardInput:
                         if b.rect.collidepoint(event.pos):
@@ -283,54 +286,25 @@ def main():
 
                             ### Checking how to move sprite
                             
-                            ## If the sprite has no parent
-                            if selected.parent == None:
-
-                                ## if it still has a child
-                                if selected.child != None:
-
-                                    ## Changes the sprite to be up
-                                    sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                    captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
-                                    nW = sprite.rect[2]
-                                    nH = sprite.rect[3]
-                                    sprite.image = pg.transform.scale(sprite.image, (nW, nH))
-
-                                    ## Temp var
-                                    x = 1
-
-
-                                    ## Can move the card now
-                                    moveCard = True
-
-                                    ## Checks all sprites for children
-                                    for sprite in sprites:
-
-                                        for s in sprites:
-
-                                            if sprite.child == s:
-
-                                                ## Sets every child in assending order in the stack
-                                                x += 1
-                                                s.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                                captchacards.CaptchaCards.kindIcon(s, scale, "u")
-                                                nW = s.rect[2]
-                                                nH = s.rect[3]
-                                                s.image = pg.transform.scale(s.image, (nW, nH))
-
-                                ## If the sprite is by its self
+                            for s in currentStack:
+                                if s != sprite.cardID:
+                                    moveing = True
                                 else:
+                                    moveing = False
+                                    break
 
-                                    ## Picks up image and places it above all
-                                    sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                    captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
-                                    nW = sprite.rect[2]
-                                    nH = sprite.rect[3]
-                                    sprite.image = pg.transform.scale(sprite.image, (nW, nH))
-                                    layers.change_layer(sprite, len(currentStack)+1)
+                            if moveing == True:
+                                moveAllCard = False
+                                ## Picks up image and places it above all
+                                sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
+                                captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
+                                nW = sprite.rect[2]
+                                nH = sprite.rect[3]
+                                sprite.image = pg.transform.scale(sprite.image, (nW, nH))
+                                layers.change_layer(sprite, len(currentStack)+1)
 
-                                    ## Can move card
-                                    moveCard = True
+                                ## Can move card
+                                moveCard = True
                                    
                 ## If middle click
                 elif event.button == 2:
@@ -350,22 +324,13 @@ def main():
                     for sprite in sprites:
                         
                         if sprite.rect.collidepoint(event.pos):
-                            selectedd = sprite
+                            selected = sprite
                             
                             if modus == "STACK":
-                                ## Cheaking if the card has no child but has a parent
-                                if selectedd.parent and selectedd.child == None:
-                                    ## If it is the top on the stack
-                                    if layers.get_layer_of_sprite(selectedd) == len(currentStack)-1:
-                                        
-                                        
-                                        ## Disconnect it
-                                        captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites, scale)
-                                        
-                                    else:
+                                if selected.cardID == currentStack[len(currentStack)-1]:
+                                    ## Disconnect it
+                                    captchacards.CaptchaCards.disconnect(selected,selected.parent,currentStack, sprites, scale)
 
-                                        ## Sets selected to none
-                                        selected = None
                             elif modus == "QUEUE":
                                 ## Cheaking if the card has no child but has a parent
                                 if selectedd.parent and selectedd.child != None:
@@ -402,6 +367,7 @@ def main():
                     bool1 = False                     
                 
                 moveCard = False
+                moveAllCard = False
 
                 ## Set the add button to netural
                 for i in uis:
@@ -440,7 +406,9 @@ def main():
                 
 
             ## Checking if the mouse is moved
-            elif event.type == pg.MOUSEMOTION:                
+            elif event.type == pg.MOUSEMOTION:    
+                if moveAllCard:
+                    captchacards.CaptchaCards.moveAll(sprites, scale, event.rel)            
 
                 for i in uis:
                     if i.job == "codePanel":
@@ -453,7 +421,7 @@ def main():
                     if moveCard == True:
 
                         ## Move card based on mouse
-                        selected.move(event.rel, currentStack, area, scale, modus, layers, sprites)
+                        selected.move(event.rel, currentStack)
                         
                         ## Makes a list of all sprites that can have an outline
                         avalible_sprites.empty()
@@ -466,7 +434,7 @@ def main():
                                 avalible_sprites.add(s)
 
                         ## If the list is longer than one make outline
-                        if avalible_sprites.__len__() >= 1 and selected.child == None and selected.parent == None:
+                        if avalible_sprites.__len__() >= 1:
 
                             
                             outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
@@ -520,7 +488,8 @@ def main():
         ## Buch of updating stuff
         sprites.update()
         screen.fill((183, 183, 183))
-        
+        lines.clear()
+        lines =  captchacards.TreeCards.startLines(sprites, currentStack, lines)
         for line in lines:
             lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
         sprites.draw(screen)

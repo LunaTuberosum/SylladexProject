@@ -52,72 +52,22 @@ class CaptchaCards(pg.sprite.Sprite):
         self.cardID = len(cardIDs)
         cardIDs.append(self.cardID)
         
-    def revert(sprites, layers, scale, modus, cardIDs):
-        sprites.empty()
-        layers.empty()
-        cardIDs.clear()
-
-        with open("data/list.txt", "r") as f:
-            count = 0
-            startingStackCodes = []
-            nameStart = []
-            tierStart = []
-
-            ## Search through and splt based on " "
-            for x in f:
-
-                y = x.split()
-
-                ## Add the capta code to stack variable
-                startingStackCodes.append(y[1])
-                count+=1
-
-                ## Adds name to a temp array
-                name = y[2]
-
-                ## If name has a space in it
-                if len(y) > 3:
-
-                    ## Added all extra parts of the name
-                    for j in range(len(y)-3):
-
-                        name += (" " + y[j+3])
-
-                ## Adds name and tier to start up arrays
-                nameStart.append(name)
-                tierStart.append(y[0])
-
-        ## if the stack variable is long enough make new stack
-        if len(startingStackCodes) >= 1:
-
-            ## temp variables
-            z = 0
-            a = 50
-            parent = None
-
-            ## Checks all codes in stack
-            for v in startingStackCodes:
-
-                ## Makes cards based of capta codes from file
-                entity = CaptchaCards((500, a), WHITE, v, nameStart[z], tierStart[z], scale, modus, cardIDs)
-                sprites.add(entity)
-                layers.add(entity)
-                CaptchaCards.kindIcon(entity, scale, "d")
-                ## If stack is 2 or longer make parents and children
-                if z >= 1:
+    def revert(sprites, layers, scale, modus, stack):
+        for s in sprites:
+            s.left = None
+            s.right = None
+        parent = None
+        layer = 0
+        move = 48 * scale
+        for c in stack:
+            for s in sprites:
+                if s.cardID == c:
                     if parent:
-                        parent.child = entity
-
-                parent = entity
-
-                ## Make them stack proprly
-                layers.change_layer(entity, z)
-                z += 1
-
-                a += 48
-        
-        
-
+                        s.rect.x = parent.rect.x
+                        s.rect.y = parent.rect.y + move
+                        layers.change_layer(s, layer)
+                        layer += 1
+                    parent = s
 
 ### FINE
     def kindIcon(entity, scale, style):
@@ -155,37 +105,25 @@ class CaptchaCards(pg.sprite.Sprite):
 
         CaptchaCards.kindIcon(entity, scale, "d")
 
-### PROLLY FINE
-    def moveChild(self, parent, velocity, move, modus, scale):
-        
-        self.rect.move_ip(velocity)
-        parent.rect.x = self.rect.x
-        parent.rect.y = self.rect.y - move
-        nW = parent.rect[2]
-        nH = parent.rect[3]
-        parent.image = pg.transform.scale(parent.image, (nW, nH))
     
-    def move(self, velocity, stack, area, scale, modus, layers, sprites):
-        if self.child == None and self.parent == None:
+    def moveAll(sprites, scale, velocity):
+        for s in sprites:
+            s.rect.move_ip(velocity)
+
+
+    def move(self, velocity, stack):
+        if len(stack) == 0:
+            aloneObj = True
+        else:
+            for c in stack:
+                if c == self.cardID:
+                    aloneObj = False
+                    break
+                else:
+                    aloneObj = True
+        if aloneObj == True:
             self.rect.move_ip(velocity)
             return
-        # elif self.parent:
-        #     current = self
-        #     while current.parent:
-        #         current = current.parent
-        #     parentAll = current
-        else:
-            parentAll = self
-        parent = parentAll
-        move = 48 * scale
-        layer = 0
-        while parent.child != None:
-            layers.change_layer(parent.child, layer)
-            layer += 1
-
-            CaptchaCards.moveChild(parent.child, parentAll, velocity, move, modus, scale)
-            parent = parent.child
-            move += 48 * scale
 
 
 ### SIMPLIFIED
@@ -212,12 +150,18 @@ class CaptchaCards(pg.sprite.Sprite):
                 return outline
 
         else:
-            for c in sprites:
-                
-                if c.cardID == stack[len(stack)-1]:
-                    y = 48 * scale
-                    outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
-                    return outline
+            for s in stack:
+                if s != self.cardID:
+                    aloneObj = True
+                else:
+                    aloneObj = False
+                    break
+            if aloneObj ==  True:
+                for c in sprites:
+                    if c.cardID == stack[len(stack)-1]:
+                        y = 48 * scale
+                        outline = CaptaOutline((c.rect.x, c.rect.y + y), (255, 255, 255), c, scale)
+                        return outline
 
 ### PROLLY FINE
     def combine(toCombi, baseCombi, outline, stack, layer, sprites):
@@ -291,85 +235,61 @@ class QueueCards(CaptchaCards):
 
 class TreeCards(CaptchaCards):
 
+    def drawLines(value, lines):
+        if value.left:
+            line = ((value.rect.x+(value.rect.w/2), value.rect.y+(value.rect.h/2) ), (value.left.rect.x+(value.rect.w/2),value.rect.y+(value.rect.h/2)), (value.left.rect.x+(value.rect.w/2), value.left.rect.y))
+            lines.append(line)
+        if value.right:
+            line = ((value.rect.x+(value.rect.w/2), value.rect.y+(value.rect.h/2) ), (value.right.rect.x+(value.rect.w/2),value.rect.y+(value.rect.h/2)), (value.right.rect.x+(value.rect.w/2), value.right.rect.y))
+            lines.append(line)
+        return lines
+
+    def startLines(sprites, stack, lines):
+        for c in stack:
+            for s in sprites:
+                if s.cardID == c:
+                    lines = TreeCards.drawLines(s, lines)
+                
+        return lines
+
     def addTree(current, value, nodeNum, lines):
-        if value.name[0] == current.name[0]:
-            if value.name[1] < current.name[1]:
-                if current.left == None:
-                    current.left =  value
-                    value.rect.y = current.rect.y + 100
-                    value.rect.x = current.rect.x
-                    value.parent = current
-                    if nodeNum > 0:
-                        value.rect.x -= current.rect.w * nodeNum
-                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
-                        pg.display.flip()
-                        lines.append(line)
-                    else:
-                        value.rect.x -= current.rect.w/2
-
-                    return lines
-
+    
+        if value.name[0].lower() < current.name[0].lower():
+            if current.left == None:
+                current.left =  value
+                value.rect.y = current.rect.y + 100
+                value.rect.x = current.rect.x
+                value.parent = current
+                current.child = value
+                if nodeNum > 1:
+                    value.rect.x -= current.rect.w * nodeNum
                 else:
-                    return TreeCards.addTree(current.left, value, nodeNum-1,lines)
+                    value.rect.x -= current.rect.w/2
+
+                return lines
+
             else:
-                if current.right == None:
-                    current.right = value
-                    value.rect.y = current.rect.y + 100
-                    value.rect.x = current.rect.x
-                    value.parent = current
-                    if nodeNum > 0:
-                        value.rect.x += current.rect.w * nodeNum
-                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
-                        pg.display.flip()
-                        lines.append(line)
-                    else:
-                        value.rect.x += current.rect.w/2
-
-                    return lines
-
-
-                else:
-                    return TreeCards.addTree(current.right, value,nodeNum-1,lines)
+                return TreeCards.addTree(current.left, value, nodeNum-1,lines)
         else:
-            if value.name[0] < current.name[0]:
-                if current.left == None:
-                    current.left =  value
-                    value.rect.y = current.rect.y + 100
-                    value.rect.x = current.rect.x
-                    value.parent = current
-                    current.child = value
-                    if nodeNum > 1:
-                        value.rect.x -= current.rect.w * nodeNum
-                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
-                        pg.display.flip()
-                        lines.append(line)
-                    else:
-                        value.rect.x -= current.rect.w/2
-
-                    return lines
-
+            if current.right == None:
+                current.right = value
+                value.rect.y = current.rect.y + 100
+                value.rect.x = current.rect.x
+                value.parent = current
+                current.child = value
+                if nodeNum > 1:
+                    value.rect.x += current.rect.w * nodeNum
+                    line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
+                    pg.display.flip()
+                    lines.append(line)
                 else:
-                    return TreeCards.addTree(current.left, value, nodeNum-1,lines)
+                    value.rect.x += current.rect.w/2
+
+                return lines
+
+
             else:
-                if current.right == None:
-                    current.right = value
-                    value.rect.y = current.rect.y + 100
-                    value.rect.x = current.rect.x
-                    value.parent = current
-                    current.child = value
-                    if nodeNum > 1:
-                        value.rect.x += current.rect.w * nodeNum
-                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
-                        pg.display.flip()
-                        lines.append(line)
-                    else:
-                        value.rect.x += current.rect.w/2
-
-                    return lines
-
-
-                else:
-                    return TreeCards.addTree(current.right, value,nodeNum-1,lines)
+                return TreeCards.addTree(current.right, value,nodeNum-1,lines)
 
     def debugPrintTree(current, root):
         
@@ -385,7 +305,6 @@ class TreeCards(CaptchaCards):
 
     def startTree(stack, sprites, lines):
         for s in sprites:
-            print(s.cardID)
             if s.cardID == stack[0]:
                 root = s
         stack.pop(0)
