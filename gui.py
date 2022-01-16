@@ -160,12 +160,11 @@ class ModusChanger(UIBase):
         layers.change_layer(entity, -1)
         uis.add(entity)
 
-    def modusChange(i, mColor, m, scale, uis, sprites, root, stack, screen): 
+    def modusChange(i, mColor, m, scale, uis, sprites): 
         if m == "STACK":
             m = "QUEUE"
         elif m == "QUEUE":
             m = "TREE"
-            captchacards.TreeCards.startTree(root, stack, sprites, screen)
         elif m == "TREE":
             m = "STACK"
 

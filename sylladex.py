@@ -100,6 +100,7 @@ def main():
     bool1 = False
 
     root = None
+    lines = []
 
 
     cardIDs = []
@@ -154,24 +155,30 @@ def main():
         for v in startingStackCodes:
 
             ## Makes cards based of capta codes from file
-            entity = captchacards.CaptchaCards((300, a), WHITE, v, nameStart[z], tierStart[z], scale, modus, cardIDs)
+            entity = captchacards.CaptchaCards((500, a), WHITE, v, nameStart[z], tierStart[z], scale, modus, cardIDs)
             sprites.add(entity)
             layers.add(entity)
             captchacards.CaptchaCards.kindIcon(entity, scale, "d")
+            if modus != "TREE":
+                ## If stack is 2 or longer make parents and children
+                if z >= 1:
 
-            ## If stack is 2 or longer make parents and children
-            if z >= 1:
+                    entity.parent = parent
+                    parent.child = entity
 
-                entity.parent = parent
-                parent.child = entity
-
-            parent = entity
+                parent = entity
 
             ## Make them stack proprly
             layers.change_layer(entity, z)
             z += 1
 
             a += 48
+
+    if modus == "TREE":
+        print(currentStack)
+        global screen
+        lines = captchacards.TreeCards.startTree(root, currentStack, sprites, lines)
+
 
     ## Programs start
     while True:
@@ -232,7 +239,10 @@ def main():
 
                         if i.rect.collidepoint(event.pos):
                             if i.job == "modusChanger" and helpT == False:
-                                modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites, root, currentStack, screen)
+                                modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites)
+                                if modus == "TREE":
+                                    print(currentStack)
+                                    lines = captchacards.TreeCards.startTree(root, currentStack, sprites, lines)
 
                             elif i.job == "cardCreate" and helpT == False:
                                 i.modus = modus
@@ -347,8 +357,7 @@ def main():
                             
                             if modus == "STACK":
                                 ## Cheaking if the card has no child but has a parent
-                                if selectedd.parent != None and selectedd.child == None:
-
+                                if selectedd.parent and selectedd.child == None:
                                     ## If it is the top on the stack
                                     if layers.get_layer_of_sprite(selectedd) == len(currentStack)-1:
                                         
@@ -362,7 +371,7 @@ def main():
                                         selected = None
                             elif modus == "QUEUE":
                                 ## Cheaking if the card has no child but has a parent
-                                if selectedd.parent == None and selectedd.child != None:
+                                if selectedd.parent and selectedd.child != None:
 
                                     ## If it is the top on the stack
                                     if layers.get_layer_of_sprite(selectedd) == 0:
@@ -513,12 +522,15 @@ def main():
 
         ## Buch of updating stuff
         sprites.update()
-        screen.fill((102, 102, 102))   
+        screen.fill((183, 183, 183))
         
-        uis.draw(screen)
+        for line in lines:
+            lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
         sprites.draw(screen)
         layers.draw(screen)
+        uis.draw(screen)
         outlines.draw(screen)
+
         for b in cardInput:
             Textbox.draw(b, screen)
         x, y = pg.mouse.get_pos()
@@ -536,7 +548,8 @@ def main():
             for i in uis:
                 i.modus = modus
                 UIBase.updateAll(i, sprites, scale, uis, modusColor[modus][0], cardInput)
-                
+
+
         modusD = modus
         scaleD = scale
 

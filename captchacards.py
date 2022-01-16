@@ -98,31 +98,29 @@ class CaptchaCards(pg.sprite.Sprite):
         nW = parent.rect[2]
         nH = parent.rect[3]
         parent.image = pg.transform.scale(parent.image, (nW, nH))
-
-### PROLLY FINE
+    
     def move(self, velocity, stack, area, scale, modus, layers, sprites):
-
         if self.child == None and self.parent == None:
             self.rect.move_ip(velocity)
-        elif self.parent != None:
             return
+        elif self.parent:
+            current = self
+            while current.parent:
+                current = current.parent
+            parentAll = current
         else:
-            parent = self
-            parent_all = self
-            move = 48* scale
-            x = 0
-            for s in stack:
-                for sprite in sprites:
-                    if s == sprite.cardID:
-                        layers.change_layer(sprite, x)
-                        x += 1
+            parentAll = self
+        parent = parentAll
+        move = 48 * scale
+        layer = 0
+        while parent.child != None:
+            layers.change_layer(parent.child, layer)
+            layer += 1
 
+            CaptchaCards.moveChild(parent.child, parentAll, velocity, move, modus, scale)
+            parent = parent.child
+            move += 48 * scale
 
-                if parent.child != None:
-
-                    CaptchaCards.moveChild(parent.child, parent_all, velocity, move, modus, scale)
-                    parent = parent.child
-                    move += 48 * scale
 
 ### SIMPLIFIED
     def distance(self, sprites, stack, scale):
@@ -227,32 +225,85 @@ class QueueCards(CaptchaCards):
 
 class TreeCards(CaptchaCards):
 
-    def addTree(current, value, nodeNum,screen):
+    def addTree(current, value, nodeNum, lines):
+        if value.name[0] == current.name[0]:
+            if value.name[1] < current.name[1]:
+                if current.left == None:
+                    current.left =  value
+                    value.rect.y = current.rect.y + 100
+                    value.rect.x = current.rect.x
+                    value.parent = current
+                    if nodeNum > 0:
+                        value.rect.x -= current.rect.w * nodeNum
+                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
+                        pg.display.flip()
+                        lines.append(line)
+                    else:
+                        value.rect.x -= current.rect.w/2
 
-        if value.name[0] < current.name[0]:
-            if current.left == None:
-                current.left =  value
-                value.rect.y = current.rect.y +(48 * nodeNum) 
-                value.rect.x = current.rect.x
-                value.rect.x -= (current.rect.w/2) * nodeNum
-                pg.draw.line(screen, (151, 255, 0), (current.rect.x, current.rect.y ), (current.rect.x,value.rect.y), 5)
-                pg.display.flip()
+                    return lines
 
-
+                else:
+                    return TreeCards.addTree(current.left, value, nodeNum-1,lines)
             else:
-                TreeCards.addTree(current.left, value, nodeNum,screen)
+                if current.right == None:
+                    current.right = value
+                    value.rect.y = current.rect.y + 100
+                    value.rect.x = current.rect.x
+                    value.parent = current
+                    if nodeNum > 0:
+                        value.rect.x += current.rect.w * nodeNum
+                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
+                        pg.display.flip()
+                        lines.append(line)
+                    else:
+                        value.rect.x += current.rect.w/2
+
+                    return lines
+
+
+                else:
+                    return TreeCards.addTree(current.right, value,nodeNum-1,lines)
         else:
-            if current.right == None:
-                current.right = value
-                value.rect.y = current.rect.y + (48 * nodeNum) 
-                value.rect.x = current.rect.x
-                value.rect.x += (current.rect.w/2) * nodeNum
-                pg.draw.line(screen, (151, 255, 0), (current.rect.x, current.rect.y ), (current.rect.x,value.rect.y), 5)
-                pg.display.flip()
+            if value.name[0] < current.name[0]:
+                if current.left == None:
+                    current.left =  value
+                    value.rect.y = current.rect.y + 100
+                    value.rect.x = current.rect.x
+                    value.parent = current
+                    current.child = value
+                    if nodeNum > 1:
+                        value.rect.x -= current.rect.w * nodeNum
+                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
+                        pg.display.flip()
+                        lines.append(line)
+                    else:
+                        value.rect.x -= current.rect.w/2
 
+                    return lines
 
+                else:
+                    return TreeCards.addTree(current.left, value, nodeNum-1,lines)
             else:
-                TreeCards.addTree(current.right, value,nodeNum, screen)
+                if current.right == None:
+                    current.right = value
+                    value.rect.y = current.rect.y + 100
+                    value.rect.x = current.rect.x
+                    value.parent = current
+                    current.child = value
+                    if nodeNum > 1:
+                        value.rect.x += current.rect.w * nodeNum
+                        line = ((current.rect.x+(current.rect.w/2), current.rect.y+(current.rect.h/2) ), (value.rect.x+(current.rect.w/2),current.rect.y+(current.rect.h/2)), (value.rect.x+(current.rect.w/2), value.rect.y))
+                        pg.display.flip()
+                        lines.append(line)
+                    else:
+                        value.rect.x += current.rect.w/2
+
+                    return lines
+
+
+                else:
+                    return TreeCards.addTree(current.right, value,nodeNum-1,lines)
 
     def debugPrintTree(current, root):
         
@@ -266,7 +317,7 @@ class TreeCards(CaptchaCards):
             TreeCards.debugPrintTree(current.right, root)
         
 
-    def startTree(root, stack, sprites, screen):
+    def startTree(root, stack, sprites, lines):
         for s in sprites:
             if s.cardID == stack[0]:
                 root = s
@@ -274,12 +325,12 @@ class TreeCards(CaptchaCards):
         current = root
         for c in stack:
             for s in sprites:
-                print("stack",c)
-                print("ID",s.cardID)
                 if s.cardID == c:
-                    TreeCards.addTree(root, s, len(stack)/2, screen)
+                    TreeCards.addTree(root, s, len(stack)/2, lines)
                     break
+        
         TreeCards.debugPrintTree(root, root)
+        return lines
         
 
     
