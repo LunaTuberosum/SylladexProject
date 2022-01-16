@@ -160,13 +160,14 @@ class ModusChanger(UIBase):
         layers.change_layer(entity, -1)
         uis.add(entity)
 
-    def modusChange(i, mColor, m, scale, uis, sprites): 
+    def modusChange(i, mColor, m, scale, uis, sprites, layers, cardIDs): 
         if m == "STACK":
             m = "QUEUE"
         elif m == "QUEUE":
             m = "TREE"
         elif m == "TREE":
             m = "STACK"
+            captchacards.CaptchaCards.revert(sprites, layers, scale, m, cardIDs)
 
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24*scale)
 

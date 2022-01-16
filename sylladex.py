@@ -98,8 +98,6 @@ def main():
     helpT = False
 
     bool1 = False
-
-    root = None
     lines = []
 
 
@@ -162,9 +160,8 @@ def main():
             if modus != "TREE":
                 ## If stack is 2 or longer make parents and children
                 if z >= 1:
-
-                    entity.parent = parent
-                    parent.child = entity
+                    if parent:
+                        parent.child = entity
 
                 parent = entity
 
@@ -177,7 +174,7 @@ def main():
     if modus == "TREE":
         print(currentStack)
         global screen
-        lines = captchacards.TreeCards.startTree(root, currentStack, sprites, lines)
+        lines = captchacards.TreeCards.startTree(currentStack, sprites, lines)
 
 
     ## Programs start
@@ -239,10 +236,10 @@ def main():
 
                         if i.rect.collidepoint(event.pos):
                             if i.job == "modusChanger" and helpT == False:
-                                modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites)
+                                modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites, layers, cardIDs)
                                 if modus == "TREE":
                                     print(currentStack)
-                                    lines = captchacards.TreeCards.startTree(root, currentStack, sprites, lines)
+                                    lines = captchacards.TreeCards.startTree(currentStack, sprites, lines)
 
                             elif i.job == "cardCreate" and helpT == False:
                                 i.modus = modus
