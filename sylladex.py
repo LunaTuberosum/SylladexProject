@@ -21,7 +21,6 @@ stackColor = (255, 0, 220)
 queueColor = (255, 96, 0)
 treeColor = (150, 255, 0)
 
-
 ## Initalizations
 pg.init()
 
