@@ -235,6 +235,32 @@ class QueueCards(CaptchaCards):
 
 class TreeCards(CaptchaCards):
 
+    def combine(toCombi, baseCombi, stack, lines, sprites):
+        lines = TreeCards.addTree(baseCombi, toCombi, len(stack)/2, lines)
+        stack.append(toCombi.cardID)
+
+        with open("data/list.txt", "w") as f:
+            for sprite in sprites:
+                for s in stack:    
+                    if s == sprite.cardID:
+                                    
+                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+        
+        return lines
+
+    def disconnect(toDis, stack, layers):
+        if toDis.parent.left == toDis:
+            toDis.parent.left = None
+        elif toDis.parent.right == toDis:
+            toDis.parent.right = None
+        
+        toDis.parent.child = None
+        toDis.parent = None
+
+        for s in stack:
+            if s == toDis.cardID:
+                stack.remove(toDis.cardID)
+
     def drawLines(value, lines):
         if value.left:
             line = ((value.rect.x+(value.rect.w/2), value.rect.y+(value.rect.h/2) ), (value.left.rect.x+(value.rect.w/2),value.rect.y+(value.rect.h/2)), (value.left.rect.x+(value.rect.w/2), value.left.rect.y))

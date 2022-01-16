@@ -333,19 +333,22 @@ def main():
 
                             elif modus == "QUEUE":
                                 ## Cheaking if the card has no child but has a parent
-                                if selectedd.parent and selectedd.child != None:
+                                if selected.parent and selected.child != None:
 
                                     ## If it is the top on the stack
-                                    if layers.get_layer_of_sprite(selectedd) == 0:
+                                    if layers.get_layer_of_sprite(selected) == 0:
 
                                         ## Disconnect it
-                                        captchacards.QueueCards.disconnect(selectedd,selectedd.child,currentStack, sprites, scale)
+                                        captchacards.QueueCards.disconnect(selected,selected.child,currentStack, sprites, scale)
 
                                         
                                     else:
 
                                         ## Sets selected to none
                                         selected = None
+                            elif modus == "TREE":
+                                if selected.left == None and selected.right == None:
+                                    captchacards.TreeCards.disconnect(selected, currentStack, layers)
                                 
                             
             ## Checking if the mouse buttons is up
@@ -392,8 +395,10 @@ def main():
                             
                             if selectedM.rect.colliderect(out) and selectedM.rect.colliderect(area): 
                                 
-                                captchacards.CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
-                                layers.change_layer(selectedM, len(currentStack))
+                                if modus == "TREE":
+                                    lines = captchacards.TreeCards.combine(selectedM, out.parent, currentStack, lines, sprites)
+                                else:
+                                    captchacards.CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
                                 outlines.empty()
 
                             else:
@@ -426,18 +431,23 @@ def main():
                         ## Makes a list of all sprites that can have an outline
                         avalible_sprites.empty()
 
-                        for s in sprites:
+                        if modus == "TREE":
+                            for c in sprites:
+                                if c.cardID == currentStack[0]:
+                                    outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
+                        else:
+                            for s in sprites:
 
-                            ## If it has no children add it
-                            if s.child == None:
+                                ## If it has no children add it
+                                if s.child == None:
 
-                                avalible_sprites.add(s)
+                                    avalible_sprites.add(s)
 
-                        ## If the list is longer than one make outline
-                        if avalible_sprites.__len__() >= 1:
+                            ## If the list is longer than one make outline
+                            if avalible_sprites.__len__() >= 1:
 
-                            
-                            outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
+                                
+                                outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
                     
                        
             ## Checking if keys are being pressed
@@ -494,8 +504,9 @@ def main():
             lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
         sprites.draw(screen)
         layers.draw(screen)
-        uis.draw(screen)
         outlines.draw(screen)
+        uis.draw(screen)
+        
 
         for b in cardInput:
             Textbox.draw(b, screen)

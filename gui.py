@@ -235,6 +235,8 @@ class AddButton(UIBase):
             captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
         elif modus == "QUEUE":
             captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
+        elif modus == "TREE":
+            captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
 
     def cardCreate(i, textboxs,   sprites, layers, currentStack, scale, cardIDs):
 
