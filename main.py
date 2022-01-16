@@ -3,7 +3,6 @@ import sys
 
 import sylladex
 
-
 ## Running main loop
 
 if __name__ == '__main__':
