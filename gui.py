@@ -358,7 +358,7 @@ class CheckBox(UIBase):
                     w = entityText.get_width()
                     wN = 168*c[3] - w/2
                     h = entityText.get_height()
-                    hN = 345*c[3] - h/2
+                    hN = 312*c[3] - h/2
                     i.parent.image.blit(entityText, [wN, hN])
 
             elif c[0] == 1:
@@ -581,6 +581,7 @@ class CardInspector(UIBase):
         entityText = panel.fontBig.render("CAPTCHALOGUE CARD", 2, WHITE)
         panel.image.blit(entityText, [12*scale, 0*scale])
 
+        print(text.captaCode)
         imageRef = [text.grist, 91, 116, text.eff[0], 91, 140, text.eff[1], 115, 140, text.eff[2], 139, 140, text.eff[3], 163, 140, text.deff[0], 91 ,164, text.deff[1], 115, 164, text.deff[2], 139, 164, text.deff[3], 163, 164, text.wKind, 67 ,92, text.action1, 36, 204, text.action2, 36, 228, text.action3, 168, 204, text.action4, 168, 228]
         x = 0
         for z in range(int(len(imageRef)/3)):

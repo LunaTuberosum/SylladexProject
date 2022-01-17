@@ -185,8 +185,8 @@ class CaptchaCards(pg.sprite.Sprite):
         baseCombi.rect = basePos
 
         with open("data/list.txt", "w") as f:
-            for sprite in sprites:
-                for s in stack:    
+            for s in stack:
+                for sprite in sprites:  
                     if s == sprite.cardID:
                                     
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
@@ -199,9 +199,9 @@ class CaptchaCards(pg.sprite.Sprite):
         if len(stack) <= 1:
             stack.clear()
         with open("data/list.txt", "w") as f:
-            for s in stack:    
-                for sprite in sprites:
-                    if s == sprite.cardID:
+            for s in stack:
+                for sprite in sprites:  
+                    if s == sprite.cardID: 
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
         
         baseDis.child = None
@@ -225,9 +225,10 @@ class QueueCards(CaptchaCards):
         if len(stack) <= 1:
             stack.clear()
         with open("data/list.txt", "w") as f:
-            for s in stack:    
-                for sprite in sprites:
+            for s in stack:
+                for sprite in sprites:  
                     if s == sprite.cardID:
+                                    
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
         
         baseDis.parent = None
@@ -236,17 +237,20 @@ class QueueCards(CaptchaCards):
 class TreeCards(CaptchaCards):
 
     def combine(toCombi, baseCombi, stack, sprites):
-        TreeCards.addTree(baseCombi, toCombi, len(stack)/2)
+        if len(stack) == 0:
+            stack.append(baseCombi.cardID)
         stack.append(toCombi.cardID)
+        TreeCards.addTree(baseCombi, toCombi, len(stack)/2)
+        
 
         with open("data/list.txt", "w") as f:
-            for sprite in sprites:
-                for s in stack:    
+            for s in stack:
+                for sprite in sprites:  
                     if s == sprite.cardID:
                                     
                         f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
 
-    def disconnect(toDis, stack, layers):
+    def disconnect(toDis, stack, layers, sprites):
         if toDis.parent.left == toDis:
             toDis.parent.left = None
         elif toDis.parent.right == toDis:
@@ -258,7 +262,14 @@ class TreeCards(CaptchaCards):
         for s in stack:
             if s == toDis.cardID:
                 stack.remove(toDis.cardID)
-
+        if len(stack) <= 1:
+            stack.clear()
+        with open("data/list.txt", "w") as f:
+            for s in stack:
+                for sprite in sprites:  
+                    if s == sprite.cardID:
+                                    
+                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
     def drawLines(value, lines, nodeNum):
         temp = nodeNum
         if value.left:
@@ -289,7 +300,6 @@ class TreeCards(CaptchaCards):
             if sprite.cardID == stack[0]:
                 root = sprite
         lines = TreeCards.drawLines(root, lines, len(stack)/2)
-
 
         return lines
 

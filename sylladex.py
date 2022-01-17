@@ -325,30 +325,31 @@ def main():
                         if sprite.rect.collidepoint(event.pos):
                             selected = sprite
                             
-                            if modus == "STACK":
-                                if selected.cardID == currentStack[len(currentStack)-1]:
-                                    ## Disconnect it
-                                    captchacards.CaptchaCards.disconnect(selected,selected.parent,currentStack, sprites, scale)
-
-                            elif modus == "QUEUE":
-                                ## Cheaking if the card has no child but has a parent
-                                if selected.parent and selected.child != None:
-
-                                    ## If it is the top on the stack
-                                    if layers.get_layer_of_sprite(selected) == 0:
-
+                            if currentStack:
+                                if modus == "STACK":
+                                    if selected.cardID == currentStack[len(currentStack)-1]:
                                         ## Disconnect it
-                                        captchacards.QueueCards.disconnect(selected,selected.child,currentStack, sprites, scale)
+                                        captchacards.CaptchaCards.disconnect(selected,selected.parent,currentStack, sprites, scale)
 
-                                        
-                                    else:
+                                elif modus == "QUEUE":
+                                    ## Cheaking if the card has no child but has a parent
+                                    if selected.parent and selected.child != None:
 
-                                        ## Sets selected to none
-                                        selected = None
-                            elif modus == "TREE":
-                                if selected.left == None and selected.right == None:
-                                    captchacards.TreeCards.disconnect(selected, currentStack, layers)
-                                
+                                        ## If it is the top on the stack
+                                        if layers.get_layer_of_sprite(selected) == 0:
+
+                                            ## Disconnect it
+                                            captchacards.QueueCards.disconnect(selected,selected.child,currentStack, sprites, scale)
+
+                                            
+                                        else:
+
+                                            ## Sets selected to none
+                                            selected = None
+                                elif modus == "TREE":
+                                    if selected.left == None and selected.right == None:
+                                        captchacards.TreeCards.disconnect(selected, currentStack, layers, sprites)
+                                    
                             
             ## Checking if the mouse buttons is up
             elif event.type == pg.MOUSEBUTTONUP:
@@ -433,8 +434,16 @@ def main():
                         if modus == "TREE":
                             for c in sprites:
                                 if len(currentStack) == 0:
-                                    if c != selected:
-                                        outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
+                                    for s in sprites:
+
+                                        ## If it has no children add it
+                                        if s.child == None:
+
+                                            avalible_sprites.add(s)
+
+                                    ## If the list is longer than one make outline
+                                    if avalible_sprites.__len__() >= 1:
+                                        outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
                                 else:
                                     if c.cardID == currentStack[0]:
                                         outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
@@ -502,9 +511,10 @@ def main():
         sprites.update()
         screen.fill((183, 183, 183))
         lines.clear()
-        lines =  captchacards.TreeCards.startLines(sprites, currentStack, lines)
-        for line in lines:
-            lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
+        if currentStack:
+            lines =  captchacards.TreeCards.startLines(sprites, currentStack, lines)
+            for line in lines:
+                lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
         sprites.draw(screen)
         layers.draw(screen)
         outlines.draw(screen)

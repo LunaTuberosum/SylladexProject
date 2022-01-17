@@ -1,9 +1,4 @@
-3 bbbbbbbb b 
-1 cccccccc c 
+4 kkkkkkkk j 
+5 uuuuuuuu u 
+2 gggggggg g 
 1 dddddddd d 
-1 aaaaaaaa a 
-1 aaaaaaaa a 
-5 gggggggg g 
-1 zzzzzzzz z 
-1 bbbbbbbb b 
-2 bbbbbbbb b 
