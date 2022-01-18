@@ -123,10 +123,11 @@ class UIBase(pg.sprite.Sprite):
 
         for s in sprites:
             s.image = pg.image.load(f"GUI/cards/{i.modus}/CAPTA.png").convert_alpha()
-            captchacards.CaptchaCards.kindIcon(s, scale, "d")
             nW = s.rect[2]
             nH = s.rect[3]
             s.image = pg.transform.scale(s.image, (nW, nH))
+            captchacards.CaptchaCards.kindIcon(s, scale, "d")
+            
 
 class StackingArea(UIBase):
 
@@ -220,6 +221,7 @@ class Textbox(UIBase):
         curBox.image = pg.image.load(f"GUI/textbox/{curBox.modus}/{curBox.activeImage}.png").convert_alpha()
         nW = curBox.rect[2]
         nH = curBox.rect[3]
+        curBox.image = pg.transform.scale(curBox.image, (nW, nH))
 
 class AddButton(UIBase):
     
@@ -235,10 +237,15 @@ class AddButton(UIBase):
             captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
         elif modus == "QUEUE":
             captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
+        elif modus == "TREE":
+            captchacards.TreeCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
 
     def cardCreate(i, textboxs,   sprites, layers, currentStack, scale, cardIDs):
 
         i.image = pg.image.load(f"GUI/button/{i.modus}/ADD_DOWN.png").convert_alpha()
+        nW = i.rect[2]
+        nH = i.rect[3]
+        i.image = pg.transform.scale(i.image, (nW, nH))
         
         for b in textboxs:
             if b.text == "":
@@ -251,6 +258,9 @@ class AddButton(UIBase):
             b.txt_surface = i.fontBig.render(b.text, True, b.color)
             b.active = False
             b.image = pg.image.load(f"GUI/textbox/{i.modus}/{b.inactiveImage}.png").convert_alpha()
+            nW = b.rect[2]
+            nH = b.rect[3]
+            b.image = pg.transform.scale(b.image, (nW, nH))
 
     def setEdit(sprites, uis, editing, stack, scale, modus):
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
@@ -263,6 +273,9 @@ class AddButton(UIBase):
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         i.active = False
                         i.image = pg.image.load(f"GUI/textbox/{i.modus}/{i.inactiveImage}.png").convert_alpha()
+                        nW = i.rect[2]
+                        nH = i.rect[3]
+                        i.image = pg.transform.scale(i.image, (nW, nH))
                     elif i.job == "code":
                         s.captaCode = i.text
                         stack.pop(len(stack)-1)
@@ -271,7 +284,13 @@ class AddButton(UIBase):
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         i.active = False
                         i.image = pg.image.load(f"GUI/textbox/{i.modus}/{i.inactiveImage}.png").convert_alpha()
+                        nW = i.rect[2]
+                        nH = i.rect[3]
+                        i.image = pg.transform.scale(i.image, (nW, nH))
                         s.image = pg.image.load(f"GUI/cards/{modus}/CAPTA.png").convert_alpha()
+                        nW = s.rect[2]
+                        nH = s.rect[3]
+                        s.image = pg.transform.scale(s.image, (nW, nH))
                         captchacards.CaptchaCards.kindIcon(s, scale, "d")
                     elif i.job == "tier":
                         s.tier = i.text
@@ -279,13 +298,22 @@ class AddButton(UIBase):
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         i.active = False
                         i.image = pg.image.load(f"GUI/textbox/{i.modus}/{i.inactiveImage}.png").convert_alpha()
+                        nW = i.rect[2]
+                        nH = i.rect[3]
+                        i.image = pg.transform.scale(i.image, (nW, nH))
                     if i.job == "endEdit":
                         i.image = pg.image.load(f"GUI/icon/{modus}/EDIT.png").convert_alpha()
+                        nW = i.rect[2]
+                        nH = i.rect[3]
+                        i.image = pg.transform.scale(i.image, (nW, nH))
                         i.job = "edit"
                     for j in uis:
                         if j.job == "set":
                             
                             j.image = pg.image.load(f"GUI/button/{modus}/ADD.png").convert_alpha()
+                            nW = j.rect[2]
+                            nH = j.rect[3]
+                            j.image = pg.transform.scale(j.image, (nW, nH))
                             j.job = "cardCreate"
         editing = False
         return editing
@@ -459,7 +487,7 @@ class CheckBox(UIBase):
 class CloseButton(UIBase):
 
     def create(pos, modus, job, parent, scale, layers, uis):
-        entity = CloseButton(pos, f"GUI/button/{i.modus}/ARROW.png", job, "button", scale, modus, (16,16))
+        entity = CloseButton(pos, f"GUI/button/{modus}/ARROW.png", job, "button", scale, modus, (16,16))
         parent.children.append(entity)
         entity.parent = parent
         layers.add(entity)
@@ -717,10 +745,16 @@ class Taskbar(UIBase):
     
     def editToggle(i, uis, editing, modus):
         i.image = pg.image.load(f"GUI/icon/{modus}/ALT_X.png").convert_alpha()
+        nW = i.rect[2]
+        nH = i.rect[3]
+        i.image = pg.transform.scale(i.image, (nW, nH))
         i.job = "endEdit"
         for j in uis:
             if j.job == "cardCreate":
                 j.image = pg.image.load(f"GUI/button/{modus}/SET.png").convert_alpha()
+                nW = j.rect[2]
+                nH = j.rect[3]
+                j.image = pg.transform.scale(j.image, (nW, nH))
                 j.job = "set"
         editing = True
         return editing
@@ -728,10 +762,16 @@ class Taskbar(UIBase):
     def editEnd(i, uis, editing, modus):
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
         i.image = pg.image.load(f"GUI/icon/{modus}/EDIT.png").convert_alpha()
+        nW = i.rect[2]
+        nH = i.rect[3]
+        i.image = pg.transform.scale(i.image, (nW, nH))
         i.job = "edit"
         for j in uis:
             if j.job == "set":
                 j.image = pg.image.load(f"GUI/button/{modus}/ADD.png").convert_alpha()
+                nW = j.rect[2]
+                nH = j.rect[3]
+                j.image = pg.transform.scale(j.image, (nW, nH))
                 j.job = "cardCreate"
             iBox = ["name", "code", "tier"]
             for l in iBox:

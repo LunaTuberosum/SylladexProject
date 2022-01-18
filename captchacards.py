@@ -67,6 +67,9 @@ class CaptchaCards(pg.sprite.Sprite):
                         s.rect.y = parent.rect.y + move
                         layers.change_layer(s, layer)
                         layer += 1
+                    else:
+                        s.rect.x = 565
+                        s.rect.y = 50
                     parent = s
 
 ### FINE
@@ -195,6 +198,9 @@ class CaptchaCards(pg.sprite.Sprite):
     def disconnect(toDis, baseDis, stack, sprites, scale, modus):
         stack.remove(toDis.cardID)
         toDis.image = pg.image.load(f"GUI/cards/{modus}/CAPTA_UP.png").convert_alpha()
+        nW = toDis.rect[2]
+        nH = toDis.rect[3]
+        toDis.image = pg.transform.scale(toDis.image, (nW, nH))
         CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
@@ -221,6 +227,9 @@ class QueueCards(CaptchaCards):
     def disconnect(toDis, baseDis, stack, sprites, scale):
         stack.remove(toDis.cardID)
         toDis.image = pg.image.load("GUI/cards/QUEUE/CAPTA_UP.png").convert_alpha()
+        nW = toDis.rect[2]
+        nH = toDis.rect[3]
+        toDis.image = pg.transform.scale(toDis.image, (nW, nH))
         CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
@@ -342,6 +351,8 @@ class TreeCards(CaptchaCards):
             for s in sprites:
                 if s.cardID == stack[0]:
                     root = s
+                    root.rect.x = 565
+                    root.rect.y = 50
             stack.pop(0)
             current = root
             for c in stack:

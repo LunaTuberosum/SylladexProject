@@ -27,7 +27,14 @@ pg.init()
 
 pg.key.set_repeat(500, 200)
 
-screen = pg.display.set_mode((960, 540))
+infoObject = pg.display.Info()
+
+scale = int(infoObject.current_w / 960)
+
+if scale == 1:
+    screen = pg.display.set_mode((960, 540))
+else:
+    screen = pg.display.set_mode((infoObject.current_w, infoObject.current_h))
 
 
 pg.mouse.set_visible(False)
@@ -37,7 +44,6 @@ sprites = pg.sprite.Group()
 outlines = pg.sprite.GroupSingle()
 layers = pg.sprite.LayeredUpdates()
 uis = pg.sprite.Group()
-avalible_sprites = pg.sprite.Group()
 
 pg.display.set_caption('SYLLADEX ALPHA 0.1')
 
@@ -53,9 +59,7 @@ def main():
         x = f.readlines()
         lines = x[0].split()
         modus = lines[0]
-        scale = int(lines[1])
     modusD = modus
-    scaleD = scale
     
 
     modusColor = {
@@ -214,7 +218,8 @@ def main():
 
             ## Quitting software
             if event.type == pg.QUIT:
-                return
+                pg.quit()
+                sys.exit()
 
             ## Checking if mouse is used
             elif event.type == pg.MOUSEBUTTONDOWN:
@@ -295,11 +300,11 @@ def main():
                             if moveing == True:
                                 moveAllCard = False
                                 ## Picks up image and places it above all
-                                sprite.image = pg.image.load(f"GUI/cards/{modus}CAPTA_UP.png").convert_alpha()
-                                captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
+                                sprite.image = pg.image.load(f"GUI/cards/{modus}/CAPTA_UP.png").convert_alpha()
                                 nW = sprite.rect[2]
                                 nH = sprite.rect[3]
                                 sprite.image = pg.transform.scale(sprite.image, (nW, nH))
+                                captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
                                 layers.change_layer(sprite, len(currentStack)+1)
 
                                 ## Can move card
@@ -327,7 +332,7 @@ def main():
                                 if modus == "STACK":
                                     if selected.cardID == currentStack[len(currentStack)-1]:
                                         ## Disconnect it
-                                        captchacards.CaptchaCards.disconnect(selected,selected.parent,currentStack, sprites, scale)
+                                        captchacards.CaptchaCards.disconnect(selected,selected.parent,currentStack, sprites, scale, modus)
 
                                 elif modus == "QUEUE":
                                     ## Cheaking if the card has no child but has a parent
@@ -356,10 +361,10 @@ def main():
                     for c in sprites:
 
                         c.image = pg.image.load(f"GUI/cards/{modus}/CAPTA.png").convert_alpha()
-                        captchacards.CaptchaCards.kindIcon(c, scale, "d")
                         nW = c.rect[2]
                         nH = c.rect[3]
                         c.image = pg.transform.scale(c.image, (nW, nH))
+                        captchacards.CaptchaCards.kindIcon(c, scale, "d")
                         
 
                         if c.parent == None and c.child == None:
@@ -427,34 +432,35 @@ def main():
                         selected.move(event.rel, currentStack)
                         
                         ## Makes a list of all sprites that can have an outline
-                        avalible_sprites.empty()
+                        avalible_sprites = []
 
                         if modus == "TREE":
                             for c in sprites:
                                 if len(currentStack) == 0:
                                     for s in sprites:
 
-                                        ## If it has no children add it
-                                        if s.child == None:
-
-                                            avalible_sprites.add(s)
+                                        avalible_sprites.append(s)
 
                                     ## If the list is longer than one make outline
-                                    if avalible_sprites.__len__() >= 1:
+                                    if len(avalible_sprites) >= 1:
                                         outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
+
                                 else:
-                                    if c.cardID == currentStack[0]:
-                                        outlines.add(captchacards.CaptaOutline((c.rect.x, c.rect.y - 48), (255, 255, 255), c, scale))
+
+                                    for s in sprites:
+                                        if s.cardID == currentStack[0]:
+                                            outlines.add(captchacards.CaptaOutline((s.rect.x, s.rect.y - 48), (255, 255, 255), s, scale))
+
                         else:
                             for s in sprites:
 
                                 ## If it has no children add it
                                 if s.child == None:
 
-                                    avalible_sprites.add(s)
+                                    avalible_sprites.append(s)
 
                             ## If the list is longer than one make outline
-                            if avalible_sprites.__len__() >= 1:
+                            if len(avalible_sprites) >= 1:
 
                                 
                                 outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
@@ -464,13 +470,16 @@ def main():
             elif event.type == pg.KEYDOWN:
 
                 if event.key == pg.K_ESCAPE:
-                    menu()
-
+                    pg.quit()
+                    sys.exit()
                 if event.key == pg.K_RETURN:
                     for b in cardInput:
                         if b.active:
                             b.active = False
                             b.image = pg.image.load(f"GUI/textbox/{modus}/{b.inactiveImage}.png").convert_alpha()
+                            nW = b.rect[2]
+                            nH = b.rect[3]
+                            b.image = pg.transform.scale(b.image, (nW, nH))
 
                 ## Checking if the input boxs are active                
                 if input_box1.active or input_box2.active or input_box3.active:
@@ -530,16 +539,15 @@ def main():
 
         pg.display.flip()
         clock.tick(60)
-        if modusD != modus or scaleD != scale:
+        if modusD != modus:
             with open("data/var.txt", "w") as f:
-                f.writelines((modus, " ", str(scale)))
+                f.writelines(f"{modus} ")
             for i in uis:
                 i.modus = modus
                 UIBase.updateAll(i, sprites, scale, uis, modusColor[modus][0], cardInput)
 
 
         modusD = modus
-        scaleD = scale
 
 
 def menu():

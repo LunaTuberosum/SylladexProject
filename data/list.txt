@@ -1,4 +1,4 @@
-4 kkkkkkkk j 
-5 uuuuuuuu u 
-2 gggggggg g 
-1 dddddddd d 
+4 44444444 4 
+1 aaaaaaaa 1 
+2 bbbbbbbb 2 
+1 cccccccc c 
