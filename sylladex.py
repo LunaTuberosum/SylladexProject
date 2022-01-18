@@ -377,7 +377,7 @@ def main():
 
                     if i.job == 'cardCreate':
 
-                        i.image = pg.image.load("GUI/button/"+ modus +"/ADD.png").convert_alpha()
+                        i.image = pg.image.load(f"GUI/button/{modus}/ADD.png").convert_alpha()
                         nW = i.rect[2]
                         nH = i.rect[3]
                         i.image = pg.transform.scale(i.image, (nW, nH))
@@ -472,7 +472,7 @@ def main():
                     for b in cardInput:
                         if b.active:
                             b.active = False
-                            b.image = pg.image.load("GUI/textbox/" + modus + "/" + b.inactiveImage + ".png").convert_alpha()
+                            b.image = pg.image.load(f"GUI/textbox/{modus}/{b.inactiveImage}.png").convert_alpha()
 
                 ## Checking if the input boxs are active                
                 if input_box1.active or input_box2.active or input_box3.active:

@@ -10,7 +10,7 @@ class CaptchaCards(pg.sprite.Sprite):
         super().__init__()
         self.image = pg.Surface((64, 64))
         self.image.fill(color)
-        self.image = pg.image.load("GUI/cards/" + modus + "/CAPTA.png").convert_alpha()
+        self.image = pg.image.load(f"GUI/cards/{modus}/CAPTA.png").convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
 
         if scale == 1:
@@ -189,12 +189,12 @@ class CaptchaCards(pg.sprite.Sprite):
                 for sprite in sprites:  
                     if s == sprite.cardID:
                                     
-                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+                        f.writelines(f"{str(sprite.tier)} {sprite.captaCode} {sprite.name} \n")
 
 ### PROLLY FINE
-    def disconnect(toDis, baseDis, stack, sprites, scale):
+    def disconnect(toDis, baseDis, stack, sprites, scale, modus):
         stack.remove(toDis.cardID)
-        toDis.image = pg.image.load("GUI/cards/STACK/CAPTA_UP.png").convert_alpha()
+        toDis.image = pg.image.load(f"GUI/cards/{modus}/CAPTA_UP.png").convert_alpha()
         CaptchaCards.kindIcon(toDis, scale, "u")
         if len(stack) <= 1:
             stack.clear()
@@ -202,7 +202,7 @@ class CaptchaCards(pg.sprite.Sprite):
             for s in stack:
                 for sprite in sprites:  
                     if s == sprite.cardID: 
-                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+                        f.writelines(f"{str(sprite.tier)} {sprite.captaCode} {sprite.name} \n")
         
         baseDis.child = None
         toDis.parent = None
@@ -229,7 +229,7 @@ class QueueCards(CaptchaCards):
                 for sprite in sprites:  
                     if s == sprite.cardID:
                                     
-                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+                        f.writelines(f"{str(sprite.tier)} {sprite.captaCode} {sprite.name} \n")
         
         baseDis.parent = None
         toDis.child = None
@@ -248,7 +248,7 @@ class TreeCards(CaptchaCards):
                 for sprite in sprites:  
                     if s == sprite.cardID:
                                     
-                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+                        f.writelines(f"{str(sprite.tier)} {sprite.captaCode} {sprite.name} \n")
 
     def disconnect(toDis, stack, layers, sprites):
         if toDis.parent.left == toDis:
