@@ -269,7 +269,7 @@ class TreeCards(CaptchaCards):
                 for sprite in sprites:  
                     if s == sprite.cardID:
                                     
-                        f.writelines((str(sprite.tier) + " " + sprite.captaCode + " " + sprite.name +" \n"))
+                        f.writelines(f"{str(sprite.tier)} {sprite.captaCode} {sprite.name} \n")
     def drawLines(value, lines, nodeNum):
         temp = nodeNum
         if value.left:

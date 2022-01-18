@@ -63,7 +63,7 @@ class UIBase(pg.sprite.Sprite):
 
     def updateAll(i, sprites, scale, uis, mColor, inputBox):
         if i.job == "CardInspection":
-            i.image = pg.image.load("GUI/panel/" + i.modus + "/PANEL.png").convert_alpha()
+            i.image = pg.image.load(f"GUI/panel/{i.modus}/PANEL.png").convert_alpha()
             nW = i.rect[2]
             nH = i.rect[3]
             i.image = pg.transform.scale(i.image, (nW, nH))
@@ -73,32 +73,32 @@ class UIBase(pg.sprite.Sprite):
             b.active = False
 
         uiChanger = {
-            "sylladexPanel": "GUI/panel/" + i.modus + "/SYLLADEXPANEL.png",
-            "stackingArea": "GUI/panel/" + i.modus + "/STACK_AREA.png",
-            "cardInspection": "GUI/panel/" + i.modus + "/PANEL.png",
-            "help": "GUI/icon/" + i.modus + "/HELP.png",
-            "cardCreate": "GUI/button/" + i.modus + "/ADD.png",
-            "sylSettings": "GUI/icon/" + i.modus + "/FLIP.png",
-            "nameLabel": "GUI/label/" + i.modus + "/NAMELABEL.png",
-            "codeLabel": "GUI/label/" + i.modus + "/CODELABEL.png",
-            "tierLabel": "GUI/label/" + i.modus + "/TIERLABEL.png",
-            "name": "GUI/textbox/" + i.modus + "/TEXTBOX.png",
-            "code": "GUI/textbox/" + i.modus + "/TEXTBOX_MEDIUM.png",
-            "tier": "GUI/textbox/" + i.modus + "/TEXTBOX_SMALL.png",
-            "modusChanger": "GUI/panel/" + i.modus + "/MODUSLABEL.png",
-            "taskbarOpen": "GUI/icon/" + i.modus + "/ARROW.png",
+            "sylladexPanel": f"GUI/panel/{i.modus}/SYLLADEXPANEL.png",
+            "stackingArea":f"GUI/panel/{i.modus}/STACK_AREA.png",
+            "cardInspection": f"GUI/panel/{i.modus}/PANEL.png",
+            "help": f"GUI/icon/{i.modus}/HELP.png",
+            "cardCreate": f"GUI/button/{i.modus}/ADD.png",
+            "sylSettings": f"GUI/icon/{i.modus}/FLIP.png",
+            "nameLabel": f"GUI/label/{i.modus}/NAMELABEL.png",
+            "codeLabel": f"GUI/label/{i.modus}/CODELABEL.png",
+            "tierLabel": f"GUI/label/{i.modus}/TIERLABEL.png",
+            "name": f"GUI/textbox/{i.modus}/TEXTBOX.png",
+            "code": f"GUI/textbox/{i.modus}/TEXTBOX_MEDIUM.png",
+            "tier": f"GUI/textbox/{i.modus}/TEXTBOX_SMALL.png",
+            "modusChanger": f"GUI/panel/{i.modus}/MODUSLABEL.png",
+            "taskbarOpen": f"GUI/icon/{i.modus}/ARROW.png",
             "inspecttrait1": "GUI/button/CHECK_BOX.png",
             "inspecttrait2": "GUI/button/CHECK_BOX.png",
             "inspectaction1": "GUI/button/CHECK_BOX.png",
             "inspectaction2": "GUI/button/CHECK_BOX.png",
             "inspectaction3": "GUI/button/CHECK_BOX.png",
             "inspectaction4": "GUI/button/CHECK_BOX.png",
-            "closePanel": "GUI/button/" + i.modus + "/ARROW.png",
-            "taskbarClose": "GUI/icon/" + i.modus + "/ARROW_ACTIVE.png",
-            "taskbar": "GUI/panel/" + i.modus + "/TASKBAR.png",
-            "trash": "GUI/icon/" + i.modus + "/TRASH.png",
-            "clear": "GUI/icon/" + i.modus + "/TRASH_ALL.png",
-            "edit": "GUI/icon/" + i.modus + "/EDIT.png",
+            "closePanel": f"GUI/button/{i.modus}/ARROW.png",
+            "taskbarClose": f"GUI/icon/{i.modus}/ARROW_ACTIVE.png",
+            "taskbar": f"GUI/panel/{i.modus}/TASKBAR.png",
+            "trash": f"GUI/icon/{i.modus}/TRASH.png",
+            "clear": f"GUI/icon/{i.modus}/TRASH_ALL.png",
+            "edit": f"GUI/icon/{i.modus}/EDIT.png",
             "infoUIs": "GUI/panel/LABEL.png"
             
         }
@@ -122,7 +122,7 @@ class UIBase(pg.sprite.Sprite):
             CardInspector.reinit(i.inspectie, i, scale)
 
         for s in sprites:
-            s.image = pg.image.load("GUI/cards/" + i.modus + "/CAPTA.png").convert_alpha()
+            s.image = pg.image.load(f"GUI/cards/{i.modus}/CAPTA.png").convert_alpha()
             captchacards.CaptchaCards.kindIcon(s, scale, "d")
             nW = s.rect[2]
             nH = s.rect[3]
@@ -131,7 +131,7 @@ class UIBase(pg.sprite.Sprite):
 class StackingArea(UIBase):
 
     def create(scale, modus, layers, uis):
-        entity = StackingArea((252,0), "GUI/panel/"+modus+"/STACK_AREA.png", "stackingArea", "panel", scale, modus, (708,540))
+        entity = StackingArea((252,0), f"GUI/panel/{modus}/STACK_AREA.png", "stackingArea", "panel", scale, modus, (708,540))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -139,7 +139,7 @@ class StackingArea(UIBase):
 class SylladexPanel(UIBase):
 
     def create(scale, modus, layers, uis, modusColor):
-        entity = StackingArea((0,0), "GUI/panel/"+modus+"/SYLLADEXPANEL.png", "sylladexPanel", "panel", scale, modus, (252,540))
+        entity = StackingArea((0,0), f"GUI/panel/{modus}/SYLLADEXPANEL.png", "sylladexPanel", "panel", scale, modus, (252,540))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -155,7 +155,7 @@ class SylladexPanel(UIBase):
 class ModusChanger(UIBase):
 
     def create(scale, modus, layers, uis):
-        entity = StackingArea((12, 391), "GUI/panel/"+modus+"/MODUSLABEL.png", "modusChanger", "button", scale, modus, (214, 113))
+        entity = StackingArea((12, 391), f"GUI/panel/{modus}/MODUSLABEL.png", "modusChanger", "button", scale, modus, (214, 113))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -186,7 +186,7 @@ class ModusChanger(UIBase):
 class Label(UIBase):
     
     def create(scale, modus, layers, uis, label, job, pos):
-        entity = StackingArea(pos, "GUI/label/"+modus+"/"+label+".png", job, "label", scale, modus, (0,0))
+        entity = StackingArea(pos, f"GUI/label/{modus}/{label}.png", job, "label", scale, modus, (0,0))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -194,7 +194,7 @@ class Label(UIBase):
 class Textbox(UIBase):
     
     def create(scale, modus, layers, uis, box, job, pos, active, inactive):
-        entity = Textbox(pos, "GUI/textbox/"+modus+"/"+box+".png", job, "textbox", scale, modus, (0,0))
+        entity = Textbox(pos, f"GUI/textbox/{modus}/{box}.png", job, "textbox", scale, modus, (0,0))
         entity.activeImage = active
         entity.inactiveImage = inactive
         layers.add(entity)
@@ -210,21 +210,21 @@ class Textbox(UIBase):
     def nameBox(curBox, otherBox, color):
         for b in otherBox:
             b.active = False
-            b.image = pg.image.load("GUI/textbox/" + b.modus + "/" + b.inactiveImage + ".png").convert_alpha()
+            b.image = pg.image.load(f"GUI/textbox/{b.modus}/{b.inactiveImage}.png").convert_alpha()
             nW = b.rect[2]
             nH = b.rect[3]
             b.image = pg.transform.scale(b.image, (nW, nH))
 
         curBox.active = not curBox.active
         curBox.color = color
-        curBox.image = pg.image.load("GUI/textbox/" + curBox.modus + "/" + curBox.activeImage + ".png").convert_alpha()
+        curBox.image = pg.image.load(f"GUI/textbox/{curBox.modus}/{curBox.activeImage}.png").convert_alpha()
         nW = curBox.rect[2]
         nH = curBox.rect[3]
 
 class AddButton(UIBase):
     
     def create(scale, modus, layers, uis, job, pos):
-        entity = AddButton(pos, "GUI/button/"+modus+"/ADD.png", job, "button", scale, modus, (68, 36))
+        entity = AddButton(pos, f"GUI/button/{modus}/ADD.png", job, "button", scale, modus, (68, 36))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)   
@@ -235,12 +235,10 @@ class AddButton(UIBase):
             captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
         elif modus == "QUEUE":
             captchacards.QueueCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
-        elif modus == "TREE":
-            captchacards.CaptchaCards.createCard(scale, sprites, layers,text, name, stack, tier, cardIDs)
 
     def cardCreate(i, textboxs,   sprites, layers, currentStack, scale, cardIDs):
 
-        i.image = pg.image.load("GUI/button/" + i.modus + "/ADD_DOWN.png").convert_alpha()
+        i.image = pg.image.load(f"GUI/button/{i.modus}/ADD_DOWN.png").convert_alpha()
         
         for b in textboxs:
             if b.text == "":
@@ -252,7 +250,7 @@ class AddButton(UIBase):
             b.text = ""
             b.txt_surface = i.fontBig.render(b.text, True, b.color)
             b.active = False
-            b.image = pg.image.load("GUI/textbox/" + i.modus + "/" + b.inactiveImage + ".png").convert_alpha()
+            b.image = pg.image.load(f"GUI/textbox/{i.modus}/{b.inactiveImage}.png").convert_alpha()
 
     def setEdit(sprites, uis, editing, stack, scale, modus):
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
@@ -264,7 +262,7 @@ class AddButton(UIBase):
                         i.text = ""
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         i.active = False
-                        i.image = pg.image.load("GUI/textbox/" + i.modus + "/" + i.inactiveImage + ".png").convert_alpha()
+                        i.image = pg.image.load(f"GUI/textbox/{i.modus}/{i.inactiveImage}.png").convert_alpha()
                     elif i.job == "code":
                         s.captaCode = i.text
                         stack.pop(len(stack)-1)
@@ -272,22 +270,22 @@ class AddButton(UIBase):
                         i.text = ""
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         i.active = False
-                        i.image = pg.image.load("GUI/textbox/" + i.modus + "/" + i.inactiveImage + ".png").convert_alpha()
-                        s.image = pg.image.load("GUI/cards/" + modus + "/CAPTA.png").convert_alpha()
+                        i.image = pg.image.load(f"GUI/textbox/{i.modus}/{i.inactiveImage}.png").convert_alpha()
+                        s.image = pg.image.load(f"GUI/cards/{modus}/CAPTA.png").convert_alpha()
                         captchacards.CaptchaCards.kindIcon(s, scale, "d")
                     elif i.job == "tier":
                         s.tier = i.text
                         i.text = ""
                         i.txt_surface = FONT.render(i.text, True, i.color)
                         i.active = False
-                        i.image = pg.image.load("GUI/textbox/" + i.modus + "/" + i.inactiveImage + ".png").convert_alpha()
+                        i.image = pg.image.load(f"GUI/textbox/{i.modus}/{i.inactiveImage}.png").convert_alpha()
                     if i.job == "endEdit":
-                        i.image = pg.image.load("GUI/icon/" + modus + "/EDIT.png").convert_alpha()
+                        i.image = pg.image.load(f"GUI/icon/{modus}/EDIT.png").convert_alpha()
                         i.job = "edit"
                     for j in uis:
                         if j.job == "set":
                             
-                            j.image = pg.image.load("GUI/button/" + modus + "/ADD.png").convert_alpha()
+                            j.image = pg.image.load(f"GUI/button/{modus}/ADD.png").convert_alpha()
                             j.job = "cardCreate"
         editing = False
         return editing
@@ -306,7 +304,7 @@ class CheckBox(UIBase):
        
     def inspect(i, b, c):
 
-        i.parent.image = pg.image.load("GUI/panel/" + c[4] + "/PANEL.png").convert_alpha()
+        i.parent.image = pg.image.load(f"GUI/panel/{c[4]}/PANEL.png").convert_alpha()
         nW = i.parent.rect[2]
         nH = i.parent.rect[3]
         i.parent.image = pg.transform.scale(i.parent.image, (nW, nH))
@@ -358,7 +356,7 @@ class CheckBox(UIBase):
                     w = entityText.get_width()
                     wN = 168*c[3] - w/2
                     h = entityText.get_height()
-                    hN = 312*c[3] - h/2
+                    hN = 345*c[3] - h/2
                     i.parent.image.blit(entityText, [wN, hN])
 
             elif c[0] == 1:
@@ -461,7 +459,7 @@ class CheckBox(UIBase):
 class CloseButton(UIBase):
 
     def create(pos, modus, job, parent, scale, layers, uis):
-        entity = CloseButton(pos, "GUI/button/" + modus + "/ARROW.png", job, "button", scale, modus, (16,16))
+        entity = CloseButton(pos, f"GUI/button/{i.modus}/ARROW.png", job, "button", scale, modus, (16,16))
         parent.children.append(entity)
         entity.parent = parent
         layers.add(entity)
@@ -477,7 +475,7 @@ class CardInspector(UIBase):
         for i in uis:
             if i.job == "cardInspection":
                 CardInspector.closePanel(uis, layers)
-        entity = CardInspector(pos, "GUI/panel/"+modus+"/PANEL.png","cardInspection", "label", scale, modus, (16,16))
+        entity = CardInspector(pos, f"GUI/panel/{modus}/PANEL.png","cardInspection", "label", scale, modus, (16,16))
         layers.add(entity)
         layers.change_layer(entity, 1000)
         uis.add(entity)
@@ -575,30 +573,31 @@ class CardInspector(UIBase):
     
         x = 0
         for z in range(int(len(textRef)/3)):
+
             makeText(panel, textRef[x], textRef[x+1], textRef[x+2], scale, text.name)
             x += 3
 
         entityText = panel.fontBig.render("CAPTCHALOGUE CARD", 2, WHITE)
         panel.image.blit(entityText, [12*scale, 0*scale])
 
-        print(text.captaCode)
         imageRef = [text.grist, 91, 116, text.eff[0], 91, 140, text.eff[1], 115, 140, text.eff[2], 139, 140, text.eff[3], 163, 140, text.deff[0], 91 ,164, text.deff[1], 115, 164, text.deff[2], 139, 164, text.deff[3], 163, 164, text.wKind, 67 ,92, text.action1, 36, 204, text.action2, 36, 228, text.action3, 168, 204, text.action4, 168, 228]
         x = 0
         for z in range(int(len(imageRef)/3)):
+            
             makeImage(panel, imageRef[x], imageRef[x+1], imageRef[x+2], scale)
             x += 3
 
 class HelpButton(UIBase):
     
     def create(scale, modus, layers, uis, pos):
-        entity = StackingArea(pos, "GUI/icon/"+modus+"/HELP.png", "help", "button", scale, modus, (16,16))
+        entity = StackingArea(pos, f"GUI/icon/{modus}/HELP.png", "help", "button", scale, modus, (16,16))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
 
     def toggleHelp(helpT, uis, modus):
         if helpT == False:
-            cursor =  pg.image.load("GUI/icon/" + modus + "/MOUSE_HELP.png").convert_alpha()
+            cursor =  pg.image.load(f"GUI/icon/{modus}/MOUSE_HELP.png").convert_alpha()
             helpT = True
         else:
             cursor =  pg.image.load("GUI/icon/MOUSE.png").convert_alpha()
@@ -671,7 +670,7 @@ class MenuButtons(UIBase):
 class Taskbar(UIBase):
 
     def create(scale, pos, uis, layers, modus):
-        entity = Taskbar(pos, "GUI/panel/"+modus+"/TASKBAR.png", "taskbar", "panel", scale, modus, (0,0))
+        entity = Taskbar(pos, f"GUI/panel/{modus}/TASKBAR.png", "taskbar", "panel", scale, modus, (0,0))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -683,7 +682,7 @@ class Taskbar(UIBase):
         Taskbar.createButton(scale, "EDIT", modus, "edit", layers, uis, (616, 510), entity)
     
     def createButton(scale, image, modus, job, layers, uis, pos, parent=None):
-        entity = Taskbar(pos, "GUI/icon/"+modus+"/"+image+".png", job, "label", scale, modus, (0,0))
+        entity = Taskbar(pos, f"GUI/icon/{modus}/{image}.png", job, "label", scale, modus, (0,0))
         layers.add(entity)
         layers.change_layer(entity, -1)
         uis.add(entity)
@@ -691,7 +690,7 @@ class Taskbar(UIBase):
             parent.children.append(entity)
 
     def taskbarOpen(i, uis, layers, scale, modus):
-        i.image = pg.image.load("GUI/icon/" + modus + "/ARROW_ACTIVE.png").convert_alpha()
+        i.image = pg.image.load(f"GUI/icon/{modus}/ARROW_ACTIVE.png").convert_alpha()
         nW = i.rect[2]
         nH = i.rect[3]
         i.image = pg.transform.scale(i.image, (nW, nH))
@@ -701,7 +700,7 @@ class Taskbar(UIBase):
         Taskbar.create(scale, (382, 492), uis, layers, modus)
 
     def taskbarClose(i, uis , layers, scale, modus):
-        i.image = pg.image.load("GUI/icon/" + modus + "/ARROW.png").convert_alpha()
+        i.image = pg.image.load(f"GUI/icon/{modus}/ARROW.png").convert_alpha()
         nW = i.rect[2]
         nH = i.rect[3]
         i.image = pg.transform.scale(i.image, (nW, nH))
@@ -717,22 +716,22 @@ class Taskbar(UIBase):
                 layers.remove(j)
     
     def editToggle(i, uis, editing, modus):
-        i.image = pg.image.load("GUI/icon/" + modus + "/ALT_X.png").convert_alpha()
+        i.image = pg.image.load(f"GUI/icon/{modus}/ALT_X.png").convert_alpha()
         i.job = "endEdit"
         for j in uis:
             if j.job == "cardCreate":
-                j.image = pg.image.load("GUI/button/" + modus + "/SET.png").convert_alpha()
+                j.image = pg.image.load(f"GUI/button/{modus}/SET.png").convert_alpha()
                 j.job = "set"
         editing = True
         return editing
 
     def editEnd(i, uis, editing, modus):
         FONT = pg.font.Font("GUI/font/DisposableDroidBB.ttf", 24)
-        i.image = pg.image.load("GUI/icon/" + modus + "/EDIT.png").convert_alpha()
+        i.image = pg.image.load(f"GUI/icon/{modus}/EDIT.png").convert_alpha()
         i.job = "edit"
         for j in uis:
             if j.job == "set":
-                j.image = pg.image.load("GUI/button/" + modus + "/ADD.png").convert_alpha()
+                j.image = pg.image.load(f"GUI/button/{modus}/ADD.png").convert_alpha()
                 j.job = "cardCreate"
             iBox = ["name", "code", "tier"]
             for l in iBox:

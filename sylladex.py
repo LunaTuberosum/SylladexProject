@@ -295,7 +295,7 @@ def main():
                             if moveing == True:
                                 moveAllCard = False
                                 ## Picks up image and places it above all
-                                sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
+                                sprite.image = pg.image.load(f"GUI/cards/{modus}CAPTA_UP.png").convert_alpha()
                                 captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
                                 nW = sprite.rect[2]
                                 nH = sprite.rect[3]
@@ -312,9 +312,7 @@ def main():
                     for s in sprites:
                         if s.rect.collidepoint(pg.mouse.get_pos()):
                             captchacards.CaptchaCards.checkCode(s)
-                            CardInspector.create(scale, modus, layers, uis, (648, 66), s)
-
-                #             # Panel.create(scale, uis, (612, 42), (360, 540), uisImageDict, None, layers, "CardInspection", s)     
+                            CardInspector.create(scale, modus, layers, uis, (648, 66), s)   
 
                 ## Checking if its right button
                 elif event.button == 3:
@@ -357,7 +355,7 @@ def main():
                 if bool1 == True:
                     for c in sprites:
 
-                        c.image = pg.image.load("GUI/cards/" + modus +"/CAPTA.png").convert_alpha()
+                        c.image = pg.image.load(f"GUI/cards/{modus}/CAPTA.png").convert_alpha()
                         captchacards.CaptchaCards.kindIcon(c, scale, "d")
                         nW = c.rect[2]
                         nH = c.rect[3]
