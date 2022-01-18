@@ -68,8 +68,8 @@ class CaptchaCards(pg.sprite.Sprite):
                         layers.change_layer(s, layer)
                         layer += 1
                     else:
-                        s.rect.x = 565
-                        s.rect.y = 50
+                        s.rect.x = 565 * scale
+                        s.rect.y = 50 * scale
                     parent = s
 
 ### FINE
@@ -351,8 +351,8 @@ class TreeCards(CaptchaCards):
             for s in sprites:
                 if s.cardID == stack[0]:
                     root = s
-                    root.rect.x = 565
-                    root.rect.y = 50
+                    root.rect.x = 565 * 2
+                    root.rect.y = 50 * 2
             stack.pop(0)
             current = root
             for c in stack:

@@ -321,7 +321,7 @@ class AddButton(UIBase):
 class CheckBox(UIBase):
 
     def create(pos, job,  scale, modus, layers, uis, parent, insAtr, insNum):
-        entity = CheckBox(pos, "GUI/button/CHECK_BOX.png", job, "button", scale, modus, (0,0))
+        entity = CheckBox(pos, "GUI/button/CHECK_BOX.png", job, "button", 1, modus, (0,0))
         parent.children.append(entity)
         entity.parent = parent
         entity.insAtr = insAtr
@@ -333,9 +333,6 @@ class CheckBox(UIBase):
     def inspect(i, b, c):
 
         i.parent.image = pg.image.load(f"GUI/panel/{c[4]}/PANEL.png").convert_alpha()
-        nW = i.parent.rect[2]
-        nH = i.parent.rect[3]
-        i.parent.image = pg.transform.scale(i.parent.image, (nW, nH))
         CardInspector.reinit(i.parent.inspectie, i.parent, c[3])
         inspectList = ["trait1", "trait2", "action1", "action2", "action3", "action4"]
         
@@ -347,9 +344,6 @@ class CheckBox(UIBase):
                 for j in inspectList:
                     if l.job == "inspect"+j:
                         l.image = pg.image.load("GUI/button/CHECK_BOX.png").convert_alpha()
-                        nW = l.rect[2]
-                        nH = l.rect[3]
-                        l.image = pg.transform.scale(l.image, (nW, nH))
                         l.checked = False
 
             i.checked = True
@@ -360,10 +354,6 @@ class CheckBox(UIBase):
                 textPoses = [297*c[3], 312*c[3], 327*c[3], 342*c[3]]
             
                 i.image = pg.image.load("GUI/button/CHECKED_BOX.png").convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
-                
             
                 tier = math.ceil(int(i.parent.inspectie.tier)/4)
                 if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier))) >= 33:
@@ -393,9 +383,6 @@ class CheckBox(UIBase):
                 textPoses = [297*c[3], 314*c[3], 327*c[3], 342*c[3]]
             
                 i.image = pg.image.load("GUI/button/CHECKED_BOX.png").convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
             
                 tier = math.ceil(int(i.parent.inspectie.tier)/4)
                 if len(b.get(codies[c[0]]).get("WEAPON").get(str(tier)).get(i.parent.inspectie.wType)) >= 33:
@@ -425,9 +412,6 @@ class CheckBox(UIBase):
                 textPoses = [297*c[3], 314*c[3], 327*c[3], 342*c[3]]
             
                 i.image = pg.image.load("GUI/button/CHECKED_BOX.png").convert_alpha()
-                nW = i.rect[2]
-                nH = i.rect[3]
-                i.image = pg.transform.scale(i.image, (nW, nH))
 
             
                 if len(b.get(codies[c[0]])[2]) >= 33:
@@ -479,9 +463,6 @@ class CheckBox(UIBase):
                     i.parent.image.blit(entityText, [wN, hN])
         else:
             i.image = pg.image.load("GUI/button/CHECK_BOX.png").convert_alpha()
-            nW = i.rect[2]
-            nH = i.rect[3]
-            i.image = pg.transform.scale(i.image, (nW, nH))
             i.checked = False
 
 class CloseButton(UIBase):
@@ -503,7 +484,7 @@ class CardInspector(UIBase):
         for i in uis:
             if i.job == "cardInspection":
                 CardInspector.closePanel(uis, layers)
-        entity = CardInspector(pos, f"GUI/panel/{modus}/PANEL.png","cardInspection", "label", scale, modus, (16,16))
+        entity = CardInspector(pos, f"GUI/panel/{modus}/PANEL.png","cardInspection", "label", 1, modus, (16,16))
         layers.add(entity)
         layers.change_layer(entity, 1000)
         uis.add(entity)
@@ -522,7 +503,7 @@ class CardInspector(UIBase):
             x += 3
             y += 1
 
-        CloseButton.create((pos[0]-38,pos[1]+194), modus, "closePanel", entity, scale, layers, uis)
+        CloseButton.create((pos[0]-38,pos[1]+194), modus, "closePanel", entity, 1, layers, uis)
 
     def closePanel(uis, layer):
         for i in uis:
@@ -557,7 +538,7 @@ class CardInspector(UIBase):
                 entityText = panel.font.render(text, 1, BLACK)
 
             H = entityText.get_height()
-            label.image.blit(entityText, [x*scale, y*scale - H/2])
+            label.image.blit(entityText, [x, y - H/2])
 
         def makeImage(label, image, x, y, scale):
 
@@ -577,11 +558,11 @@ class CardInspector(UIBase):
 
                     entityImage = pg.image.load(inImage).convert_alpha()
 
-                    nW = 32*scale
-                    nH = 32*scale
+                    nW = 32
+                    nH = 32
                     entityImage = pg.transform.scale(entityImage, (nW, nH))
 
-                    label.image.blit(entityImage, [x*scale, y*scale])
+                    label.image.blit(entityImage, [x, y])
                     break
                 else:
                     n += 1
@@ -590,11 +571,11 @@ class CardInspector(UIBase):
                     entityImage = pg.Surface((16, 16))
                     entityImage.fill(WHITE)
                     entityImage = pg.image.load(codeDatabase.action.get(image)).convert_alpha()
-                    nW = 108*scale
-                    nH = 24*scale
+                    nW = 108
+                    nH = 24
                     entityImage = pg.transform.scale(entityImage, (nW, nH))
 
-                    label.image.blit(entityImage, [x*scale, y*scale])
+                    label.image.blit(entityImage, [x, y])
 
 
         textRef = ["CODE", 40, 372, text.captaCode, 94, 372,"TIER",174, 372, str(text.tier), 216, 372, "GRIST TYPE", 16, 132 , text.grist, 123, 132, "NAME", 16, 48, text.name,  54, 48, "ITEMKIND" , 16 , 108 , text.wKind, 99, 108, text.trait1, 39, 84, text.trait2, 123, 84, text.wType, 231, 72, "EFFECTIVE", 16, 156, "INEFFECTIVE", 16, 180, "INSPECT INFORMATION", 78, 276, "CST", 14, 303, "DMG", 12, 333, "1", 214, 108, "2", 214, 132, "3", 214, 156, "BD", 210, 180, codeDatabase.damgeNum.get(int(text.tier)).get("1"), 244, 108, codeDatabase.damgeNum.get(int(text.tier)).get("2"), 244, 132, codeDatabase.damgeNum.get(int(text.tier)).get("3"), 244, 156, codeDatabase.damgeNum.get(int(text.tier)).get("BD"), 240, 181]        
