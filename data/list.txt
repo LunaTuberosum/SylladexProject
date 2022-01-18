@@ -1,4 +1,4 @@
-4 44444444 4 
-1 aaaaaaaa 1 
-2 bbbbbbbb 2 
-1 cccccccc c 
+2 aaaaaaaa a 
+2 aaaaaaaa a 
+1 11111111 1 
+2 aaaaaaaa a 

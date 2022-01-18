@@ -316,7 +316,7 @@ def main():
                     for s in sprites:
                         if s.rect.collidepoint(pg.mouse.get_pos()):
                             captchacards.CaptchaCards.checkCode(s)
-                            CardInspector.create(scale, modus, layers, uis, (648, 66), s)   
+                            CardInspector.create(scale, modus, layers, uis, (1608, 332), s)   
 
                 ## Checking if its right button
                 elif event.button == 3:
@@ -448,7 +448,7 @@ def main():
 
                                     for s in sprites:
                                         if s.cardID == currentStack[0]:
-                                            outlines.add(captchacards.CaptaOutline((s.rect.x, s.rect.y - 48), (255, 255, 255), s, scale))
+                                            outlines.add(captchacards.CaptaOutline((s.rect.x, s.rect.y - 48* scale), (255, 255, 255), s, scale))
 
                         else:
                             for s in sprites:
