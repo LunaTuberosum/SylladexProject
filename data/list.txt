@@ -1,3 +1,4 @@
-3 dddddddd z 
-4 aaaaaaaa f 
-6 jjjjjjjj j
+4 44444444 4 
+1 aaaaaaaa 1 
+2 bbbbbbbb 2 
+1 cccccccc c 

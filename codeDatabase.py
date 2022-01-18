@@ -70,8 +70,8 @@ code = {
     "0": {
         "1": "Artifactkind", 
         "2": "ARTIFACT", 
-        "3": "None", 
-        "4": "None", 
+        "3": "NONE", 
+        "4": "NONE", 
         "5": {
             "MELEE": "No Action",
             "RANGED": "No Action",
@@ -100,8 +100,8 @@ code = {
     "1": {
         "1": "Moduskind", 
         "2": "ARTIFACT", 
-        "3": "None", 
-        "4": "None", 
+        "3": "NONE", 
+        "4": "NONE", 
         "5": {
             "MELEE": "No Action",
             "RANGED": "No Action",
@@ -130,8 +130,8 @@ code = {
     "2": {
         "1": "Hammerkind", 
         "2": "URANIUM", 
-        "3": "None", 
-        "4": "None", 
+        "3": "NONE", 
+        "4": "NONE", 
         "5": {
             "MELEE": "ASSURE",
             "RANGED": "ARROGATE",
@@ -3234,7 +3234,7 @@ action = {
     "ARGUFY": "GUI/action/ARGUFY.png",
     "ARISE": "GUI/action/ARISE.png",
     "ARITHMETIZE": "GUI/action/ARITHMETIZE.png",
-    "ARMAMENTFY": "GUI/action/ARMAMENTFY.png",
+    "ARMAMENTIFY": "GUI/action/ARMAMENTIFY.png",
     "ARRAIGN": "GUI/action/ARRAIGN.png",
     "ARRANGE": "GUI/action/ARRANGE.png",
     "ARREST": "GUI/action/ARREST.png",

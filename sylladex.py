@@ -26,7 +26,14 @@ pg.init()
 
 pg.key.set_repeat(500, 200)
 
-screen = pg.display.set_mode((960, 540))
+infoObject = pg.display.Info()
+
+scale = int(infoObject.current_w / 960)
+
+if scale == 1:
+    screen = pg.display.set_mode((960, 540))
+else:
+    screen = pg.display.set_mode((infoObject.current_w, infoObject.current_h))
 
 
 pg.mouse.set_visible(False)
@@ -36,7 +43,6 @@ sprites = pg.sprite.Group()
 outlines = pg.sprite.GroupSingle()
 layers = pg.sprite.LayeredUpdates()
 uis = pg.sprite.Group()
-avalible_sprites = pg.sprite.Group()
 
 pg.display.set_caption('SYLLADEX ALPHA 0.1')
 
@@ -52,9 +58,7 @@ def main():
         x = f.readlines()
         lines = x[0].split()
         modus = lines[0]
-        scale = int(lines[1])
     modusD = modus
-    scaleD = scale
     
 
     modusColor = {
@@ -99,6 +103,7 @@ def main():
     bool1 = False
     lines = []
 
+    moveAllCard = False
 
     cardIDs = []
 
@@ -161,7 +166,7 @@ def main():
                 if z >= 1:
                     if parent:
                         parent.child = entity
-
+                        entity.parent = parent
                 parent = entity
 
             ## Make them stack proprly
@@ -171,9 +176,8 @@ def main():
             a += 48
 
     if modus == "TREE":
-        print(currentStack)
         global screen
-        lines = captchacards.TreeCards.startTree(currentStack, sprites, lines)
+        captchacards.TreeCards.startTree(currentStack, sprites)
 
 
     ## Programs start
@@ -213,13 +217,16 @@ def main():
 
             ## Quitting software
             if event.type == pg.QUIT:
-                return
+                pg.quit()
+                sys.exit()
 
             ## Checking if mouse is used
             elif event.type == pg.MOUSEBUTTONDOWN:
 
                 ## Checking if its left mouse button
                 if event.button == 1:
+
+                    moveAllCard = True
 
                     for b in cardInput:
                         if b.rect.collidepoint(event.pos):
@@ -237,8 +244,7 @@ def main():
                             if i.job == "modusChanger" and helpT == False:
                                 modus = ModusChanger.modusChange(i, modusColor[modus][0], modus, scale, uis, sprites, layers, cardIDs)
                                 if modus == "TREE":
-                                    print(currentStack)
-                                    lines = captchacards.TreeCards.startTree(currentStack, sprites, lines)
+                                    captchacards.TreeCards.startTree(currentStack, sprites)
 
                             elif i.job == "cardCreate" and helpT == False:
                                 i.modus = modus
@@ -281,55 +287,27 @@ def main():
                                 Taskbar.captaEdit(selected, input_box1, input_box2, input_box3)
 
                             ### Checking how to move sprite
-                            
-                            ## If the sprite has no parent
-                            if selected.parent == None:
-
-                                ## if it still has a child
-                                if selected.child != None:
-
-                                    ## Changes the sprite to be up
-                                    sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                    captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
-                                    nW = sprite.rect[2]
-                                    nH = sprite.rect[3]
-                                    sprite.image = pg.transform.scale(sprite.image, (nW, nH))
-
-                                    ## Temp var
-                                    x = 1
-
-
-                                    ## Can move the card now
-                                    moveCard = True
-
-                                    ## Checks all sprites for children
-                                    for sprite in sprites:
-
-                                        for s in sprites:
-
-                                            if sprite.child == s:
-
-                                                ## Sets every child in assending order in the stack
-                                                x += 1
-                                                s.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                                captchacards.CaptchaCards.kindIcon(s, scale, "u")
-                                                nW = s.rect[2]
-                                                nH = s.rect[3]
-                                                s.image = pg.transform.scale(s.image, (nW, nH))
-
-                                ## If the sprite is by its self
+                            if len(currentStack) == 0:
+                                moveing = True
+                            for s in currentStack:
+                                if s != sprite.cardID:
+                                    moveing = True
                                 else:
+                                    moveing = False
+                                    break
 
-                                    ## Picks up image and places it above all
-                                    sprite.image = pg.image.load("GUI/cards/" + modus + "/CAPTA_UP.png").convert_alpha()
-                                    captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
-                                    nW = sprite.rect[2]
-                                    nH = sprite.rect[3]
-                                    sprite.image = pg.transform.scale(sprite.image, (nW, nH))
-                                    layers.change_layer(sprite, len(currentStack)+1)
+                            if moveing == True:
+                                moveAllCard = False
+                                ## Picks up image and places it above all
+                                sprite.image = pg.image.load(f"GUI/cards/{modus}/CAPTA_UP.png").convert_alpha()
+                                nW = sprite.rect[2]
+                                nH = sprite.rect[3]
+                                sprite.image = pg.transform.scale(sprite.image, (nW, nH))
+                                captchacards.CaptchaCards.kindIcon(sprite, scale, "u")
+                                layers.change_layer(sprite, len(currentStack)+1)
 
-                                    ## Can move card
-                                    moveCard = True
+                                ## Can move card
+                                moveCard = True
                                    
                 ## If middle click
                 elif event.button == 2:
@@ -338,9 +316,7 @@ def main():
                     for s in sprites:
                         if s.rect.collidepoint(pg.mouse.get_pos()):
                             captchacards.CaptchaCards.checkCode(s)
-                            CardInspector.create(scale, modus, layers, uis, (648, 66), s)
-
-                #             # Panel.create(scale, uis, (612, 42), (360, 540), uisImageDict, None, layers, "CardInspection", s)     
+                            CardInspector.create(scale, modus, layers, uis, (648, 66), s)   
 
                 ## Checking if its right button
                 elif event.button == 3:
@@ -349,38 +325,33 @@ def main():
                     for sprite in sprites:
                         
                         if sprite.rect.collidepoint(event.pos):
-                            selectedd = sprite
+                            selected = sprite
                             
-                            if modus == "STACK":
-                                ## Cheaking if the card has no child but has a parent
-                                if selectedd.parent and selectedd.child == None:
-                                    ## If it is the top on the stack
-                                    if layers.get_layer_of_sprite(selectedd) == len(currentStack)-1:
-                                        
-                                        
+                            if currentStack:
+                                if modus == "STACK":
+                                    if selected.cardID == currentStack[len(currentStack)-1]:
                                         ## Disconnect it
-                                        captchacards.CaptchaCards.disconnect(selectedd,selectedd.parent,currentStack, sprites, scale)
-                                        
-                                    else:
+                                        captchacards.CaptchaCards.disconnect(selected,selected.parent,currentStack, sprites, scale, modus)
 
-                                        ## Sets selected to none
-                                        selected = None
-                            elif modus == "QUEUE":
-                                ## Cheaking if the card has no child but has a parent
-                                if selectedd.parent and selectedd.child != None:
+                                elif modus == "QUEUE":
+                                    ## Cheaking if the card has no child but has a parent
+                                    if selected.parent and selected.child != None:
 
-                                    ## If it is the top on the stack
-                                    if layers.get_layer_of_sprite(selectedd) == 0:
+                                        ## If it is the top on the stack
+                                        if layers.get_layer_of_sprite(selected) == 0:
 
-                                        ## Disconnect it
-                                        captchacards.QueueCards.disconnect(selectedd,selectedd.child,currentStack, sprites, scale)
+                                            ## Disconnect it
+                                            captchacards.QueueCards.disconnect(selected,selected.child,currentStack, sprites, scale)
 
-                                        
-                                    else:
+                                            
+                                        else:
 
-                                        ## Sets selected to none
-                                        selected = None
-                                
+                                            ## Sets selected to none
+                                            selected = None
+                                elif modus == "TREE":
+                                    if selected.left == None and selected.right == None:
+                                        captchacards.TreeCards.disconnect(selected, currentStack, layers, sprites)
+                                    
                             
             ## Checking if the mouse buttons is up
             elif event.type == pg.MOUSEBUTTONUP:
@@ -388,11 +359,11 @@ def main():
                 if bool1 == True:
                     for c in sprites:
 
-                        c.image = pg.image.load("GUI/cards/" + modus +"/CAPTA.png").convert_alpha()
-                        captchacards.CaptchaCards.kindIcon(c, scale, "d")
+                        c.image = pg.image.load(f"GUI/cards/{modus}/CAPTA.png").convert_alpha()
                         nW = c.rect[2]
                         nH = c.rect[3]
                         c.image = pg.transform.scale(c.image, (nW, nH))
+                        captchacards.CaptchaCards.kindIcon(c, scale, "d")
                         
 
                         if c.parent == None and c.child == None:
@@ -401,13 +372,14 @@ def main():
                     bool1 = False                     
                 
                 moveCard = False
+                moveAllCard = False
 
                 ## Set the add button to netural
                 for i in uis:
 
                     if i.job == 'cardCreate':
 
-                        i.image = pg.image.load("GUI/button/"+ modus +"/ADD.png").convert_alpha()
+                        i.image = pg.image.load(f"GUI/button/{modus}/ADD.png").convert_alpha()
                         nW = i.rect[2]
                         nH = i.rect[3]
                         i.image = pg.transform.scale(i.image, (nW, nH))
@@ -425,8 +397,10 @@ def main():
                             
                             if selectedM.rect.colliderect(out) and selectedM.rect.colliderect(area): 
                                 
-                                captchacards.CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
-                                layers.change_layer(selectedM, len(currentStack))
+                                if modus == "TREE":
+                                    captchacards.TreeCards.combine(selectedM, out.parent, currentStack, sprites)
+                                else:
+                                    captchacards.CaptchaCards.combine(selectedM, out.parent, out, currentStack, layers, sprites)
                                 outlines.empty()
 
                             else:
@@ -439,7 +413,9 @@ def main():
                 
 
             ## Checking if the mouse is moved
-            elif event.type == pg.MOUSEMOTION:                
+            elif event.type == pg.MOUSEMOTION:    
+                if moveAllCard:
+                    captchacards.CaptchaCards.moveAll(sprites, scale, event.rel)            
 
                 for i in uis:
                     if i.job == "codePanel":
@@ -452,36 +428,57 @@ def main():
                     if moveCard == True:
 
                         ## Move card based on mouse
-                        selected.move(event.rel, currentStack, area, scale, modus, layers, sprites)
+                        selected.move(event.rel, currentStack)
                         
                         ## Makes a list of all sprites that can have an outline
-                        avalible_sprites.empty()
+                        avalible_sprites = []
 
-                        for s in sprites:
+                        if modus == "TREE":
+                            for c in sprites:
+                                if len(currentStack) == 0:
+                                    for s in sprites:
 
-                            ## If it has no children add it
-                            if s.child == None:
+                                        avalible_sprites.append(s)
 
-                                avalible_sprites.add(s)
+                                    ## If the list is longer than one make outline
+                                    if len(avalible_sprites) >= 1:
+                                        outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
 
-                        ## If the list is longer than one make outline
-                        if avalible_sprites.__len__() >= 1 and selected.child == None and selected.parent == None:
+                                else:
 
-                            
-                            outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
+                                    for s in sprites:
+                                        if s.cardID == currentStack[0]:
+                                            outlines.add(captchacards.CaptaOutline((s.rect.x, s.rect.y - 48), (255, 255, 255), s, scale))
+
+                        else:
+                            for s in sprites:
+
+                                ## If it has no children add it
+                                if s.child == None:
+
+                                    avalible_sprites.append(s)
+
+                            ## If the list is longer than one make outline
+                            if len(avalible_sprites) >= 1:
+
+                                
+                                outlines.add(captchacards.CaptchaCards.distance(selected, avalible_sprites, currentStack, scale))
                     
                        
             ## Checking if keys are being pressed
             elif event.type == pg.KEYDOWN:
 
                 if event.key == pg.K_ESCAPE:
-                    menu()
-
+                    pg.quit()
+                    sys.exit()
                 if event.key == pg.K_RETURN:
                     for b in cardInput:
                         if b.active:
                             b.active = False
-                            b.image = pg.image.load("GUI/textbox/" + modus + "/" + b.inactiveImage + ".png").convert_alpha()
+                            b.image = pg.image.load(f"GUI/textbox/{modus}/{b.inactiveImage}.png").convert_alpha()
+                            nW = b.rect[2]
+                            nH = b.rect[3]
+                            b.image = pg.transform.scale(b.image, (nW, nH))
 
                 ## Checking if the input boxs are active                
                 if input_box1.active or input_box2.active or input_box3.active:
@@ -519,13 +516,16 @@ def main():
         ## Buch of updating stuff
         sprites.update()
         screen.fill((183, 183, 183))
-        
-        for line in lines:
-            lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
+        lines.clear()
+        if currentStack:
+            lines =  captchacards.TreeCards.startLines(sprites, currentStack, lines)
+            for line in lines:
+                lineNew = pg.draw.lines(screen, (124, 166, 25), False, line, 5)
         sprites.draw(screen)
         layers.draw(screen)
-        uis.draw(screen)
         outlines.draw(screen)
+        uis.draw(screen)
+        
 
         for b in cardInput:
             Textbox.draw(b, screen)
@@ -538,16 +538,15 @@ def main():
 
         pg.display.flip()
         clock.tick(60)
-        if modusD != modus or scaleD != scale:
+        if modusD != modus:
             with open("data/var.txt", "w") as f:
-                f.writelines((modus, " ", str(scale)))
+                f.writelines(f"{modus} ")
             for i in uis:
                 i.modus = modus
                 UIBase.updateAll(i, sprites, scale, uis, modusColor[modus][0], cardInput)
 
 
         modusD = modus
-        scaleD = scale
 
 
 def menu():
@@ -589,11 +588,8 @@ def menu():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     for i in ui:
-                        print(1)
                         if i.job == "start":
-                            print(2)
                             if i.rect.collidepoint(pg.mouse.get_pos()):
-                                print(3)
                                 i.image = pg.image.load("MAINSCREEN/START_ACTIVE.png").convert_alpha()
                                 running = False
                         if i.job == "quit":
