@@ -1,7 +1,7 @@
 import pygame as pg
 
 class UIBase(pg.sprite.Sprite):
-    modus = ""
+    modus = "STACK"
     uiElements = pg.sprite.Group()
 
     def __init__(self, x, y, size, image):
