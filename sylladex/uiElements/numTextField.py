@@ -26,6 +26,7 @@ class NumTextField(UIBase):
                 if amount < 0:
                     for removeCard in range(0, amount*-1):
                         elem.remove_fromList()
+                        elem.place_list()
                 else:
                     for newCard in range(0, amount):
                         elem.add_toList()

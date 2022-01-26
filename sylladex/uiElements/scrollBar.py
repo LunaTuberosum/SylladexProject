@@ -15,11 +15,13 @@ class ScrollBar(pg.sprite.Sprite):
         self.itemList = cardList
 
         if len(self.itemList) == 0:
-            sections = 0
+            size = 0
         else:
-        
-            sections = 631 / len(self.itemList)
-        size = sections * 9
+            if len(self.itemList) > 9:
+                sections = 625 / len(self.itemList) 
+                size = sections * 8
+            else:
+                size = 0
         self.image = pg.Surface((23, size))
         self.image.fill((255, 0, 220))
         self.rect = pg.Rect(273, 196, 23, size)
@@ -29,18 +31,37 @@ class ScrollBar(pg.sprite.Sprite):
     def on_click(self):
         self.selected = True 
 
-    def move_bar(self, mousePos):
-        checkNum = 631 / len(self.itemList)
-        # checkNum = startNum * (len(self.itemList)- 9 )
-        # self.rectTemp += rel[1]
-        if mousePos[1] >= self.rect.y + checkNum:
-            self.rect.y += checkNum
+    def move_bar(self, rel, pos):
+        checkNum = 625 / len(self.itemList)
+        self.rect.y = pos[1]
+        if self.rect.y < 196:
+            self.rect.y = 196
+            for cardItem in self.itemList:
+                cardItem.rect.y = 196 + (70 * self.itemList.index(cardItem))
 
-            for item in self.itemList:
-                item.rect.y -= 70
+        elif self.rect.y + self.rect.h > 821:
+            self.rect.y = 821 - self.rect.h
+            for cardItem in self.itemList:
+                cardItem.rect.y = 196 - (70 * ((len(self.itemList)-9) - self.itemList.index(cardItem)))
 
-        elif mousePos[1] <= self.rect.y - checkNum:
-            self.rect.y -= checkNum
+        else:
+            tempNum = checkNum
+            allChecks = []
+            for newCheck in range(0, len(self.itemList)-9):
+                allChecks.append(tempNum + 196)
+                tempNum += checkNum
 
-            for item in self.itemList:
-                item.rect.y += 70
+            for check in allChecks:
+                if self.rect.y >= check:
+
+                    if self.itemList[0].rect.y > 196 - (70 * allChecks.index(check)):
+                        
+                        for cardItem in self.itemList:
+                            cardItem.rect.y -= 70
+                
+                if self.rect.y <= check:
+
+                    if self.itemList[0].rect.y < 196 - (70 * allChecks.index(check)):
+                        
+                        for cardItem in self.itemList:
+                            cardItem.rect.y += 70

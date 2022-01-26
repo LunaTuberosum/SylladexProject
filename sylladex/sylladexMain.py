@@ -5,6 +5,7 @@ from sylladex.uiElements.gristCacheButton import GristCacheButton
 from sylladex.uiElements.popUp import PopUp
 from sylladex.uiElements.numTextField import NumTextField
 from sylladex.uiElements.scrollBar import ScrollBar
+from sylladex.uiElements.listObject import ListObject
 
 
 import pygame as pg
@@ -44,7 +45,7 @@ def main():
                 for elem in UIBase.get_group("ui"):
                     if isinstance(elem, ScrollBar):
                         if elem.selected == True:
-                            elem.move_bar(event.pos)
+                            elem.move_bar(event.rel, event.pos)
 
             if event.type == pg.KEYDOWN:
                 for elem in UIBase.get_group("ui"):
@@ -59,12 +60,14 @@ def main():
             else:
                 elem.negate = False
 
-        for elem in UIBase.get_group("ui"):
             if isinstance(elem, PopUp):
                 if pg.time.get_ticks() - elem.last >= elem.timer:
                     elem.remove()
                     if elem:
                         elem.last = pg.time.get_ticks()
+
+            if isinstance(elem, ListObject):
+                elem.update()
 
         clock.tick(30)
         screen.fill((183, 183, 183))
