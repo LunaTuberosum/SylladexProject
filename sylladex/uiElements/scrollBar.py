@@ -30,10 +30,46 @@ class ScrollBar(pg.sprite.Sprite):
 
     def on_click(self):
         self.selected = True 
+        self.image.fill((255, 97, 220))
 
-    def move_bar(self, rel, pos):
+    def move_bar(self, pos):
         checkNum = 625 / len(self.itemList)
         self.rect.y = pos[1]
+        if self.rect.y < 196:
+            self.rect.y = 196
+            for cardItem in self.itemList:
+                cardItem.rect.y = 196 + (70 * self.itemList.index(cardItem))
+
+        elif self.rect.y + self.rect.h > 821:
+            self.rect.y = 821 - self.rect.h
+            for cardItem in self.itemList:
+                cardItem.rect.y = 196 - (70 * ((len(self.itemList)-9) - self.itemList.index(cardItem)))
+
+        else:
+            tempNum = checkNum
+            allChecks = []
+            for newCheck in range(0, len(self.itemList)-9):
+                allChecks.append(tempNum + 196)
+                tempNum += checkNum
+
+            for check in allChecks:
+                if self.rect.y >= check:
+
+                    if self.itemList[0].rect.y > 196 - (70 * allChecks.index(check)):
+                        
+                        for cardItem in self.itemList:
+                            cardItem.rect.y -= 70
+                
+                if self.rect.y <= check:
+
+                    if self.itemList[0].rect.y < 196 - (70 * allChecks.index(check)):
+                        
+                        for cardItem in self.itemList:
+                            cardItem.rect.y += 70
+
+    def move_bar_wheel(self, rel):
+        checkNum = 625 / len(self.itemList)
+        self.rect.y += rel * 10
         if self.rect.y < 196:
             self.rect.y = 196
             for cardItem in self.itemList:
