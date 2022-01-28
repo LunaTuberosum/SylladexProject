@@ -15,6 +15,10 @@ class ListObject(UIBase):
         self.image.blit(self.txt_surface, (3,37))
         self.image.blit(self.txt_surface, (129,37))
 
+        self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
+        self.kindImage.set_alpha(125)
+        self.image.blit(self.kindImage, (185, 3))
+
         self.interactable = True
     
     def update(self):
