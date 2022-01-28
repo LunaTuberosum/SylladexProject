@@ -10,9 +10,10 @@ class ListObject(UIBase):
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
-        self.text = str(int(length) + 1)
-        self.txt_surface = self.font.render(self.text, True, (0,0,0))
-        self.image.blit(self.txt_surface, (10,10))
+        self.txt_surface = self.font.render("-", True, (0,0,0))
+        self.image.blit(self.txt_surface, (3,3))
+        self.image.blit(self.txt_surface, (3,37))
+        self.image.blit(self.txt_surface, (129,37))
 
         self.interactable = True
     

@@ -15,12 +15,15 @@ class SidebarButton(UIBase):
         super().__init__(x, y, size, image)
 
         self.state = state
+        self.hovering = False
 
     def hover(self):
         self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON{self.state}HOVER.png").convert_alpha()
+        self.hovering = True
 
     def no_hover(self):
         self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON{self.state}.png").convert_alpha()
+        self.hovering = False
 
     def on_click(self):
         if self.state == "_":

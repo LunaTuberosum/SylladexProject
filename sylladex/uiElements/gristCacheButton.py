@@ -9,4 +9,4 @@ class GristCacheButton(UIBase):
         super().__init__(x, y, size, image)
         
     def on_click(self):
-        PopUp('Grsit cahce is comming cery soon')
+        PopUp('Grsit cahce is comming very soon')

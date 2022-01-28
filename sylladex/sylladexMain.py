@@ -69,10 +69,17 @@ def main():
 
 
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, PopUp) and elem.rect.collidepoint(event.pos):
-                elem.negate = True
+            if elem.rect.collidepoint(pg.mouse.get_pos()):
+                if isinstance(elem, PopUp):
+                    elem.negate = True
+                if hasattr(elem, "hover"):
+                    elem.hover()
             else:
-                elem.negate = False
+                if hasattr(elem, "negate"):
+                    elem.negate = False
+                if hasattr(elem, "no_hover"):
+                    if elem.hovering == True:
+                        elem.no_hover()
 
             if isinstance(elem, PopUp):
                 if nowTick - elem.last >= elem.timer:
@@ -82,12 +89,6 @@ def main():
 
             if isinstance(elem, ListObject):
                 elem.update()
-
-            if isinstance(elem, SidebarButton):
-                if elem.rect.collidepoint(pg.mouse.get_pos()):
-                    elem.hover()
-                else:
-                    elem.no_hover()
   
 
         clock.tick(30)
