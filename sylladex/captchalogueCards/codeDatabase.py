@@ -3113,24 +3113,24 @@ damgeNum = {
 ## IMAGE DATABSES
 
 grist = {
-    "ALL": "GUI/grist/All.png",
-    "AMBER": "GUI/grist/Amber.png",
-    "AMETHYST": "GUI/grist/Amethyst.png",
-    "ARTIFACT": "GUI/grist/Artifact.png",
-    "BUILD": "GUI/grist/Build.png",
-    "CAULK": "GUI/grist/Caulk.png",
-    "CHALK": "GUI/grist/Chalk.png",
-    "COBALT": "GUI/grist/Cobalt.png",
-    "DIAMOND": "GUI/grist/Diamond.png",
-    "GARNET": "GUI/grist/Garnet.png",
-    "IRON": "GUI/grist/Iron.png",
-    "MARBLE": "GUI/grist/Marble.png",
-    "RUBY": "GUI/grist/Ruby.png",
-    "SHALE": "GUI/grist/Shale.png",
-    "TAR": "GUI/grist/Tar.png",
-    "URANIUM": "GUI/grist/Uranium.png",
-    "ZILLIUM": "GUI/grist/Zillium.png",
-    "NONE": "GUI/grist/NONE.png"
+    "ALL": "sylladex/uiElements/asset/GRISTS/All.png",
+    "AMBER": "sylladex/uiElements/asset/GRISTS/Amber.png",
+    "AMETHYST": "sylladex/uiElements/asset/GRISTS/Amethyst.png",
+    "ARTIFACT": "sylladex/uiElements/asset/GRISTS/Artifact.png",
+    "BUILD": "sylladex/uiElements/asset/GRISTS/Build.png",
+    "CAULK": "sylladex/uiElements/asset/GRISTS/Caulk.png",
+    "CHALK": "sylladex/uiElements/asset/GRISTS/Chalk.png",
+    "COBALT": "sylladex/uiElements/asset/GRISTS/Cobalt.png",
+    "DIAMOND": "sylladex/uiElements/asset/GRISTS/Diamond.png",
+    "GARNET": "sylladex/uiElements/asset/GRISTS/Garnet.png",
+    "IRON": "sylladex/uiElements/asset/GRISTS/Iron.png",
+    "MARBLE": "sylladex/uiElements/asset/GRISTS/Marble.png",
+    "RUBY": "sylladex/uiElements/asset/GRISTS/Ruby.png",
+    "SHALE": "sylladex/uiElements/asset/GRISTS/Shale.png",
+    "TAR": "sylladex/uiElements/asset/GRISTS/Tar.png",
+    "URANIUM": "sylladex/uiElements/asset/GRISTS/Uranium.png",
+    "ZILLIUM": "sylladex/uiElements/asset/GRISTS/Zillium.png",
+    "NONE": "sylladex/uiElements/asset/GRISTS/NONE.png"
 }
 
 kind = {
@@ -3282,8 +3282,14 @@ def read_code(codeNum, card):
     card.action4 = code.get(codeArray[7]).get("8").get(wType)
 
 
-def find_kindImage(card):
-    if kind.get(card.kind):
-        return kind.get(card.kind)
+def find_kindImage(kindName):
+    if kind.get(kindName):
+        return kind.get(kindName)
     else:
-        raise Exception(f"Could not find image for {card.kind}")
+        raise Exception(f"Could not find image for {kindName}")
+
+def find_gristImage(gristName):
+    if grist.get(gristName):
+        return grist.get(gristName)
+    else:
+        raise Exception(f"Could not find image for {gristName}")

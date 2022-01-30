@@ -14,17 +14,17 @@ class CardList(UIBase):
         self.uiLayers.change_layer(self, -1)
         
     def add_toList(self):
-        self.listObj.append(ListObject(24, 127, (249, 64), "sylladex/uiElements/asset/MISC/LIST_OBJ.png", str(len(self.listObj))))
+        self.listObj.append(ListObject())
         self.place_list()
 
-    def remove_fromList(self, NumTextField):
+    def remove_fromList(self, TextField):
         if self.listObj[len(self.listObj)-1].empty == True:
             self.listObj[len(self.listObj)-1].kill()
             self.listObj.remove(self.listObj[len(self.listObj)-1])
         else:
             PopUp("You can only remove empty cards. Eject cards first")
-            NumTextField.text = str(len(self.listObj))
-            NumTextField.draw()
+            TextField.text = str(len(self.listObj))
+            TextField.draw()
             return
         
         

@@ -4,27 +4,37 @@ from sylladex.uiElements.baseUI import UIBase
 from sylladex.uiElements.cardList import CardList
 
 
-class NumTextField(UIBase):
-    text = "0"
+class TextField(pg.sprite.Sprite):
 
-    def __init__(self, x, y, size, image, maxChar):
-        super().__init__(x, y, size, image)
+    def __init__(self, x, y, width, height, maxChar, job, toolTipText, defaultValue):
+        super().__init__()
+
+        UIBase.add_toGroup(self)
+        UIBase.uiLayers.change_layer(self, 1)
+
+        self.image = pg.Surface((width, height))
+        self.image.fill((255,255,255))
+        self.rect = pg.Rect(x, y, width, height)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-        self.text = NumTextField.text 
+        self.text = defaultValue
         self.txt_surface = self.font.render(self.text, True, (0,0,0))
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
 
         self.maxChar = maxChar
+        self.job = job
         self.active = False
 
-        self.toolTipText = "The Number of Cards in you Sylladex" 
+        self.toolTipText = toolTipText
 
     def exit_field(self):
         self.active = False
+        self.image.fill((255,255,255))
+        self.txt_surface = self.font.render(self.text, True, (0,0,0))
+        self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, CardList):
-                amount = int(NumTextField.text) - len(elem.listObj)
+            if isinstance(elem, CardList) and self.job == "numOfCards":
+                amount = int(self.text) - len(elem.listObj)
                 if amount < 0:
                     for removeCard in range(0, amount*-1):
                         elem.remove_fromList(self)
@@ -34,12 +44,14 @@ class NumTextField(UIBase):
                         elem.add_toList()
         
     def draw(self):
-        self.image = pg.image.load("sylladex/uiElements/asset/MISC/NUM_CARD_FIELD.png").convert_alpha()
-        NumTextField.text = self.text
+        self.image.fill((160,160,160))
         self.txt_surface = self.font.render(self.text, True, (0,0,0))
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+     
+           
 
     def typeing(self, event):
+        
         if self.active == True:
             if event.key == pg.K_BACKSPACE:
                 self.text = self.text[:-1]
@@ -58,3 +70,8 @@ class NumTextField(UIBase):
 
     def on_click(self):
         self.active = True
+        self.image.fill((170,170,170))
+        self.txt_surface = self.font.render(self.text, True, (0,0,0))
+        self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+        
+        

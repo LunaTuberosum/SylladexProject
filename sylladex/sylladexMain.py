@@ -3,11 +3,13 @@ from sylladex.uiElements.stackingArea import StackingArea
 from sylladex.uiElements.sidebarButton import SidebarButton
 from sylladex.uiElements.gristCacheButton import GristCacheButton
 from sylladex.uiElements.popUp import PopUp
-from sylladex.uiElements.numTextField import NumTextField
+from sylladex.uiElements.textField import TextField
 from sylladex.uiElements.scrollBar import ScrollBar
 from sylladex.uiElements.listObject import ListObject
 from sylladex.uiElements.cardList import CardList
 from sylladex.uiElements.toolTip import ToolTip
+from sylladex.uiElements.removeCardButton import RemoveCardButton
+from sylladex.uiElements.newCardOverlay import NewCardOverlay
 
 import pygame as pg
 
@@ -25,6 +27,8 @@ def main():
     SidebarButton(0, 537, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png", "")
     GristCacheButton()
 
+    NewCardOverlay()
+
     prevTick = pg.time.get_ticks()
 
     while True:
@@ -40,6 +44,21 @@ def main():
                             elem.exit_field()
                         if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
                             elem.on_click()
+                            
+                            if RemoveCardButton.eject == True:
+                                if len(CardList.listObj) == 0:
+                                    RemoveCardButton.eject = False
+                                else:
+                                    for elem in UIBase.get_group("ui"):
+                                        if isinstance(elem, ListObject):    
+                                            elem.redraw_card((230,230,230))
+
+                            elif RemoveCardButton.eject == False:
+                                for elem in UIBase.get_group("ui"):
+                                    if isinstance(elem, ListObject):    
+                                        elem.redraw_card((255,255,255))
+                            
+
             
             elif event.type == pg.MOUSEBUTTONUP:
                 for elem in UIBase.get_group("ui"):
@@ -63,7 +82,7 @@ def main():
 
             if event.type == pg.KEYDOWN:
                 for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, NumTextField):
+                    if isinstance(elem, TextField):
                         elem.typeing(event)
 
 
@@ -74,29 +93,36 @@ def main():
                 if isinstance(elem, PopUp):
                     elem.negate = True
                 if hasattr(elem, "hover"):
-                    elem.hover()
+                    if isinstance(elem, ListObject)and RemoveCardButton.eject == True:
+                        elem.alt_hover()
+                    else:
+                        elem.hover()
                 if hasattr(elem, "toolTipText"):
-                    ToolTip(pg.mouse.get_pos(), elem.toolTipText)
+                    if hasattr(elem, "active") and elem.active == True:
+                        pass
+                    else:
+                        ToolTip(pg.mouse.get_pos(), elem.toolTipText)
             else:
                 if hasattr(elem, "negate"):
                     elem.negate = False
-                if hasattr(elem, "no_hover"):
-                    if elem.hovering == True:
+                if hasattr(elem, "no_hover")and elem.hovering == True:
+                    if isinstance(elem, ListObject)and RemoveCardButton.eject == True:
+                        elem.alt_no_hover()
+                    else:
                         elem.no_hover()
 
-            if isinstance(elem, PopUp):
-                if nowTick - elem.last >= elem.timer:
-                    elem.remove()
-                    if elem:
-                        elem.last = pg.time.get_ticks()
+            if isinstance(elem, PopUp) and  hasattr(elem, "last") and nowTick - elem.last >= elem.timer:
+                elem.remove()
+                if elem:
+                    elem.last = pg.time.get_ticks()
 
             if isinstance(elem, ToolTip):
                 UIBase.remove_fromGroup(elem)
                 elem.kill()
 
-            if isinstance(elem, ListObject):
+            if hasattr(elem, "update"):
                 elem.update()
-  
+
 
         clock.tick(30)
         screen.fill((183, 183, 183))
