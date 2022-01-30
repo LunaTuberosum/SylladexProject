@@ -18,6 +18,8 @@ class NumTextField(UIBase):
         self.maxChar = maxChar
         self.active = False
 
+        self.toolTipText = "The Number of Cards in you Sylladex" 
+
     def exit_field(self):
         self.active = False
         for elem in UIBase.get_group("ui"):
@@ -25,8 +27,8 @@ class NumTextField(UIBase):
                 amount = int(NumTextField.text) - len(elem.listObj)
                 if amount < 0:
                     for removeCard in range(0, amount*-1):
-                        elem.remove_fromList()
-                        elem.place_list()
+                        elem.remove_fromList(self)
+                    elem.place_list()
                 else:
                     for newCard in range(0, amount):
                         elem.add_toList()

@@ -3134,70 +3134,70 @@ grist = {
 }
 
 kind = {
-    "Artifactkind": "GUI/kinds/ArtifactKind.PNG",
-    "Moduskind": "GUI/kinds/ModusKind.PNG",
-    "Customkind 1": "GUI/kinds/CustomKind.PNG",
-    "Customkind 2": "GUI/kinds/CustomKind.PNG",
-    "Hammerkind": "GUI/kinds/HammerKind.PNG",
-    "Needlekind": "GUI/kinds/NeedleKind.PNG",
-    "Bladekind": "GUI/kinds/BladeKind.PNG",
-    "Riflekind": "GUI/kinds/RifleKind.PNG",
-    "Utensilkind": "GUI/kinds/UtensilKind.PNG",
-    "Fistkind": "GUI/kinds/FistKind.PNG",
-    "Puppetkind": "GUI/kinds/PuppetKind.PNG",
-    "Pistolkind": "GUI/kinds/PistolKind.PNG",
-    "Lancekind": "GUI/kinds/LanceKind.PNG",
-    "Thrwstarkind": "GUI/kinds/ThrwstarKind.PNG",
-    "Sicklekind": "GUI/kinds/SickleKind.PNG",
-    "Clawkind": "GUI/kinds/ClawKind.PNG",
-    "Chainsawkind": "GUI/kinds/ChainsawKind.PNG",
-    "Canekind": "GUI/kinds/CaneKind.PNG",
-    "Dicekind": "GUI/kinds/DiceKind.PNG",
-    "Bowkind": "GUI/kinds/BowKind.PNG",
-    "Clubkind": "GUI/kinds/ClubKind.PNG",
-    "Wandkind": "GUI/kinds/WandKind.PNG",
-    "Spearkind": "GUI/kinds/SpearKind.PNG",
-    "Bunnykind": "GUI/kinds/BunnyKind.PNG",
-    "Paperkind": "GUI/kinds/PaperKind.PNG",
-    "Fncysntakind": "GUI/kinds/FncysntaKind.PNG",
-    "Umbrellakind": "GUI/kinds/UmbrellaKind.PNG",
-    "Broomkind": "GUI/kinds/BroomKind.PNG",
-    "Flshlghtkind": "GUI/kinds/FlshlghtKind.PNG",
-    "Sawkind": "GUI/kinds/SawKind.PNG",
-    "Wrenchkind": "GUI/kinds/WrenchKind.PNG",
-    "Scrwdrvrkind": "GUI/kinds/ScrwdrvrKind.PNG",
-    "Plierkind": "GUI/kinds/PlierKind.PNG",
-    "Nailkind": "GUI/kinds/NailKind.PNG",
-    "Crowbarkind": "GUI/kinds/CrowbarKind.PNG",
-    "Bookkind": "GUI/kinds/BookKind.PNG",
-    "Yoyokind": "GUI/kinds/YoyoKind.PNG",
-    "Staplerkind": "GUI/kinds/StaplerKind.PNG",
-    "Shotgunkind": "GUI/kinds/ShotgunKind.PNG",
-    "Pencilkind": "GUI/kinds/PencilKind.PNG",
-    "Brushkind": "GUI/kinds/BrushKind.PNG",
-    "Scythekind": "GUI/kinds/ScytheKind.PNG",
-    "Scissorkind": "GUI/kinds/ScissorKind.PNG",
-    "Knifekind": "GUI/kinds/KnifeKind.PNG",
-    "Shovelkind": "GUI/kinds/ShovelKind.PNG",
-    "Cordkind": "GUI/kinds/CordKind.PNG",
-    "Axekind": "GUI/kinds/AxeKind.PNG",
-    "Dartkind": "GUI/kinds/DartKind.PNG",
-    "Chainkind": "GUI/kinds/ChainKind.PNG",
-    "Ballkind": "GUI/kinds/BallKind.PNG",
-    "Rockkind": "GUI/kinds/RockKind.PNG",
-    "Hckystckkind": "GUI/kinds/HckystckKind.PNG",
-    "Tridentkind": "GUI/kinds/TridentKind.PNG",
-    "Razorkind": "GUI/kinds/RazorKind.PNG",
-    "Fankind": "GUI/kinds/FanKind.PNG",
-    "Cardkind": "GUI/kinds/CardKind.PNG",
-    "Armorkind": "GUI/kinds/ArmorKind.PNG",
-    "Shoekind": "GUI/kinds/ShoeKind.PNG",
-    "Hatkind": "GUI/kinds/HatKind.PNG",
-    "Glasseskind": "GUI/kinds/GlassesKind.PNG",
-    "Picturekind": "GUI/kinds/PictureKind.PNG",
-    "Bustkind": "GUI/kinds/BustKind.PNG",
-    "Furniturekind": "GUI/kinds/FurnitureKind.PNG",
-    "Vehicalekind": "GUI/kinds/VehicleKind.PNG",
+    "Artifactkind": "sylladex/uiElements/asset/KINDS/ArtifactKind.png",
+    "Moduskind": "sylladex/uiElements/asset/KINDS/ModusKind.png",
+    "Customkind 1": "sylladex/uiElements/asset/KINDS/CustomKind.png",
+    "Customkind 2": "sylladex/uiElements/asset/KINDS/CustomKind.png",
+    "Hammerkind": "sylladex/uiElements/asset/KINDS/HammerKind.png",
+    "Needlekind": "sylladex/uiElements/asset/KINDS/NeedleKind.png",
+    "Bladekind": "sylladex/uiElements/asset/KINDS/BladeKind.png",
+    "Riflekind": "sylladex/uiElements/asset/KINDS/RifleKind.png",
+    "Utensilkind": "sylladex/uiElements/asset/KINDS/UtensilKind.png",
+    "Fistkind": "sylladex/uiElements/asset/KINDS/FistKind.png",
+    "Puppetkind": "sylladex/uiElements/asset/KINDS/PuppetKind.png",
+    "Pistolkind": "sylladex/uiElements/asset/KINDS/PistolKind.png",
+    "Lancekind": "sylladex/uiElements/asset/KINDS/LanceKind.png",
+    "Thrwstarkind": "sylladex/uiElements/asset/KINDS/ThrwstarKind.png",
+    "Sicklekind": "sylladex/uiElements/asset/KINDS/SickleKind.png",
+    "Clawkind": "sylladex/uiElements/asset/KINDS/ClawKind.png",
+    "Chainsawkind": "sylladex/uiElements/asset/KINDS/ChainsawKind.png",
+    "Canekind": "sylladex/uiElements/asset/KINDS/CaneKind.png",
+    "Dicekind": "sylladex/uiElements/asset/KINDS/DiceKind.png",
+    "Bowkind": "sylladex/uiElements/asset/KINDS/BowKind.png",
+    "Clubkind": "sylladex/uiElements/asset/KINDS/ClubKind.png",
+    "Wandkind": "sylladex/uiElements/asset/KINDS/WandKind.png",
+    "Spearkind": "sylladex/uiElements/asset/KINDS/SpearKind.png",
+    "Bunnykind": "sylladex/uiElements/asset/KINDS/BunnyKind.png",
+    "Paperkind": "sylladex/uiElements/asset/KINDS/PaperKind.png",
+    "Fncysntakind": "sylladex/uiElements/asset/KINDS/FncysntaKind.png",
+    "Umbrellakind": "sylladex/uiElements/asset/KINDS/UmbrellaKind.png",
+    "Broomkind": "sylladex/uiElements/asset/KINDS/BroomKind.png",
+    "Flshlghtkind": "sylladex/uiElements/asset/KINDS/FlshlghtKind.png",
+    "Sawkind": "sylladex/uiElements/asset/KINDS/SawKind.png",
+    "Wrenchkind": "sylladex/uiElements/asset/KINDS/WrenchKind.png",
+    "Scrwdrvrkind": "sylladex/uiElements/asset/KINDS/ScrwdrvrKind.png",
+    "Plierkind": "sylladex/uiElements/asset/KINDS/PlierKind.png",
+    "Nailkind": "sylladex/uiElements/asset/KINDS/NailKind.png",
+    "Crowbarkind": "sylladex/uiElements/asset/KINDS/CrowbarKind.png",
+    "Bookkind": "sylladex/uiElements/asset/KINDS/BookKind.png",
+    "Yoyokind": "sylladex/uiElements/asset/KINDS/YoyoKind.png",
+    "Staplerkind": "sylladex/uiElements/asset/KINDS/StaplerKind.png",
+    "Shotgunkind": "sylladex/uiElements/asset/KINDS/ShotgunKind.png",
+    "Pencilkind": "sylladex/uiElements/asset/KINDS/PencilKind.png",
+    "Brushkind": "sylladex/uiElements/asset/KINDS/BrushKind.png",
+    "Scythekind": "sylladex/uiElements/asset/KINDS/ScytheKind.png",
+    "Scissorkind": "sylladex/uiElements/asset/KINDS/ScissorKind.png",
+    "Knifekind": "sylladex/uiElements/asset/KINDS/KnifeKind.png",
+    "Shovelkind": "sylladex/uiElements/asset/KINDS/ShovelKind.png",
+    "Cordkind": "sylladex/uiElements/asset/KINDS/CordKind.png",
+    "Axekind": "sylladex/uiElements/asset/KINDS/AxeKind.png",
+    "Dartkind": "sylladex/uiElements/asset/KINDS/DartKind.png",
+    "Chainkind": "sylladex/uiElements/asset/KINDS/ChainKind.png",
+    "Ballkind": "sylladex/uiElements/asset/KINDS/BallKind.png",
+    "Rockkind": "sylladex/uiElements/asset/KINDS/RockKind.PNG",
+    "Hckystckkind": "sylladex/uiElements/asset/KINDS/HckystckKind.png",
+    "Tridentkind": "sylladex/uiElements/asset/KINDS/TridentKind.png",
+    "Razorkind": "sylladex/uiElements/asset/KINDS/RazorKind.png",
+    "Fankind": "sylladex/uiElements/asset/KINDS/FanKind.png",
+    "Cardkind": "sylladex/uiElements/asset/KINDS/CardKind.png",
+    "Armorkind": "sylladex/uiElements/asset/KINDS/ArmorKind.png",
+    "Shoekind": "sylladex/uiElements/asset/KINDS/ShoeKind.png",
+    "Hatkind": "sylladex/uiElements/asset/KINDS/HatKind.png",
+    "Glasseskind": "sylladex/uiElements/asset/KINDS/GlassesKind.png",
+    "Picturekind": "sylladex/uiElements/asset/KINDS/PictureKind.png",
+    "Bustkind": "sylladex/uiElements/asset/KINDS/BustKind.png",
+    "Furniturekind": "sylladex/uiElements/asset/KINDS/FurnitureKind.png",
+    "Vehicalekind": "sylladex/uiElements/asset/KINDS/VehicleKind.png",
 }
 
 action = {
@@ -3263,72 +3263,27 @@ action = {
 
 }
 
-# def readCode(input, cypher, wType, teir, card):
-#     code = list(input)
-    
-#     if len(code) > 8 or len(code) < 8:
-#         return
-#     else:
-#         currentCode = []
-#         p = 0
-#         y = ["1", "2", "3", "4", "5", "6", "7", "8"]
-#         for z in code:
-            
-#             for x in cypher.keys():
-#                 if x == code[p]:
-#                     j = cypher[x][y[p]]
-                        
-#                     traitChecker = {
-#                         "MAGICAL": {
-#                             "wType": "MAGIC",
-#                         },
-#                         "EXQUISITE": {
-#                             "grist": "DIAMOND"
-#                         },
-#                         "SHITTY": {
-#                             "grist" :"ARTIFACT"
-#                         },
-#                         "TRICKSTER": {
-#                             "grist": "ZILLIUM",
-#                             "wType": "MAGIC"
-#                         },
-#                     }
+def read_code(codeNum, card):
+    if len(codeNum) >= 9:
+        raise Exception("Codes can not be longer than 8 characters")
+    elif len(codeNum) <= 7:
+        raise Exception("Codes must be 8 characters long")
+    codeArray = list(codeNum)
 
-#                     noTrait = {
-#                         "none": "none"
-#                     }
+    card.kind = code.get(codeArray[0]).get("1")
+    card.grist = code.get(codeArray[1]).get("2")
+    card.trait1 = code.get(codeArray[2]).get("3")
+    card.trait2 = code.get(codeArray[3]).get("4")
 
-#                     if y[p] == "1":
-#                         for x in weaponType.keys():
-#                             if j == x:
-#                                 wType = weaponType[j]
-#                     if y[p] >= str(5):
-#                         j = cypher[x][y[p]][wType]
-#                     elif y[p] == "4":
-#                         grist = traitChecker.get(j, noTrait).get("grist", currentCode[1])
+    wType = weaponType.get(card.kind)
+    card.action1 = code.get(codeArray[4]).get("5").get(wType)
+    card.action2 = code.get(codeArray[5]).get("6").get(wType)
+    card.action3 = code.get(codeArray[6]).get("7").get(wType)
+    card.action4 = code.get(codeArray[7]).get("8").get(wType)
 
-#                         currentCode.pop(1)
-#                         currentCode.insert(1, grist)
 
-#                         wType = traitChecker.get(j, noTrait).get("wType", wType)
-                        
-
-#                     currentCode.append(j)
-#             p += 1
-
-#         card.wKind = currentCode[0]
-#         card.wType = wType
-#         card.grist = currentCode[1]
-#         card.trait1 = currentCode[2]
-#         card.trait2 = currentCode[3]
-#         card.action1 = currentCode[4]
-#         card.action2 = currentCode[5]
-#         card.action3 = currentCode[6]
-#         card.action4 = currentCode[7]
-
-#         for x in gristData.keys():
-#             if currentCode[1] == x:
-
-#                 card.eff = gristData[x]["Effective"]
-#                 card.deff = gristData[x]["Diseffective"]
-        
+def find_kindImage(card):
+    if kind.get(card.kind):
+        return kind.get(card.kind)
+    else:
+        raise Exception(f"Could not find image for {card.kind}")

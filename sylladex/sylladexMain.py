@@ -7,6 +7,7 @@ from sylladex.uiElements.numTextField import NumTextField
 from sylladex.uiElements.scrollBar import ScrollBar
 from sylladex.uiElements.listObject import ListObject
 from sylladex.uiElements.cardList import CardList
+from sylladex.uiElements.toolTip import ToolTip
 
 import pygame as pg
 
@@ -21,8 +22,8 @@ def main():
     pg.key.set_repeat(500, 200)
 
     StackingArea(0,0, (0,0), f"sylladex/uiElements/asset/{UIBase.get_modus()}/STACK_AREA.png")
-    SidebarButton(0, 537, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_.png", "_")
-    GristCacheButton(0, 928, (70, 70), f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON.png")
+    SidebarButton(0, 537, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png", "")
+    GristCacheButton()
 
     prevTick = pg.time.get_ticks()
 
@@ -74,6 +75,8 @@ def main():
                     elem.negate = True
                 if hasattr(elem, "hover"):
                     elem.hover()
+                if hasattr(elem, "toolTipText"):
+                    ToolTip(pg.mouse.get_pos(), elem.toolTipText)
             else:
                 if hasattr(elem, "negate"):
                     elem.negate = False
@@ -86,6 +89,10 @@ def main():
                     elem.remove()
                     if elem:
                         elem.last = pg.time.get_ticks()
+
+            if isinstance(elem, ToolTip):
+                UIBase.remove_fromGroup(elem)
+                elem.kill()
 
             if isinstance(elem, ListObject):
                 elem.update()

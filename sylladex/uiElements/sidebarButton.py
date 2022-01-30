@@ -1,24 +1,29 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
-from sylladex.uiElements.popUp import PopUp
 from sylladex.uiElements.sideBar import SideBar
 from sylladex.uiElements.gristCacheButton import GristCacheButton
 from sylladex.uiElements.numTextField import NumTextField
 from sylladex.uiElements.cardList import CardList
 from sylladex.uiElements.scrollBar import ScrollBar
 from sylladex.uiElements.modus import Modus
-
+from sylladex.uiElements.addCardButton import AddCardButton
+from sylladex.uiElements.removeCardButton import RemoveCardButton
 
 class SidebarButton(UIBase):
     def __init__(self, x, y, size, image, state):
         super().__init__(x, y, size, image)
 
         self.state = state
+        if self.state == "":
+            self.toolTipText = "Opens Side Bar"
+        else:
+            self.toolTipText = "Closes Side Bar"
+
         self.hovering = False
 
     def hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON{self.state}HOVER.png").convert_alpha()
+        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON{self.state}_HOVER.png").convert_alpha()
         self.hovering = True
 
     def no_hover(self):
@@ -26,11 +31,15 @@ class SidebarButton(UIBase):
         self.hovering = False
 
     def on_click(self):
-        if self.state == "_":
+        if self.state == "":
             SidebarButton.kill(self)
 
             SideBar()
-            SidebarButton(320, 505, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_REVERESED_.png","_REVERESED_")
+
+            AddCardButton()
+            RemoveCardButton()
+
+            SidebarButton(320, 505, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_REVERESED.png","_REVERESED")
             NumTextField(242, 142, (54, 48),"sylladex/uiElements/asset/MISC/NUM_CARD_FIELD.png",3)
             CardList(24, 196, (249, 649),"sylladex/uiElements/asset/MISC/LIST_BACK.png")
 
@@ -52,7 +61,7 @@ class SidebarButton(UIBase):
             
         else:
             SidebarButton.kill(self)
-            SidebarButton(0, 537, (70, 70),f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_.png","_")
+            SidebarButton(0, 537, (70, 70),f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png","")
 
             for elem in UIBase.get_group("ui"):
 
@@ -72,6 +81,12 @@ class SidebarButton(UIBase):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
                 if isinstance(elem, Modus):
+                    UIBase.remove_fromGroup(elem)
+                    elem.kill()
+                if isinstance(elem, AddCardButton):
+                    UIBase.remove_fromGroup(elem)
+                    elem.kill()
+                if isinstance(elem, RemoveCardButton):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
 
