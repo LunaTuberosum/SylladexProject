@@ -1,15 +1,11 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
-from sylladex.captchalogueCards import codeDatabase
-from sylladex.uiElements.removeCardButton import RemoveCardButton
-from sylladex.uiElements.popUp import PopUp
-
 
 class ListObject(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
+        
         UIBase.add_toGroup(self)
         UIBase.uiLayers.change_layer(self, 1)
 
@@ -32,6 +28,7 @@ class ListObject(pg.sprite.Sprite):
 
         self.interactable = True
         self.hovering = False
+        self.writing = False
 
         self.empty = True
 
@@ -55,49 +52,56 @@ class ListObject(pg.sprite.Sprite):
             self.interactable = False
 
     def redraw_card(self, color):
-        if self.code == "-":
-            self.image.fill(color)
-            self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
-            self.kindImage.set_alpha(125)
-            self.image.blit(self.kindImage, (185, 3))
+        if self.writing == False:
+            if self.code == "-":
+                self.image.fill(color)
+                self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
+                self.kindImage.set_alpha(125)
+                self.image.blit(self.kindImage, (185, 3))
 
-            self.txt_surface = self.font.render("-", True, (0,0,0))
-            self.image.blit(self.txt_surface, (3,3))
-            self.image.blit(self.txt_surface, (3,37))
-            self.image.blit(self.txt_surface, (129,37))
-        else:
-            codeDatabase.read_code(self.code, self)
-            self.image.fill(color)
-            self.kindImage = pg.image.load(codeDatabase.find_kindImage(self.kind)).convert_alpha()
-            self.kindImage.set_alpha(125)
-            self.image.blit(self.kindImage, (185, 3))
+                self.txt_surface = self.font.render("-", True, (0,0,0))
+                self.image.blit(self.txt_surface, (3,3))
+                self.image.blit(self.txt_surface, (3,37))
+                self.image.blit(self.txt_surface, (129,37))
+            else:
+                UIBase.CodeDatabase.read_code(self.code, self)
+                self.image.fill(color)
+                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.kind)).convert_alpha()
+                self.kindImage.set_alpha(125)
+                self.image.blit(self.kindImage, (185, 3))
 
-            nameTxt = self.font.render(self.name, True, (0,0,0))
-            self.image.blit(nameTxt, (3,3))
+                nameTxt = self.font.render(self.name, True, (0,0,0))
+                self.image.blit(nameTxt, (3,3))
 
-            codeTxt = self.font.render(self.code, True, (0,0,0))
-            self.image.blit(codeTxt, (3,37))
+                codeTxt = self.font.render(self.code, True, (0,0,0))
+                self.image.blit(codeTxt, (3,37))
 
-            tierTxt = self.font.render(self.tier, True, (0,0,0))
-            self.image.blit(tierTxt, (129,37))
+                tierTxt = self.font.render(self.tier, True, (0,0,0))
+                self.image.blit(tierTxt, (129,37))
 
     def start_card(self):
-        ## max is 22 characters
-        self.name = input("Name > ")
-        ## max is 8 characters
-        self.code = input("Code > ")
-        ## max is 2 characters
-        self.tier = input("Tier > ")
 
-        self.redraw_card((255,255,255))
+        self.image.fill((255,255,255))
+        self.writing = True
+        UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "")
+        UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "")
+        UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "")
+
+        for elem in UIBase.get_group("ui"):
+            if hasattr(elem, "job"):
+                if elem.job == "nameOverlay" or elem.job == "codeOverlay" or elem.job == "tierOverlay":
+                    elem.color = (235,235,235)
+                    elem.no_hover()
 
     def hover(self):
-        self.redraw_card((230,230,230))
-        self.hovering = True
+        if self.writing == False:
+            self.redraw_card((230,230,230))
+            self.hovering = True
 
     def no_hover(self):
-        self.redraw_card((255,255,255))
-        self.hovering = False
+        if self.writing == False:
+            self.redraw_card((255,255,255))
+            self.hovering = False
 
     def alt_no_hover(self):
         self.redraw_card((230,230,230))
@@ -108,16 +112,16 @@ class ListObject(pg.sprite.Sprite):
         self.hovering = True
 
     def on_click(self):
-        if RemoveCardButton.eject == True:
+        if UIBase.RemoveCardButton.eject == True:
             if self.empty == False:
                 self.empty = True
                 self.name = "-"
                 self.code = "-"
                 self.tier = "-"
 
-                RemoveCardButton.eject = False
+                UIBase.RemoveCardButton.eject = False
                 for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, ListObject):
+                    if isinstance(elem, UIBase.ListObject):
                         elem.redraw_card((255,255,255))
             else: 
-                PopUp("You can\'t wject an empty card")
+                UIBase.PopUp("You can\'t wject an empty card")

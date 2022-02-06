@@ -1,7 +1,6 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
-from sylladex.uiElements.popUp import PopUp
 
 
 class GristCacheButton(UIBase):
@@ -11,4 +10,4 @@ class GristCacheButton(UIBase):
         self.toolTipText = "Comming Soon" 
         
     def on_click(self):
-        PopUp('Grsit cahce is comming very soon')
+        UIBase.PopUp('Grsit cahce is comming very soon')

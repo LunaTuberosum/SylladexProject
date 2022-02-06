@@ -6,19 +6,17 @@ from sylladex.uiElements.baseUI import UIBase
 class ScrollBar(pg.sprite.Sprite):
     selected = False
 
-    def __init__(self, cardList):
+    def __init__(self):
         super().__init__()
 
         UIBase.add_toGroup(self)
         UIBase.uiLayers.change_layer(self, 1)
 
-        self.itemList = cardList
-
-        if len(self.itemList) == 0:
+        if len(UIBase.CardList.listObj) == 0:
             size = 0
         else:
-            if len(self.itemList) > 9:
-                sections = 625 / len(self.itemList) 
+            if len(UIBase.CardList.listObj) > 9:
+                sections = 625 / len(UIBase.CardList.listObj) 
                 size = sections * 8
             else:
                 size = 0
@@ -33,71 +31,71 @@ class ScrollBar(pg.sprite.Sprite):
         self.image.fill((255, 97, 220))
 
     def move_bar(self, pos):
-        checkNum = 625 / len(self.itemList)
+        checkNum = 625 / len(UIBase.CardList.listObj)
         self.rect.y = pos[1]
         if self.rect.y < 196:
             self.rect.y = 196
-            for cardItem in self.itemList:
-                cardItem.rect.y = 196 + (70 * self.itemList.index(cardItem))
+            for cardItem in UIBase.CardList.listObj:
+                cardItem.rect.y = 196 + (70 * UIBase.CardList.listObj.index(cardItem))
 
         elif self.rect.y + self.rect.h > 821:
             self.rect.y = 821 - self.rect.h
-            for cardItem in self.itemList:
-                cardItem.rect.y = 196 - (70 * ((len(self.itemList)-9) - self.itemList.index(cardItem)))
+            for cardItem in UIBase.CardList.listObj:
+                cardItem.rect.y = 196 - (70 * ((len(UIBase.CardList.listObj)-9) - UIBase.CardList.listObj.index(cardItem)))
 
         else:
             tempNum = checkNum
             allChecks = []
-            for newCheck in range(0, len(self.itemList)-9):
+            for newCheck in range(0, len(UIBase.CardList.listObj)-9):
                 allChecks.append(tempNum + 196)
                 tempNum += checkNum
 
             for check in allChecks:
                 if self.rect.y >= check:
 
-                    if self.itemList[0].rect.y > 196 - (70 * allChecks.index(check)):
+                    if UIBase.CardList.listObj[0].rect.y > 196 - (70 * allChecks.index(check)):
                         
-                        for cardItem in self.itemList:
+                        for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y -= 70
                 
                 if self.rect.y <= check:
 
-                    if self.itemList[0].rect.y < 196 - (70 * allChecks.index(check)):
+                    if UIBase.CardList.listObj[0].rect.y < 196 - (70 * allChecks.index(check)):
                         
-                        for cardItem in self.itemList:
+                        for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y += 70
 
     def move_bar_wheel(self, rel):
-        checkNum = 625 / len(self.itemList)
+        checkNum = 625 / len(UIBase.CardList.listObj)
         self.rect.y += rel * 10
         if self.rect.y < 196:
             self.rect.y = 196
-            for cardItem in self.itemList:
-                cardItem.rect.y = 196 + (70 * self.itemList.index(cardItem))
+            for cardItem in UIBase.CardList.listObj:
+                cardItem.rect.y = 196 + (70 * UIBase.CardList.listObj.index(cardItem))
 
         elif self.rect.y + self.rect.h > 821:
             self.rect.y = 821 - self.rect.h
-            for cardItem in self.itemList:
-                cardItem.rect.y = 196 - (70 * ((len(self.itemList)-9) - self.itemList.index(cardItem)))
+            for cardItem in UIBase.CardList.listObj:
+                cardItem.rect.y = 196 - (70 * ((len(UIBase.CardList.listObj)-9) - UIBase.CardList.listObj.index(cardItem)))
 
         else:
             tempNum = checkNum
             allChecks = []
-            for newCheck in range(0, len(self.itemList)-9):
+            for newCheck in range(0, len(UIBase.CardList.listObj)-9):
                 allChecks.append(tempNum + 196)
                 tempNum += checkNum
 
             for check in allChecks:
                 if self.rect.y >= check:
 
-                    if self.itemList[0].rect.y > 196 - (70 * allChecks.index(check)):
+                    if UIBase.CardList.listObj[0].rect.y > 196 - (70 * allChecks.index(check)):
                         
-                        for cardItem in self.itemList:
+                        for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y -= 70
                 
                 if self.rect.y <= check:
 
-                    if self.itemList[0].rect.y < 196 - (70 * allChecks.index(check)):
+                    if UIBase.CardList.listObj[0].rect.y < 196 - (70 * allChecks.index(check)):
                         
-                        for cardItem in self.itemList:
+                        for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y += 70

@@ -3,9 +3,10 @@ import pygame as pg
 from sylladex.uiElements.baseUI import UIBase
 
 
-class Modus(UIBase):
+class ModusCard(UIBase):
     def __init__(self, x, y, size, image, modus):
         super().__init__(x, y, size, image)
+
         self.modus = modus
         self.hovering = False
         
@@ -19,7 +20,7 @@ class Modus(UIBase):
 
     def on_click(self):
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, Modus):
+            if isinstance(elem, UIBase.ModusCard):
                 if elem == self:
                     elem.image = pg.image.load(f"sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png").convert_alpha()
                     UIBase.set_modus(self.modus)

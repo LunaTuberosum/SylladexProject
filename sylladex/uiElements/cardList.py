@@ -2,9 +2,7 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
-from sylladex.uiElements.listObject import ListObject
-from sylladex.uiElements.scrollBar import ScrollBar
-from sylladex.uiElements.popUp import PopUp
+
 
 class CardList(UIBase):
     listObj = []
@@ -14,7 +12,7 @@ class CardList(UIBase):
         self.uiLayers.change_layer(self, -1)
         
     def add_toList(self):
-        self.listObj.append(ListObject())
+        self.listObj.append(UIBase.ListObject())
         self.place_list()
 
     def remove_fromList(self, TextField):
@@ -22,9 +20,9 @@ class CardList(UIBase):
             self.listObj[len(self.listObj)-1].kill()
             self.listObj.remove(self.listObj[len(self.listObj)-1])
         else:
-            PopUp("You can only remove empty cards. Eject cards first")
-            TextField.text = str(len(self.listObj))
-            TextField.draw()
+            UIBase.PopUp("You can only remove empty cards. Eject cards first")
+            UIBase.TextField.text = str(len(self.listObj))
+            UIBase.TextField.draw()
             return
         
         
@@ -42,8 +40,8 @@ class CardList(UIBase):
             card.rect.y = 127 + offset
             offset += 70
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, ScrollBar):
+            if isinstance(elem, UIBase.ScrollBar):
                 UIBase.uiElements.remove(elem)
                 UIBase.uiLayers.remove(elem)
                 elem.kill()
-        ScrollBar(self.listObj)
+        UIBase.ScrollBar()

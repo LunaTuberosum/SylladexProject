@@ -18,4 +18,4 @@ class PopUp(UIBase):
     def remove(self):
         if self.negate == False:
             UIBase.remove_fromGroup(self)
-            PopUp.kill(self)
+            self.kill()

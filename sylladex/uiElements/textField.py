@@ -1,19 +1,19 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
-from sylladex.uiElements.cardList import CardList
 
 
 class TextField(pg.sprite.Sprite):
 
     def __init__(self, x, y, width, height, maxChar, job, toolTipText, defaultValue):
         super().__init__()
-
+        
         UIBase.add_toGroup(self)
         UIBase.uiLayers.change_layer(self, 1)
 
         self.image = pg.Surface((width, height))
-        self.image.fill((255,255,255))
+        self.color = (255,255,255)
+        self.image.fill(self.color)
         self.rect = pg.Rect(x, y, width, height)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
@@ -24,16 +24,17 @@ class TextField(pg.sprite.Sprite):
         self.maxChar = maxChar
         self.job = job
         self.active = False
+        self.hovering = False
 
         self.toolTipText = toolTipText
 
     def exit_field(self):
         self.active = False
-        self.image.fill((255,255,255))
+        self.image.fill(self.color)
         self.txt_surface = self.font.render(self.text, True, (0,0,0))
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, CardList) and self.job == "numOfCards":
+            if isinstance(elem, UIBase.CardList) and self.job == "numOfCards":
                 amount = int(self.text) - len(elem.listObj)
                 if amount < 0:
                     for removeCard in range(0, amount*-1):
@@ -45,6 +46,7 @@ class TextField(pg.sprite.Sprite):
         
     def draw(self):
         self.image.fill((160,160,160))
+        
         self.txt_surface = self.font.render(self.text, True, (0,0,0))
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
      
@@ -67,6 +69,20 @@ class TextField(pg.sprite.Sprite):
                 if event.key != pg.K_RETURN and len(self.text) < self.maxChar:
                     self.text += event.unicode
                     self.draw()
+
+    def hover(self):
+        if self.active == False:
+            self.image.fill((230,230,230))
+            self.txt_surface = self.font.render(self.text, True, (0,0,0))
+            self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+            self.hovering = True
+
+    def no_hover(self):
+        if self.active == False:
+            self.image.fill(self.color)
+            self.txt_surface = self.font.render(self.text, True, (0,0,0))
+            self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+            self.hovering = False
 
     def on_click(self):
         self.active = True

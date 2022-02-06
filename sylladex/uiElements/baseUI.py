@@ -1,10 +1,27 @@
 import pygame as pg
 import pickle
 
+
 class UIBase(pg.sprite.Sprite):
     modus = "STACK"
     uiElements = pg.sprite.Group()
     uiLayers = pg.sprite.LayeredUpdates()
+
+    AddCardButton = None
+    CardList = None
+    GristCacheButton = None
+    ListObject = None
+    ModusCard = None
+    PopUp = None
+    RemoveCardButton = None
+    ScrollBar = None
+    SideBar = None
+    SidebarButton = None
+    StackingArea = None
+    TextField = None
+    ToolTip = None
+
+    CodeDatabase = None
 
     def __init__(self, x, y, size, image):
         super().__init__()
