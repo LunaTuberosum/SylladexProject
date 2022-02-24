@@ -1,37 +1,5 @@
 from sylladex.uiElements.baseUI import UIBase
 
-from sylladex.uiElements.addCardButton import AddCardButton
-from sylladex.uiElements.cardList import CardList
-from sylladex.uiElements.gristCacheButton import GristCacheButton
-from sylladex.uiElements.listObject import ListObject
-from sylladex.uiElements.modusCard import ModusCard
-from sylladex.uiElements.popUp import PopUp
-from sylladex.uiElements.removeCardButton import RemoveCardButton
-from sylladex.uiElements.scrollBar import ScrollBar
-from sylladex.uiElements.sideBar import SideBar
-from sylladex.uiElements.sidebarButton import SidebarButton
-from sylladex.uiElements.stackingArea import StackingArea
-from sylladex.uiElements.textField import TextField
-from sylladex.uiElements.toolTip import ToolTip
-
-from sylladex.captchalogueCards import codeDatabase
-
-UIBase.AddCardButton = AddCardButton
-UIBase.CardList = CardList
-UIBase.GristCacheButton = GristCacheButton
-UIBase.ListObject = ListObject
-UIBase.ModusCard = ModusCard
-UIBase.PopUp = PopUp
-UIBase.RemoveCardButton = RemoveCardButton
-UIBase.ScrollBar = ScrollBar
-UIBase.SideBar = SideBar
-UIBase.SidebarButton = SidebarButton
-UIBase.StackingArea = StackingArea
-UIBase.TextField = TextField
-UIBase.ToolTip = ToolTip
-
-UIBase.CodeDatabase = codeDatabase
-
 import pygame as pg
 
 def main():
@@ -48,8 +16,6 @@ def main():
     UIBase.SidebarButton(0, 537, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png", "")
     UIBase.GristCacheButton()
 
-    prevTick = pg.time.get_ticks()
-
     while True:
 
         nowTick = pg.time.get_ticks()
@@ -64,15 +30,15 @@ def main():
                         if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
                             elem.on_click()
                             
-                            if RemoveCardButton.eject == True:
+                            if UIBase.RemoveCardButton.eject == True:
                                 if len(UIBase.CardList.listObj) == 0:
-                                    RemoveCardButton.eject = False
+                                    UIBase.RemoveCardButton.eject = False
                                 else:
                                     for elem in UIBase.get_group("ui"):
                                         if isinstance(elem, UIBase.ListObject):    
                                             elem.redraw_card((230,230,230))
 
-                            elif RemoveCardButton.eject == False:
+                            elif UIBase.RemoveCardButton.eject == False:
                                 for elem in UIBase.get_group("ui"):
                                     if isinstance(elem, UIBase.ListObject):    
                                         elem.redraw_card((255,255,255))
@@ -96,7 +62,7 @@ def main():
                     if isinstance(elem, UIBase.CardList):
                         if elem.rect.collidepoint(pg.mouse.get_pos()):
                             for elem in UIBase.get_group("ui"):
-                                if isinstance(elem, ScrollBar):
+                                if isinstance(elem, UIBase.ScrollBar):
                                     elem.move_bar_wheel(-event.y)
 
             if event.type == pg.KEYDOWN:
@@ -120,7 +86,7 @@ def main():
                     if hasattr(elem, "active") and elem.active == True:
                         pass
                     else:
-                        ToolTip(pg.mouse.get_pos(), elem.toolTipText)
+                        UIBase.ToolTip(pg.mouse.get_pos(), elem.toolTipText)
             else:
                 if hasattr(elem, "negate"):
                     elem.negate = False

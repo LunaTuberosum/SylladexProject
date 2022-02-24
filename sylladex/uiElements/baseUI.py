@@ -20,8 +20,11 @@ class UIBase(pg.sprite.Sprite):
     StackingArea = None
     TextField = None
     ToolTip = None
+    FinishButton = None
 
     CodeDatabase = None
+
+    prevTick = pg.time.get_ticks()
 
     def __init__(self, x, y, size, image):
         super().__init__()

@@ -25,6 +25,7 @@ class ListObject(pg.sprite.Sprite):
         self.image.blit(self.txt_surface, (3,3))
         self.image.blit(self.txt_surface, (3,37))
         self.image.blit(self.txt_surface, (129,37))
+        self.children = []
 
         self.interactable = True
         self.hovering = False
@@ -83,9 +84,9 @@ class ListObject(pg.sprite.Sprite):
 
         self.image.fill((255,255,255))
         self.writing = True
-        UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "")
-        UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "")
-        UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "")
+        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", ""))
+        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", ""))
+        self.children.append(UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", ""))
 
         for elem in UIBase.get_group("ui"):
             if hasattr(elem, "job"):
@@ -124,4 +125,4 @@ class ListObject(pg.sprite.Sprite):
                     if isinstance(elem, UIBase.ListObject):
                         elem.redraw_card((255,255,255))
             else: 
-                UIBase.PopUp("You can\'t wject an empty card")
+                UIBase.PopUp("You can\'t eject an empty card")

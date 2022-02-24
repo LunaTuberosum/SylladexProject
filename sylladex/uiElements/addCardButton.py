@@ -1,8 +1,6 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
-from sylladex.uiElements.cardList import CardList
-from sylladex.uiElements.popUp import PopUp
 
 class AddCardButton(UIBase):
     def __init__(self):
@@ -11,10 +9,22 @@ class AddCardButton(UIBase):
         self.toolTipText = "Captchalogue a Card to your Sylladex" 
         
     def on_click(self):
-        for item in CardList.listObj:
+        for item in UIBase.CardList.listObj:
+            if item.writing == True:
+                item.writing = False
+                item.empty = True
+                item.redraw_card((255,255,255))
+                self.toolTipText = "Captchalogue a Card to your Sylladex" 
+                
+                for child in item.children:
+                    child.kill()
+                return
             if item.empty == True:
                 item.empty = False
                 item.start_card()
+                item.children.append(UIBase.FinishButton(item))
+                self.toolTipText = "Stop adding a Card to your Sylladex" 
+
                 return
-        PopUp("You have no empty cards")
+        UIBase.PopUp("You have no empty cards")
         
