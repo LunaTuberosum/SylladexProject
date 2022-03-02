@@ -57,6 +57,8 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y -= 70
+                            for child in cardItem.children:
+                                child.rect.y -= 70
                 
                 if self.rect.y <= check:
 
@@ -64,6 +66,9 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y += 70
+                            for child in cardItem.children:
+                                child.rect.y += 70
+                
 
     def move_bar_wheel(self, rel):
         checkNum = 625 / len(UIBase.CardList.listObj)
@@ -92,10 +97,14 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y -= 70
-                
+                            for child in cardItem.children:
+                                child.rect.y -= 70
+
                 if self.rect.y <= check:
 
                     if UIBase.CardList.listObj[0].rect.y < 196 - (70 * allChecks.index(check)):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y += 70
+                            for child in cardItem.children:
+                                child.rect.y += 70

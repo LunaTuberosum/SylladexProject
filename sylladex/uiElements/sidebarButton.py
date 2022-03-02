@@ -67,9 +67,10 @@ class SidebarButton(UIBase):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
                 if isinstance(elem, UIBase.CardList):
+                    elem.save_list()
                     for card in elem.listObj:
-                        UIBase.remove_fromGroup(card)
-                    UIBase.CardList.kill(elem)
+                        card.kill()
+                    elem.kill()
                 if isinstance(elem, UIBase.ScrollBar):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
@@ -80,6 +81,9 @@ class SidebarButton(UIBase):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
                 if isinstance(elem, UIBase.RemoveCardButton):
+                    UIBase.remove_fromGroup(elem)
+                    elem.kill()
+                if isinstance(elem, UIBase.FinishButton):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
 

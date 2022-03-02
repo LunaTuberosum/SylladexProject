@@ -5,15 +5,10 @@ from sylladex.uiElements.baseUI import UIBase
 class ListObject(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        
-        UIBase.add_toGroup(self)
-        UIBase.uiLayers.change_layer(self, 1)
 
         self.image = pg.Surface((249, 64))
         self.image.fill((255,255,255))
         self.rect = pg.Rect(24, 127, 249, 64)
-
-        UIBase.uiLayers.change_layer(self, 0)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
@@ -48,6 +43,8 @@ class ListObject(pg.sprite.Sprite):
         self.action3 = None
         self.action4 = None
     
+    
+
     def update(self):
         if self.grabbed == True:
             self.rect.left = pg.mouse.get_pos()[0] - 32
@@ -95,6 +92,14 @@ class ListObject(pg.sprite.Sprite):
         self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", ""))
         self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", ""))
         self.children.append(UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", ""))
+        self.children.append(UIBase.FinishButton(self))
+
+        for child in self.children:
+            UIBase.get_group('layer').change_layer(child, -1)
+
+        self.children[0].active = True
+        self.children[0].image.fill((170,170,170))
+
 
         for elem in UIBase.get_group("ui"):
             if hasattr(elem, "job"):
@@ -121,7 +126,7 @@ class ListObject(pg.sprite.Sprite):
         self.hovering = True
 
     def on_click(self):
-        if UIBase.RemoveCardButton.eject == True:
+        if UIBase.RemoveCardButton.eject == True and self.interactable == True:
             if self.empty == False:
                 self.empty = True
                 self.name = "-"

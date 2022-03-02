@@ -74,9 +74,6 @@ def main():
                     if isinstance(elem, UIBase.TextField):
                         elem.typeing(event)
 
-
-
-
         for elem in UIBase.get_group("ui"):
             if elem.rect.collidepoint(pg.mouse.get_pos()):
                 if isinstance(elem, UIBase.PopUp):

@@ -20,7 +20,6 @@ class AddCardButton(UIBase):
                 return
             if item.empty == True:
                 item.start_card()
-                item.children.append(UIBase.FinishButton(item))
                 self.toolTipText = "Stop adding a Card to your Sylladex" 
 
                 return

@@ -1,5 +1,6 @@
 ### 9 items can fit before scroll
 import pygame as pg
+import pickle
 
 from sylladex.uiElements.baseUI import UIBase
 
@@ -13,6 +14,9 @@ class CardList(UIBase):
         
     def add_toList(self):
         self.listObj.append(UIBase.ListObject())
+        card = self.listObj[len(self.listObj)-1]
+        UIBase.add_toGroup(card)
+        UIBase.uiLayers.change_layer(card, -1)
         self.place_list()
 
     def remove_fromList(self, TextField):
@@ -25,13 +29,39 @@ class CardList(UIBase):
             UIBase.TextField.draw()
             return
         
-        
+    def save_list(self):
+        tempList = []
+        for card in self.listObj:
+            tempList.append([card.name, card.code, card.tier, card.empty])
+
+        with open('sylladex/uiElements/data/uiData.plk', 'wb') as saveList:
+            pickle.dump(tempList, saveList, -1)
+
+    def load_list(self):
+        with open('sylladex/uiElements/data/uiData.plk', 'rb') as saveList:
+            tempList = pickle.load(saveList)
+        print(len(tempList))
+
+        self.listObj.clear()
+
+        for card in tempList:
+            obj = UIBase.ListObject()
+            obj.name = card[0]
+            obj.code = card[1]
+            obj.tier = card[2]
+            obj.empty = card[3]
+            self.listObj.append(obj)
+        for elem in UIBase.get_group('ui'):
+            if isinstance(elem, UIBase.TextField):
+                elem.text = str(len(self.listObj))
+                elem.draw()
 
     def start_list(self):
+        self.load_list()
         for card in self.listObj:
             UIBase.add_toGroup(card)
             UIBase.uiLayers.change_layer(card, -1)
-        self.place_list
+        self.place_list()
 
     def place_list(self):
         offset = 70
