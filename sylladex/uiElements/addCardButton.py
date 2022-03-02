@@ -12,7 +12,6 @@ class AddCardButton(UIBase):
         for item in UIBase.CardList.listObj:
             if item.writing == True:
                 item.writing = False
-                item.empty = True
                 item.redraw_card((255,255,255))
                 self.toolTipText = "Captchalogue a Card to your Sylladex" 
                 
@@ -20,7 +19,6 @@ class AddCardButton(UIBase):
                     child.kill()
                 return
             if item.empty == True:
-                item.empty = False
                 item.start_card()
                 item.children.append(UIBase.FinishButton(item))
                 self.toolTipText = "Stop adding a Card to your Sylladex" 

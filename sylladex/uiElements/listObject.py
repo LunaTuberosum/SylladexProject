@@ -28,6 +28,8 @@ class ListObject(pg.sprite.Sprite):
         self.children = []
 
         self.interactable = True
+        self.prevPos = None
+        self.grabbed = False
         self.hovering = False
         self.writing = False
 
@@ -47,6 +49,12 @@ class ListObject(pg.sprite.Sprite):
         self.action4 = None
     
     def update(self):
+        if self.grabbed == True:
+            self.rect.left = pg.mouse.get_pos()[0] - 32
+            self.rect.top = pg.mouse.get_pos()[1] - 32
+            self.redraw_card((255,255,255))
+
+            self.hovering = False
         if self.rect.y >= 196 and self.rect.y <= 757:
             self.interactable = True
         else:
@@ -126,3 +134,7 @@ class ListObject(pg.sprite.Sprite):
                         elem.redraw_card((255,255,255))
             else: 
                 UIBase.PopUp("You can\'t eject an empty card")
+        else:
+            if self.empty == False:
+                self.grabbed = True
+                self.prevPos = self.rect.topleft

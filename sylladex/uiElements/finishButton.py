@@ -49,11 +49,13 @@ class FinishButton(UIBase):
                         UIBase.PopUp("Tier must be at least 1")
                         return
                     
-                    self.card.tier = elem.text   
+                    self.card.tier = elem.text
+                    
                     textElem.append(elem)        
 
         for textE in textElem:
             textE.kill()            
         self.card.writing = False   
         self.card.redraw_card((255,255,255))
+        self.card.empty = False
         self.kill()

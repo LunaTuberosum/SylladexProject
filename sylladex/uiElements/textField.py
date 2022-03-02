@@ -65,22 +65,23 @@ class TextField(pg.sprite.Sprite):
                 self.draw()
                 self.exit_field()
 
-            elif event.key == pg.K_TAB and pg.time.get_ticks() - UIBase.prevTick >= 100:
-                if self.job == 'nameOverlay':
-                    nextText = 'codeOverlay'
-                elif self.job == 'codeOverlay':
-                    nextText = 'tierOverlay'
-                elif self.job == 'tierOverlay':
-                    nextText = 'nameOverlay'
+            elif event.key == pg.K_TAB:
+                if pg.time.get_ticks() - UIBase.prevTick >= 1:
+                    if self.job == 'nameOverlay':
+                        nextText = 'codeOverlay'
+                    elif self.job == 'codeOverlay':
+                        nextText = 'tierOverlay'
+                    elif self.job == 'tierOverlay':
+                        nextText = 'nameOverlay'
 
-                for elem in UIBase.get_group('ui'):
-                    if isinstance(elem, UIBase.TextField):
-                        if elem.job == nextText:
-                            elem.on_click()
-                            self.draw()
-                            self.exit_field()
-                            UIBase.prevTick = pg.time.get_ticks()
-                            return
+                    for elem in UIBase.get_group('ui'):
+                        if isinstance(elem, UIBase.TextField):
+                            if elem.job == nextText:
+                                elem.on_click()
+                                self.draw()
+                                self.exit_field()
+                                UIBase.prevTick = pg.time.get_ticks()
+                                return
 
             else:
                 if event.key != pg.K_RETURN and len(self.text) < self.maxChar:

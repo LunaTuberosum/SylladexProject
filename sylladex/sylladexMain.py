@@ -42,7 +42,7 @@ def main():
                                 for elem in UIBase.get_group("ui"):
                                     if isinstance(elem, UIBase.ListObject):    
                                         elem.redraw_card((255,255,255))
-                            
+
 
             
             elif event.type == pg.MOUSEBUTTONUP:
@@ -50,6 +50,10 @@ def main():
                     if isinstance(elem, UIBase.ScrollBar):
                         elem.selected = False
                         elem.image.fill((255, 0, 220))
+                    
+                    elif hasattr(elem, 'grabbed') and elem.grabbed == True:
+                        elem.rect.topleft = elem.prevPos
+                        elem.grabbed = False
             
             elif event.type == pg.MOUSEMOTION:
                 for elem in UIBase.get_group("ui"):
