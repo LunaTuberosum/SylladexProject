@@ -40,7 +40,6 @@ class CardList(UIBase):
     def load_list(self):
         with open('sylladex/uiElements/data/uiData.plk', 'rb') as saveList:
             tempList = pickle.load(saveList)
-        print(len(tempList))
 
         self.listObj.clear()
 
@@ -55,6 +54,7 @@ class CardList(UIBase):
             if isinstance(elem, UIBase.TextField):
                 elem.text = str(len(self.listObj))
                 elem.draw()
+                elem.no_hover()
 
     def start_list(self):
         self.load_list()

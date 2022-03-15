@@ -139,7 +139,7 @@ class ListObject(pg.sprite.Sprite):
                         elem.redraw_card((255,255,255))
             else: 
                 UIBase.PopUp("You can\'t eject an empty card")
-        else:
+        elif self.interactable == True:
             if self.empty == False:
                 self.grabbed = True
                 self.prevPos = self.rect.topleft
