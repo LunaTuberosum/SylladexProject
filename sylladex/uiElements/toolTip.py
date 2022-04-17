@@ -20,7 +20,7 @@ class ToolTip(pg.sprite.Sprite):
 
         self.image = pg.Surface((width, height))
         self.image.fill((210, 210, 210))
-        self.rect = pg.Rect(pos[0]+6, pos[1]-30, width, height)
+        self.rect = pg.Rect(pos[0]+12, pos[1]+15, width, height)
 
         self.image.blit(self.txt_surface, [3, 3])
     
