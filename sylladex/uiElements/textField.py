@@ -3,18 +3,10 @@ import pygame as pg
 from sylladex.uiElements.baseUI import UIBase
 
 
-class TextField(pg.sprite.Sprite):
+class TextField(UIBase):
 
     def __init__(self, x, y, width, height, maxChar, job, toolTipText, defaultValue):
-        super().__init__()
-        
-        UIBase.add_toGroup(self)
-        UIBase.uiLayers.change_layer(self, 1)
-
-        self.image = pg.Surface((width, height))
-        self.color = (255,255,255)
-        self.image.fill(self.color)
-        self.rect = pg.Rect(x, y, width, height)
+        super().__init__(x, y, (width, height), 'surfaceRect', True, (255,255,255))
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
         self.text = defaultValue
@@ -30,7 +22,7 @@ class TextField(pg.sprite.Sprite):
 
     def exit_field(self):
         self.active = False
-        self.image.fill(self.color)
+        self.image.fill((255,255,255))
         self.txt_surface = self.font.render(self.text, True, (0,0,0))
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
         for elem in UIBase.get_group("ui"):
@@ -97,7 +89,7 @@ class TextField(pg.sprite.Sprite):
 
     def no_hover(self):
         if self.active == False:
-            self.image.fill(self.color)
+            self.image.fill((255,255,255))
             self.txt_surface = self.font.render(self.text, True, (0,0,0))
             self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
             self.hovering = False

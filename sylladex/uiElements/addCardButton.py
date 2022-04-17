@@ -4,7 +4,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class AddCardButton(UIBase):
     def __init__(self):
-        super().__init__(30, 50, (70, 70), "sylladex/uiElements/asset/STACK/ADD_CARD.png")
+        super().__init__(30, 50, (70, 70), f"ADD_CARD.png")
 
         self.toolTipText = "Captchalogue a Card to your Sylladex" 
         self.hovering = False

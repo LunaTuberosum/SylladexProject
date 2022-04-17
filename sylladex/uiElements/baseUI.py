@@ -26,19 +26,33 @@ class UIBase(pg.sprite.Sprite):
 
     prevTick = pg.time.get_ticks()
 
-    def __init__(self, x, y, size, image):
+    def __init__(self, x, y, size, image, misc=False, surfaceColor=(0,0,0)):
         super().__init__()
         UIBase.add_toGroup(self)
         UIBase.uiLayers.add(self)
         UIBase.uiLayers.change_layer(self, 1)
 
-        self.image = pg.Surface(size)
-        self.image.fill((255, 255, 255))
-        self.image = pg.image.load(image).convert_alpha()
+        self.imageID = image
+        self.isMisc = misc
+        if image == 'surfaceRect':
+            self.image = pg.Surface(size)
+            self.image.fill(surfaceColor)
+        else:
+            if self.isMisc == True:
+                self.image = pg.image.load(f'sylladex/uiElements/asset/MISC/{image}').convert_alpha()
+            else:
+                self.image = pg.image.load(f'sylladex/uiElements/asset/{UIBase.get_modus()}/{self.imageID}').convert_alpha()
+
         self.rect = self.image.get_rect(topleft=(x, y))
 
     def set_modus(modus):
         UIBase.modus = modus
+
+        for elem in UIBase.get_group('ui'):
+            if elem.isMisc == False:
+                elem.image = pg.image.load(f'sylladex/uiElements/asset/{UIBase.get_modus()}/{elem.imageID}').convert_alpha()
+            elif isinstance(elem, UIBase.ScrollBar):
+                elem.image.fill(UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
 
     def get_modus():
         return UIBase.modus

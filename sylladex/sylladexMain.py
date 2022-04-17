@@ -14,8 +14,8 @@ def main():
 
     globalPrevTick = pg.time.get_ticks()
 
-    UIBase.StackingArea(0,0, (0,0), f"sylladex/uiElements/asset/{UIBase.get_modus()}/STACK_AREA.png")
-    UIBase.SidebarButton(0, 537, (70, 70), f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png", "")
+    UIBase.StackingArea(0,0, (0,0), f"STACK_AREA.png")
+    UIBase.SidebarButton(0, 537, (70, 70), f"SIDE_BAR_BUTTON.png", "")
     UIBase.GristCacheButton()
 
     while True:
@@ -51,7 +51,6 @@ def main():
                 for elem in UIBase.get_group("ui"):
                     if isinstance(elem, UIBase.ScrollBar):
                         elem.selected = False
-                        elem.image.fill((255, 0, 220))
                     
                     elif hasattr(elem, 'grabbed') and elem.grabbed == True:
                         elem.rect.topleft = elem.prevPos

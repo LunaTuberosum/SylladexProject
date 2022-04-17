@@ -2,13 +2,9 @@ import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
 
-class ListObject(pg.sprite.Sprite):
+class ListObject(UIBase):
     def __init__(self):
-        super().__init__()
-
-        self.image = pg.Surface((249, 64))
-        self.image.fill((255,255,255))
-        self.rect = pg.Rect(24, 127, 249, 64)
+        super().__init__(24, 127, (249, 64), 'surfaceRect', True, (255,255,255))
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
@@ -52,6 +48,7 @@ class ListObject(pg.sprite.Sprite):
             self.redraw_card((255,255,255))
 
             self.hovering = False
+
         if self.rect.y >= 196 and self.rect.y <= 757:
             self.interactable = True
             if self.children:
@@ -100,7 +97,7 @@ class ListObject(pg.sprite.Sprite):
 
     def start_card(self):
 
-        self.image.fill((255,255,255))
+        self.image.fill((235,235,235))
         self.writing = True
         self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", ""))
         self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", ""))

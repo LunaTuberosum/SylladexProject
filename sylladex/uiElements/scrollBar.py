@@ -3,15 +3,25 @@ import pygame as pg
 from sylladex.uiElements.baseUI import UIBase
 
 
-class ScrollBar(pg.sprite.Sprite):
+class ScrollBar(UIBase):
     selected = False
 
+    modusColorDict = {
+        'STACK': {
+            'base': (255, 0, 220),
+            'highlight': (255, 97, 220)
+        },
+        'QUEUE': {
+            'base': (225, 96, 0),
+            'highlight': (255, 145, 43)
+        },
+        'TREE': {
+            'base': (150, 255, 0),
+            'highlight': (205, 255, 43)
+        },
+        }
+
     def __init__(self):
-        super().__init__()
-
-        UIBase.add_toGroup(self)
-        UIBase.uiLayers.change_layer(self, 1)
-
         if len(UIBase.CardList.listObj) == 0:
             size = 0
         else:
@@ -20,20 +30,19 @@ class ScrollBar(pg.sprite.Sprite):
                 size = sections * 8
             else:
                 size = 0
-        self.image = pg.Surface((23, size))
-        self.image.fill((255, 0, 220))
-        self.rect = pg.Rect(273, 196, 23, size)
+
+        super().__init__(273, 196, (23, size), 'surfaceRect', True, UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
 
         self.rectTemp = self.rect.y
 
         self.hovering = False
 
     def hover(self):
-        self.image.fill((255, 97, 220))
+        self.image.fill(UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['highlight'])
         self.hovering = True
 
     def no_hover(self):
-        self.image.fill((255, 0, 220))
+        self.image.fill(UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
         self.hovering = False
 
     def on_click(self):
