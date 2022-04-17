@@ -19,9 +19,14 @@ class AddCardButton(UIBase):
                     child.kill()
                 return
             if item.empty == True:
-                item.start_card()
-                self.toolTipText = "Stop adding a Card to your Sylladex" 
+                if item.interactable == True:
+                    item.start_card()
+                    self.toolTipText = "Stop adding a Card to your Sylladex" 
 
-                return
+                    return
+                else:
+                    UIBase.PopUp('Empty card not in view')
+
+                    return
         UIBase.PopUp("You have no empty cards")
         

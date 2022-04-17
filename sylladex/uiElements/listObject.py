@@ -96,6 +96,7 @@ class ListObject(pg.sprite.Sprite):
 
         for child in self.children:
             UIBase.get_group('layer').change_layer(child, -1)
+        UIBase.get_group('layer').change_layer(self.children[3], 1)
 
         self.children[0].active = True
         self.children[0].image.fill((170,170,170))
