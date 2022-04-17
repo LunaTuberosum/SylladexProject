@@ -50,6 +50,7 @@ class SidebarButton(UIBase):
                         if isinstance(elem2, UIBase.GristCache):
                             elem.rect.x = 1038
                             elem2.rect.x = 325
+                            elem2.repositionChildren()
                 if isinstance(elem, UIBase.CardList):
                     elem.start_list()
 
@@ -75,6 +76,8 @@ class SidebarButton(UIBase):
                         if isinstance(elem2, UIBase.GristCache):
                             elem.rect.x = 713
                             elem2.rect.x = 0
+                            elem2.repositionChildren()
+                            
                 if isinstance(elem, UIBase.TextField):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()

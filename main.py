@@ -5,7 +5,10 @@ from sylladex.uiElements.baseUI import UIBase
 
 from sylladex.uiElements.addCardButton import AddCardButton
 from sylladex.uiElements.cardList import CardList
+from sylladex.uiElements.gristCache import GristCache
 from sylladex.uiElements.gristCacheButton import GristCacheButton
+from sylladex.uiElements.gristCacheLimit import GristCacheLimit
+from sylladex.uiElements.gristInfoBox import GristInfoBox
 from sylladex.uiElements.listObject import ListObject
 from sylladex.uiElements.modusCard import ModusCard
 from sylladex.uiElements.popUp import PopUp
@@ -17,12 +20,14 @@ from sylladex.uiElements.stackingArea import StackingArea
 from sylladex.uiElements.textField import TextField
 from sylladex.uiElements.toolTip import ToolTip
 from sylladex.uiElements.finishButton import FinishButton
-from sylladex.uiElements.gristCache import GristCache
 from sylladex.captchalogueCards import codeDatabase
 
 UIBase.AddCardButton = AddCardButton
 UIBase.CardList = CardList
+UIBase.GristCache = GristCache
 UIBase.GristCacheButton = GristCacheButton
+UIBase.GristCacheLimit = GristCacheLimit
+UIBase.GristInfoBox = GristInfoBox
 UIBase.ListObject = ListObject
 UIBase.ModusCard = ModusCard
 UIBase.PopUp = PopUp
@@ -34,7 +39,6 @@ UIBase.StackingArea = StackingArea
 UIBase.TextField = TextField
 UIBase.ToolTip = ToolTip
 UIBase.FinishButton = FinishButton
-UIBase.GristCache = GristCache
 
 UIBase.CodeDatabase = codeDatabase
 

@@ -9,7 +9,10 @@ class UIBase(pg.sprite.Sprite):
 
     AddCardButton = None
     CardList = None
+    GristCache = None
     GristCacheButton = None
+    GristCacheLimit = None
+    GristInfoBox = None
     ListObject = None
     ModusCard = None
     PopUp = None
@@ -21,7 +24,6 @@ class UIBase(pg.sprite.Sprite):
     TextField = None
     ToolTip = None
     FinishButton = None
-    GristCache = None
 
     CodeDatabase = None
 
