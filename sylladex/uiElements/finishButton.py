@@ -9,6 +9,16 @@ class FinishButton(UIBase):
         self.card = card
         UIBase.get_group('layer').change_layer(self, 1)
         self.toolTipText = "Finish Captchalogueing a Card to your Deck" 
+
+        self.hovering = False
+        
+    def hover(self):
+        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/FINISH_BUTTON_HOVER.png").convert_alpha()
+        self.hovering = True
+
+    def no_hover(self):
+        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/FINISH_BUTTON.png").convert_alpha()
+        self.hovering = False
         
     def on_click(self):
         for elem in UIBase.get_group("ui"):

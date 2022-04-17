@@ -7,7 +7,16 @@ class AddCardButton(UIBase):
         super().__init__(30, 50, (70, 70), "sylladex/uiElements/asset/STACK/ADD_CARD.png")
 
         self.toolTipText = "Captchalogue a Card to your Sylladex" 
+        self.hovering = False
         
+    def hover(self):
+        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_HOVER.png").convert_alpha()
+        self.hovering = True
+
+    def no_hover(self):
+        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD.png").convert_alpha()
+        self.hovering = False
+    
     def on_click(self):
         for item in UIBase.CardList.listObj:
             if item.writing == True:
