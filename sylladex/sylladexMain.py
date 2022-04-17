@@ -15,7 +15,7 @@ def main():
     globalPrevTick = pg.time.get_ticks()
 
     UIBase.StackingArea(0,0, (0,0), f"STACK_AREA.png")
-    UIBase.SidebarButton(0, 537, (70, 70), f"SIDE_BAR_BUTTON.png", "")
+    UIBase.SidebarButton()
     UIBase.GristCacheButton()
 
     while True:

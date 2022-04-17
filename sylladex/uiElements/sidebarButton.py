@@ -4,35 +4,38 @@ from sylladex.uiElements.baseUI import UIBase
 
 
 class SidebarButton(UIBase):
-    def __init__(self, x, y, size, image, state):
-        super().__init__(x, y, size, image)
+    def __init__(self):
+        super().__init__(0, 536, (70,70), "SIDE_BAR_BUTTON.png")
 
-        self.state = state
-        if self.state == "":
-            self.toolTipText = "Opens Side Bar"
-        else:
-            self.toolTipText = "Closes Side Bar"
+        self.toolTipText = "Opens Side Bar"
 
         self.hovering = False
 
     def hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON{self.state}_HOVER.png").convert_alpha()
+        if self.toolTipText == 'Opens Side Bar':
+            self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_HOVER.png").convert_alpha()
+        elif self.toolTipText == 'Closes Side Bar':
+            self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_REVERESED_HOVER.png").convert_alpha()
         self.hovering = True
 
     def no_hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON{self.state}.png").convert_alpha()
+        if self.toolTipText == 'Opens Side Bar':
+            self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png").convert_alpha()
+        elif self.toolTipText == 'Closes Side Bar':            
+            self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_REVERESED.png").convert_alpha()
         self.hovering = False
 
     def on_click(self):
-        if self.state == "":
-            UIBase.SidebarButton.kill(self)
+        if self.toolTipText == 'Opens Side Bar':
+            self.toolTipText = 'Closes Side Bar'
+            self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_REVERESED.png").convert_alpha()
+            self.rect.x = 319
 
             UIBase.SideBar()
 
             UIBase.AddCardButton()
             UIBase.RemoveCardButton()
 
-            UIBase.SidebarButton(320, 505, (70, 70), f"SIDE_BAR_BUTTON_REVERESED.png","_REVERESED")
             UIBase.TextField(242, 142, 53, 48, 3, "numOfCards", "The Number of Cards in you Sylladex", "0")
             UIBase.CardList(24, 196, (249, 649), "LIST_BACK.png")
 
@@ -56,9 +59,10 @@ class SidebarButton(UIBase):
                     elem.kill()
             UIBase.ScrollBar()
             
-        else:
-            UIBase.SidebarButton.kill(self)
-            UIBase.SidebarButton(0, 537, (70, 70),f"SIDE_BAR_BUTTON.png","")
+        elif self.toolTipText == 'Closes Side Bar':
+            self.toolTipText = 'Opens Side Bar'
+            self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png").convert_alpha()
+            self.rect.x = 0
 
             for elem in UIBase.get_group("ui"):
 

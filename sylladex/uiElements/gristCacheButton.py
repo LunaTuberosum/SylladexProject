@@ -35,6 +35,7 @@ class GristCacheButton(UIBase):
                 if isinstance(elem, UIBase.SideBar):
                     self.rect.x = 1038
                     UIBase.GristCache(325)
+                    return
                     
             UIBase.GristCache(0)
 
