@@ -16,7 +16,6 @@ from sylladex.uiElements.stackingArea import StackingArea
 from sylladex.uiElements.textField import TextField
 from sylladex.uiElements.toolTip import ToolTip
 from sylladex.uiElements.finishButton import FinishButton
-
 from sylladex.captchalogueCards import codeDatabase
 
 UIBase.AddCardButton = AddCardButton

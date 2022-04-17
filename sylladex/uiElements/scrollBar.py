@@ -26,9 +26,18 @@ class ScrollBar(pg.sprite.Sprite):
 
         self.rectTemp = self.rect.y
 
+        self.hovering = False
+
+    def hover(self):
+        self.image.fill((255, 97, 220))
+        self.hovering = True
+
+    def no_hover(self):
+        self.image.fill((255, 0, 220))
+        self.hovering = False
+
     def on_click(self):
         self.selected = True 
-        self.image.fill((255, 97, 220))
 
     def move_bar(self, pos):
         checkNum = 625 / len(UIBase.CardList.listObj)
@@ -37,11 +46,15 @@ class ScrollBar(pg.sprite.Sprite):
             self.rect.y = 196
             for cardItem in UIBase.CardList.listObj:
                 cardItem.rect.y = 196 + (70 * UIBase.CardList.listObj.index(cardItem))
+                if cardItem.children:
+                    cardItem.place_children()
 
         elif self.rect.y + self.rect.h > 821:
             self.rect.y = 821 - self.rect.h
             for cardItem in UIBase.CardList.listObj:
                 cardItem.rect.y = 196 - (70 * ((len(UIBase.CardList.listObj)-9) - UIBase.CardList.listObj.index(cardItem)))
+                if cardItem.children:
+                    cardItem.place_children()
 
         else:
             tempNum = checkNum
@@ -57,8 +70,8 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y -= 70
-                            for child in cardItem.children:
-                                child.rect.y -= 70
+                            if cardItem.children:
+                                cardItem.place_children()
                 
                 if self.rect.y <= check:
 
@@ -66,8 +79,8 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y += 70
-                            for child in cardItem.children:
-                                child.rect.y += 70
+                            if cardItem.children:
+                                cardItem.place_children()
                 
 
     def move_bar_wheel(self, rel):
@@ -77,11 +90,15 @@ class ScrollBar(pg.sprite.Sprite):
             self.rect.y = 196
             for cardItem in UIBase.CardList.listObj:
                 cardItem.rect.y = 196 + (70 * UIBase.CardList.listObj.index(cardItem))
+                if cardItem.children:
+                    cardItem.place_children()
 
         elif self.rect.y + self.rect.h > 821:
             self.rect.y = 821 - self.rect.h
             for cardItem in UIBase.CardList.listObj:
                 cardItem.rect.y = 196 - (70 * ((len(UIBase.CardList.listObj)-9) - UIBase.CardList.listObj.index(cardItem)))
+                if cardItem.children:
+                    cardItem.place_children()
 
         else:
             tempNum = checkNum
@@ -97,8 +114,8 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y -= 70
-                            for child in cardItem.children:
-                                child.rect.y -= 70
+                            if cardItem.children:
+                                cardItem.place_children()
 
                 if self.rect.y <= check:
 
@@ -106,5 +123,5 @@ class ScrollBar(pg.sprite.Sprite):
                         
                         for cardItem in UIBase.CardList.listObj:
                             cardItem.rect.y += 70
-                            for child in cardItem.children:
-                                child.rect.y += 70
+                            if cardItem.children:
+                                cardItem.place_children()

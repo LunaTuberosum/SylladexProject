@@ -54,8 +54,15 @@ class ListObject(pg.sprite.Sprite):
             self.hovering = False
         if self.rect.y >= 196 and self.rect.y <= 757:
             self.interactable = True
+            if self.children:
+                for child in self.children:
+                    UIBase.get_group('layer').change_layer(child, -1)
+                UIBase.get_group('layer').change_layer(self.children[3], 1)
         else:
             self.interactable = False
+            if self.children:
+                for child in self.children:
+                    UIBase.get_group('layer').change_layer(child, -1)
 
     def redraw_card(self, color):
         if self.writing == False:
@@ -84,6 +91,12 @@ class ListObject(pg.sprite.Sprite):
 
                 tierTxt = self.font.render(self.tier, True, (0,0,0))
                 self.image.blit(tierTxt, (129,37))
+
+    def place_children(self):
+        self.children[0].rect.topleft = (self.rect.x+3, self.rect.y+3)
+        self.children[1].rect.topleft = (self.rect.x+3, self.rect.y+35)
+        self.children[2].rect.topleft = (self.rect.x+129, self.rect.y+35)
+        self.children[3].rect.topleft = (78, self.rect.y+64)
 
     def start_card(self):
 
