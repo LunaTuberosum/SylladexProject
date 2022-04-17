@@ -7,10 +7,10 @@ class FinishButton(UIBase):
         super().__init__(78, card.rect.y+64, (70, 70), "sylladex/uiElements/asset/STACK/FINISH_BUTTON.png")
 
         self.card = card
+        UIBase.get_group('layer').change_layer(self, 1)
         self.toolTipText = "Finish Captchalogueing a Card to your Deck" 
         
     def on_click(self):
-        textElem = []
         for elem in UIBase.get_group("ui"):
             if isinstance(elem, UIBase.TextField):
                 if elem.job == "nameOverlay":
@@ -18,13 +18,12 @@ class FinishButton(UIBase):
                         UIBase.PopUp('The card must have a name')
                         return
                     self.card.name = elem.text
-                    textElem.append(elem)
+
                 elif elem.job == "codeOverlay":
                     if len(elem.text) < 8:
                         UIBase.PopUp('Codes must be a 8 characters long')
                         return
                     self.card.code = elem.text
-                    textElem.append(elem)
                 elif elem.job == "tierOverlay":
                     if len(elem.text) == 0:
                         UIBase.PopUp('Cards must have a tier')
@@ -49,13 +48,11 @@ class FinishButton(UIBase):
                         UIBase.PopUp("Tier must be at least 1")
                         return
                     
-                    self.card.tier = elem.text
-                    
-                    textElem.append(elem)        
-
-        for textE in textElem:
-            textE.kill()            
+                    self.card.tier = elem.text    
+     
         self.card.writing = False   
         self.card.redraw_card((255,255,255))
         self.card.empty = False
-        self.kill()
+        for child in self.card.children:
+            child.kill()
+        self.card.children.clear()
