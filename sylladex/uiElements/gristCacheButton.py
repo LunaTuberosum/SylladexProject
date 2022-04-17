@@ -7,17 +7,49 @@ class GristCacheButton(UIBase):
     def __init__(self):
         super().__init__(0, 928, (70,70), "GRIST_CACHE_BUTTON.png", True)
 
-        self.toolTipText = "Comming Soon" 
+        self.toolTipText = "Opens Grist Cache" 
 
         self.hovering = False
 
     def hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON_HOVER.png").convert_alpha()
+        if self.toolTipText == 'Closes Grist Cache':
+            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON.png").convert_alpha()
+        else:
+            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON_HOVER.png").convert_alpha()
         self.hovering = True
 
     def no_hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON.png").convert_alpha()
+        if self.toolTipText == 'Closes Grist Cache':
+            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON_HOVER.png").convert_alpha()
+        else:
+            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON.png").convert_alpha()
         self.hovering = False
         
     def on_click(self):
-        UIBase.PopUp('Grsit cahce is comming very soon')
+        if self.toolTipText == 'Opens Grist Cache':
+            self.toolTipText = 'Closes Grist Cache'
+            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON_HOVER.png").convert_alpha()
+            
+            self.rect.x = 713
+            for elem in UIBase.get_group('ui'):
+                if isinstance(elem, UIBase.SideBar):
+                    self.rect.x = 1038
+                    UIBase.GristCache(325)
+                    
+            UIBase.GristCache(0)
+
+        elif self.toolTipText == 'Closes Grist Cache':
+            self.toolTipText = 'Opens Grist Cache'
+            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/GRIST_CACHE_BUTTON.png").convert_alpha()
+
+            self.rect.x = 0
+            for elem in UIBase.get_group('ui'):
+                if isinstance(elem ,UIBase.GristCache):
+                    UIBase.remove_fromGroup(elem)
+                    elem.kill()
+
+                if isinstance(elem, UIBase.SideBar):
+                    self.rect.x = 326
+
+             
+            

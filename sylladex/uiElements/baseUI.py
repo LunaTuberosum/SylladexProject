@@ -21,6 +21,7 @@ class UIBase(pg.sprite.Sprite):
     TextField = None
     ToolTip = None
     FinishButton = None
+    GristCache = None
 
     CodeDatabase = None
 

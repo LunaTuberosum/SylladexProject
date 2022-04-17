@@ -43,6 +43,10 @@ class SidebarButton(UIBase):
             for elem in UIBase.get_group("ui"):
                 if isinstance(elem, UIBase.GristCacheButton):
                     elem.rect.x = 326
+                    for elem2 in UIBase.get_group('ui'):
+                        if isinstance(elem2, UIBase.GristCache):
+                            elem.rect.x = 1038
+                            elem2.rect.x = 325
                 if isinstance(elem, UIBase.CardList):
                     elem.start_list()
 
@@ -63,6 +67,10 @@ class SidebarButton(UIBase):
                     elem.kill()
                 if isinstance(elem, UIBase.GristCacheButton):
                     elem.rect.x = 0
+                    for elem2 in UIBase.get_group('ui'):
+                        if isinstance(elem2, UIBase.GristCache):
+                            elem.rect.x = 713
+                            elem2.rect.x = 0
                 if isinstance(elem, UIBase.TextField):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
