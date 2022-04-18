@@ -36,7 +36,6 @@ class GristCache(UIBase):
 
         
         for index, data in enumerate(tempData):
-            print(data)
             self.children[index+1].children[0].text = data
             self.children[index+1].children[0].draw()
             self.children[index+1].children[0].no_hover()
