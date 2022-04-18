@@ -24,8 +24,7 @@ class GristProgressBar(UIBase):
                         self.progress = 0
                         break
                     elif int(self.parent.children[0].text) > int(elem.limitNum):
-                        self.parent.children[0].text = elem.limitNum
-                        self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
+                        self.progress = 1
                         break
 
                     else:

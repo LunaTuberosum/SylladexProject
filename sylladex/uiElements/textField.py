@@ -65,6 +65,12 @@ class TextField(UIBase):
                 self.draw()
 
             elif event.key == pg.K_RETURN:
+                
+                if len(self.job) > 6 and self.job[-6:] == 'NumBox':
+                    for elem in UIBase.get_group('ui'):
+                        if isinstance(elem, UIBase.GristCacheLimit):
+                            if self.text > elem.limitNum:
+                                self.text = elem.limitNum
                 if self.text == "":
                     self.text = "0"
                 self.draw()

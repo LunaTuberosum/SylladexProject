@@ -1,4 +1,3 @@
-from email.headerregistry import Group
 from sylladex import sylladexMain
 
 from sylladex.uiElements.baseUI import UIBase
@@ -21,6 +20,7 @@ from sylladex.uiElements.stackingArea import StackingArea
 from sylladex.uiElements.textField import TextField
 from sylladex.uiElements.toolTip import ToolTip
 from sylladex.uiElements.finishButton import FinishButton
+
 from sylladex.captchalogueCards import codeDatabase
 
 UIBase.AddCardButton = AddCardButton
