@@ -18,5 +18,13 @@ class GristInfoBox(UIBase):
         self.gristName = self.font.render(self.grist, False, 'black')
         self.image.blit(self.gristName, (55.5-(self.gristName.get_width()/2)+52, 11.5-(self.gristName.get_height()/2)))
 
+        self.children = []
+
+        self.children.append(UIBase.TextField(self.rect.x+53, self.rect.y+48, 111, 36, 5, f'{self.grist}NumBox', f'Let\'s you alter how much {self.grist} grist you have', '0', (67,178,222)))
+        self.children[0].changeColors((239,239,239), (199,199,199), (179,179,179))
+
+        self.children.append(UIBase.GristProgressBar(self))
+        
+
     def update(self):
         self.image.blit(self.gristImage, (6, 22))

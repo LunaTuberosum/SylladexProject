@@ -97,7 +97,7 @@ class ListObject(UIBase):
 
     def start_card(self):
 
-        self.image.fill((235,235,235))
+        self.image.fill((255,255,255))
         self.writing = True
         self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", ""))
         self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", ""))
@@ -106,6 +106,7 @@ class ListObject(UIBase):
 
         for child in self.children:
             UIBase.get_group('layer').change_layer(child, -1)
+            child.changeColors((230,230,230), (200,200,200), (170,170,170))
 
         self.children.append(UIBase.FinishButton(self))
 

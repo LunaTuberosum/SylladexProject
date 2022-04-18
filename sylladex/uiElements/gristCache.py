@@ -10,26 +10,21 @@ class GristCache(UIBase):
         self.children = []
 
         self.children.append(UIBase.GristCacheLimit(x))
-        self.children.append(UIBase.GristInfoBox(334, 692, 'Build'))
-        self.children.append(UIBase.GristInfoBox(510, 692, 'Shale'))
-        self.children.append(UIBase.GristInfoBox(686, 692, 'Ruby'))
-        self.children.append(UIBase.GristInfoBox(862, 692, 'Cobalt'))
 
-        # self.children.append(UIBase.GristInfoBox(334, 789))
-        # self.children.append(UIBase.GristInfoBox(510, 789))
-        # self.children.append(UIBase.GristInfoBox(686, 789))
-        # self.children.append(UIBase.GristInfoBox(862, 789))
-
-        # self.children.append(UIBase.GristInfoBox(334, 885))
-        # self.children.append(UIBase.GristInfoBox(510, 885))
-        # self.children.append(UIBase.GristInfoBox(686, 885))
-        # self.children.append(UIBase.GristInfoBox(862, 885))
-
-        # self.children.append(UIBase.GristInfoBox(334, 982))
-        # self.children.append(UIBase.GristInfoBox(510, 982))
-        # self.children.append(UIBase.GristInfoBox(686, 982))
-        # self.children.append(UIBase.GristInfoBox(862, 982))
+        for index, grist in enumerate(['Build', 'Shale', 'Ruby', 'Cobalt', 'Chalk', 'Marble', 'Iron', 'Amber', 'Caulk', 'Tar', 'Uranium', 'Amethyst', 'Garnet', 'Artifact', 'Zillium', 'Diamond']):
+            if index < 4: self.children.append(UIBase.GristInfoBox((self.rect.x+9)+(174*index), 692, grist))
+            elif index < 8: self.children.append(UIBase.GristInfoBox((self.rect.x+9)+(174*(index-4)), 789, grist))
+            elif index < 12: self.children.append(UIBase.GristInfoBox((self.rect.x+9)+(174*(index-8)), 885, grist))
+            elif index < 16: self.children.append(UIBase.GristInfoBox((self.rect.x+9)+(174*(index-12)), 982, grist))
 
     def repositionChildren(self):
 
-        self.children[0].rect.x = self.rect.x+212
+        for index, child in enumerate(self.children):
+            if index == 0: child.rect.x = self.rect.x+212
+            elif index < 5: child.rect.x = (self.rect.x+9) + (174*(index - 1))
+            elif index < 9: child.rect.x = (self.rect.x+9) + (174*(index - 5))
+            elif index < 13: child.rect.x = (self.rect.x+9) + (174*(index - 9))
+            elif index < 17: child.rect.x = (self.rect.x+9) + (174*(index - 13))
+
+            if index > 0:
+                child.children[0].rect.x = child.rect.x+53

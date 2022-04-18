@@ -13,6 +13,7 @@ class UIBase(pg.sprite.Sprite):
     GristCacheButton = None
     GristCacheLimit = None
     GristInfoBox = None
+    GristProgressBar = None
     ListObject = None
     ModusCard = None
     PopUp = None

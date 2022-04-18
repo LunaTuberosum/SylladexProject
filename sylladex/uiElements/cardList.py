@@ -51,7 +51,7 @@ class CardList(UIBase):
             obj.empty = card[3]
             self.listObj.append(obj)
         for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.TextField):
+            if isinstance(elem, UIBase.TextField) and elem.job == 'numOfCards':
                 elem.text = str(len(self.listObj))
                 elem.draw()
                 elem.no_hover()

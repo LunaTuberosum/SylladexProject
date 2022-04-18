@@ -47,6 +47,10 @@ class GristCacheButton(UIBase):
             for elem in UIBase.get_group('ui'):
                 if isinstance(elem ,UIBase.GristCache):
                     for child in elem.children:
+                        if hasattr(child, 'children'):
+                            for child2 in child.children:
+                                UIBase.remove_fromGroup(child2)
+                                child2.kill()
                         UIBase.remove_fromGroup(child)
                         child.kill()
                     UIBase.remove_fromGroup(elem)

@@ -27,7 +27,7 @@ def main():
                 if event.button == 1:
                     
                     for elem in UIBase.get_group("ui"):
-                        if hasattr(elem, "active"):
+                        if hasattr(elem, "active") and elem.active == True:
                             elem.exit_field()
                         if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
                             elem.on_click()

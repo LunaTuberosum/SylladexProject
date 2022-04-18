@@ -79,8 +79,9 @@ class SidebarButton(UIBase):
                             elem2.repositionChildren()
                             
                 if isinstance(elem, UIBase.TextField):
-                    UIBase.remove_fromGroup(elem)
-                    elem.kill()
+                    if elem.job == 'numOfCards' or elem.job == 'nameOverlay' or elem.job == 'codeOverlay' or elem.job == 'tierOverlay':
+                        UIBase.remove_fromGroup(elem)
+                        elem.kill()
                 if isinstance(elem, UIBase.CardList):
                     elem.save_list()
                     for card in elem.listObj:

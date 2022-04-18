@@ -9,6 +9,7 @@ from sylladex.uiElements.gristCache import GristCache
 from sylladex.uiElements.gristCacheButton import GristCacheButton
 from sylladex.uiElements.gristCacheLimit import GristCacheLimit
 from sylladex.uiElements.gristInfoBox import GristInfoBox
+from sylladex.uiElements.gristProgressBar import GristProgressBar
 from sylladex.uiElements.listObject import ListObject
 from sylladex.uiElements.modusCard import ModusCard
 from sylladex.uiElements.popUp import PopUp
@@ -28,6 +29,7 @@ UIBase.GristCache = GristCache
 UIBase.GristCacheButton = GristCacheButton
 UIBase.GristCacheLimit = GristCacheLimit
 UIBase.GristInfoBox = GristInfoBox
+UIBase.GristProgressBar = GristProgressBar
 UIBase.ListObject = ListObject
 UIBase.ModusCard = ModusCard
 UIBase.PopUp = PopUp
