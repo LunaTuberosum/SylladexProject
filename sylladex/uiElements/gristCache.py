@@ -1,4 +1,5 @@
 import pygame as pg
+import pickle
 
 from sylladex.uiElements.baseUI import UIBase
 
@@ -17,6 +18,29 @@ class GristCache(UIBase):
             elif index < 12: self.children.append(UIBase.GristInfoBox((self.rect.x+9)+(174*(index-8)), 885, grist))
             elif index < 16: self.children.append(UIBase.GristInfoBox((self.rect.x+9)+(174*(index-12)), 982, grist))
 
+        self.load_list()
+
+    def save_cache(self):
+        tempData = []
+
+        for index, child in enumerate(self.children):
+            if index > 0:
+                tempData.append(child.children[0].text)
+
+        with open('sylladex/uiElements/data/uiCache.plk', 'wb') as saveCache:
+            pickle.dump(tempData, saveCache, -1)
+
+    def load_list(self):
+        with open('sylladex/uiElements/data/uiCache.plk', 'rb') as saveCache:
+            tempData = pickle.load(saveCache)
+
+        
+        for index, data in enumerate(tempData):
+            print(data)
+            self.children[index+1].children[0].text = data
+            self.children[index+1].children[0].draw()
+            self.children[index+1].children[0].no_hover()
+    
     def repositionChildren(self):
 
         for index, child in enumerate(self.children):
@@ -28,3 +52,4 @@ class GristCache(UIBase):
 
             if index > 0:
                 child.children[0].rect.x = child.rect.x+53
+                

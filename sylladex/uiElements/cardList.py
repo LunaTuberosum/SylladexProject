@@ -34,11 +34,11 @@ class CardList(UIBase):
         for card in self.listObj:
             tempList.append([card.name, card.code, card.tier, card.empty])
 
-        with open('sylladex/uiElements/data/uiData.plk', 'wb') as saveList:
+        with open('sylladex/uiElements/data/uiList.plk', 'wb') as saveList:
             pickle.dump(tempList, saveList, -1)
 
     def load_list(self):
-        with open('sylladex/uiElements/data/uiData.plk', 'rb') as saveList:
+        with open('sylladex/uiElements/data/uiList.plk', 'rb') as saveList:
             tempList = pickle.load(saveList)
 
         self.listObj.clear()
