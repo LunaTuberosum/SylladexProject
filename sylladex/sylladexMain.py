@@ -33,7 +33,7 @@ def main():
                             elem.on_click()
                             
                             if UIBase.RemoveCardButton.eject == True:
-                                if len(UIBase.CardList.listObj) == 0:
+                                if len(UIBase.CardList.children) == 0:
                                     UIBase.RemoveCardButton.eject = False
                                 else:
                                     for elem in UIBase.get_group("ui"):

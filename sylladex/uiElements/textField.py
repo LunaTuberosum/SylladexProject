@@ -39,7 +39,7 @@ class TextField(UIBase):
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
         for elem in UIBase.get_group("ui"):
             if isinstance(elem, UIBase.CardList) and self.job == "numOfCards":
-                amount = int(self.text) - len(elem.listObj)
+                amount = int(self.text) - len(elem.children)
                 if amount < 0:
                     for removeCard in range(0, amount*-1):
                         elem.remove_fromList(self)

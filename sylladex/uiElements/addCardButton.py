@@ -18,7 +18,7 @@ class AddCardButton(UIBase):
         self.hovering = False
     
     def on_click(self):
-        for item in UIBase.CardList.listObj:
+        for item in UIBase.CardList.children:
             if item.writing == True:
                 item.writing = False
                 item.redraw_card((255,255,255))

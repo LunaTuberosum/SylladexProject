@@ -58,7 +58,6 @@ class SidebarButton(UIBase):
                     UIBase.uiElements.remove(elem)
                     UIBase.uiLayers.remove(elem)
                     elem.kill()
-            UIBase.ScrollBar()
             
         elif self.toolTipText == 'Closes Side Bar':
             self.toolTipText = 'Opens Side Bar'
@@ -84,7 +83,7 @@ class SidebarButton(UIBase):
                         elem.kill()
                 if isinstance(elem, UIBase.CardList):
                     elem.save_list()
-                    for card in elem.listObj:
+                    for card in elem.children:
                         card.kill()
                     elem.kill()
                 if isinstance(elem, UIBase.ScrollBar):
