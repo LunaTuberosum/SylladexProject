@@ -13,7 +13,7 @@ class ToolTip(UIBase):
         width = self.txt_surface.get_width() + 6
         height = self.txt_surface.get_height() + 6
 
-        super().__init__(pos[0]+12, pos[1]+15, (width, height), 'surfaceRect', True, (210,210,210))
+        super().__init__(pos[0]+12, pos[1]+15, (width, height), 'surfaceRect', 'ToolTip', True, (210,210,210))
 
         self.image.blit(self.txt_surface, [3, 3])
     

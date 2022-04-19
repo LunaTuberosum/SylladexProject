@@ -71,12 +71,42 @@ def main():
                                     elem.move_bar_wheel(-event.y)
 
             if event.type == pg.KEYDOWN:
+                if event.mod == pg.KMOD_LCTRL and event.key == pg.K_i:
+                    if UIBase.DebugInspect == False:
+                        UIBase.DebugInspect = True
+                    else:
+                        UIBase.DebugInspect = False
+                        UIBase.Insepctors.clear()
+                        for elem in UIBase.get_group('ui'):
+                            if isinstance(elem, UIBase.DebugUIInspector):
+                                UIBase.remove_fromGroup(elem)
+                                elem.kill()
+
                 for elem in UIBase.get_group("ui"):
                     if isinstance(elem, UIBase.TextField):
                         elem.typeing(event)
 
         for elem in UIBase.get_group("ui"):
             if elem.rect.collidepoint(pg.mouse.get_pos()):
+                
+                if UIBase.DebugInspect == True:
+                    dontMake = False
+                    for elem2 in UIBase.get_group('ui'):
+                        if isinstance(elem2, UIBase.DebugUIInspector):
+                            if elem2.currentIns == elem:
+                                dontMake = True
+
+                    if dontMake == False:
+                        UIBase.Insepctors.append(UIBase.DebugUIInspector(elem))
+
+                    for index, inspector in enumerate(UIBase.Insepctors):
+                        if index == 0:
+                            inspector.rect.x = (pg.display.get_surface().get_width()-10)-(inspector.rect.w)
+                            growingOffSet = inspector.rect.w+10
+                        else:
+                            inspector.rect.x = (pg.display.get_surface().get_width()-10)-(growingOffSet)-(inspector.rect.w)
+                            growingOffSet += inspector.rect.w+10
+
                 if isinstance(elem, UIBase.PopUp):
                     elem.negate = True
                 if hasattr(elem, "hover") and elem.hovering == False:

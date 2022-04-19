@@ -31,7 +31,7 @@ class ScrollBar(UIBase):
             else:
                 size = 0
 
-        super().__init__(273, 196, (23, size), 'surfaceRect', True, UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
+        super().__init__(273, 196, (23, size), 'surfaceRect', 'ScrollBar', True, UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
 
         self.rectTemp = self.rect.y
 

@@ -4,7 +4,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class FinishButton(UIBase):
     def __init__(self, card):
-        super().__init__(78, card.rect.y+64, (70, 70), "FINISH_BUTTON.png")
+        super().__init__(78, card.rect.y+64, (70, 70), "FINISH_BUTTON.png", 'FinishButton')
 
         self.card = card
         UIBase.get_group('layer').change_layer(self, 1)

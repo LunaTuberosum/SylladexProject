@@ -28,14 +28,19 @@ class UIBase(pg.sprite.Sprite):
 
     CodeDatabase = None
 
+    DebugUIInspector = None
+    DebugInspect = False
+    Insepctors = []
+
     prevTick = pg.time.get_ticks()
 
-    def __init__(self, x, y, size, image, misc=False, surfaceColor=(0,0,0)):
+    def __init__(self, x, y, size, image, objName, misc=False, surfaceColor=(0,0,0)):
         super().__init__()
         UIBase.add_toGroup(self)
         UIBase.uiLayers.add(self)
         UIBase.uiLayers.change_layer(self, 1)
 
+        self.objName = objName
         self.imageID = image
         self.isMisc = misc
         if image == 'surfaceRect':

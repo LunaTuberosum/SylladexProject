@@ -6,7 +6,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class PopUp(UIBase):
     def __init__(self, text, question=False):
-        super().__init__(660, 380, (600, 320), "POPUP.png", True)
+        super().__init__(660, 380, (600, 320), "POPUP.png", 'PopUp', True)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 48)
         text_len = len(text) // 26

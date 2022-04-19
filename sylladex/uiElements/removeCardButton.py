@@ -8,7 +8,7 @@ class RemoveCardButton(UIBase):
     eject = False
 
     def __init__(self):
-        super().__init__(112, 50, (70, 70), f"REMOVE_CARD.png")
+        super().__init__(112, 50, (70, 70), "REMOVE_CARD.png", 'RemoveCardButton')
 
         self.toolTipText = "Eject a Card from your Sylladex" 
         self.hovering = False

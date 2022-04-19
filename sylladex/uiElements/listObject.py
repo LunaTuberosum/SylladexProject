@@ -4,9 +4,9 @@ from sylladex.uiElements.baseUI import UIBase
 
 class ListObject(UIBase):
     def __init__(self):
-        super().__init__(24, 127, (249, 64), 'surfaceRect', True, (255,255,255))
+        super().__init__(24, 127, (249, 64), 'surfaceRect', 'CardListObject', True, (255,255,255))
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
+        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf",24)
 
         self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
         self.kindImage.set_alpha(125)

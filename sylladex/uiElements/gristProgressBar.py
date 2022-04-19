@@ -13,7 +13,7 @@ class GristProgressBar(UIBase):
                 self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
                 break
 
-        super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, (99*self.progress,12), "surfaceRect", True, (67,178,222))
+        super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, (99*self.progress,12), "surfaceRect", f'GristProgressBar ({self.parent.grist})', True, (67,178,222))
 
     def update(self):
         if self.parent.children[0].text != self.prevAmount:

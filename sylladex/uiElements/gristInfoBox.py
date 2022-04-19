@@ -5,7 +5,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class GristInfoBox(UIBase):
     def __init__(self, x, y, grist):
-        super().__init__(x, y, (170,90), "GRIST_INFO_BOX.png", True)
+        super().__init__(x, y, (170,90), "GRIST_INFO_BOX.png", 'GristInfoBox',True)
 
         self.grist = grist
 

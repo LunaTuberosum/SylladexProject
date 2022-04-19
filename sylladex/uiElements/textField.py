@@ -1,4 +1,3 @@
-from posixpath import split
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
@@ -7,7 +6,7 @@ from sylladex.uiElements.baseUI import UIBase
 class TextField(UIBase):
 
     def __init__(self, x, y, width, height, maxChar, job, toolTipText, defaultValue, textColor=(0,0,0)):
-        super().__init__(x, y, (width, height), 'surfaceRect', True, (255,255,255))
+        super().__init__(x, y, (width, height), 'surfaceRect', f'TextField ({job})', True, (255,255,255))
 
         self.textColor = textColor
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)

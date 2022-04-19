@@ -23,6 +23,8 @@ from sylladex.uiElements.finishButton import FinishButton
 
 from sylladex.captchalogueCards import codeDatabase
 
+from sylladex.uiElements.debugUIInspector import DebugUIInspector
+
 UIBase.AddCardButton = AddCardButton
 UIBase.CardList = CardList
 UIBase.GristCache = GristCache
@@ -43,6 +45,8 @@ UIBase.ToolTip = ToolTip
 UIBase.FinishButton = FinishButton
 
 UIBase.CodeDatabase = codeDatabase
+
+UIBase.DebugUIInspector = DebugUIInspector
 
 if __name__ == '__main__':
     sylladexMain.main()

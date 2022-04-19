@@ -6,7 +6,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class GristCacheLimit(UIBase):
     def __init__(self, x):
-        super().__init__(x+212, 642, (290,42), "GRIST_CACHE_LIMIT.png", True)
+        super().__init__(x+212, 642, (290,42), "GRIST_CACHE_LIMIT.png", 'GristCacheLimit',True)
 
         self.toolTipText = 'The amount of each grist you can hold based on your Rung'
 

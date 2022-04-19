@@ -5,7 +5,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class SidebarButton(UIBase):
     def __init__(self):
-        super().__init__(0, 536, (70,70), "SIDE_BAR_BUTTON.png")
+        super().__init__(0, 536, (70,70), "SIDE_BAR_BUTTON.png", 'SideBarButton')
 
         self.toolTipText = "Opens Side Bar"
 

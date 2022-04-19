@@ -9,7 +9,7 @@ class CardList(UIBase):
     listObj = []
 
     def __init__(self, x, y, size, image):
-        super().__init__(x, y, size, image, True)
+        super().__init__(x, y, size, image, 'CardList', True)
         self.uiLayers.change_layer(self, -1)
         
     def add_toList(self):

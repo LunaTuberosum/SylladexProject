@@ -5,9 +5,11 @@ from sylladex.uiElements.baseUI import UIBase
 
 class ModusCard(UIBase):
     def __init__(self, x, y, size, image, modus):
-        super().__init__(x, y, size, image, True)
 
         self.modus = modus
+
+        super().__init__(x, y, size, image, f'ModusCard ({self.modus})', True)
+
         self.hovering = False
         
         if UIBase.get_modus() == self.modus:

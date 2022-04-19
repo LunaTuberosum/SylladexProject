@@ -5,7 +5,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 class GristCacheButton(UIBase):
     def __init__(self):
-        super().__init__(0, 928, (70,70), "GRIST_CACHE_BUTTON.png", True)
+        super().__init__(0, 928, (70,70), "GRIST_CACHE_BUTTON.png", 'GristCacheButton', True)
 
         self.toolTipText = "Opens Grist Cache" 
 
