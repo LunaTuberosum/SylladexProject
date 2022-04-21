@@ -1,5 +1,4 @@
 import pygame as pg
-import pickle
 
 
 class UIBase(pg.sprite.Sprite):
@@ -9,6 +8,8 @@ class UIBase(pg.sprite.Sprite):
 
     AddCardButton = None
     CardList = None
+    EscapeMenu = None
+    EscapeMenuOption = None
     GristCache = None
     GristCacheButton = None
     GristCacheLimit = None

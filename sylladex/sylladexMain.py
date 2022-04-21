@@ -81,10 +81,24 @@ def main():
                             if isinstance(elem, UIBase.DebugUIInspector):
                                 UIBase.remove_fromGroup(elem)
                                 elem.kill()
+                elif event.key == pg.K_ESCAPE:
+                    makeEscape = True
+                    for elem in UIBase.get_group('ui'):
+                        if isinstance(elem, UIBase.EscapeMenu):
+                            for child in elem.children:
+                                UIBase.remove_fromGroup(child)
+                                child.kill()
+                            UIBase.remove_fromGroup(elem)
+                            elem.kill()
+                            makeEscape = False
 
-                for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.TextField):
-                        elem.typeing(event)
+                    if makeEscape == True:
+                        UIBase.EscapeMenu()
+                    
+                else:
+                    for elem in UIBase.get_group("ui"):
+                        if isinstance(elem, UIBase.TextField):
+                            elem.typeing(event)
 
         for elem in UIBase.get_group("ui"):
             if elem.rect.collidepoint(pg.mouse.get_pos()):
