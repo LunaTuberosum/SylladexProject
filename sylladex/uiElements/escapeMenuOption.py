@@ -1,4 +1,4 @@
-from turtle import width
+import sys
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
@@ -53,3 +53,7 @@ class EscapeMenuOption(UIBase):
         self.image.fill((239,239,239))
         self.image.blit(self.bigPrefixAlt, [0,0])
         self.image.blit(self.txt_surfAlt, [self.bigPrefixAlt.get_width(),0])
+
+        if self.text == 'To Desktop':
+            pg.quit()
+            sys.exit()

@@ -20,7 +20,7 @@ class GristInfoBox(UIBase):
 
         self.children = []
 
-        self.children.append(UIBase.TextField(self.rect.x+53, self.rect.y+48, 111, 36, 5, f'{self.grist}NumBox', f'Let\'s you alter how much {self.grist} grist you have', '0', (67,178,222)))
+        self.children.append(UIBase.TextField(self.rect.x+53, self.rect.y+48, 111, 36, 7, f'{self.grist}NumBox', f'Let\'s you alter how much {self.grist} grist you have', 'Num', (67,178,222)))
         self.children[0].changeColors((239,239,239), (199,199,199), (179,179,179))
 
         self.children.append(UIBase.GristProgressBar(self))

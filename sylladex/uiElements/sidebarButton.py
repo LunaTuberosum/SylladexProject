@@ -36,7 +36,7 @@ class SidebarButton(UIBase):
             UIBase.AddCardButton()
             UIBase.RemoveCardButton()
 
-            UIBase.TextField(242, 142, 53, 48, 3, "numOfCards", "The Number of Cards in you Sylladex", "0")
+            UIBase.TextField(242, 142, 53, 48, 3, "numOfCards", "The Number of Cards in you Sylladex", "Num")
             UIBase.CardList(24, 196, (249, 649), "LIST_BACK.png")
 
             UIBase.ModusCard(33, 910, (72, 96), "STACK_MODUS.png", "STACK")
@@ -82,7 +82,6 @@ class SidebarButton(UIBase):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
                 if isinstance(elem, UIBase.CardList):
-                    elem.save_list()
                     for card in elem.children:
                         card.kill()
                     elem.kill()

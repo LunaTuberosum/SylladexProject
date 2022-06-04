@@ -58,11 +58,14 @@ class FinishButton(UIBase):
                         UIBase.PopUp("Tier must be at least 1")
                         return
                     
-                    self.card.tier = elem.text    
-     
+                    self.card.tier = elem.text
+                        
         self.card.writing = False   
         self.card.redraw_card((255,255,255))
         self.card.empty = False
         for child in self.card.children:
             child.kill()
         self.card.children.clear()
+        for elem in UIBase.get_group('ui'):
+            if isinstance(elem, UIBase.CardList):
+                elem.save_list()

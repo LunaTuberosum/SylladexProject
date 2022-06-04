@@ -30,6 +30,7 @@ class CardList(UIBase):
             return
         
     def save_list(self):
+        UIBase.ConsoleMessage('Saved List')
         tempList = []
         for card in self.children:
             tempList.append([card.name, card.code, card.tier, card.empty])

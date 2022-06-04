@@ -99,9 +99,9 @@ class ListObject(UIBase):
 
         self.image.fill((255,255,255))
         self.writing = True
-        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", ""))
-        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", ""))
-        self.children.append(UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", ""))
+        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "Txt"))
+        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "Txt"))
+        self.children.append(UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "Txt"))
         
 
         for child in self.children:
@@ -150,6 +150,8 @@ class ListObject(UIBase):
                 for elem in UIBase.get_group("ui"):
                     if isinstance(elem, UIBase.ListObject):
                         elem.redraw_card((255,255,255))
+                    elif isinstance(elem, UIBase.CardList):
+                        elem.save_list()
             else: 
                 UIBase.PopUp("You can\'t eject an empty card")
         elif self.interactable == True:

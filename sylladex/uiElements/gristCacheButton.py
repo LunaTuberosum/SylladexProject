@@ -53,7 +53,6 @@ class GristCacheButton(UIBase):
                                 child2.kill()
                         UIBase.remove_fromGroup(child)
                         child.kill()
-                    elem.save_cache()
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
 

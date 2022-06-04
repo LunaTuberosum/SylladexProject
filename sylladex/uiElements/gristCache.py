@@ -22,6 +22,7 @@ class GristCache(UIBase):
 
     def save_cache(self):
         tempData = []
+        UIBase.ConsoleMessage('Saved Cache')
 
         for index, child in enumerate(self.children):
             if index > 0:

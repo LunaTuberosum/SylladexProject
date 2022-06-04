@@ -5,12 +5,16 @@ from sylladex.uiElements.baseUI import UIBase
 
 class TextField(UIBase):
 
-    def __init__(self, x, y, width, height, maxChar, job, toolTipText, defaultValue, textColor=(0,0,0)):
+    def __init__(self, x, y, width, height, maxChar, job, toolTipText, textType, textColor=(0,0,0)):
         super().__init__(x, y, (width, height), 'surfaceRect', f'TextField ({job})', True, (255,255,255))
 
         self.textColor = textColor
+        self.textType = textType
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-        self.text = defaultValue
+        if self.textType == 'Num':
+            self.text = '0'
+        if self.textType == 'Txt':
+            self.text = ''
         self.txt_surface = self.font.render(self.text, True, self.textColor)
         self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
 
@@ -65,13 +69,21 @@ class TextField(UIBase):
 
             elif event.key == pg.K_RETURN:
                 
+                if len(self.text) > 1:
+                    if self.text[0] == '0':
+                        self.text = self.text[1:]
                 if len(self.job) > 6 and self.job[-6:] == 'NumBox':
                     for elem in UIBase.get_group('ui'):
                         if isinstance(elem, UIBase.GristCacheLimit):
                             if self.text > elem.limitNum:
                                 self.text = elem.limitNum
+                        if isinstance(elem, UIBase.GristCache):
+                            elem.save_cache()
                 if self.text == "":
-                    self.text = "0"
+                    if self.textType == 'Num':
+                        self.text = '0'
+                    elif self.textType == 'Txt':
+                        self.text = ''
                 self.draw()
                 self.exit_field()
 
@@ -101,10 +113,11 @@ class TextField(UIBase):
                     if len(self.job) > 6 and self.job[-6:] == 'NumBox':
                         isNum = False
                         for num in range(0,10):
-                            if self.text[-1] == str(num):
+                            if len(self.text) > 0 and self.text[-1] == str(num):
                                 isNum = True
                         if isNum == False:
-                            self.text = self.text[:-1]
+                            if len(self.text) > 0:
+                                self.text = self.text[:-1]
 
                     self.draw()
 
