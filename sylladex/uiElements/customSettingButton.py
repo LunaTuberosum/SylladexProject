@@ -50,6 +50,9 @@ class CustomSettingButton(UIBase):
                 if isinstance(elem, UIBase.CustomSettingMenu):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
+                    for child in elem.children:
+                        UIBase.remove_fromGroup(child)
+                        child.kill()
                 elif isinstance(elem, UIBase.SideBar):
                     self.rect.x = 326        
             
