@@ -50,7 +50,7 @@ class SidebarButton(UIBase):
                     for elem2 in UIBase.get_group('ui'):
                         if isinstance(elem2, UIBase.GristCache):
                             elem.rect.x = 1038
-                            elem2.rect.x = 325
+                            elem2.rect.x = 326
                             elem2.repositionChildren()
                 if isinstance(elem, UIBase.CardList):
                     elem.start_list()
@@ -59,7 +59,10 @@ class SidebarButton(UIBase):
                     UIBase.uiElements.remove(elem)
                     UIBase.uiLayers.remove(elem)
                     elem.kill()
-            
+
+                if isinstance(elem, UIBase.CustomSettingButton):
+                    elem.rect.x = 326
+
         elif self.toolTipText == 'Closes Side Bar':
             self.toolTipText = 'Opens Side Bar'
             self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png").convert_alpha()
@@ -78,6 +81,8 @@ class SidebarButton(UIBase):
                             elem.rect.x = 713
                             elem2.rect.x = 0
                             elem2.repositionChildren()
+                if isinstance(elem, UIBase.CustomSettingButton):
+                    elem.rect.x = 0
                             
                 if isinstance(elem, UIBase.TextField):
                     if elem.job == 'numOfCards' or elem.job == 'nameOverlay' or elem.job == 'codeOverlay' or elem.job == 'tierOverlay':

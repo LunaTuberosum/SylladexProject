@@ -1,14 +1,13 @@
-from sylladex.uiElements.baseUI import UIBase
-
 import pygame as pg
 
-def main(screen, clock):
+def main(screen, clock, UIBase):
 
     globalPrevTick = pg.time.get_ticks()
 
     UIBase.StackingArea(0,0, (0,0), f"STACK_AREA.png")
     UIBase.SidebarButton()
     UIBase.GristCacheButton()
+    UIBase.CustomSettingButton()
 
     while True:
 

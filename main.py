@@ -7,6 +7,7 @@ from sylladex.uiElements.baseUI import UIBase
 from sylladex.uiElements.addCardButton import AddCardButton
 from sylladex.uiElements.cardList import CardList
 from sylladex.uiElements.consoleMessage import ConsoleMessage
+from sylladex.uiElements.customSettingButton import CustomSettingButton
 from sylladex.uiElements.escapeMenu import EscapeMenu
 from sylladex.uiElements.escapeMenuOption import EscapeMenuOption
 from sylladex.uiElements.gristCache import GristCache
@@ -33,6 +34,7 @@ from sylladex.uiElements.debugUIInspector import DebugUIInspector
 UIBase.AddCardButton = AddCardButton
 UIBase.CardList = CardList
 UIBase.ConsoleMessage = ConsoleMessage
+UIBase.CustomSettingButton = CustomSettingButton
 UIBase.GristCache = GristCache
 UIBase.EscapeMenu = EscapeMenu
 UIBase.EscapeMenuOption = EscapeMenuOption
@@ -65,4 +67,4 @@ pg.display.set_caption('SYLLADEX ALPHA 0.1')
 pg.key.set_repeat(500, 200)
 
 if __name__ == '__main__':
-    sylladexMain.main(screen, clock)
+    sylladexMain.main(screen, clock, UIBase)
