@@ -2,15 +2,7 @@ from sylladex.uiElements.baseUI import UIBase
 
 import pygame as pg
 
-def main():
-
-    pg.init()
-
-    clock = pg.time.Clock()
-
-    screen = pg.display.set_mode((1920, 1080))
-    pg.display.set_caption('SYLLADEX ALPHA 0.1')
-    pg.key.set_repeat(500, 200)
+def main(screen, clock):
 
     globalPrevTick = pg.time.get_ticks()
 

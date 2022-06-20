@@ -1,3 +1,4 @@
+import pygame as pg
 from sylladex import sylladexMain
 
 from sylladex.uiElements.baseUI import UIBase
@@ -54,5 +55,13 @@ UIBase.CodeDatabase = codeDatabase
 
 UIBase.DebugUIInspector = DebugUIInspector
 
+pg.init()
+
+clock = pg.time.Clock()
+
+screen = pg.display.set_mode((1920, 1080))
+pg.display.set_caption('SYLLADEX ALPHA 0.1')
+pg.key.set_repeat(500, 200)
+
 if __name__ == '__main__':
-    sylladexMain.main()
+    sylladexMain.main(screen, clock)
