@@ -7,6 +7,7 @@ class ModusCard(UIBase):
     def __init__(self, x, y, size, image, modus):
 
         self.modus = modus
+        self.toolTipText = f'Changes the modus to {self.modus} MODUS'
 
         super().__init__(x, y, size, image, f'ModusCard ({self.modus})', True)
 

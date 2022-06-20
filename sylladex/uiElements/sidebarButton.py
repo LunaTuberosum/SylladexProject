@@ -28,6 +28,7 @@ class SidebarButton(UIBase):
     def on_click(self):
         if self.toolTipText == 'Opens Side Bar':
             self.toolTipText = 'Closes Side Bar'
+            self.imageID = 'SIDE_BAR_BUTTON_REVERESED.png'
             self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON_REVERESED.png").convert_alpha()
             self.rect.x = 319
 
@@ -62,6 +63,7 @@ class SidebarButton(UIBase):
         elif self.toolTipText == 'Closes Side Bar':
             self.toolTipText = 'Opens Side Bar'
             self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_BUTTON.png").convert_alpha()
+            self.imageID = 'SIDE_BAR_BUTTON.png'
             self.rect.x = 0
 
             for elem in UIBase.get_group("ui"):
