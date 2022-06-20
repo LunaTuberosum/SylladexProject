@@ -8,6 +8,7 @@ from sylladex.uiElements.addCardButton import AddCardButton
 from sylladex.uiElements.cardList import CardList
 from sylladex.uiElements.consoleMessage import ConsoleMessage
 from sylladex.uiElements.customSettingButton import CustomSettingButton
+from sylladex.uiElements.customSettingMenu import CustomSettingMenu
 from sylladex.uiElements.escapeMenu import EscapeMenu
 from sylladex.uiElements.escapeMenuOption import EscapeMenuOption
 from sylladex.uiElements.gristCache import GristCache
@@ -35,6 +36,7 @@ UIBase.AddCardButton = AddCardButton
 UIBase.CardList = CardList
 UIBase.ConsoleMessage = ConsoleMessage
 UIBase.CustomSettingButton = CustomSettingButton
+UIBase.CustomSettingMenu = CustomSettingMenu
 UIBase.GristCache = GristCache
 UIBase.EscapeMenu = EscapeMenu
 UIBase.EscapeMenuOption = EscapeMenuOption

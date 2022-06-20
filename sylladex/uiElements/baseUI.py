@@ -10,6 +10,7 @@ class UIBase(pg.sprite.Sprite):
     CardList = None
     ConsoleMessage = None
     CustomSettingButton = None
+    CustomSettingMenu = None
     EscapeMenu = None
     EscapeMenuOption = None
     GristCache = None

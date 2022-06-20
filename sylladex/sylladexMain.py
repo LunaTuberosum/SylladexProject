@@ -122,6 +122,8 @@ def main(screen, clock, UIBase):
                 if hasattr(elem, "toolTipText"):
                     if hasattr(elem, "active") and elem.active == True:
                         pass
+                    elif hasattr(elem, 'inactive') and elem.inactive == True:
+                        pass
                     elif nowTick - globalPrevTick >= 1300:
                         UIBase.ToolTip(pg.mouse.get_pos(), elem.toolTipText)
             else:
