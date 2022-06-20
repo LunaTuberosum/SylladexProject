@@ -1,4 +1,5 @@
 import pygame as pg
+import settings
 from sylladex import sylladexMain
 
 from sylladex.uiElements.baseUI import UIBase
@@ -59,7 +60,7 @@ pg.init()
 
 clock = pg.time.Clock()
 
-screen = pg.display.set_mode((1920, 1080))
+screen = pg.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
 pg.display.set_caption('SYLLADEX ALPHA 0.1')
 pg.key.set_repeat(500, 200)
 
