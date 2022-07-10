@@ -1,6 +1,7 @@
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
+from sylladex.captchalogueCards import codeDatabase
 
 
 class CustomSettingMenu(UIBase):
@@ -17,8 +18,8 @@ class CustomSettingMenu(UIBase):
 
         self.children = [
             UIBase.CustomSettingSectionName(self, 36, 'WEAPONKINDS'),
-            UIBase.CustomSettingAreaBox(self, "WEAPONKIND", 'customkind1', 66),
-            UIBase.CustomSettingAreaBox(self, "WEAPONKIND", 'customkind2', 96),
+            UIBase.CustomSettingAreaBox(self, "WEAPONKIND", codeDatabase.get_codeValue('!', '1'), 66),
+            UIBase.CustomSettingAreaBox(self, "WEAPONKIND", codeDatabase.get_codeValue('?', '1'), 96),
             UIBase.CustomSettingSectionName(self, 126, 'MELEE ACTIONS'),
             UIBase.CustomSettingAreaBox(self, "ACTION", 'melee1', 156),
             UIBase.CustomSettingAreaBox(self, "ACTION", 'melee2', 258),

@@ -49,7 +49,7 @@ class CustomSettingAreaBox(UIBase):
             self.image.blit(self.nameTxt, [178+(24-(self.nameTxt.get_width()/2)), 12-(self.nameTxt.get_height()/2)])
 
             self.children = [
-                UIBase.TextField(self.rect.x+72, self.rect.y, 106, 24, 13, f'{self.inputDetail}name', f'Change name of {self.inputDetail}', 'Txt')
+                UIBase.TextField(self.rect.x+72, self.rect.y, 106, 24, 13, f'{self.inputDetail}name', f'Changes the name of {self.inputDetail}', 'Txt')
             ]
 
             self.children[0].text = self.inputDetail
