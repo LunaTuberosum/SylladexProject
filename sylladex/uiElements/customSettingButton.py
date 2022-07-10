@@ -53,6 +53,10 @@ class CustomSettingButton(UIBase):
                     for child in elem.children:
                         UIBase.remove_fromGroup(child)
                         child.kill()
+                        if hasattr(child, 'children'):
+                            for child in child.children:
+                                UIBase.remove_fromGroup(child)
+                                child.kill()
                 elif isinstance(elem, UIBase.SideBar):
                     self.rect.x = 326        
             

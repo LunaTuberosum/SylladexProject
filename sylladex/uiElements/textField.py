@@ -1,6 +1,8 @@
+import code
 import pygame as pg
 
 from sylladex.uiElements.baseUI import UIBase
+from sylladex.captchalogueCards import codeDatabase
 
 
 class TextField(UIBase):
@@ -72,6 +74,7 @@ class TextField(UIBase):
                 if len(self.text) > 1:
                     if self.text[0] == '0':
                         self.text = self.text[1:]
+
                 if len(self.job) > 6 and self.job[-6:] == 'NumBox':
                     for elem in UIBase.get_group('ui'):
                         if isinstance(elem, UIBase.GristCacheLimit):
@@ -79,6 +82,17 @@ class TextField(UIBase):
                                 self.text = elem.limitNum
                         if isinstance(elem, UIBase.GristCache):
                             elem.save_cache()
+                elif self.job == f'{codeDatabase.get_codeValue("!", "1")}Name':
+                    codeDatabase.change_codeValue('Customkind 1', self.text)
+                    self.job = f'{self.text}Name'
+                    self.objName = f'TextField ({self.job})'
+                    self.toolTipText = f'Changes the name of {self.text}'
+                elif self.job == f'{codeDatabase.get_codeValue("?", "1")}Name':
+                    codeDatabase.change_codeValue('Customkind 2', self.text)
+                    self.job = f'{self.text}Name'
+                    self.objName = f'TextField ({self.job})'
+                    self.toolTipText = f'Changes the name of {self.text}'
+                            
                 if self.text == "":
                     if self.textType == 'Num':
                         self.text = '0'

@@ -1,6 +1,8 @@
 from random import *
 from math import *
 
+from sylladex.uiElements.baseUI import UIBase
+
 codeCypher = {
 
     # SPEACIAL CHARACTERS
@@ -3270,7 +3272,8 @@ def read_code(codeNum, card):
         raise Exception('Codes must be 8 characters long')
     codeArray = list(codeNum)
 
-    card.kind = codeCypher.get(codeArray[0]).get('1')
+    
+    card.kind = get_codeValue(codeArray[0], '1')
     card.grist = codeCypher.get(codeArray[1]).get('2')
     card.trait1 = codeCypher.get(codeArray[2]).get('3')
     card.trait2 = codeCypher.get(codeArray[3]).get('4')
@@ -3286,7 +3289,15 @@ def find_kindImage(kindName):
     if kind.get(kindName):
         return kind.get(kindName)
     else:
-        raise Exception(f'Could not find image for {kindName}')
+        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+            customData = database.read()
+
+        if kindName == customData.split(',')[0]:
+            return kind.get('Customkind 1')
+        elif kindName == customData.split(',')[1]:
+            return kind.get('Customkind 2')
+        else:
+            raise Exception(f'Could not find image for {kindName}')
 
 def find_gristImage(gristName):
     if grist.get(gristName):
@@ -3297,8 +3308,33 @@ def find_gristImage(gristName):
 def get_codeValue(symbol, position):
     if codeCypher.get(symbol):
         if codeCypher.get(symbol).get(position):
+            if codeCypher.get(symbol).get(position) == 'Customkind 1':
+                with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                    customData = database.read()
+
+                return customData.split(',')[0]
+            elif codeCypher.get(symbol).get(position) == 'Customkind 2':
+                with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                    customData = database.read()
+
+                return customData.split(',')[1]
             return codeCypher.get(symbol).get(position)
         else:
             raise Exception(f'Could not find position {position} in {symbol}')
     else:
         raise Exception(f'Could not find {symbol}')
+
+def change_codeValue(whichCustom, newCodeValue):
+
+    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'w') as database:
+        if whichCustom == 'Customkind 1':
+            database.write(f'{newCodeValue},{codeCypher.get("?").get("1")}')
+        elif whichCustom == 'Customkind 2':
+            database.write(f'{codeCypher.get("?").get("1")},{newCodeValue}')
+
+    for elem in UIBase.get_group('ui'):
+        if isinstance(elem, UIBase.CardList):
+            for child in elem.children:
+                child.redraw_card((255,255,255))
+
+    
