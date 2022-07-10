@@ -31,6 +31,17 @@ class DebugUIInspector(UIBase):
         self.children.append(self.font.render(f'Layer: {UIBase.get_group("layer").get_layer_of_sprite(self.currentIns)}', False, 'white'))
 
         if hasattr(self.currentIns, 'children'): self.children.append(self.font.render(f'#ofChildren: {len(self.currentIns.children)}', False, 'white'))
+        if hasattr(self.currentIns, 'options'): 
+            self.children.append(self.font.render(f'Options: [', False, 'white'))
+            for index, option in enumerate(self.currentIns.options):
+                if index == 21:
+                    self.children.append(self.font.render(f'    ... {len(self.currentIns.options) - index} more ]', False, 'white'))
+                    break
+                elif index == len(self.currentIns.options)-1:
+                    self.children.append(self.font.render(f'    {index}: {option} ]', False, 'white'))
+                else:
+                    self.children.append(self.font.render(f'    {index}: {option},', False, 'white'))
+        if hasattr(self.currentIns, 'currentOption'): self.children.append(self.font.render(f'Current Option: {self.currentIns.currentOption}', False, 'white'))
 
         newWidth = self.rect.w
         for index, child in enumerate(self.children):

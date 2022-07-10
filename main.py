@@ -20,6 +20,7 @@ from sylladex.uiElements.gristInfoBox import GristInfoBox
 from sylladex.uiElements.gristProgressBar import GristProgressBar
 from sylladex.uiElements.listObject import ListObject
 from sylladex.uiElements.modusCard import ModusCard
+from sylladex.uiElements.optionToggle import OptionToggle
 from sylladex.uiElements.popUp import PopUp
 from sylladex.uiElements.removeCardButton import RemoveCardButton
 from sylladex.uiElements.scrollBar import ScrollBar
@@ -41,15 +42,16 @@ UIBase.CustomSettingAreaBox = CustomSettingAreaBox
 UIBase.CustomSettingButton = CustomSettingButton
 UIBase.CustomSettingMenu = CustomSettingMenu
 UIBase.CustomSettingSectionName = CustomSettingSectionName
-UIBase.GristCache = GristCache
 UIBase.EscapeMenu = EscapeMenu
 UIBase.EscapeMenuOption = EscapeMenuOption
+UIBase.GristCache = GristCache
 UIBase.GristCacheButton = GristCacheButton
 UIBase.GristCacheLimit = GristCacheLimit
 UIBase.GristInfoBox = GristInfoBox
 UIBase.GristProgressBar = GristProgressBar
 UIBase.ListObject = ListObject
 UIBase.ModusCard = ModusCard
+UIBase.OptionToggle = OptionToggle
 UIBase.PopUp = PopUp
 UIBase.RemoveCardButton = RemoveCardButton
 UIBase.ScrollBar = ScrollBar

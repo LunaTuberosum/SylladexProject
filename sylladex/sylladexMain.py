@@ -36,7 +36,10 @@ def main(screen, clock, UIBase):
                                     if isinstance(elem, UIBase.ListObject):    
                                         elem.redraw_card((255,255,255))
 
-
+                elif event.button == 3:
+                    for elem in UIBase.get_group("ui"):
+                        if hasattr(elem, "on_altClick") and elem.rect.collidepoint(event.pos):
+                            elem.on_altClick()
             
             elif event.type == pg.MOUSEBUTTONUP:
                 for elem in UIBase.get_group("ui"):
@@ -99,6 +102,8 @@ def main(screen, clock, UIBase):
                     for elem2 in UIBase.get_group('ui'):
                         if isinstance(elem2, UIBase.DebugUIInspector):
                             if elem2.currentIns == elem:
+                                dontMake = True
+                            elif elem2 == elem:
                                 dontMake = True
 
                     if dontMake == False:

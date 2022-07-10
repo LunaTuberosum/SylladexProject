@@ -22,6 +22,7 @@ class UIBase(pg.sprite.Sprite):
     GristProgressBar = None
     ListObject = None
     ModusCard = None
+    OptionToggle = None
     PopUp = None
     RemoveCardButton = None
     ScrollBar = None

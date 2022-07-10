@@ -1903,7 +1903,7 @@ codeCypher = {
             }, 
         },
     'z': {
-        '1': 'Vehicalekind', 
+        '1': 'Vehiclekind', 
         '2': 'AMBER', 
         '3': 'STORAGE', 
         '4': 'LIGHT SOURCE', 
@@ -1935,8 +1935,8 @@ codeCypher = {
 }
 
 weaponType = {
-    'CUSTOMKIND 1': 'NA',
-    'CUSTOMKIND 2': 'NA',
+    'Customkind 1': 'NA',
+    'Customkind 2': 'NA',
     'Artifactkind': 'NA',
     'Moduskind': 'NA',
     'Hammerkind': 'MELEE',
@@ -1994,7 +1994,7 @@ weaponType = {
     'Armorkind': 'NA',
     'Shoekind': 'NA',
     'Hatkind': 'NA',
-    'Glassseskind': 'NA',
+    'Glasseskind': 'NA',
     'Picturekind': 'NA',
     'Bustkind': 'NA',
     'Furniturekind': 'NA',
@@ -3138,8 +3138,7 @@ grist = {
 kind = {
     'Artifactkind': 'sylladex/uiElements/asset/KINDS/ArtifactKind.png',
     'Moduskind': 'sylladex/uiElements/asset/KINDS/ModusKind.png',
-    'Customkind 1': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
-    'Customkind 2': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
+    'Customkind': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
     'Hammerkind': 'sylladex/uiElements/asset/KINDS/HammerKind.png',
     'Needlekind': 'sylladex/uiElements/asset/KINDS/NeedleKind.png',
     'Bladekind': 'sylladex/uiElements/asset/KINDS/BladeKind.png',
@@ -3199,7 +3198,7 @@ kind = {
     'Picturekind': 'sylladex/uiElements/asset/KINDS/PictureKind.png',
     'Bustkind': 'sylladex/uiElements/asset/KINDS/BustKind.png',
     'Furniturekind': 'sylladex/uiElements/asset/KINDS/FurnitureKind.png',
-    'Vehicalekind': 'sylladex/uiElements/asset/KINDS/VehicleKind.png',
+    'Vehiclekind': 'sylladex/uiElements/asset/KINDS/VehicleKind.png',
 }
 
 action = {
@@ -3274,11 +3273,11 @@ def read_code(codeNum, card):
 
     
     card.kind = get_codeValue(codeArray[0], '1')
-    card.grist = codeCypher.get(codeArray[1]).get('2')
-    card.trait1 = codeCypher.get(codeArray[2]).get('3')
-    card.trait2 = codeCypher.get(codeArray[3]).get('4')
+    card.grist = get_codeValue(codeArray[1], '2')
+    card.trait1 = get_codeValue(codeArray[2], '3')
+    card.trait2 = get_codeValue(codeArray[3], '4')
 
-    wType = weaponType.get(card.kind)
+    wType = get_weaponType(card.kind)
     card.action1 = codeCypher.get(codeArray[4]).get('5').get(wType)
     card.action2 = codeCypher.get(codeArray[5]).get('6').get(wType)
     card.action3 = codeCypher.get(codeArray[6]).get('7').get(wType)
@@ -3290,12 +3289,12 @@ def find_kindImage(kindName):
         return kind.get(kindName)
     else:
         with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.read()
+            customData = database.readlines()
 
-        if kindName == customData.split(',')[0]:
-            return kind.get('Customkind 1')
-        elif kindName == customData.split(',')[1]:
-            return kind.get('Customkind 2')
+        if kindName == customData[0].split(',')[0]:
+            return kind.get(customData[1].split(',')[0])
+        elif kindName == customData[0].split(',')[2]:
+            return kind.get(customData[1].split(',')[1])
         else:
             raise Exception(f'Could not find image for {kindName}')
 
@@ -3317,20 +3316,58 @@ def get_codeValue(symbol, position):
                 with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
                     customData = database.read()
 
-                return customData.split(',')[1]
+                return customData.split(',')[2]
             return codeCypher.get(symbol).get(position)
         else:
             raise Exception(f'Could not find position {position} in {symbol}')
     else:
         raise Exception(f'Could not find {symbol}')
 
+def get_weaponType(weaponKind):
+    if weaponType.get(weaponKind):
+        return weaponType.get(weaponKind)
+    else:
+        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+            customData = database.read()
+
+        if weaponKind == customData.split(',')[0]:
+            return customData.split(',')[1]
+        elif weaponKind == customData.split(',')[2]:
+            return customData.split(',')[3]
+        else:
+            raise Exception(f'Could not find type for {weaponKind}')
+        
+
 def change_codeValue(whichCustom, newCodeValue):
+
+    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+        customData = database.readlines()
 
     with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'w') as database:
         if whichCustom == 'Customkind 1':
-            database.write(f'{newCodeValue},{codeCypher.get("?").get("1")}')
+            database.write(f'{newCodeValue},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
+            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+
         elif whichCustom == 'Customkind 2':
-            database.write(f'{codeCypher.get("?").get("1")},{newCodeValue}')
+            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{newCodeValue},{customData[0].split(",")[3]},\n')
+            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+
+        elif whichCustom == f'{customData[0].split(",")[0]} Type':
+            database.write(f'{customData[0].split(",")[0]},{newCodeValue},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
+            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+            
+        elif whichCustom == f'{customData[0].split(",")[2]} Type':
+            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{newCodeValue},\n')
+            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+
+        elif whichCustom == f'{customData[0].split(",")[0]} Icon':
+            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
+            database.write(f'{newCodeValue},{customData[1].split(",")[1]}')
+
+        elif whichCustom == f'{customData[0].split(",")[3]} Icon':
+            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
+            database.write(f'{customData[1].split(",")[0]},{newCodeValue}')
+
 
     for elem in UIBase.get_group('ui'):
         if isinstance(elem, UIBase.CardList):
