@@ -1,2 +1,5 @@
-Austino,NA,Customkind,NA,
-Customkind,Customkind
+Customkind 1,MELEE,Customkind 2,NA,
+Utensilkind,Pistolkind,
+AS,0,/,/ ,AS,0,/,/ ,
+AR,0,/,/,AR,0,/,/,
+AC,0,/,/ ,AC,0,/,/ 

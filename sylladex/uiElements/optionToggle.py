@@ -13,6 +13,8 @@ class OptionToggle(UIBase):
         self.currentOption = defultOption
         self.customObj = customObj
         self.toolTipText = f'Change weapon type for {self.customObj}'
+        if showType == 'Image':
+            self.toolTipText = f'Change weaponkind icon for {self.customObj}'
         self.showType = showType
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 16)

@@ -6,6 +6,7 @@ class UIBase(pg.sprite.Sprite):
     uiElements = pg.sprite.Group()
     uiLayers = pg.sprite.LayeredUpdates()
 
+    ActionIcon = None
     AddCardButton = None
     CardList = None
     ConsoleMessage = None
@@ -21,6 +22,7 @@ class UIBase(pg.sprite.Sprite):
     GristInfoBox = None
     GristProgressBar = None
     ListObject = None
+    LongTextField = None
     ModusCard = None
     OptionToggle = None
     PopUp = None
@@ -30,6 +32,7 @@ class UIBase(pg.sprite.Sprite):
     SidebarButton = None
     StackingArea = None
     TextField = None
+    ToggleButton = None
     ToolTip = None
     FinishButton = None
 

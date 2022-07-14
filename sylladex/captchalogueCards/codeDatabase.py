@@ -12,27 +12,27 @@ codeCypher = {
         '3': 'CUSTOM TRAIT 1', 
         '4': 'CUSTOM TRAIT 3', 
         '5': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 1 MELEE',
+            'RANGED': 'CUSTOM 1 RANGED',
+            'MAGIC': 'CUSTOM 1 MAGIC',
             'NA': 'No Action'
             }, 
         '6': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 1 MELEE',
+            'RANGED': 'CUSTOM 1 RANGED',
+            'MAGIC': 'CUSTOM 1 MAGIC',
             'NA': 'No Action'
             },  
         '7': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 1 MELEE',
+            'RANGED': 'CUSTOM 1 RANGED',
+            'MAGIC': 'CUSTOM 1 MAGIC',
             'NA': 'No Action'
             },  
         '8': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 1 MELEE',
+            'RANGED': 'CUSTOM 1 RANGED',
+            'MAGIC': 'CUSTOM 1 MAGIC',
             'NA': 'No Action'
             }, 
         },
@@ -42,27 +42,27 @@ codeCypher = {
         '3': 'CUSTOM TRAIT 2', 
         '4': 'CUSTOM TRAIT 4', 
         '5': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 2 MELEE',
+            'RANGED': 'CUSTOM 2 RANGED',
+            'MAGIC': 'CUSTOM 2 MAGIC',
             'NA': 'No Action'
             }, 
         '6': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 2 MELEE',
+            'RANGED': 'CUSTOM 2 RANGED',
+            'MAGIC': 'CUSTOM 2 MAGIC',
             'NA': 'No Action'
             },  
         '7': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 2 MELEE',
+            'RANGED': 'CUSTOM 2 RANGED',
+            'MAGIC': 'CUSTOM 2 MAGIC',
             'NA': 'No Action'
             },  
         '8': {
-            'MELEE': 'No Action',
-            'RANGED': 'No Action',
-            'MAGIC': 'No Action',
+            'MELEE': 'CUSTOM 2 MELEE',
+            'RANGED': 'CUSTOM 2 RANGED',
+            'MAGIC': 'CUSTOM 2 MAGIC',
             'NA': 'No Action'
             }, 
         },
@@ -2929,9 +2929,9 @@ actionData = {
     'ASTOUND': ['3','2','Instant'],
     'ASTRICT': ['2','/','Grapple'],
 
-    # CUSTOM ATTACKS
-    'CUSTOM ACTION 1 MELEE': ['/','/','/'],
-    'CUSTOM ACTION 2 MELEE': ['/','/','/'],
+    # CUSTOM ATTACKS MELEE
+    'CUSTOM 1 MELEE': ['0','/','/'],
+    'CUSTOM 2 MELEE': ['0','/','/'],
 
     # RANGED ATTACKS
     'ARBITRATE': ['1','1','Unfavorable, reuse'],
@@ -2952,9 +2952,9 @@ actionData = {
     'ARTICULATE': ['4','2','Favorable'],
     'ARTILLERATE': ['2','/','All actions deal BD this turn'],
 
-    # CUSTOM ATTACKS
-    'CUSTOM ACTION 1 RANGED': ['/','/','/'],
-    'CUSTOM ACTION 2 RANGED': ['/','/','/'],
+    # CUSTOM ATTACKS RANGED
+    'CUSTOM 1 RANGED': ['0','/','/'],
+    'CUSTOM 2 RANGED': ['0','/','/'],
 
     # MAGIC ATTACKS
     'ACCEDE': ['2','1','BD'],
@@ -2975,9 +2975,9 @@ actionData = {
     'ACUERE': ['1','1','Unfavorable, Instant'],
     'ACUPRESSURE': ['1','/','BD, reuse, instant'],
 
-    # CUSTOM ATTACKS
-    'CUSTOM ACTION 1 MAGIC': ['/','/','/'],
-    'CUSTOM ACTION 2 MAGIC': ['/','/','/'],
+    # CUSTOM ATTACKS MAGIC
+    'CUSTOM 1 MAGIC': ['0','/','/'],
+    'CUSTOM 2 MAGIC': ['0','/','/'],
 
 }
 
@@ -3278,11 +3278,70 @@ def read_code(codeNum, card):
     card.trait2 = get_codeValue(codeArray[3], '4')
 
     wType = get_weaponType(card.kind)
-    card.action1 = codeCypher.get(codeArray[4]).get('5').get(wType)
-    card.action2 = codeCypher.get(codeArray[5]).get('6').get(wType)
-    card.action3 = codeCypher.get(codeArray[6]).get('7').get(wType)
-    card.action4 = codeCypher.get(codeArray[7]).get('8').get(wType)
+    card.action1 = get_actionName(codeArray[4], '5', wType)
+    card.action2 = get_actionName(codeArray[5], '6', wType)
+    card.action3 = get_actionName(codeArray[6], '7', wType)
+    card.action4 = get_actionName(codeArray[7], '8', wType)
 
+def get_actionName(symbol, position, wType):
+    if codeCypher.get(symbol):
+        if codeCypher.get(symbol).get(position):
+            if codeCypher.get(symbol).get(position).get(wType):
+                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 MELEE':
+                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                        customData = database.readlines()
+                    if customData[2].split(',')[0] == 'AS':
+                        return 'No Action'
+                    else:
+                        return customData[2].split(',')[0]
+
+                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 2 MELEE':
+                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                        customData = database.readlines()
+                    if customData[2].split(',')[4] == 'AS':
+                        return 'No Action'
+                    else:
+                        return customData[2].split(',')[4]
+
+                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 RANGED':
+                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                        customData = database.readlines()
+                    if customData[3].split(',')[0] == 'AR':
+                        return 'No Action'
+                    else:
+                        return customData[3].split(',')[0]
+
+                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 2 RANGED':
+                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                        customData = database.readlines()
+                    if customData[3].split(',')[4] == 'AR':
+                        return 'No Action'
+                    else:
+                        return customData[3].split(',')[4]
+
+                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 MAGIC':
+                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                        customData = database.readlines()
+                    if customData[4].split(',')[0] == 'AC':
+                        return 'No Action'
+                    else:
+                        return customData[4].split(',')[0]
+
+                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 3 MAGIC':
+                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                        customData = database.readlines()
+                    if customData[4].split(',')[4] == 'AC':
+                        return 'No Action'
+                    else:
+                        return customData[4].split(',')[4]
+                else:
+                    return codeCypher.get(symbol).get(position).get(wType)
+            else:
+                raise Exception(f'Couldn\'t find {wType} action at {position} in {symbol}')
+        else:
+            raise Exception(f'Couldn\'t find {position} in {symbol}')
+    else:
+        raise Exception(f'Couldn\'t find {symbol}')
 
 def find_kindImage(kindName):
     if kind.get(kindName):
@@ -3309,14 +3368,14 @@ def get_codeValue(symbol, position):
         if codeCypher.get(symbol).get(position):
             if codeCypher.get(symbol).get(position) == 'Customkind 1':
                 with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                    customData = database.read()
+                    customData = database.readlines()
 
-                return customData.split(',')[0]
+                return customData[0].split(',')[0]
             elif codeCypher.get(symbol).get(position) == 'Customkind 2':
                 with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                    customData = database.read()
+                    customData = database.readlines()
 
-                return customData.split(',')[2]
+                return customData[0].split(',')[2]
             return codeCypher.get(symbol).get(position)
         else:
             raise Exception(f'Could not find position {position} in {symbol}')
@@ -3325,17 +3384,17 @@ def get_codeValue(symbol, position):
 
 def get_weaponType(weaponKind):
     if weaponType.get(weaponKind):
-        return weaponType.get(weaponKind)
-    else:
         with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.read()
+            customData = database.readlines()
 
-        if weaponKind == customData.split(',')[0]:
-            return customData.split(',')[1]
-        elif weaponKind == customData.split(',')[2]:
-            return customData.split(',')[3]
+        if weaponKind == customData[0].split(',')[0]:
+            return customData[0].split(',')[1]
+        elif weaponKind == customData[0].split(',')[2]:
+            return customData[0].split(',')[3]
         else:
-            raise Exception(f'Could not find type for {weaponKind}')
+            return weaponType.get(weaponKind)
+    else:    
+        raise Exception(f'Could not find type for {weaponKind}')
         
 
 def change_codeValue(whichCustom, newCodeValue):
@@ -3343,31 +3402,117 @@ def change_codeValue(whichCustom, newCodeValue):
     with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
         customData = database.readlines()
 
+    customLine1 = customData[0].split(',')
+    customLine2 = customData[1].split(',')
+    customLine3 = customData[2].split(',')
+    customLine4 = customData[3].split(',')
+    customLine5 = customData[4].split(',')
+
+    line1 = f'{customLine1[0]},{customLine1[1]},{customLine1[2]},{customLine1[3]},\n'
+    line2 = f'{customLine2[0]},{customLine2[1]},\n'
+    line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
+    line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
+    line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]}'
+
     with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'w') as database:
+
+        # Customkind changing
         if whichCustom == 'Customkind 1':
-            database.write(f'{newCodeValue},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
-            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+            line1 = f'{newCodeValue},{customLine1[1]},{customLine1[2]},{customLine1[3]},\n'
 
         elif whichCustom == 'Customkind 2':
-            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{newCodeValue},{customData[0].split(",")[3]},\n')
-            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+            line1 = f'{customLine1[0]},{customLine1[1]},{newCodeValue},{customLine1[3]},\n'
 
-        elif whichCustom == f'{customData[0].split(",")[0]} Type':
-            database.write(f'{customData[0].split(",")[0]},{newCodeValue},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
-            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+        elif whichCustom == f'{customLine1[0]} Type':
+            line1 = f'{customLine1[0]},{newCodeValue},{customLine1[2]},{customLine1[3]},\n'
             
-        elif whichCustom == f'{customData[0].split(",")[2]} Type':
-            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{newCodeValue},\n')
-            database.write(f'{customData[1].split(",")[0]},{customData[1].split(",")[1]}')
+        elif whichCustom == f'{customLine1[2]} Type':
+            line1 = f'{customLine1[0]},{customLine1[1]},{customLine1[2]},{newCodeValue},\n'
+           
+        # Customkind icon changing
+        elif whichCustom == f'{customLine1[0]} Icon':
+            line2 = f'{newCodeValue},{customLine2[1]},\n' 
+           
+        elif whichCustom == f'{customLine1[2]} Icon':
+            line2 = f'{customLine2[0]},{newCodeValue},\n'
+            
+        # Melee action changing
+        elif whichCustom == 'Melee 1 Name':
+            line3 = f'{newCodeValue},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
+            
+        elif whichCustom == 'Melee 2 Name':
+            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{newCodeValue},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
 
-        elif whichCustom == f'{customData[0].split(",")[0]} Icon':
-            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
-            database.write(f'{newCodeValue},{customData[1].split(",")[1]}')
+        elif whichCustom == 'Melee 1 Cost':
+            line3 = f'{customLine3[0]},{newCodeValue},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
+            
+        elif whichCustom == 'Melee 2 Cost':
+            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{newCodeValue},{customLine3[6]},{customLine3[7]},\n'
+            
+        elif whichCustom == 'Melee 1 Dmg':
+            line3 = f'{customLine3[0]},{customLine3[1]},{newCodeValue},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
+            
+        elif whichCustom == 'Melee 2 Dmg':
+            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{newCodeValue},{customLine3[7]},\n'
+            
+        elif whichCustom == 'Melee 1 Desc':
+            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{newCodeValue},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
+            
+        elif whichCustom == 'Melee 2 Desc':
+            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{newCodeValue},\n'
 
-        elif whichCustom == f'{customData[0].split(",")[3]} Icon':
-            database.write(f'{customData[0].split(",")[0]},{customData[0].split(",")[1]},{customData[0].split(",")[2]},{customData[0].split(",")[3]},\n')
-            database.write(f'{customData[1].split(",")[0]},{newCodeValue}')
+        # Ranged action changing
+        elif whichCustom == 'Ranged 1 Name':
+            line4 = f'{newCodeValue},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
+            
+        elif whichCustom == 'Ranged 2 Name':
+            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{newCodeValue},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
 
+        elif whichCustom == 'Ranged 1 Cost':
+            line4 = f'{customLine4[0]},{newCodeValue},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
+
+        elif whichCustom == 'Ranged 2 Cost':
+            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{newCodeValue},{customLine4[6]},{customLine4[7]},\n'
+
+        elif whichCustom == 'Ranged 1 Dmg':
+            line4 = f'{customLine4[0]},{customLine4[1]},{newCodeValue},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
+
+        elif whichCustom == 'Ranged 2 Dmg':
+            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{newCodeValue},{customLine4[7]},\n'
+
+        elif whichCustom == 'Ranged 1 Desc':
+            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{newCodeValue},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
+            
+        elif whichCustom == 'Ranged 2 Desc':
+            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{newCodeValue},\n'
+
+        # Magic action changing
+        elif whichCustom == 'Magic 1 Name':
+            line5 = f'{newCodeValue},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
+            
+        elif whichCustom == 'Magic 2 Name':
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{newCodeValue},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
+
+        elif whichCustom == 'Magic 1 Cost':
+            line5 = f'{customLine5[0]},{newCodeValue},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]}'
+
+        elif whichCustom == 'Magic 2 Cost':
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{newCodeValue},{customLine5[6]},{customLine5[7]}'
+
+        elif whichCustom == 'Magic 1 Dmg':
+            line5 = f'{customLine5[0]},{customLine5[1]},{newCodeValue},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]}'
+
+        elif whichCustom == 'Magic 2 Dmg':
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{newCodeValue},{customLine5[7]}'
+
+        elif whichCustom == 'Magic 1 Desc':
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{newCodeValue},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
+            
+        elif whichCustom == 'Magic 2 Desc':
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{newCodeValue},\n'
+
+        database.writelines([line1,line2,line3,line4,line5])
+        UIBase.ConsoleMessage('Saved Custom Settings')
 
     for elem in UIBase.get_group('ui'):
         if isinstance(elem, UIBase.CardList):

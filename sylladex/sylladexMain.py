@@ -19,7 +19,9 @@ def main(screen, clock, UIBase):
                     
                     for elem in UIBase.get_group("ui"):
                         if hasattr(elem, "active") and elem.active == True:
-                            elem.exit_field()
+                            if hasattr(elem, "exit_field"):
+                                elem.draw()
+                                elem.exit_field()
                         if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
                             elem.on_click()
                             
@@ -91,7 +93,7 @@ def main(screen, clock, UIBase):
                     
                 else:
                     for elem in UIBase.get_group("ui"):
-                        if isinstance(elem, UIBase.TextField):
+                        if hasattr(elem, 'typeing'):
                             elem.typeing(event)
 
         for elem in UIBase.get_group("ui"):
