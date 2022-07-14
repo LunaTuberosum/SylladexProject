@@ -78,7 +78,7 @@ clock = pg.time.Clock()
 
 screen = pg.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
 pg.display.set_caption('SYLLADEX ALPHA 0.1')
-pg.key.set_repeat(500, 200)
+pg.key.set_repeat(100, 200)
 
 if __name__ == '__main__':
     sylladexMain.main(screen, clock, UIBase)

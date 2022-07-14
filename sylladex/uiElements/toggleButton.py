@@ -65,10 +65,10 @@ class ToggleButton(UIBase):
                         if elem.job == 'meleeToggle': 
                             elem.on = False
                             elem.no_hover()
-                        if elem.job == 'rangedToggle': 
+                        elif elem.job == 'rangedToggle': 
                             elem.on = False
                             elem.no_hover()
-                        if elem.job == 'magicToggle': 
+                        elif elem.job == 'magicToggle': 
                             elem.on = False
                             elem.no_hover()
 
@@ -84,7 +84,7 @@ class ToggleButton(UIBase):
                             elif self.job == 'magicToggle': elem.text = customData[4].split(',')[4][2:]
                             elem.draw()
 
-                    if isinstance(elem, UIBase.TextField):
+                    elif isinstance(elem, UIBase.TextField):
                         if elem.job == 'action1Cost':
                             if self.job == 'meleeToggle': elem.text = customData[2].split(',')[1]
                             elif self.job == 'rangedToggle': elem.text = customData[3].split(',')[1]
@@ -106,7 +106,8 @@ class ToggleButton(UIBase):
                             elif self.job == 'rangedToggle': elem.text = customData[3].split(',')[6]
                             elif self.job == 'magicToggle': elem.text = customData[4].split(',')[6]
                             elem.no_hover()
-                    if isinstance(elem, UIBase.LongTextField):
+                    
+                    elif isinstance(elem, UIBase.LongTextField):
                         if elem.job == 'action1Desc':
                             if self.job == 'meleeToggle': elem.starter_text(customData[2].split(',')[3])
                             elif self.job == 'rangedToggle': elem.starter_text(customData[3].split(',')[3])
@@ -115,6 +116,54 @@ class ToggleButton(UIBase):
                             if self.job == 'meleeToggle': elem.starter_text(customData[2].split(',')[7])
                             elif self.job == 'rangedToggle': elem.starter_text(customData[3].split(',')[7])
                             elif self.job == 'magicToggle': elem.starter_text(customData[4].split(',')[7])
+            
+        elif self.job == 't1Toggle' or self.job == 't2Toggle' or self.job == 't3Toggle' or self.job == 't4Toggle':
+            if self.on == False:
+                for elem in UIBase.get_group('ui'):
+                    if isinstance(elem, UIBase.ToggleButton):
+                        
+                        if elem.job == 't1Toggle': 
+                            elem.on = False
+                            elem.no_hover()
+                        elif elem.job == 't2Toggle': 
+                            elem.on = False
+                            elem.no_hover()
+                        elif elem.job == 't3Toggle': 
+                            elem.on = False
+                            elem.no_hover()
+                        elif elem.job == 't4Toggle': 
+                            elem.on = False
+                            elem.no_hover()
 
-            self.hover()
-            self.on = True
+                    elif isinstance(elem, UIBase.TextField):
+                        if elem.job == 'traitName':
+                            if self.job == 't1Toggle': elem.text = customData[5].split(',')[0]
+                            elif self.job == 't2Toggle': elem.text = customData[6].split(',')[0]
+                            elif self.job == 't3Toggle': elem.text = customData[7].split(',')[0]
+                            elif self.job == 't4Toggle': elem.text = customData[8].split(',')[0]
+                            elem.no_hover()
+
+                    elif isinstance(elem, UIBase.LongTextField):
+                        if elem.job == '1-4Desc':
+                            if self.job == 't1Toggle': elem.starter_text(customData[5].split(',')[1])
+                            elif self.job == 't2Toggle': elem.starter_text(customData[6].split(',')[1])
+                            elif self.job == 't3Toggle': elem.starter_text(customData[7].split(',')[1])
+                            elif self.job == 't4Toggle': elem.starter_text(customData[8].split(',')[1])
+                        if elem.job == '5-8Desc':
+                            if self.job == 't1Toggle': elem.starter_text(customData[5].split(',')[2])
+                            elif self.job == 't2Toggle': elem.starter_text(customData[6].split(',')[2])
+                            elif self.job == 't3Toggle': elem.starter_text(customData[7].split(',')[2])
+                            elif self.job == 't4Toggle': elem.starter_text(customData[8].split(',')[2])
+                        if elem.job == '9-12Desc':
+                            if self.job == 't1Toggle': elem.starter_text(customData[5].split(',')[3])
+                            elif self.job == 't2Toggle': elem.starter_text(customData[6].split(',')[3])
+                            elif self.job == 't3Toggle': elem.starter_text(customData[7].split(',')[3])
+                            elif self.job == 't4Toggle': elem.starter_text(customData[8].split(',')[3])
+                        if elem.job == '13-16Desc':
+                            if self.job == 't1Toggle': elem.starter_text(customData[5].split(',')[4])
+                            elif self.job == 't2Toggle': elem.starter_text(customData[6].split(',')[4])
+                            elif self.job == 't3Toggle': elem.starter_text(customData[7].split(',')[4])
+                            elif self.job == 't4Toggle': elem.starter_text(customData[8].split(',')[4])
+
+        self.hover()
+        self.on = True

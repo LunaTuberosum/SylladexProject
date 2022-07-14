@@ -31,7 +31,7 @@ class CustomSettingMenu(UIBase):
             UIBase.ToggleButton(self.rect.x+212, self.rect.y+390, 't2Toggle', '2'),
             UIBase.ToggleButton(self.rect.x+242, self.rect.y+390, 't3Toggle', '3'),
             UIBase.ToggleButton(self.rect.x+272, self.rect.y+390, 't4Toggle', '4'),
-            UIBase.CustomSettingAreaBox(self, "TRAIT", 'name1', 390),
+            UIBase.CustomSettingAreaBox(self, "TRAIT", 'name', 390),
             UIBase.CustomSettingAreaBox(self, "TRAIT", 'tier1-4', 420),
             UIBase.CustomSettingAreaBox(self, "TRAIT", 'tier5-8', 498),
             UIBase.CustomSettingAreaBox(self, "TRAIT", 'tier9-12', 576),

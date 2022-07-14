@@ -3366,17 +3366,28 @@ def find_gristImage(gristName):
 def get_codeValue(symbol, position):
     if codeCypher.get(symbol):
         if codeCypher.get(symbol).get(position):
+            with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                customData = database.readlines()
             if codeCypher.get(symbol).get(position) == 'Customkind 1':
-                with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                    customData = database.readlines()
 
                 return customData[0].split(',')[0]
             elif codeCypher.get(symbol).get(position) == 'Customkind 2':
-                with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                    customData = database.readlines()
 
                 return customData[0].split(',')[2]
-            return codeCypher.get(symbol).get(position)
+            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 1':
+
+                return customData[5].split(',')[0]
+            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 2':
+
+                return customData[6].split(',')[0]
+            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 3':
+
+                return customData[7].split(',')[0]
+            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 4':
+
+                return customData[8].split(',')[0]
+            else:
+                return codeCypher.get(symbol).get(position)
         else:
             raise Exception(f'Could not find position {position} in {symbol}')
     else:
@@ -3407,12 +3418,20 @@ def change_codeValue(whichCustom, newCodeValue):
     customLine3 = customData[2].split(',')
     customLine4 = customData[3].split(',')
     customLine5 = customData[4].split(',')
+    customLine6 = customData[5].split(',')
+    customLine7 = customData[6].split(',')
+    customLine8 = customData[7].split(',')
+    customLine9 = customData[8].split(',')
 
     line1 = f'{customLine1[0]},{customLine1[1]},{customLine1[2]},{customLine1[3]},\n'
     line2 = f'{customLine2[0]},{customLine2[1]},\n'
     line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
     line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-    line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]}'
+    line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
+    line6 = f'{customLine6[0]},{customLine6[1]},{customLine6[2]},{customLine6[3]},{customLine6[4]},\n'
+    line7 = f'{customLine7[0]},{customLine7[1]},{customLine7[2]},{customLine7[3]},{customLine7[4]},\n'
+    line8 = f'{customLine8[0]},{customLine8[1]},{customLine8[2]},{customLine8[3]},{customLine8[4]},\n'
+    line9 = f'{customLine9[0]},{customLine9[1]},{customLine9[2]},{customLine9[3]},{customLine9[4]}'
 
     with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'w') as database:
 
@@ -3494,16 +3513,16 @@ def change_codeValue(whichCustom, newCodeValue):
             line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{newCodeValue},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
 
         elif whichCustom == 'Magic 1 Cost':
-            line5 = f'{customLine5[0]},{newCodeValue},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]}'
+            line5 = f'{customLine5[0]},{newCodeValue},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
 
         elif whichCustom == 'Magic 2 Cost':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{newCodeValue},{customLine5[6]},{customLine5[7]}'
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{newCodeValue},{customLine5[6]},{customLine5[7]},\n'
 
         elif whichCustom == 'Magic 1 Dmg':
-            line5 = f'{customLine5[0]},{customLine5[1]},{newCodeValue},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]}'
+            line5 = f'{customLine5[0]},{customLine5[1]},{newCodeValue},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
 
         elif whichCustom == 'Magic 2 Dmg':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{newCodeValue},{customLine5[7]}'
+            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{newCodeValue},{customLine5[7]},\n'
 
         elif whichCustom == 'Magic 1 Desc':
             line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{newCodeValue},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
@@ -3511,7 +3530,56 @@ def change_codeValue(whichCustom, newCodeValue):
         elif whichCustom == 'Magic 2 Desc':
             line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{newCodeValue},\n'
 
-        database.writelines([line1,line2,line3,line4,line5])
+        # Custom trait 1 changing
+        elif whichCustom == 'Trait 1 Name':
+            line6 = f'{newCodeValue},{customLine6[1]},{customLine6[2]},{customLine6[3]},{customLine6[4]},\n'
+        elif whichCustom == 'Trait 1 1-4':
+            line6 = f'{customLine6[0]},{newCodeValue},{customLine6[2]},{customLine6[3]},{customLine6[4]},\n'
+        elif whichCustom == 'Trait 1 5-8':
+            line6 = f'{customLine6[0]},{customLine6[1]},{newCodeValue},{customLine6[3]},{customLine6[4]},\n'
+        elif whichCustom == 'Trait 1 9-12':
+            line6 = f'{customLine6[0]},{customLine6[1]},{customLine6[2]},{newCodeValue},{customLine6[4]},\n'
+        elif whichCustom == 'Trait 1 13-16':
+            line6 = f'{customLine6[0]},{customLine6[1]},{customLine6[2]},{customLine6[3]},{newCodeValue},\n'
+        
+        # Custom trait 2 changing
+        elif whichCustom == 'Trait 2 Name':
+            line7 = f'{newCodeValue},{customLine7[1]},{customLine7[2]},{customLine7[3]},{customLine7[4]},\n'
+        elif whichCustom == 'Trait 2 1-4':
+            line7 = f'{customLine7[0]},{newCodeValue},{customLine7[2]},{customLine7[3]},{customLine7[4]},\n'
+        elif whichCustom == 'Trait 2 5-8':
+            line7 = f'{customLine7[0]},{customLine7[1]},{newCodeValue},{customLine7[3]},{customLine7[4]},\n'
+        elif whichCustom == 'Trait 2 9-12':
+            line7 = f'{customLine7[0]},{customLine7[1]},{customLine7[2]},{newCodeValue},{customLine7[4]},\n'
+        elif whichCustom == 'Trait 2 13-16':
+            line7 = f'{customLine7[0]},{customLine7[1]},{customLine7[2]},{customLine7[3]},{newCodeValue},\n'
+        
+        # Custom trait 3 changing
+        elif whichCustom == 'Trait 3 Name':
+            line8 = f'{newCodeValue},{customLine8[1]},{customLine8[2]},{customLine8[3]},{customLine8[4]},\n'
+        elif whichCustom == 'Trait 3 1-4':
+            line8 = f'{customLine8[0]},{newCodeValue},{customLine8[2]},{customLine8[3]},{customLine8[4]},\n'
+        elif whichCustom == 'Trait 3 5-8':
+            line8 = f'{customLine8[0]},{customLine8[1]},{newCodeValue},{customLine8[3]},{customLine8[4]},\n'
+        elif whichCustom == 'Trait 3 9-12':
+            line8 = f'{customLine8[0]},{customLine8[1]},{customLine8[2]},{newCodeValue},{customLine8[4]},\n'
+        elif whichCustom == 'Trait 3 13-16':
+            line8 = f'{customLine8[0]},{customLine8[1]},{customLine8[2]},{customLine8[3]},{newCodeValue},\n'
+        
+        # Custom trait 4 changing
+        elif whichCustom == 'Trait 4 Name':
+            line9 = f'{newCodeValue},{customLine9[1]},{customLine9[2]},{customLine9[3]},{customLine9[4]}'
+        elif whichCustom == 'Trait 4 1-4':
+            line9 = f'{customLine9[0]},{newCodeValue},{customLine9[2]},{customLine9[3]},{customLine9[4]}'
+        elif whichCustom == 'Trait 4 5-8':
+            line9 = f'{customLine9[0]},{customLine9[1]},{newCodeValue},{customLine9[3]},{customLine9[4]}'
+        elif whichCustom == 'Trait 4 9-12':
+            line9 = f'{customLine9[0]},{customLine9[1]},{customLine9[2]},{newCodeValue},{customLine9[4]}'
+        elif whichCustom == 'Trait 4 9-12':
+            line9 = f'{customLine9[0]},{customLine9[1]},{customLine9[2]},{customLine9[3]},{newCodeValue}'
+
+
+        database.writelines([line1,line2,line3,line4,line5,line6,line7,line8,line9])
         UIBase.ConsoleMessage('Saved Custom Settings')
 
     for elem in UIBase.get_group('ui'):

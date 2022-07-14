@@ -102,11 +102,6 @@ class CustomSettingAreaBox(UIBase):
                 UIBase.LongTextField(self.rect.x, self.rect.y+48, 300, 48, 30, 3, f'{self.inputDetail}Desc', f'Change {curAction}\'s description')
             ]
 
-            if self.inputDetail == 'action1':
-                curAction = customData[2].split(',')[0]
-            elif self.inputDetail == 'action2':
-                curAction = customData[2].split(',')[4]
-
             self.children[1].font = self.font
             self.children[1].baseColor = '#C9DAF8'
             self.children[1].no_hover()
@@ -128,7 +123,7 @@ class CustomSettingAreaBox(UIBase):
 
 
         elif self.typeInput == 'TRAIT':
-            if self.inputDetail[:4] == 'name':
+            if self.inputDetail == 'name':
                 self.backgroundColor = pg.Surface((156,24))
                 self.backgroundColor.fill('#1C4587')
                 self.image.blit(self.backgroundColor, [6, 6])
@@ -136,6 +131,22 @@ class CustomSettingAreaBox(UIBase):
                 self.foregroundColor = pg.Surface((156,24))
                 self.foregroundColor.fill('#3C78D8')
                 self.image.blit(self.foregroundColor, [0, 0])
+
+                self.nameTxt = self.font.render('NAME', True, (0,0,0))
+                self.image.blit(self.nameTxt, [24-(self.nameTxt.get_width()/2), (12-(self.nameTxt.get_height()/2))])
+
+                with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+                    customData = database.readlines()
+
+                self.children = [
+                    UIBase.TextField(self.rect.x+48, self.rect.y, 108, 24, 13, 'traitName', f'Change the name of the trait', 'Txt')
+                ]
+
+                self.children[0].font = self.font
+                self.children[0].baseColor = '#C9DAF8'
+                self.children[0].no_hover()
+                self.children[0].hoverColor = '#D9E2F1'
+                self.children[0].selectedColor = '#9CB0D5'
 
             elif self.inputDetail[:4] == 'tier':
                 self.backgroundColor = pg.Surface((300,72))
@@ -145,6 +156,19 @@ class CustomSettingAreaBox(UIBase):
                 self.foregroundColor = pg.Surface((300,72))
                 self.foregroundColor.fill('#3C78D8')
                 self.image.blit(self.foregroundColor, [0, 0])
+
+                self.nameTxt = self.font.render('TIER '+self.inputDetail[4:]+' DESCRIPTION', True, (0,0,0))
+                self.image.blit(self.nameTxt, [150-(self.nameTxt.get_width()/2), (12-(self.nameTxt.get_height()/2))])
+
+                self.children = [
+                    UIBase.LongTextField(self.rect.x, self.rect.y+24, 300, 48, 30, 3, f'{self.inputDetail[4:]}Desc', f'Change the description for tiers {self.inputDetail[4:]}')
+                ]
+
+                self.children[0].font = self.font
+                self.children[0].baseColor = '#C9DAF8'
+                self.children[0].no_hover()
+                self.children[0].hoverColor = '#D9E2F1'
+                self.children[0].selectedColor = '#9CB0D5'
     
     def update(self):
 

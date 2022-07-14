@@ -85,6 +85,23 @@ class TextField(UIBase):
                         elif self.job == 'action2Dmg':
                             codeDatabase.change_codeValue('Magic 2 Dmg', self.text)
 
+                elif elem.job == 't1Toggle':
+                    if elem.on == True:
+                        if self.job == 'traitName':
+                            codeDatabase.change_codeValue('Trait 1 Name', self.text)
+                elif elem.job == 't2Toggle':
+                    if elem.on == True:
+                        if self.job == 'traitName':
+                            codeDatabase.change_codeValue('Trait 2 Name', self.text)
+                elif elem.job == 't3Toggle':
+                    if elem.on == True:
+                        if self.job == 'traitName':
+                            codeDatabase.change_codeValue('Trait 3 Name', self.text)
+                elif elem.job == 't4Toggle':
+                    if elem.on == True:
+                        if self.job == 'traitName':
+                            codeDatabase.change_codeValue('Trait 4 Name', self.text)
+
         if self.job == 'kind1Name':
             codeDatabase.change_codeValue('Customkind 1', self.text)
             self.job = f'{self.text}Name'
@@ -125,7 +142,23 @@ class TextField(UIBase):
                             elem.save_cache()
                             
                 if self.text == "":
-                    if self.textType == 'Num':
+                    if self.job == 'traitName':
+                        for elem in UIBase.get_group('ui'):
+                            if isinstance(elem, UIBase.ToggleButton):
+                                if elem.job == 't1Toggle' and elem.on == True: 
+                                    self.text = 'CUSTOM TRAIT 1'
+                                    self.no_hover()
+                                if elem.job == 't2Toggle' and elem.on == True: 
+                                    self.text = 'CUSTOM TRAIT 2'
+                                    self.no_hover()
+                                if elem.job == 't3Toggle' and elem.on == True: 
+                                    self.text = 'CUSTOM TRAIT 3'
+                                    self.no_hover()
+                                if elem.job == 't4Toggle' and elem.on == True: 
+                                    self.text = 'CUSTOM TRAIT 4'
+                                    self.no_hover()
+
+                    elif self.textType == 'Num':
                         self.text = self.defultText
                     elif self.textType == 'Txt':
                         self.text = self.defultText
