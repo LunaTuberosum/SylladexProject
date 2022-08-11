@@ -5,9 +5,9 @@ from sylladex.uiElements.baseUI import UIBase
 
 class DebugUIInspector(UIBase):
     def __init__(self, elem):
-        super().__init__(pg.display.get_surface().get_width()-160, 40, (150,150), 'surfaceRect', 'DebugUIInspector', True, (50,50,50))
+        super().__init__(pg.display.get_surface().get_width()-160, 40, (150,150), 'DebugUIInspector', (50,50,50))
 
-        self.image.set_alpha(130)
+        self._create_appearance([[150,150], (50,50,50), [0,0]], alpha = 130)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
@@ -25,7 +25,6 @@ class DebugUIInspector(UIBase):
         if hasattr(self.currentIns, 'action3'): self.children.append(self.font.render(f'Action3: {self.currentIns.action3}', False, 'white'))
         if hasattr(self.currentIns, 'action4'): self.children.append(self.font.render(f'Action4: {self.currentIns.action4}', False, 'white'))
 
-        self.children.append(self.font.render(f'ImageID: {self.currentIns.imageID}', False, 'white'))
         if hasattr(self.currentIns, 'toolTipText'): self.children.append(self.font.render(f'HasToolTip: {hasattr(self.currentIns, "toolTipText")}', False, 'white'))
         self.children.append(self.font.render(f'Position: ({self.currentIns.rect.x}, {self.currentIns.rect.y})', False, 'white'))
         self.children.append(self.font.render(f'Layer: {UIBase.get_group("layer").get_layer_of_sprite(self.currentIns)}', False, 'white'))

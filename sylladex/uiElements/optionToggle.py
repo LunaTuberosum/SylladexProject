@@ -6,7 +6,7 @@ from sylladex.captchalogueCards import codeDatabase
 
 class OptionToggle(UIBase):
     def __init__(self,x, y, w, h, job, color, options, defultOption, customObj, showType):
-        super().__init__(x, y, (w,h), 'surfaceRect', f'DropDown ({job})', True, color)
+        super().__init__(x, y, (w,h), f'DropDown ({job})', color)
 
         self.job = job
         self.options = options

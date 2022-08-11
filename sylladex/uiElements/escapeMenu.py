@@ -4,7 +4,9 @@ from sylladex.uiElements.baseUI import UIBase
 
 class EscapeMenu(UIBase):
     def __init__(self):
-        super().__init__(750, 360, (420, 360), "ESCAPE_MENU.png", 'EscapeMenu', True)
+        super().__init__(750, 360, (420, 360), 'EscapeMenu', (0,0,0))
+
+        self._create_appearance([[420, 360], '#000000', [0, 0]], image = ['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]])
 
         self.children = [
             UIBase.EscapeMenuOption(self.rect.x+110,self.rect.y+110,'Settings'),

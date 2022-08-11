@@ -6,15 +6,9 @@ from sylladex.captchalogueCards import codeDatabase
 
 class CustomSettingMenu(UIBase):
     def __init__(self, x):
-        super().__init__(x, 38, (348,768), "surfaceRect", 'CustomSettingMenu', True, '#666666')
+        super().__init__(x, 38, (348,768), 'CustomSettingMenu', '#666666')
 
-        self.backgroundColor = pg.Surface((326,732))
-        self.backgroundColor.fill('#434343')
-        self.image.blit(self.backgroundColor, [10, 24])
-        
-        self.foregroundColor = pg.Surface((326,732))
-        self.foregroundColor.fill('#1155CC')
-        self.image.blit(self.foregroundColor, [0, 12])
+        self._create_appearance([[326, 732], '#434343', [10, 24]], [[326, 732], '#1155CC', [0, 12]])
 
         self.children = [
             UIBase.CustomSettingSectionName(self, 36, 'WEAPONKINDS'),

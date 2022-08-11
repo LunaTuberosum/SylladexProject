@@ -22,7 +22,7 @@ class EscapeMenuOption(UIBase):
         self.txt_surfAlt = self.font.render(self.text, False, self.hoverColor)
 
         self.x = x
-        super().__init__(x+(102.5-(self.prefix.get_width()/2+self.txt_surf.get_width()/2)), y, (self.prefix.get_width()+self.txt_surf.get_width(), 51), "surfaceRect" ,f'EscapeOption ({self.text})', True, (239, 239, 239))
+        super().__init__(x+(102.5-(self.prefix.get_width()/2+self.txt_surf.get_width()/2)), y, (self.prefix.get_width()+self.txt_surf.get_width(), 51), f'EscapeOption ({self.text})', (239, 239, 239))
 
         self.image.blit(self.prefix, [0,0])
         self.image.blit(self.txt_surf, [self.prefix.get_width(),0])

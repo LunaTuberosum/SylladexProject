@@ -8,8 +8,8 @@ from sylladex.uiElements.baseUI import UIBase
 class CardList(UIBase):
     children = []
 
-    def __init__(self, x, y, size, image):
-        super().__init__(x, y, size, image, 'CardList', True)
+    def __init__(self, x, y, size):
+        super().__init__(x, y, size, 'CardList', '#A4A4A4')
         self.uiLayers.change_layer(self, -1)
         
     def add_toList(self):

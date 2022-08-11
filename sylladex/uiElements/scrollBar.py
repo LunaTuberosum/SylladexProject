@@ -6,21 +6,6 @@ from sylladex.uiElements.baseUI import UIBase
 class ScrollBar(UIBase):
     selected = False
 
-    modusColorDict = {
-        'STACK': {
-            'base': (255, 0, 220),
-            'highlight': (255, 97, 220)
-        },
-        'QUEUE': {
-            'base': (225, 96, 0),
-            'highlight': (255, 145, 43)
-        },
-        'TREE': {
-            'base': (150, 255, 0),
-            'highlight': (205, 255, 43)
-        },
-        }
-
     def __init__(self):
         if len(UIBase.CardList.children) == 0:
             size = 0
@@ -31,18 +16,18 @@ class ScrollBar(UIBase):
             else:
                 size = 0
 
-        super().__init__(273, 196, (23, size), 'surfaceRect', 'ScrollBar', True, UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
+        super().__init__(273, 196, (23, size), 'ScrollBar', UIBase.modusForground)
 
         self.rectTemp = self.rect.y
 
         self.hovering = False
 
     def hover(self):
-        self.image.fill(UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['highlight'])
+        self.image.fill(UIBase.modusAccent)
         self.hovering = True
 
     def no_hover(self):
-        self.image.fill(UIBase.ScrollBar.modusColorDict[UIBase.get_modus()]['base'])
+        self.image.fill(UIBase.modusForground)
         self.hovering = False
 
     def on_click(self):

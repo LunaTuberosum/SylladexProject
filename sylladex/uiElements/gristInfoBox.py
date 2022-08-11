@@ -5,7 +5,9 @@ from sylladex.uiElements.baseUI import UIBase
 
 class GristInfoBox(UIBase):
     def __init__(self, x, y, grist):
-        super().__init__(x, y, (170,90), "GRIST_INFO_BOX.png", 'GristInfoBox',True)
+        super().__init__(x, y, (170,90), 'GristInfoBox', '#FFFFFF')
+
+        self._create_appearance([[164, 84], '#999999', [6, 6]], [[164, 84], '#C4C4C4', [0, 0]], [[52, 84], '#D9D9D9', [0, 0]], [[111, 23], '#D9D9D9', [53, 0]], [[111, 23], '#D9D9D9', [53, 24]], [[111, 36], '#EFEFEF', [53, 48]], colorKey = True)
 
         self.grist = grist
 

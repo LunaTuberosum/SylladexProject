@@ -7,7 +7,7 @@ from sylladex.captchalogueCards import codeDatabase
 class LongTextField(UIBase):
 
     def __init__(self, x, y, width, height, maxChar, maxLineCount, job, toolTipText, textColor=(0,0,0)):
-        super().__init__(x, y, (width, height), 'surfaceRect', f'LongTextField ({job})', True, (255,255,255))
+        super().__init__(x, y, (width, height), f'LongTextField ({job})', (255,255,255))
 
         self.textColor = textColor
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)

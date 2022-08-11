@@ -9,7 +9,9 @@ class ModusCard(UIBase):
         self.modus = modus
         self.toolTipText = f'Changes the modus to {self.modus} MODUS'
 
-        super().__init__(x, y, size, image, f'ModusCard ({self.modus})', True)
+        super().__init__(x, y, size, f'ModusCard ({self.modus})', (0,0,0))
+
+        self._create_appearance([size, (0,0,0), [0, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/MISC/{image}', [0,0]])
 
         self.hovering = False
         

@@ -5,24 +5,14 @@ from sylladex.uiElements.baseUI import UIBase
 
 class ToggleButton(UIBase):
     def __init__(self, x, y, job, text):
-        super().__init__(x, y, (30,30), "surfaceRect", f'ToggleButton ({job})', True, '#ffffff')
+        super().__init__(x, y, (30,30), f'ToggleButton ({job})', '#ffffff')
 
         self.job = job
         self.text = text
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
-        self.image.set_colorkey((255,255,255))
 
-        self.backgroundColor = pg.Surface((24,24))
-        self.backgroundColor.fill('#1C4587')
-        self.image.blit(self.backgroundColor, [6, 6])
-        
-        self.foregroundColor = pg.Surface((24,24))
-        self.foregroundColor.fill('#3C78D8')
-        self.image.blit(self.foregroundColor, [0, 0])
-
-        txt_surf = self.font.render(self.text, True, (0,0,0))
-        self.image.blit(txt_surf, [12-(txt_surf.get_width()/2), 12-(txt_surf.get_height()/2)])
+        self._create_appearance([[24,24], '#1C4587', [6,6]], [[24,24], '#3C78D8', [0,0]], texts = [[self.text, [12, 12], 'center']], colorKey = True)
 
         self.on = False
         self.hovering = False

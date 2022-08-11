@@ -7,7 +7,7 @@ from sylladex.captchalogueCards import codeDatabase
 class TextField(UIBase):
 
     def __init__(self, x, y, width, height, maxChar, job, toolTipText, textType, textColor=(0,0,0)):
-        super().__init__(x, y, (width, height), 'surfaceRect', f'TextField ({job})', True, (255,255,255))
+        super().__init__(x, y, (width, height), f'TextField ({job})', (255,255,255))
 
         self.textColor = textColor
         self.textType = textType
@@ -138,8 +138,10 @@ class TextField(UIBase):
                         if isinstance(elem, UIBase.GristCacheLimit):
                             if self.text > elem.limitNum:
                                 self.text = elem.limitNum
-                        if isinstance(elem, UIBase.GristCache):
-                            elem.save_cache()
+                                self.draw()
+                            for elem in UIBase.get_group('ui'):
+                                if isinstance(elem, UIBase.GristCache):
+                                    elem.save_cache()
                             
                 if self.text == "":
                     if self.job == 'traitName':
@@ -160,6 +162,10 @@ class TextField(UIBase):
 
                     elif self.textType == 'Num':
                         self.text = self.defultText
+                        self.draw()
+                        for elem in UIBase.get_group('ui'):
+                            if isinstance(elem, UIBase.GristCache):
+                                elem.save_cache()
                     elif self.textType == 'Txt':
                         self.text = self.defultText
                 self.exit_field()

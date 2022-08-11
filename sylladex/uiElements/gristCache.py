@@ -6,7 +6,11 @@ from sylladex.uiElements.baseUI import UIBase
 
 class GristCache(UIBase):
     def __init__(self, x):
-        super().__init__(x, 626, (719,452), "GRIST_CACHE.png", 'GristCache' ,True)
+        super().__init__(x, 626, (719,452), 'GristCache', '#999999')
+
+        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
+
+        self._create_appearance([[713, 446], '#CCCCCC', [0, 6]], texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']])
 
         self.children = []
 

@@ -28,23 +28,10 @@ class CustomSettingAreaBox(UIBase):
                 height = 78
         
 
-        super().__init__(self.parent.rect.x+12, self.parent.rect.y+y, (width,height), "surfaceRect", f'CustomSettingAreaBox ({self.typeInput})', True, (255,255,255))
-        self.image.set_colorkey((255,255,255))
+        super().__init__(self.parent.rect.x+12, self.parent.rect.y+y, (width,height), f'CustomSettingAreaBox ({self.typeInput})', (255,255,255))
 
         if self.typeInput == 'WEAPONKIND':
-            self.backgroundColor = pg.Surface((274,24))
-            self.backgroundColor.fill('#1C4587')
-            self.image.blit(self.backgroundColor, [6, 6])
-            
-            self.foregroundColor = pg.Surface((274,24))
-            self.foregroundColor.fill('#3C78D8')
-            self.image.blit(self.foregroundColor, [0, 0])
-
-            self.nameTxt = self.font.render('NAME', True, (0,0,0))
-            self.image.blit(self.nameTxt, [24+(24-(self.nameTxt.get_width()/2)), 12-(self.nameTxt.get_height()/2)])
-
-            self.nameTxt = self.font.render('TYPE', True, (0,0,0))
-            self.image.blit(self.nameTxt, [178+(24-(self.nameTxt.get_width()/2)), 12-(self.nameTxt.get_height()/2)])
+            self._create_appearance([[274, 24], '#1C4587', [6, 6]], [[274, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['NAME', [48, 12], 'center'], ['TYPE', [202, 12], 'center']])
 
             with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
                 customData = database.readlines()
@@ -70,22 +57,7 @@ class CustomSettingAreaBox(UIBase):
             self.children[1].selectedColor = '#9CB0D5'
 
         elif self.typeInput == 'ACTION':
-            self.backgroundColor = pg.Surface((300,96))
-            self.backgroundColor.fill('#1C4587')
-            self.image.blit(self.backgroundColor, [6, 6])
-            
-            self.foregroundColor = pg.Surface((300,96))
-            self.foregroundColor.fill('#3C78D8')
-            self.image.blit(self.foregroundColor, [0, 0])
-
-            self.nameTxt = self.font.render('COST', True, (0,0,0))
-            self.image.blit(self.nameTxt, [108+(24-(self.nameTxt.get_width()/2)), 12-(self.nameTxt.get_height()/2)])
-
-            self.nameTxt = self.font.render('DMG', True, (0,0,0))
-            self.image.blit(self.nameTxt, [204+(24-(self.nameTxt.get_width()/2)), 12-(self.nameTxt.get_height()/2)])
-
-            self.nameTxt = self.font.render('ACTION DESCRIPTION', True, (0,0,0))
-            self.image.blit(self.nameTxt, [150-(self.nameTxt.get_width()/2), 24+(12-(self.nameTxt.get_height()/2))])
+            self._create_appearance([[300, 96], '#1C4587', [6, 6]], [[300, 96], '#3C78D8', [0, 0]], colorKey = True, texts = [['COST', [132, 12], 'center'], ['DMG', [228, 12], 'center'], ['ACTION DESCRPTION', [150, 36], 'center']])
 
             with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
                 customData = database.readlines()
@@ -124,16 +96,7 @@ class CustomSettingAreaBox(UIBase):
 
         elif self.typeInput == 'TRAIT':
             if self.inputDetail == 'name':
-                self.backgroundColor = pg.Surface((156,24))
-                self.backgroundColor.fill('#1C4587')
-                self.image.blit(self.backgroundColor, [6, 6])
-                
-                self.foregroundColor = pg.Surface((156,24))
-                self.foregroundColor.fill('#3C78D8')
-                self.image.blit(self.foregroundColor, [0, 0])
-
-                self.nameTxt = self.font.render('NAME', True, (0,0,0))
-                self.image.blit(self.nameTxt, [24-(self.nameTxt.get_width()/2), (12-(self.nameTxt.get_height()/2))])
+                self._create_appearance([[156, 24], '#1C4587', [6, 6]], [[156, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['NAME', [24, 12], 'center']])
 
                 with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
                     customData = database.readlines()
@@ -149,16 +112,7 @@ class CustomSettingAreaBox(UIBase):
                 self.children[0].selectedColor = '#9CB0D5'
 
             elif self.inputDetail[:4] == 'tier':
-                self.backgroundColor = pg.Surface((300,72))
-                self.backgroundColor.fill('#1C4587')
-                self.image.blit(self.backgroundColor, [6, 6])
-                
-                self.foregroundColor = pg.Surface((300,72))
-                self.foregroundColor.fill('#3C78D8')
-                self.image.blit(self.foregroundColor, [0, 0])
-
-                self.nameTxt = self.font.render('TIER '+self.inputDetail[4:]+' DESCRIPTION', True, (0,0,0))
-                self.image.blit(self.nameTxt, [150-(self.nameTxt.get_width()/2), (12-(self.nameTxt.get_height()/2))])
+                self._create_appearance([[300, 72], '#1C4587', [6, 6]], [[300, 72], '#3C78D8', [0, 0]], colorKey = True, texts = [['TIER '+self.inputDetail[4:]+' DESCRIPTION', [150, 12], 'center']])
 
                 self.children = [
                     UIBase.LongTextField(self.rect.x, self.rect.y+24, 300, 48, 30, 3, f'{self.inputDetail[4:]}Desc', f'Change the description for tiers {self.inputDetail[4:]}')

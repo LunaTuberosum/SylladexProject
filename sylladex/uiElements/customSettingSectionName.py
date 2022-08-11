@@ -9,23 +9,13 @@ class CustomSettingSectionName(UIBase):
         self.section = section
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
-        super().__init__(self.parent.rect.x+12, self.parent.rect.y+y, (186,30), "surfaceRect", f'CustomSettingSectionName ({self.section})', True, (255,255,255))
-        self.image.set_colorkey((255,255,255))
+        super().__init__(self.parent.rect.x+12, self.parent.rect.y+y, (186,30), f'CustomSettingSectionName ({self.section})', (255,255,255))
 
-        self.backgroundColor = pg.Surface((180,24))
-        self.backgroundColor.fill('#1C4587')
-        self.image.blit(self.backgroundColor, [6, 6])
+        if self.section == 'ACTIONS': _textValue = 'CUSTOM MELEE ACTIONS'
+        else: _textValue = 'CUSTOM ' + self.section
         
-        self.foregroundColor = pg.Surface((180,24))
-        self.foregroundColor.fill('#3C78D8')
-        self.image.blit(self.foregroundColor, [0, 0])
+        self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [[_textValue, [90, 12], 'center']])
 
-        if self.section == 'ACTIONS':
-            self.sectionText = self.font.render('CUSTOM MELEE ACTIONS', True, (0,0,0))
-            self.image.blit(self.sectionText, [90-(self.sectionText.get_width()/2), 12-(self.sectionText.get_height()/2)])
-        else:
-            self.sectionText = self.font.render('CUSTOM '+self.section, True, (0,0,0))
-            self.image.blit(self.sectionText, [90-(self.sectionText.get_width()/2), 12-(self.sectionText.get_height()/2)])
 
     def update(self):
         if self.section == 'ACTIONS':
@@ -33,39 +23,12 @@ class CustomSettingSectionName(UIBase):
                 if isinstance(elem, UIBase.ToggleButton):
                     if elem.job == 'meleeToggle':
                         if elem.on == True:
-                            self.backgroundColor = pg.Surface((180,24))
-                            self.backgroundColor.fill('#1C4587')
-                            self.image.blit(self.backgroundColor, [6, 6])
-
-                            self.foregroundColor = pg.Surface((180,24))
-                            self.foregroundColor.fill('#3C78D8')
-                            self.image.blit(self.foregroundColor, [0, 0])   
-
-                            self.sectionText = self.font.render('CUSTOM MELEE ACTIONS', True, (0,0,0))
-                            self.image.blit(self.sectionText, [90-(self.sectionText.get_width()/2), 12-(self.sectionText.get_height()/2)])
+                            self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MELEE ACTIONS', [90, 12], 'center']])
 
                     elif elem.job == 'rangedToggle':
                         if elem.on == True:
-                            self.backgroundColor = pg.Surface((180,24))
-                            self.backgroundColor.fill('#1C4587')
-                            self.image.blit(self.backgroundColor, [6, 6])
-
-                            self.foregroundColor = pg.Surface((180,24))
-                            self.foregroundColor.fill('#3C78D8')
-                            self.image.blit(self.foregroundColor, [0, 0]) 
-
-                            self.sectionText = self.font.render('CUSTOM RANGED ACTIONS', True, (0,0,0))
-                            self.image.blit(self.sectionText, [90-(self.sectionText.get_width()/2), 12-(self.sectionText.get_height()/2)])
+                            self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM RANGED ACTIONS', [90, 12], 'center']])
 
                     elif elem.job == 'magicToggle':
                         if elem.on == True:
-                            self.backgroundColor = pg.Surface((180,24))
-                            self.backgroundColor.fill('#1C4587')
-                            self.image.blit(self.backgroundColor, [6, 6])
-
-                            self.foregroundColor = pg.Surface((180,24))
-                            self.foregroundColor.fill('#3C78D8')
-                            self.image.blit(self.foregroundColor, [0, 0]) 
-
-                            self.sectionText = self.font.render('CUSTOM MAGIC ACTIONS', True, (0,0,0))
-                            self.image.blit(self.sectionText, [90-(self.sectionText.get_width()/2), 12-(self.sectionText.get_height()/2)])
+                            self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MAGIC ACTIONS', [90, 12], 'center']])

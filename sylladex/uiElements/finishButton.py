@@ -4,7 +4,11 @@ from sylladex.uiElements.baseUI import UIBase
 
 class FinishButton(UIBase):
     def __init__(self, card):
-        super().__init__(78, card.rect.y+64, (70, 70), "FINISH_BUTTON.png", 'FinishButton')
+        super().__init__(78, card.rect.y+64, (140, 36), 'FinishButton', UIBase.modusBackground)
+
+        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
+
+        self._create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
 
         self.card = card
         UIBase.get_group('layer').change_layer(self, 1)
@@ -13,11 +17,11 @@ class FinishButton(UIBase):
         self.hovering = False
         
     def hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/FINISH_BUTTON_HOVER.png").convert_alpha()
+        self._create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusForground]])
         self.hovering = True
 
     def no_hover(self):
-        self.image = pg.image.load(f"sylladex/uiElements/asset/{UIBase.get_modus()}/FINISH_BUTTON.png").convert_alpha()
+        self._create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
         self.hovering = False
         
     def on_click(self):

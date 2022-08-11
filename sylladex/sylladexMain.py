@@ -4,7 +4,7 @@ def main(screen, clock, UIBase):
 
     globalPrevTick = pg.time.get_ticks()
 
-    UIBase.StackingArea(0,0, (0,0), f"STACK_AREA.png")
+    UIBase.StackingArea()
     UIBase.SidebarButton()
     UIBase.GristCacheButton()
     UIBase.CustomSettingButton()
@@ -114,10 +114,10 @@ def main(screen, clock, UIBase):
                     for index, inspector in enumerate(UIBase.Insepctors):
                         if index == 0:
                             inspector.rect.x = (pg.display.get_surface().get_width()-10)-(inspector.rect.w)
-                            growingOffSet = inspector.rect.w+10
+                            growingOffSet = inspector.rect.w+20
                         else:
                             inspector.rect.x = (pg.display.get_surface().get_width()-10)-(growingOffSet)-(inspector.rect.w)
-                            growingOffSet += inspector.rect.w+10
+                            growingOffSet += inspector.rect.w+20
 
                 if isinstance(elem, UIBase.PopUp):
                     elem.negate = True

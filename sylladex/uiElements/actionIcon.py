@@ -7,7 +7,7 @@ from sylladex.captchalogueCards import codeDatabase
 class ActionIcon(UIBase):
 
     def __init__(self, x, y, job):
-        super().__init__(x, y, (180, 24), 'surfaceRect', f'ActionIcon ({job})', True, (0,0,0))
+        super().__init__(x, y, (180, 24), f'ActionIcon ({job})', (0,0,0))
 
         self.job = job
         self.active = False
@@ -26,13 +26,7 @@ class ActionIcon(UIBase):
 
         self.prefix = 'AS'
 
-        self.backgroundColor = pg.Surface((107,22))
-        self.backgroundColor.fill(self.currentColor)
-        self.image.blit(self.backgroundColor, [0,1])
-        
-        self.foregroundColor = pg.Surface((101,18))
-        self.foregroundColor.fill('#FFFFFF')
-        self.image.blit(self.foregroundColor, [3, 3])
+        self._create_appearance([[107, 22], self.currentColor, [0, 1]], [[101, 18], '#FFFFFF', [3, 3]])
 
         self.text = ''
 
