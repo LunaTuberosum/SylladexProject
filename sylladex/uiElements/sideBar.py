@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class SideBar(UIBase):

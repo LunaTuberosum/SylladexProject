@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 class ListObject(UIBase):
     def __init__(self):
@@ -99,16 +99,16 @@ class ListObject(UIBase):
 
         self.image.fill((255,255,255))
         self.writing = True
-        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "Txt"))
-        self.children.append(UIBase.TextField(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "Txt"))
-        self.children.append(UIBase.TextField(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "Txt"))
+        self.children.append(UIBase.get_uiElem('TextField')(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "Txt"))
+        self.children.append(UIBase.get_uiElem('TextField')(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "Txt"))
+        self.children.append(UIBase.get_uiElem('TextField')(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "Txt"))
         
 
         for child in self.children:
             UIBase.get_group('layer').change_layer(child, -1)
             child.changeColors((230,230,230), (200,200,200), (170,170,170))
 
-        self.children.append(UIBase.FinishButton(self))
+        self.children.append(UIBase.get_uiElem('FinishButton')(self))
 
         self.children[0].active = True
         self.children[0].image.fill((170,170,170))
@@ -139,21 +139,21 @@ class ListObject(UIBase):
         self.hovering = True
 
     def on_click(self):
-        if UIBase.RemoveCardButton.eject == True and self.interactable == True:
+        if UIBase.get_uiElem('RemoveCardButton').eject == True and self.interactable == True:
             if self.empty == False:
                 self.empty = True
                 self.name = "-"
                 self.code = "-"
                 self.tier = "-"
 
-                UIBase.RemoveCardButton.eject = False
+                UIBase.get_uiElem('RemoveCardButton').eject = False
                 for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.ListObject):
+                    if isinstance(elem, UIBase.get_uiElem('ListObject')):
                         elem.redraw_card((255,255,255))
-                    elif isinstance(elem, UIBase.CardList):
+                    elif isinstance(elem, UIBase.get_uiElem('CardList')):
                         elem.save_list()
             else: 
-                UIBase.PopUp("You can\'t eject an empty card")
+                UIBase.get_uiElem('PopUp')("You can\'t eject an empty card")
         elif self.interactable == True:
             if self.empty == False:
                 self.grabbed = True

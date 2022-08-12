@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class RemoveCardButton(UIBase):
@@ -24,11 +24,11 @@ class RemoveCardButton(UIBase):
         self.hovering = False
         
     def on_click(self):
-        if UIBase.RemoveCardButton.eject == False:
-            UIBase.RemoveCardButton.eject = True
+        if UIBase.get_uiElem('RemoveCardButton').eject == False:
+            UIBase.get_uiElem('RemoveCardButton').eject = True
             
         else:
-            UIBase.RemoveCardButton.eject = False
+            UIBase.get_uiElem('RemoveCardButton').eject = False
                 
                         
 

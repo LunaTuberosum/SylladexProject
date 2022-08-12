@@ -1,7 +1,7 @@
 import sys
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 class EscapeMenuOption(UIBase):
     def __init__(self, x, y, text):

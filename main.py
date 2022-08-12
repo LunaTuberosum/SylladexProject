@@ -2,71 +2,11 @@ import pygame as pg
 import settings
 from sylladex import sylladexMain
 
-from sylladex.uiElements.baseUI import UIBase
-
-from sylladex.uiElements.actionIcon import ActionIcon
-from sylladex.uiElements.addCardButton import AddCardButton
-from sylladex.uiElements.cardList import CardList
-from sylladex.uiElements.consoleMessage import ConsoleMessage
-from sylladex.uiElements.customSettingAreaBox import CustomSettingAreaBox
-from sylladex.uiElements.customSettingButton import CustomSettingButton
-from sylladex.uiElements.customSettingMenu import CustomSettingMenu
-from sylladex.uiElements.customSettingSectionName import CustomSettingSectionName
-from sylladex.uiElements.escapeMenu import EscapeMenu
-from sylladex.uiElements.escapeMenuOption import EscapeMenuOption
-from sylladex.uiElements.gristCache import GristCache
-from sylladex.uiElements.gristCacheButton import GristCacheButton
-from sylladex.uiElements.gristCacheLimit import GristCacheLimit
-from sylladex.uiElements.gristInfoBox import GristInfoBox
-from sylladex.uiElements.gristProgressBar import GristProgressBar
-from sylladex.uiElements.listObject import ListObject
-from sylladex.uiElements.longTextField import LongTextField
-from sylladex.uiElements.modusCard import ModusCard
-from sylladex.uiElements.optionToggle import OptionToggle
-from sylladex.uiElements.popUp import PopUp
-from sylladex.uiElements.removeCardButton import RemoveCardButton
-from sylladex.uiElements.scrollBar import ScrollBar
-from sylladex.uiElements.sideBar import SideBar
-from sylladex.uiElements.sidebarButton import SidebarButton
-from sylladex.uiElements.stackingArea import StackingArea
-from sylladex.uiElements.textField import TextField
-from sylladex.uiElements.toggleButton import ToggleButton
-from sylladex.uiElements.toolTip import ToolTip
-from sylladex.uiElements.finishButton import FinishButton
+from baseUI import UIBase
 
 from sylladex.captchalogueCards import codeDatabase
 
 from sylladex.uiElements.debugUIInspector import DebugUIInspector
-
-UIBase.ActionIcon = ActionIcon
-UIBase.AddCardButton = AddCardButton
-UIBase.CardList = CardList
-UIBase.ConsoleMessage = ConsoleMessage
-UIBase.CustomSettingAreaBox = CustomSettingAreaBox
-UIBase.CustomSettingButton = CustomSettingButton
-UIBase.CustomSettingMenu = CustomSettingMenu
-UIBase.CustomSettingSectionName = CustomSettingSectionName
-UIBase.EscapeMenu = EscapeMenu
-UIBase.EscapeMenuOption = EscapeMenuOption
-UIBase.GristCache = GristCache
-UIBase.GristCacheButton = GristCacheButton
-UIBase.GristCacheLimit = GristCacheLimit
-UIBase.GristInfoBox = GristInfoBox
-UIBase.GristProgressBar = GristProgressBar
-UIBase.ListObject = ListObject
-UIBase.LongTextField = LongTextField
-UIBase.ModusCard = ModusCard
-UIBase.OptionToggle = OptionToggle
-UIBase.PopUp = PopUp
-UIBase.RemoveCardButton = RemoveCardButton
-UIBase.ScrollBar = ScrollBar
-UIBase.SideBar = SideBar
-UIBase.SidebarButton = SidebarButton
-UIBase.StackingArea = StackingArea
-UIBase.TextField = TextField
-UIBase.ToggleButton = ToggleButton
-UIBase.ToolTip = ToolTip
-UIBase.FinishButton = FinishButton
 
 UIBase.CodeDatabase = codeDatabase
 

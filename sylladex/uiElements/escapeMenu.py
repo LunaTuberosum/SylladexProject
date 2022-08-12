@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 class EscapeMenu(UIBase):
     def __init__(self):
@@ -9,7 +9,7 @@ class EscapeMenu(UIBase):
         self._create_appearance([[420, 360], '#000000', [0, 0]], image = ['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]])
 
         self.children = [
-            UIBase.EscapeMenuOption(self.rect.x+110,self.rect.y+110,'Settings'),
-            UIBase.EscapeMenuOption(self.rect.x+110,self.rect.y+171,'Tutorials'),
-            UIBase.EscapeMenuOption(self.rect.x+110,self.rect.y+232,'To Desktop'),
-            UIBase.EscapeMenuOption(self.rect.x+110,self.rect.y+293,'Log Out'),]
+            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+110,'Settings'),
+            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+171,'Tutorials'),
+            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+232,'To Desktop'),
+            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+293,'Log Out'),]

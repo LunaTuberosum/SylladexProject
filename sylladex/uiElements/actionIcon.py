@@ -1,8 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
-from sylladex.captchalogueCards import codeDatabase
-
+from baseUI import UIBase
 
 class ActionIcon(UIBase):
 
@@ -37,13 +35,13 @@ class ActionIcon(UIBase):
         self.active = False
         self.draw()
         if self.job == 'action1Icon':
-            if self.currentColor == self.meleeColor: codeDatabase.change_codeValue('Melee 1 Name', (self.prefix+self.text).upper())
-            elif self.currentColor == self.meleeColor: codeDatabase.change_codeValue('Ranged 1 Name', (self.prefix+self.text).upper())
-            elif self.currentColor == self.meleeColor: codeDatabase.change_codeValue('Magic 1 Name', (self.prefix+self.text).upper())
+            if self.currentColor == self.meleeColor: UIBase.CodeDatabase.change_codeValue('Melee 1 Name', (self.prefix+self.text).upper())
+            elif self.currentColor == self.meleeColor: UIBase.CodeDatabase.change_codeValue('Ranged 1 Name', (self.prefix+self.text).upper())
+            elif self.currentColor == self.meleeColor: UIBase.CodeDatabase.change_codeValue('Magic 1 Name', (self.prefix+self.text).upper())
         elif self.job == 'action2Icon':
-            if self.currentColor == self.meleeColor: codeDatabase.change_codeValue('Melee 2 Name', (self.prefix+self.text).upper())
-            elif self.currentColor == self.meleeColor: codeDatabase.change_codeValue('Ranged 2 Name', (self.prefix+self.text).upper())
-            elif self.currentColor == self.meleeColor: codeDatabase.change_codeValue('Magic 2 Name', (self.prefix+self.text).upper())
+            if self.currentColor == self.meleeColor: UIBase.CodeDatabase.change_codeValue('Melee 2 Name', (self.prefix+self.text).upper())
+            elif self.currentColor == self.meleeColor: UIBase.CodeDatabase.change_codeValue('Ranged 2 Name', (self.prefix+self.text).upper())
+            elif self.currentColor == self.meleeColor: UIBase.CodeDatabase.change_codeValue('Magic 2 Name', (self.prefix+self.text).upper())
 
     def draw(self):
         self.backgroundColor = pg.Surface((107,22))
@@ -82,7 +80,7 @@ class ActionIcon(UIBase):
 
     def update(self):
         for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.ToggleButton):
+            if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
                 if elem.job == 'meleeToggle' and elem.on == True:
                     self.currentColor = self.meleeColor
                     self.prefix = 'AS'

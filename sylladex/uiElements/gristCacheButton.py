@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class GristCacheButton(UIBase):
@@ -34,12 +34,12 @@ class GristCacheButton(UIBase):
             
             self.rect.x = 713
             for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.SideBar):
+                if isinstance(elem, UIBase.get_uiElem('SideBar')):
                     self.rect.x = 1038
-                    UIBase.GristCache(325)
+                    UIBase.get_uiElem('GristCache')(325)
                     return
                     
-            UIBase.GristCache(0)
+            UIBase.get_uiElem('GristCache')(0)
 
         elif self.toolTipText == 'Closes Grist Cache':
             self.toolTipText = 'Opens Grist Cache'
@@ -47,7 +47,7 @@ class GristCacheButton(UIBase):
 
             self.rect.x = 0
             for elem in UIBase.get_group('ui'):
-                if isinstance(elem ,UIBase.GristCache):
+                if isinstance(elem ,UIBase.get_uiElem('GristCache')):
                     for child in elem.children:
                         if hasattr(child, 'children'):
                             for child2 in child.children:
@@ -58,7 +58,7 @@ class GristCacheButton(UIBase):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
 
-                if isinstance(elem, UIBase.SideBar):
+                if isinstance(elem, UIBase.get_uiElem('SideBar')):
                     self.rect.x = 326
 
              

@@ -1,7 +1,7 @@
 import pygame as pg
 import textwrap
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class PopUp(UIBase):

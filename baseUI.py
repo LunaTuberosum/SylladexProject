@@ -1,4 +1,3 @@
-from ssl import Options
 import pygame as pg
 
 
@@ -7,35 +6,7 @@ class UIBase(pg.sprite.Sprite):
     uiElements = pg.sprite.Group()
     uiLayers = pg.sprite.LayeredUpdates()
 
-    ActionIcon = None
-    AddCardButton = None
-    CardList = None
-    ConsoleMessage = None
-    CustomSettingAreaBox = None
-    CustomSettingButton = None
-    CustomSettingMenu = None
-    CustomSettingSectionName = None
-    EscapeMenu = None
-    EscapeMenuOption = None
-    GristCache = None
-    GristCacheButton = None
-    GristCacheLimit = None
-    GristInfoBox = None
-    GristProgressBar = None
-    ListObject = None
-    LongTextField = None
-    ModusCard = None
-    OptionToggle = None
-    PopUp = None
-    RemoveCardButton = None
-    ScrollBar = None
-    SideBar = None
-    SidebarButton = None
-    StackingArea = None
-    TextField = None
-    ToggleButton = None
-    ToolTip = None
-    FinishButton = None
+    currentUI = {}
 
     CodeDatabase = None
 
@@ -79,6 +50,16 @@ class UIBase(pg.sprite.Sprite):
         self.image.fill(surfaceColor)
 
         self.rect = self.image.get_rect(topleft=(x, y))
+
+    def add_current_UI(uiArray):
+        for elem in uiArray:
+            UIBase.currentUI[f'{elem.__name__}'] = elem
+
+    def get_uiElem(elem):
+        try:
+            return UIBase.currentUI.get(elem)
+        except:
+            raise Exception(f'Could not find {elem} in current UI')
 
     def _create_appearance(self, *sizeColorPos, **options):
         if 'colorKey' in options and options['colorKey'] == True: self.image.set_colorkey(self.baseColor)

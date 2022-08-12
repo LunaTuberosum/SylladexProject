@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class ModusCard(UIBase):
@@ -25,7 +25,7 @@ class ModusCard(UIBase):
 
     def on_click(self):
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.ModusCard):
+            if isinstance(elem, UIBase.get_uiElem('ModusCard')):
                 if elem == self:
                     elem.image = pg.image.load(f"sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png").convert_alpha()
                     UIBase.set_modus(self.modus)

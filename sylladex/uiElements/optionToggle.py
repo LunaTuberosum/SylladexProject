@@ -1,8 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
-from sylladex.captchalogueCards import codeDatabase
-
+from baseUI import UIBase
 
 class OptionToggle(UIBase):
     def __init__(self,x, y, w, h, job, color, options, defultOption, customObj, showType):
@@ -27,7 +25,7 @@ class OptionToggle(UIBase):
             self.currentText = self.font.render(f'{self.currentOption}', True, (0,0,0))
             self.image.blit(self.currentText, [(24-(self.currentText.get_width()/2)), 12-(self.currentText.get_height()/2)])
         elif self.showType == 'Image':
-            self.currentImage = pg.image.load(codeDatabase.find_kindImage(self.currentOption)).convert_alpha()
+            self.currentImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.currentOption)).convert_alpha()
             self.currentImage = pg.transform.scale(self.currentImage, (24,24))
             self.image.blit(self.currentImage, [0,0])
 
@@ -43,13 +41,13 @@ class OptionToggle(UIBase):
             self.currentText = self.font.render(f'{self.currentOption}', True, (0,0,0))
             self.image.blit(self.currentText, [(24-(self.currentText.get_width()/2)), 12-(self.currentText.get_height()/2)])
 
-            codeDatabase.change_codeValue(f'{self.customObj} Type', self.currentOption)
+            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Type', self.currentOption)
         elif self.showType == 'Image':
-            self.currentImage = pg.image.load(codeDatabase.find_kindImage(self.currentOption)).convert_alpha()
+            self.currentImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.currentOption)).convert_alpha()
             self.currentImage = pg.transform.scale(self.currentImage, (24,24))
             self.image.blit(self.currentImage, [0,0])
 
-            codeDatabase.change_codeValue(f'{self.customObj} Icon', self.currentOption)
+            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Icon', self.currentOption)
 
     def on_altClick(self):
         self.currentIndex -= 1
@@ -62,10 +60,10 @@ class OptionToggle(UIBase):
             self.currentText = self.font.render(f'{self.currentOption}', True, (0,0,0))
             self.image.blit(self.currentText, [(24-(self.currentText.get_width()/2)), 12-(self.currentText.get_height()/2)])
 
-            codeDatabase.change_codeValue(f'{self.customObj} Type', self.currentOption)
+            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Type', self.currentOption)
         elif self.showType == 'Image':
-            self.currentImage = pg.image.load(codeDatabase.find_kindImage(self.currentOption)).convert_alpha()
+            self.currentImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.currentOption)).convert_alpha()
             self.currentImage = pg.transform.scale(self.currentImage, (24,24))
             self.image.blit(self.currentImage, [0,0])
 
-            codeDatabase.change_codeValue(f'{self.customObj} Icon', self.currentOption)
+            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Icon', self.currentOption)

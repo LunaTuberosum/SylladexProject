@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class CustomSettingSectionName(UIBase):
@@ -20,7 +20,7 @@ class CustomSettingSectionName(UIBase):
     def update(self):
         if self.section == 'ACTIONS':
             for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.ToggleButton):
+                if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
                     if elem.job == 'meleeToggle':
                         if elem.on == True:
                             self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MELEE ACTIONS', [90, 12], 'center']])

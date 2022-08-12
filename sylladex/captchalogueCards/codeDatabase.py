@@ -1,7 +1,7 @@
 from random import *
 from math import *
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 codeCypher = {
 

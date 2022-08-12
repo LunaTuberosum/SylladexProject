@@ -2,7 +2,7 @@
 import pygame as pg
 import pickle
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class CardList(UIBase):
@@ -13,7 +13,7 @@ class CardList(UIBase):
         self.uiLayers.change_layer(self, -1)
         
     def add_toList(self):
-        self.children.append(UIBase.ListObject())
+        self.children.append(UIBase.get_uiElem('ListObject')())
         card = self.children[len(self.children)-1]
         UIBase.add_toGroup(card)
         UIBase.uiLayers.change_layer(card, -1)
@@ -24,13 +24,16 @@ class CardList(UIBase):
             self.children[len(self.children)-1].kill()
             self.children.remove(self.children[len(self.children)-1])
         else:
-            UIBase.PopUp("You can only remove empty cards. Eject cards first")
-            UIBase.TextField.text = str(len(self.children))
-            UIBase.TextField.draw()
+            UIBase.get_uiElem('PopUp')("You can only remove empty cards. Eject cards first")
+            for elem in UIBase.get_group('ui'):
+                if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
+                    elem.text = str(len(self.children))
+                    elem.draw()
+                    elem.no_hover()
             return
         
     def save_list(self):
-        UIBase.ConsoleMessage('Saved List')
+        UIBase.get_uiElem('ConsoleMessage')('Saved List')
         tempList = []
         for card in self.children:
             tempList.append([card.name, card.code, card.tier, card.empty])
@@ -45,14 +48,14 @@ class CardList(UIBase):
         self.children.clear()
 
         for card in tempList:
-            obj = UIBase.ListObject()
+            obj = UIBase.get_uiElem('ListObject')()
             obj.name = card[0]
             obj.code = card[1]
             obj.tier = card[2]
             obj.empty = card[3]
             self.children.append(obj)
         for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.TextField) and elem.job == 'numOfCards':
+            if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
                 elem.text = str(len(self.children))
                 elem.draw()
                 elem.no_hover()
@@ -71,7 +74,7 @@ class CardList(UIBase):
             card.rect.y = 127 + offset
             offset += 70
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.ScrollBar):
+            if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                 UIBase.remove_fromGroup(elem)
                 elem.kill()
-        UIBase.ScrollBar()
+        UIBase.get_uiElem('ScrollBar')()

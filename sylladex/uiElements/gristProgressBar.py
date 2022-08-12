@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class GristProgressBar(UIBase):
@@ -9,7 +9,7 @@ class GristProgressBar(UIBase):
         self.prevAmount = self.parent.children[0].text
 
         for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.GristCacheLimit):
+            if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
                 self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
                 break
 
@@ -19,7 +19,7 @@ class GristProgressBar(UIBase):
         if self.parent.children[0].text != self.prevAmount:
             self.prevAmount = self.parent.children[0].text
             for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.GristCacheLimit):
+                if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
                     if self.parent.children[0].text == '':
                         self.progress = 0
                         break

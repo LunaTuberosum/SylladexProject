@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class SidebarButton(UIBase):
@@ -30,7 +30,7 @@ class SidebarButton(UIBase):
 
     def update(self):
         for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.CustomSettingMenu):
+            if isinstance(elem, UIBase.get_uiElem('CustomSettingMenu')):
                 self.inactive = True
                 return
         self.inactive = False
@@ -42,35 +42,35 @@ class SidebarButton(UIBase):
                 self._create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0]])
                 self.rect.x = 319
 
-                UIBase.SideBar()
+                UIBase.get_uiElem('SideBar')()
 
-                UIBase.AddCardButton()
-                UIBase.RemoveCardButton()
+                UIBase.get_uiElem('AddCardButton')()
+                UIBase.get_uiElem('RemoveCardButton')()
 
-                UIBase.TextField(242, 142, 53, 48, 3, "numOfCards", "The Number of Cards in you Sylladex", "Num")
-                UIBase.CardList(24, 196, (249, 649))
+                UIBase.get_uiElem('TextField')(242, 142, 53, 48, 3, "numOfCards", "The Number of Cards in you Sylladex", "Num")
+                UIBase.get_uiElem('CardList')(24, 196, (249, 649))
 
-                UIBase.ModusCard(33, 910, (72, 96), "STACK_MODUS.png", "STACK")
-                UIBase.ModusCard(121, 910, (72, 96), "QUEUE_MODUS.png", "QUEUE")
-                UIBase.ModusCard(209, 910, (72, 96), "TREE_MODUS.png", "TREE")
+                UIBase.get_uiElem('ModusCard')(33, 910, (72, 96), "STACK_MODUS.png", "STACK")
+                UIBase.get_uiElem('ModusCard')(121, 910, (72, 96), "QUEUE_MODUS.png", "QUEUE")
+                UIBase.get_uiElem('ModusCard')(209, 910, (72, 96), "TREE_MODUS.png", "TREE")
 
                 for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.GristCacheButton):
+                    if isinstance(elem, UIBase.get_uiElem('GristCacheButton')):
                         elem.rect.x = 326
                         for elem2 in UIBase.get_group('ui'):
-                            if isinstance(elem2, UIBase.GristCache):
+                            if isinstance(elem2, UIBase.get_uiElem('GristCache')):
                                 elem.rect.x = 1038
                                 elem2.rect.x = 326
                                 elem2.repositionChildren()
-                    if isinstance(elem, UIBase.CardList):
+                    if isinstance(elem, UIBase.get_uiElem('CardList')):
                         elem.start_list()
 
-                    if isinstance(elem, UIBase.ScrollBar):
+                    if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                         UIBase.uiElements.remove(elem)
                         UIBase.uiLayers.remove(elem)
                         elem.kill()
 
-                    if isinstance(elem, UIBase.CustomSettingButton):
+                    if isinstance(elem, UIBase.get_uiElem('CustomSettingButton')):
                         elem.rect.x = 326
 
             elif self.toolTipText == 'Closes Side Bar':
@@ -80,40 +80,40 @@ class SidebarButton(UIBase):
 
                 for elem in UIBase.get_group("ui"):
 
-                    if isinstance(elem, UIBase.SideBar):
+                    if isinstance(elem, UIBase.get_uiElem('SideBar')):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
-                    if isinstance(elem, UIBase.GristCacheButton):
+                    if isinstance(elem, UIBase.get_uiElem('GristCacheButton')):
                         elem.rect.x = 0
                         for elem2 in UIBase.get_group('ui'):
-                            if isinstance(elem2, UIBase.GristCache):
+                            if isinstance(elem2, UIBase.get_uiElem('GristCache')):
                                 elem.rect.x = 713
                                 elem2.rect.x = 0
                                 elem2.repositionChildren()
-                    if isinstance(elem, UIBase.CustomSettingButton):
+                    if isinstance(elem, UIBase.get_uiElem('CustomSettingButton')):
                         elem.rect.x = 0
                                 
-                    if isinstance(elem, UIBase.TextField):
+                    if isinstance(elem, UIBase.get_uiElem('TextField')):
                         if elem.job == 'numOfCards' or elem.job == 'nameOverlay' or elem.job == 'codeOverlay' or elem.job == 'tierOverlay':
                             UIBase.remove_fromGroup(elem)
                             elem.kill()
-                    if isinstance(elem, UIBase.CardList):
+                    if isinstance(elem, UIBase.get_uiElem('CardList')):
                         for card in elem.children:
                             card.kill()
                         elem.kill()
-                    if isinstance(elem, UIBase.ScrollBar):
+                    if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
-                    if isinstance(elem, UIBase.ModusCard):
+                    if isinstance(elem, UIBase.get_uiElem('ModusCard')):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
-                    if isinstance(elem, UIBase.AddCardButton):
+                    if isinstance(elem, UIBase.get_uiElem('AddCardButton')):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
-                    if isinstance(elem, UIBase.RemoveCardButton):
+                    if isinstance(elem, UIBase.get_uiElem('RemoveCardButton')):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
-                    if isinstance(elem, UIBase.FinishButton):
+                    if isinstance(elem, UIBase.get_uiElem('FinishButton')):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
 

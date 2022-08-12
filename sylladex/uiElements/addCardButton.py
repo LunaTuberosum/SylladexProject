@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 class AddCardButton(UIBase):
     def __init__(self):
@@ -20,7 +20,7 @@ class AddCardButton(UIBase):
         self.hovering = False
     
     def on_click(self):
-        for item in UIBase.CardList.children:
+        for item in UIBase.get_uiElem('CardList').children:
             if item.writing == True:
                 item.writing = False
                 item.redraw_card((255,255,255))
@@ -36,8 +36,8 @@ class AddCardButton(UIBase):
 
                     return
                 else:
-                    UIBase.PopUp('Empty card not in view')
+                    UIBase.get_uiElem('PopUp')('Empty card not in view')
 
                     return
-        UIBase.PopUp("You have no empty cards")
+        UIBase.get_uiElem('PopUp')("You have no empty cards")
         

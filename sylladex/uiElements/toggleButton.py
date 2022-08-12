@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class ToggleButton(UIBase):
@@ -50,7 +50,7 @@ class ToggleButton(UIBase):
         if self.job == 'meleeToggle' or self.job == 'rangedToggle' or self.job == 'magicToggle':
             if self.on == False:
                 for elem in UIBase.get_group('ui'):
-                    if isinstance(elem, UIBase.ToggleButton):
+                    if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
                         
                         if elem.job == 'meleeToggle': 
                             elem.on = False
@@ -62,7 +62,7 @@ class ToggleButton(UIBase):
                             elem.on = False
                             elem.no_hover()
 
-                    if isinstance(elem, UIBase.ActionIcon):
+                    if isinstance(elem, UIBase.get_uiElem('ActionIcon')):
                         if elem.job == 'action1Icon':
                             if self.job == 'meleeToggle': elem.text = customData[2].split(',')[0][2:]
                             elif self.job == 'rangedToggle': elem.text = customData[3].split(',')[0][2:]
@@ -74,7 +74,7 @@ class ToggleButton(UIBase):
                             elif self.job == 'magicToggle': elem.text = customData[4].split(',')[4][2:]
                             elem.draw()
 
-                    elif isinstance(elem, UIBase.TextField):
+                    elif isinstance(elem, UIBase.get_uiElem('TextField')):
                         if elem.job == 'action1Cost':
                             if self.job == 'meleeToggle': elem.text = customData[2].split(',')[1]
                             elif self.job == 'rangedToggle': elem.text = customData[3].split(',')[1]
@@ -97,7 +97,7 @@ class ToggleButton(UIBase):
                             elif self.job == 'magicToggle': elem.text = customData[4].split(',')[6]
                             elem.no_hover()
                     
-                    elif isinstance(elem, UIBase.LongTextField):
+                    elif isinstance(elem, UIBase.get_uiElem('LongTextField')):
                         if elem.job == 'action1Desc':
                             if self.job == 'meleeToggle': elem.starter_text(customData[2].split(',')[3])
                             elif self.job == 'rangedToggle': elem.starter_text(customData[3].split(',')[3])
@@ -110,7 +110,7 @@ class ToggleButton(UIBase):
         elif self.job == 't1Toggle' or self.job == 't2Toggle' or self.job == 't3Toggle' or self.job == 't4Toggle':
             if self.on == False:
                 for elem in UIBase.get_group('ui'):
-                    if isinstance(elem, UIBase.ToggleButton):
+                    if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
                         
                         if elem.job == 't1Toggle': 
                             elem.on = False
@@ -125,7 +125,7 @@ class ToggleButton(UIBase):
                             elem.on = False
                             elem.no_hover()
 
-                    elif isinstance(elem, UIBase.TextField):
+                    elif isinstance(elem, UIBase.get_uiElem('TextField')):
                         if elem.job == 'traitName':
                             if self.job == 't1Toggle': elem.text = customData[5].split(',')[0]
                             elif self.job == 't2Toggle': elem.text = customData[6].split(',')[0]
@@ -133,7 +133,7 @@ class ToggleButton(UIBase):
                             elif self.job == 't4Toggle': elem.text = customData[8].split(',')[0]
                             elem.no_hover()
 
-                    elif isinstance(elem, UIBase.LongTextField):
+                    elif isinstance(elem, UIBase.get_uiElem('LongTextField')):
                         if elem.job == '1-4Desc':
                             if self.job == 't1Toggle': elem.starter_text(customData[5].split(',')[1])
                             elif self.job == 't2Toggle': elem.starter_text(customData[6].split(',')[1])

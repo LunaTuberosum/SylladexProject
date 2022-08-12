@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 
 class CustomSettingButton(UIBase):
@@ -25,17 +25,17 @@ class CustomSettingButton(UIBase):
             self.rect.x = 342
             self.toolTipText = 'Close custom card code settings'
             for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.SideBar):
-                    UIBase.CustomSettingMenu(326)
+                if isinstance(elem, UIBase.get_uiElem('SideBar')):
+                    UIBase.get_uiElem('CustomSettingMenu')(326)
                     self.rect.x = 668
                     return
-            UIBase.CustomSettingMenu(0)
+            UIBase.get_uiElem('CustomSettingMenu')(0)
 
         elif self.toolTipText == 'Close custom card code settings':
 
             self.rect.x = 0
             for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.CustomSettingMenu):
+                if isinstance(elem, UIBase.get_uiElem('CustomSettingMenu')):
                     UIBase.remove_fromGroup(elem)
                     elem.kill()
                     for child in elem.children:
@@ -45,7 +45,7 @@ class CustomSettingButton(UIBase):
                             for child in child.children:
                                 UIBase.remove_fromGroup(child)
                                 child.kill()
-                elif isinstance(elem, UIBase.SideBar):
+                elif isinstance(elem, UIBase.get_uiElem('SideBar')):
                     self.rect.x = 326        
             
             self.toolTipText = 'Open custom card code settings'

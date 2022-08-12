@@ -1,6 +1,6 @@
 import pygame as pg
 
-from sylladex.uiElements.baseUI import UIBase
+from baseUI import UIBase
 
 class FinishButton(UIBase):
     def __init__(self, card):
@@ -26,21 +26,21 @@ class FinishButton(UIBase):
         
     def on_click(self):
         for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.TextField):
+            if isinstance(elem, UIBase.get_uiElem('TextField')):
                 if elem.job == "nameOverlay":
                     if len(elem.text) == 0:
-                        UIBase.PopUp('The card must have a name')
+                        UIBase.get_uiElem('PopUp')('The card must have a name')
                         return
                     self.card.name = elem.text
 
                 elif elem.job == "codeOverlay":
                     if len(elem.text) < 8:
-                        UIBase.PopUp('Codes must be a 8 characters long')
+                        UIBase.get_uiElem('PopUp')('Codes must be a 8 characters long')
                         return
                     self.card.code = elem.text
                 elif elem.job == "tierOverlay":
                     if len(elem.text) == 0:
-                        UIBase.PopUp('Cards must have a tier')
+                        UIBase.get_uiElem('PopUp')('Cards must have a tier')
                         return
 
                     isNum = True
@@ -52,14 +52,14 @@ class FinishButton(UIBase):
                             else:
                                 isNum = False
                         if isNum == False:
-                            UIBase.PopUp("Tier must only be numbers")
+                            UIBase.get_uiElem('PopUp')("Tier must only be numbers")
                             return
 
                     if int(elem.text) > 16:
-                        UIBase.PopUp("Tier can be no higher than 16")
+                        UIBase.get_uiElem('PopUp')("Tier can be no higher than 16")
                         return
                     elif int(elem.text) == 0:
-                        UIBase.PopUp("Tier must be at least 1")
+                        UIBase.get_uiElem('PopUp')("Tier must be at least 1")
                         return
                     
                     self.card.tier = elem.text
@@ -71,5 +71,5 @@ class FinishButton(UIBase):
             child.kill()
         self.card.children.clear()
         for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.CardList):
+            if isinstance(elem, UIBase.get_uiElem('CardList')):
                 elem.save_list()
