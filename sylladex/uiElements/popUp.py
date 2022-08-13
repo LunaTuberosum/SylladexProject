@@ -17,6 +17,8 @@ class PopUp(UIBase):
             self.txt_surface = self.font.render(text, True, (0,0,0))
             self.image.blit(self.txt_surface, [self.rect.w/2-self.txt_surface.get_width()/2, (self.rect.h/4-self.txt_surface.get_height()/2)+(index*self.rect.h/6)])
 
+        UIBase.get_group('layer').change_layer(self, 3)
+
         self.last = pg.time.get_ticks()
         self.timer = 1200  
         self.negate = False

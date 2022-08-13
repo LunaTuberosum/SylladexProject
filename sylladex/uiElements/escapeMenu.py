@@ -7,6 +7,8 @@ class EscapeMenu(UIBase):
         super().__init__(750, 360, (420, 360), 'EscapeMenu', (0,0,0))
 
         self._create_appearance([[420, 360], '#000000', [0, 0]], image = ['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]])
+        
+        UIBase.get_group('layer').change_layer(self, 3)
 
         self.children = [
             UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+110,'Settings'),

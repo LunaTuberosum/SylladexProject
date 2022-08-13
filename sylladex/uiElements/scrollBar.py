@@ -16,18 +16,18 @@ class ScrollBar(UIBase):
             else:
                 size = 0
 
-        super().__init__(273, 196, (23, size), 'ScrollBar', UIBase.modusForground)
+        super().__init__(273, 196, (23, size), 'ScrollBar', '#999999')
 
         self.rectTemp = self.rect.y
 
         self.hovering = False
 
     def hover(self):
-        self.image.fill(UIBase.modusAccent)
+        self.image.fill('#D9D9D9')
         self.hovering = True
 
     def no_hover(self):
-        self.image.fill(UIBase.modusForground)
+        self.image.fill('#999999')
         self.hovering = False
 
     def on_click(self):

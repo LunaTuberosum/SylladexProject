@@ -5,7 +5,6 @@ from baseUI import UIBase
 
 class EscapeMenuOption(UIBase):
     def __init__(self, x, y, text):
-
         
         self.text = text
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
@@ -23,6 +22,8 @@ class EscapeMenuOption(UIBase):
 
         self.x = x
         super().__init__(x+(102.5-(self.prefix.get_width()/2+self.txt_surf.get_width()/2)), y, (self.prefix.get_width()+self.txt_surf.get_width(), 51), f'EscapeOption ({self.text})', (239, 239, 239))
+
+        UIBase.get_group('layer').change_layer(self, 3)
 
         self.image.blit(self.prefix, [0,0])
         self.image.blit(self.txt_surf, [self.prefix.get_width(),0])

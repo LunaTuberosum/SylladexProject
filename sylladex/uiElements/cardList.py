@@ -18,11 +18,13 @@ class CardList(UIBase):
         UIBase.add_toGroup(card)
         UIBase.uiLayers.change_layer(card, -1)
         self.place_list()
+        self.save_list()
 
     def remove_fromList(self, TextField):
         if self.children[len(self.children)-1].empty == True:
             self.children[len(self.children)-1].kill()
             self.children.remove(self.children[len(self.children)-1])
+            self.save_list()
         else:
             UIBase.get_uiElem('PopUp')("You can only remove empty cards. Eject cards first")
             for elem in UIBase.get_group('ui'):

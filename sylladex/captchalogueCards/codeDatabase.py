@@ -3580,7 +3580,7 @@ def change_codeValue(whichCustom, newCodeValue):
 
 
         database.writelines([line1,line2,line3,line4,line5,line6,line7,line8,line9])
-        UIBase.ConsoleMessage('Saved Custom Settings')
+        UIBase.get_uiElem('ConsoleMessage')('Saved Custom Settings')
 
     for elem in UIBase.get_group('ui'):
         if isinstance(elem, UIBase.CardList):

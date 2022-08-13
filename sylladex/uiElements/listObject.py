@@ -25,6 +25,7 @@ class ListObject(UIBase):
         self.writing = False
 
         self.empty = True
+        self.captaCard = None
 
         self.name = "-"
         self.code = "-"
@@ -38,10 +39,16 @@ class ListObject(UIBase):
         self.action2 = None
         self.action3 = None
         self.action4 = None
-    
+
+        self.prevTick = 0
     
 
     def update(self):
+        if self.prevTick > 0:
+            if pg.time.get_ticks() - self.prevTick >= 500:
+                self.captaCard.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
+                self.captaCard.kind_image()
+
         if self.grabbed == True:
             self.rect.left = pg.mouse.get_pos()[0] - 32
             self.rect.top = pg.mouse.get_pos()[1] - 32
@@ -63,7 +70,23 @@ class ListObject(UIBase):
 
     def redraw_card(self, color):
         if self.writing == False:
-            if self.code == "-":
+            if self.captaCard:
+                self._create_appearance([[249, 64], color, [0, 0]],  [[10, 64], UIBase.modusForground, [239, 0]])
+
+                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.kind)).convert_alpha()
+                self.kindImage.set_alpha(125)
+                self.image.blit(self.kindImage, (185, 3))
+
+                nameTxt = self.font.render(self.name, True, (0,0,0))
+                self.image.blit(nameTxt, (3,3))
+
+                codeTxt = self.font.render(self.code, True, (0,0,0))
+                self.image.blit(codeTxt, (3,37))
+
+                tierTxt = self.font.render(self.tier, True, (0,0,0))
+                self.image.blit(tierTxt, (129,37))
+
+            elif self.code == "-":
                 self.image.fill(color)
                 self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
                 self.kindImage.set_alpha(125)
@@ -121,6 +144,10 @@ class ListObject(UIBase):
                     elem.no_hover()
 
     def hover(self):
+        if self.captaCard:
+            if self.prevTick == 0:
+                self.prevTick = pg.time.get_ticks()
+
         if self.writing == False:
             self.redraw_card((230,230,230))
             self.hovering = True
@@ -129,6 +156,11 @@ class ListObject(UIBase):
         if self.writing == False:
             self.redraw_card((255,255,255))
             self.hovering = False
+
+        if self.captaCard:
+            self.prevTick = 0
+            self.captaCard.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+            self.captaCard.kind_image()
 
     def alt_no_hover(self):
         self.redraw_card((230,230,230))
@@ -158,3 +190,4 @@ class ListObject(UIBase):
             if self.empty == False:
                 self.grabbed = True
                 self.prevPos = self.rect.topleft
+                UIBase.get_group('layer').change_layer(self, len(UIBase.get_group('ui')))

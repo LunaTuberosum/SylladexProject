@@ -9,6 +9,9 @@ class StackManager():
     def get_length():
         return len(StackManager.stack)
 
+    def add_toStack(card):
+        return StackManager.stack.append(card)
+
     def save_stack():
         with open("data/data.plk", "wb") as inStack:
             pickle.dump(StackManager.get_stack(), inStack, -1)

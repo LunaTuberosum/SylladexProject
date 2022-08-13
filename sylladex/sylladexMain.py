@@ -1,36 +1,38 @@
+from lib2to3.pytree import Base
 import pygame as pg
 
 from baseUI import UIBase
+from .captchalogueCards.baseCard import BaseCard
 
-from sylladex.uiElements.actionIcon import ActionIcon
-from sylladex.uiElements.addCardButton import AddCardButton
-from sylladex.uiElements.cardList import CardList
-from sylladex.uiElements.consoleMessage import ConsoleMessage
-from sylladex.uiElements.customSettingAreaBox import CustomSettingAreaBox
-from sylladex.uiElements.customSettingButton import CustomSettingButton
-from sylladex.uiElements.customSettingMenu import CustomSettingMenu
-from sylladex.uiElements.customSettingSectionName import CustomSettingSectionName
-from sylladex.uiElements.escapeMenu import EscapeMenu
-from sylladex.uiElements.escapeMenuOption import EscapeMenuOption
-from sylladex.uiElements.gristCache import GristCache
-from sylladex.uiElements.gristCacheButton import GristCacheButton
-from sylladex.uiElements.gristCacheLimit import GristCacheLimit
-from sylladex.uiElements.gristInfoBox import GristInfoBox
-from sylladex.uiElements.gristProgressBar import GristProgressBar
-from sylladex.uiElements.listObject import ListObject
-from sylladex.uiElements.longTextField import LongTextField
-from sylladex.uiElements.modusCard import ModusCard
-from sylladex.uiElements.optionToggle import OptionToggle
-from sylladex.uiElements.popUp import PopUp
-from sylladex.uiElements.removeCardButton import RemoveCardButton
-from sylladex.uiElements.scrollBar import ScrollBar
-from sylladex.uiElements.sideBar import SideBar
-from sylladex.uiElements.sidebarButton import SidebarButton
-from sylladex.uiElements.stackingArea import StackingArea
-from sylladex.uiElements.textField import TextField
-from sylladex.uiElements.toggleButton import ToggleButton
-from sylladex.uiElements.toolTip import ToolTip
-from sylladex.uiElements.finishButton import FinishButton
+from .uiElements.actionIcon import ActionIcon
+from .uiElements.addCardButton import AddCardButton
+from .uiElements.cardList import CardList
+from .uiElements.consoleMessage import ConsoleMessage
+from .uiElements.customSettingAreaBox import CustomSettingAreaBox
+from .uiElements.customSettingButton import CustomSettingButton
+from .uiElements.customSettingMenu import CustomSettingMenu
+from .uiElements.customSettingSectionName import CustomSettingSectionName
+from .uiElements.escapeMenu import EscapeMenu
+from .uiElements.escapeMenuOption import EscapeMenuOption
+from .uiElements.gristCache import GristCache
+from .uiElements.gristCacheButton import GristCacheButton
+from .uiElements.gristCacheLimit import GristCacheLimit
+from .uiElements.gristInfoBox import GristInfoBox
+from .uiElements.gristProgressBar import GristProgressBar
+from .uiElements.listObject import ListObject
+from .uiElements.longTextField import LongTextField
+from .uiElements.modusCard import ModusCard
+from .uiElements.optionToggle import OptionToggle
+from .uiElements.popUp import PopUp
+from .uiElements.removeCardButton import RemoveCardButton
+from .uiElements.scrollBar import ScrollBar
+from .uiElements.sideBar import SideBar
+from .uiElements.sidebarButton import SidebarButton
+from .uiElements.stackingArea import StackingArea
+from .uiElements.textField import TextField
+from .uiElements.toggleButton import ToggleButton
+from .uiElements.toolTip import ToolTip
+from .uiElements.finishButton import FinishButton
 
 UIBase.add_current_UI([
     ActionIcon, 
@@ -80,7 +82,10 @@ def main(screen, clock, UIBase):
         for event in pg.event.get():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    
+                    for card in BaseCard.cards:
+                        if card.rect.collidepoint(pg.mouse.get_pos()) and card.selected == False:
+                            card.on_click()
+
                     for elem in UIBase.get_group("ui"):
                         if hasattr(elem, "active") and elem.active == True:
                             if hasattr(elem, "exit_field"):
@@ -108,12 +113,25 @@ def main(screen, clock, UIBase):
                             elem.on_altClick()
             
             elif event.type == pg.MOUSEBUTTONUP:
+                for card in BaseCard.cards:
+                    if card.selected == True:
+                        card.on_release()
+
                 for elem in UIBase.get_group("ui"):
                     if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                         elem.selected = False
                     
                     elif hasattr(elem, 'grabbed') and elem.grabbed == True:
+                        if elem.rect.x > 326 and elem.captaCard == None:
+                            elem.captaCard = BaseCard(elem.rect.topleft, elem)
+                            elem.redraw_card('#FFFFFF')
+                        else:
+                            UIBase.get_uiElem('PopUp')('This card is already deployed')
+
                         elem.rect.topleft = elem.prevPos
+                        UIBase.get_group('layer').change_layer(elem, -1)
+                        for child in elem.children:
+                            UIBase.get_group('layer').change_layer(elem, -1)   
                         elem.grabbed = False
             
             elif event.type == pg.MOUSEMOTION:
@@ -121,6 +139,10 @@ def main(screen, clock, UIBase):
                     if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                         if elem.selected == True:
                             elem.move_bar(event.pos)
+                
+                for card in BaseCard.cards:
+                    if card.selected == True:
+                        card.move(event.rel)
 
             elif event.type == pg.MOUSEWHEEL:
                 for elem in UIBase.get_group("ui"):
@@ -138,7 +160,7 @@ def main(screen, clock, UIBase):
                         UIBase.DebugInspect = False
                         UIBase.Insepctors.clear()
                         for elem in UIBase.get_group('ui'):
-                            if isinstance(elem, UIBase.get_uiElem('DebugUIInspector')):
+                            if isinstance(elem, UIBase.DebugUIInspector):
                                 UIBase.remove_fromGroup(elem)
                                 elem.kill()
                 elif event.key == pg.K_ESCAPE:
@@ -153,12 +175,21 @@ def main(screen, clock, UIBase):
                             makeEscape = False
 
                     if makeEscape == True:
-                        UIBase.EscapeMenu()
+                        UIBase.get_uiElem('EscapeMenu')()
                     
                 else:
                     for elem in UIBase.get_group("ui"):
                         if hasattr(elem, 'typeing'):
                             elem.typeing(event)
+
+        for card in BaseCard.cards:
+            if card.rect.collidepoint(pg.mouse.get_pos()):
+                if card.hovering == False:
+                    card.hover()
+            else:
+                if card.hovering == True:
+                    card.no_hover()
+            
 
         for elem in UIBase.get_group("ui"):
             if elem.rect.collidepoint(pg.mouse.get_pos()):
@@ -166,14 +197,14 @@ def main(screen, clock, UIBase):
                 if UIBase.DebugInspect == True:
                     dontMake = False
                     for elem2 in UIBase.get_group('ui'):
-                        if isinstance(elem2, UIBase.get_uiElem('DebugUIInspector')):
+                        if isinstance(elem2, UIBase.DebugUIInspector):
                             if elem2.currentIns == elem:
                                 dontMake = True
                             elif elem2 == elem:
                                 dontMake = True
 
                     if dontMake == False:
-                        UIBase.Insepctors.append(UIBase.get_uiElem('DebugUIInspector')(elem))
+                        UIBase.Insepctors.append(UIBase.DebugUIInspector(elem))
 
                     for index, inspector in enumerate(UIBase.Insepctors):
                         if index == 0:
@@ -230,8 +261,9 @@ def main(screen, clock, UIBase):
 
 
         clock.tick(30)
-        screen.fill((183, 183, 183))
+        screen.fill('#B7B7B7')
         UIBase.get_group("ui").draw(screen)
+        BaseCard.cards.draw(screen)
         UIBase.get_group("layer").draw(screen)
         pg.display.flip()
 
