@@ -46,6 +46,7 @@ class BaseCard(pg.sprite.Sprite):
         self.hovering = False
 
     def on_click(self):
+        UIBase.get_group('layer').change_layer(self, 2)
         self.selected = True
         self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_UP.png').convert_alpha()
         self.kind_image()
@@ -60,6 +61,7 @@ class BaseCard(pg.sprite.Sprite):
                     BaseCard.remove_cardFromGroup(self)
                     return
 
+        UIBase.get_group('layer').change_layer(self, -1)
         self.selected = False
         self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
         self.kind_image()
