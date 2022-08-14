@@ -7,17 +7,17 @@ class CustomSettingButton(UIBase):
     def __init__(self):
         super().__init__(0, 50, (70,70), 'CustomSettingButton', (0,0,0))
 
-        self._create_appearance([[64, 64], '#666666', [0, 6]], [[64, 64], '#1155CC', [6, 0]], colorKey = True, image = ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]])
+        self.create_appearance([[64, 64], '#666666', [0, 6]], [[64, 64], '#1155CC', [6, 0]], colorKey = True, image = ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]])
 
         self.toolTipText = 'Open custom card code settings'
         self.hovering = False
     
     def hover(self):
-        self._reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12])
+        self.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12])
         self.hovering = True
 
     def no_hover(self):
-        self._reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12])
+        self.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12])
         self.hovering = False
 
     def on_click(self):

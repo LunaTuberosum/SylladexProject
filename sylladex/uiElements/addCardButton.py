@@ -6,17 +6,17 @@ class AddCardButton(UIBase):
     def __init__(self):
         super().__init__(30, 50, (70, 70), 'AddCard', (0,0,0))
 
-        self._create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0]])
+        self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0]])
 
         self.toolTipText = "Captchalogue a Card to your Sylladex" 
         self.hovering = False
         
     def hover(self):
-        self._reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON_HOVER.png', [6, 0])
+        self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON_HOVER.png', [6, 0])
         self.hovering = True
 
     def no_hover(self):
-        self._reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0])
+        self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0])
         self.hovering = False
     
     def on_click(self):

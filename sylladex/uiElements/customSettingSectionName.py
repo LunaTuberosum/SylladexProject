@@ -14,7 +14,7 @@ class CustomSettingSectionName(UIBase):
         if self.section == 'ACTIONS': _textValue = 'CUSTOM MELEE ACTIONS'
         else: _textValue = 'CUSTOM ' + self.section
         
-        self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [[_textValue, [90, 12], 'center']])
+        self.create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [[_textValue, [90, 12], 'center']])
 
 
     def update(self):
@@ -23,12 +23,12 @@ class CustomSettingSectionName(UIBase):
                 if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
                     if elem.job == 'meleeToggle':
                         if elem.on == True:
-                            self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MELEE ACTIONS', [90, 12], 'center']])
+                            self.create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MELEE ACTIONS', [90, 12], 'center']])
 
                     elif elem.job == 'rangedToggle':
                         if elem.on == True:
-                            self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM RANGED ACTIONS', [90, 12], 'center']])
+                            self.create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM RANGED ACTIONS', [90, 12], 'center']])
 
                     elif elem.job == 'magicToggle':
                         if elem.on == True:
-                            self._create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MAGIC ACTIONS', [90, 12], 'center']])
+                            self.create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MAGIC ACTIONS', [90, 12], 'center']])

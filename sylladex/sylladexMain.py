@@ -2,6 +2,9 @@ from lib2to3.pytree import Base
 import pygame as pg
 
 from baseUI import UIBase
+from .captchalogueCards.stackManager import StackManager
+
+from .captchalogueCards.cardOutline import CardOutline
 from .captchalogueCards.baseCard import BaseCard
 
 from .uiElements.actionIcon import ActionIcon
@@ -143,6 +146,9 @@ def main(screen, clock, UIBase):
                 for card in BaseCard.cards:
                     if card.selected == True:
                         card.move(event.rel)
+                        card.moving = True
+                    else:
+                        card.moving = False
 
             elif event.type == pg.MOUSEWHEEL:
                 for elem in UIBase.get_group("ui"):
@@ -189,6 +195,8 @@ def main(screen, clock, UIBase):
             else:
                 if card.hovering == True:
                     card.no_hover()
+
+            card.update()
             
 
         for elem in UIBase.get_group("ui"):
@@ -264,6 +272,8 @@ def main(screen, clock, UIBase):
         screen.fill('#B7B7B7')
         UIBase.get_group("ui").draw(screen)
         BaseCard.cards.draw(screen)
+        if UIBase.get_modus() == 'STACK' and StackManager.get_length(): StackManager.get_stack().draw(screen)
+        CardOutline.currentOutline.draw(screen)
         UIBase.get_group("layer").draw(screen)
         pg.display.flip()
 

@@ -9,7 +9,7 @@ class GristCacheLimit(UIBase):
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 16)
 
-        self._create_appearance([[284, 36], '#999999', [6, 6]], [[182, 36], '#C4C4C4', [0, 0]], [[102, 36], '#EFEFEF', [182, 0]], colorKey = True, texts = [['CACHE LIMIT', [92, 19], 'center']])
+        self.create_appearance([[284, 36], '#999999', [6, 6]], [[182, 36], '#C4C4C4', [0, 0]], [[102, 36], '#EFEFEF', [182, 0]], colorKey = True, texts = [['CACHE LIMIT', [92, 19], 'center']])
 
         self.toolTipText = 'The amount of each grist you can hold based on your Rung'
 

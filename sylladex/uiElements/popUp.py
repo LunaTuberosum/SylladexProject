@@ -8,7 +8,7 @@ class PopUp(UIBase):
     def __init__(self, text, question=False):
         super().__init__(660, 380, (600, 320), 'PopUp', '#999999')
 
-        self._create_appearance([[576, 296], '#D9D9D9', [12, 12]])
+        self.create_appearance([[576, 296], '#D9D9D9', [12, 12]])
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 48)
         text_len = len(text) // 26

@@ -24,7 +24,7 @@ class ActionIcon(UIBase):
 
         self.prefix = 'AS'
 
-        self._create_appearance([[107, 22], self.currentColor, [0, 1]], [[101, 18], '#FFFFFF', [3, 3]])
+        self.create_appearance([[107, 22], self.currentColor, [0, 1]], [[101, 18], '#FFFFFF', [3, 3]])
 
         self.text = ''
 

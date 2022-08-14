@@ -7,7 +7,7 @@ class CustomSettingMenu(UIBase):
     def __init__(self, x):
         super().__init__(x, 38, (348,768), 'CustomSettingMenu', '#666666')
 
-        self._create_appearance([[326, 732], '#434343', [10, 24]], [[326, 732], '#1155CC', [0, 12]])
+        self.create_appearance([[326, 732], '#434343', [10, 24]], [[326, 732], '#1155CC', [0, 12]])
 
         self.children = [
             UIBase.get_uiElem('CustomSettingSectionName')(self, 36, 'WEAPONKINDS'),

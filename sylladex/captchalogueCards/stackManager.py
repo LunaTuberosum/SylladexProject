@@ -1,7 +1,8 @@
+import pygame as pg
 import pickle
 
 class StackManager():
-    stack = []
+    stack = pg.sprite.LayeredUpdates()
 
     def get_stack():
         return StackManager.stack
@@ -9,8 +10,13 @@ class StackManager():
     def get_length():
         return len(StackManager.stack)
 
+    def get_top_card():
+        for index, card in enumerate(StackManager.stack):
+            if index == 0:
+                return card
+
     def add_toStack(card):
-        return StackManager.stack.append(card)
+        return StackManager.stack.add(card)
 
     def save_stack():
         with open("data/data.plk", "wb") as inStack:

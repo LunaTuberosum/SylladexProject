@@ -51,17 +51,19 @@ class UIBase(pg.sprite.Sprite):
 
         self.rect = self.image.get_rect(topleft=(x, y))
 
-    def add_current_UI(uiArray):
+    @classmethod
+    def add_current_UI(cls, uiArray):
         for elem in uiArray:
-            UIBase.currentUI[f'{elem.__name__}'] = elem
+            cls.currentUI[f'{elem.__name__}'] = elem
 
-    def get_uiElem(elem):
+    @classmethod
+    def get_uiElem(cls, elem):
         try:
             return UIBase.currentUI.get(elem)
         except:
             raise Exception(f'Could not find {elem} in current UI')
 
-    def _create_appearance(self, *sizeColorPos, **options):
+    def create_appearance(self, *sizeColorPos, **options):
         if 'colorKey' in options and options['colorKey'] == True: self.image.set_colorkey(self.baseColor)
 
         for rect in sizeColorPos:
@@ -87,36 +89,41 @@ class UIBase(pg.sprite.Sprite):
                 elif text[2] == 'left':
                     self.image.blit(_text, [text[1][0], (text[1][1]-(_text.get_height()/2))])
 
-    def _reload_image(self, image, pos):
+    def reload_image(self, image, pos):
         _image = pg.image.load(image).convert_alpha()
         self.image.blit(_image, pos)
 
-    def set_modus(modus):
-        UIBase.modus = modus
+    @classmethod
+    def set_modus(cls, modus):
+        cls.modus = modus
 
-        UIBase.modusBackground = UIBase.modusColor.get(UIBase.modus).get('background')
-        UIBase.modusForground = UIBase.modusColor.get(UIBase.modus).get('forground')
-        UIBase.modusAccent = UIBase.modusColor.get(UIBase.modus).get('accent')
+        cls.modusBackground = cls.modusColor.get(cls.modus).get('background')
+        cls.modusForground = cls.modusColor.get(cls.modus).get('forground')
+        cls.modusAccent = cls.modusColor.get(cls.modus).get('accent')
 
-        for elem in UIBase.get_group('ui'):
+        for elem in cls.get_group('ui'):
             if elem.isMisc == False:
-                elem.image = pg.image.load(f'sylladex/uiElements/asset/{UIBase.get_modus()}/{elem.imageID}').convert_alpha()
+                elem.image = pg.image.load(f'sylladex/uiElements/asset/{cls.get_modus()}/{elem.imageID}').convert_alpha()
             elif isinstance(elem, UIBase.ScrollBar):
-                elem.image.fill(UIBase.modusForground)
+                elem.image.fill(cls.modusForground)
 
-    def get_modus():
-        return UIBase.modus
+    @classmethod
+    def get_modus(cls, ):
+        return cls.modus
 
-    def get_group(whichGroup):
+    @classmethod
+    def get_group(cls, whichGroup):
         if whichGroup == "ui":
-            return UIBase.uiElements
+            return cls.uiElements
         elif whichGroup == "layer":
-            return UIBase.uiLayers
+            return cls.uiLayers
 
-    def add_toGroup(elem):
-        UIBase.get_group("ui").add(elem)
-        UIBase.get_group("layer").add(elem)
+    @classmethod
+    def add_toGroup(cls, elem):
+        cls.get_group("ui").add(elem)
+        cls.get_group("layer").add(elem)
 
-    def remove_fromGroup(elem):
-        UIBase.get_group("ui").remove(elem)
-        UIBase.get_group("layer").remove(elem)
+    @classmethod
+    def remove_fromGroup(cls, elem):
+        cls.get_group("ui").remove(elem)
+        cls.get_group("layer").remove(elem)

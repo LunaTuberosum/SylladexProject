@@ -12,7 +12,7 @@ class ToggleButton(UIBase):
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
-        self._create_appearance([[24,24], '#1C4587', [6,6]], [[24,24], '#3C78D8', [0,0]], texts = [[self.text, [12, 12], 'center']], colorKey = True)
+        self.create_appearance([[24,24], '#1C4587', [6,6]], [[24,24], '#3C78D8', [0,0]], texts = [[self.text, [12, 12], 'center']], colorKey = True)
 
         self.on = False
         self.hovering = False

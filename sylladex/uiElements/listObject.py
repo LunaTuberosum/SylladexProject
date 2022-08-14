@@ -2,6 +2,7 @@ import pygame as pg
 
 from baseUI import UIBase
 
+
 class ListObject(UIBase):
     def __init__(self):
         super().__init__(24, 127, (249, 64), 'CardListObject', (255,255,255))
@@ -46,8 +47,9 @@ class ListObject(UIBase):
     def update(self):
         if self.prevTick > 0:
             if pg.time.get_ticks() - self.prevTick >= 500:
-                self.captaCard.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
-                self.captaCard.kind_image()
+                if self.captaCard.shaking == False:
+                    self.captaCard.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
+                    self.captaCard.kind_image()
 
         if self.grabbed == True:
             self.rect.left = pg.mouse.get_pos()[0] - 32
@@ -71,7 +73,7 @@ class ListObject(UIBase):
     def redraw_card(self, color):
         if self.writing == False:
             if self.captaCard:
-                self._create_appearance([[249, 64], color, [0, 0]],  [[10, 64], UIBase.modusForground, [239, 0]])
+                self.create_appearance([[249, 64], color, [0, 0]],  [[10, 64], UIBase.modusForground, [239, 0]])
 
                 self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.kind)).convert_alpha()
                 self.kindImage.set_alpha(125)

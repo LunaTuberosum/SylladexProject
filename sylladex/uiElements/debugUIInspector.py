@@ -7,7 +7,7 @@ class DebugUIInspector(UIBase):
     def __init__(self, elem):
         super().__init__(pg.display.get_surface().get_width()-160, 40, (150,150), 'DebugUIInspector', (50,50,50))
 
-        self._create_appearance([[150,150], (50,50,50), [0,0]], alpha = 130)
+        self.create_appearance([[150,150], (50,50,50), [0,0]], alpha = 130)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 

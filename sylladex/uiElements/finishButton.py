@@ -8,7 +8,7 @@ class FinishButton(UIBase):
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
 
-        self._create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
+        self.create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
 
         self.card = card
         UIBase.get_group('layer').change_layer(self, 1)
@@ -17,11 +17,11 @@ class FinishButton(UIBase):
         self.hovering = False
         
     def hover(self):
-        self._create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusForground]])
+        self.create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusForground]])
         self.hovering = True
 
     def no_hover(self):
-        self._create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
+        self.create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
         self.hovering = False
         
     def on_click(self):

@@ -7,7 +7,7 @@ class SidebarButton(UIBase):
     def __init__(self):
         super().__init__(0, 536, (70,70), 'SideBarButton', (0,0,0))
 
-        self._create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
+        self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
 
         self.toolTipText = "Opens Side Bar"
 
@@ -16,16 +16,16 @@ class SidebarButton(UIBase):
 
     def hover(self):
         if self.toolTipText == 'Opens Side Bar':
-            self._reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER.png', [6, 0])
+            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER.png', [6, 0])
         elif self.toolTipText == 'Closes Side Bar':
-            self._reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER_REVERESED.png', [6, 0])
+            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER_REVERESED.png', [6, 0])
         self.hovering = True
 
     def no_hover(self):
         if self.toolTipText == 'Opens Side Bar':
-            self._reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0])
+            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0])
         elif self.toolTipText == 'Closes Side Bar':
-            self._reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0])
+            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0])
         self.hovering = False
 
     def update(self):
@@ -39,7 +39,7 @@ class SidebarButton(UIBase):
         if self.inactive == False:
             if self.toolTipText == 'Opens Side Bar':
                 self.toolTipText = 'Closes Side Bar'
-                self._create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0]])
+                self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0]])
                 self.rect.x = 319
 
                 UIBase.get_uiElem('SideBar')()
@@ -75,7 +75,7 @@ class SidebarButton(UIBase):
 
             elif self.toolTipText == 'Closes Side Bar':
                 self.toolTipText = 'Opens Side Bar'
-                self._create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
+                self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
                 self.rect.x = 0
 
                 for elem in UIBase.get_group("ui"):

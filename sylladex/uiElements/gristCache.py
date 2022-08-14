@@ -10,7 +10,7 @@ class GristCache(UIBase):
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
 
-        self._create_appearance([[713, 446], '#CCCCCC', [0, 6]], texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']])
+        self.create_appearance([[713, 446], '#CCCCCC', [0, 6]], texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']])
 
         self.children = []
 
