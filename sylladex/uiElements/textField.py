@@ -162,7 +162,7 @@ class TextField(UIBase):
                         self.text = self.defultText
                         self.draw()
                         for elem in UIBase.get_group('ui'):
-                            if isinstance(elem, UIBase.GristCache):
+                            if isinstance(elem, UIBase.get_uiElem('GristCache')):
                                 elem.save_cache()
                     elif self.textType == 'Txt':
                         self.text = self.defultText

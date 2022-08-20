@@ -3264,7 +3264,7 @@ action = {
 
 }
 
-def read_code(codeNum, card):
+def read_code(name, codeNum, tier, listObj):
     if len(codeNum) >= 9:
         raise Exception('Codes can not be longer than 8 characters')
     elif len(codeNum) <= 7:
@@ -3272,16 +3272,18 @@ def read_code(codeNum, card):
     codeArray = list(codeNum)
 
     
-    card.kind = get_codeValue(codeArray[0], '1')
-    card.grist = get_codeValue(codeArray[1], '2')
-    card.trait1 = get_codeValue(codeArray[2], '3')
-    card.trait2 = get_codeValue(codeArray[3], '4')
+    _kind = get_codeValue(codeArray[0], '1')
+    _grist = get_codeValue(codeArray[1], '2')
+    _trait1 = get_codeValue(codeArray[2], '3')
+    _trait2 = get_codeValue(codeArray[3], '4')
 
-    wType = get_weaponType(card.kind)
-    card.action1 = get_actionName(codeArray[4], '5', wType)
-    card.action2 = get_actionName(codeArray[5], '6', wType)
-    card.action3 = get_actionName(codeArray[6], '7', wType)
-    card.action4 = get_actionName(codeArray[7], '8', wType)
+    wType = get_weaponType(_kind)
+    _action1 = get_actionName(codeArray[4], '5', wType)
+    _action2 = get_actionName(codeArray[5], '6', wType)
+    _action3 = get_actionName(codeArray[6], '7', wType)
+    _action4 = get_actionName(codeArray[7], '8', wType)
+
+    listObj.codeData = UIBase.CodeData(name, codeNum, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
 
 def get_actionName(symbol, position, wType):
     if codeCypher.get(symbol):
@@ -3583,7 +3585,7 @@ def change_codeValue(whichCustom, newCodeValue):
         UIBase.get_uiElem('ConsoleMessage')('Saved Custom Settings')
 
     for elem in UIBase.get_group('ui'):
-        if isinstance(elem, UIBase.CardList):
+        if isinstance(elem, UIBase.get_uiElem('CardList')):
             for child in elem.children:
                 child.redraw_card((255,255,255))
 

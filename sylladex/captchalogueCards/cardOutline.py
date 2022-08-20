@@ -8,7 +8,7 @@ class CardOutline(pg.sprite.Sprite):
 
     def __init__(self, parent):
         super().__init__(CardOutline.currentOutline, UIBase.get_group('layer'))
-        UIBase.get_group('layer').change_layer(self, 3)
+        UIBase.get_group('layer').change_layer(self, -2)
 
         self.focusedCard = parent
 

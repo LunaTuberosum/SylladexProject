@@ -9,6 +9,7 @@ class UIBase(pg.sprite.Sprite):
     currentUI = {}
 
     CodeDatabase = None
+    CodeData = None
 
     DebugUIInspector = None
     DebugInspect = False
@@ -57,7 +58,7 @@ class UIBase(pg.sprite.Sprite):
             cls.currentUI[f'{elem.__name__}'] = elem
 
     @classmethod
-    def get_uiElem(cls, elem):
+    def get_uiElem(cls, elem) -> object:
         try:
             return UIBase.currentUI.get(elem)
         except:
@@ -108,7 +109,7 @@ class UIBase(pg.sprite.Sprite):
                 elem.image.fill(cls.modusForground)
 
     @classmethod
-    def get_modus(cls, ):
+    def get_modus(cls):
         return cls.modus
 
     @classmethod

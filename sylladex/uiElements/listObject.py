@@ -1,7 +1,24 @@
 import pygame as pg
+from dataclasses import dataclass
 
 from baseUI import UIBase
 
+@dataclass
+class CodeData():
+    name: str = "-"
+    code: str = "-"
+    tier: str = "-"
+    
+    kind: str = ''
+    grist: str = ''
+    trait1: str = ''
+    trait2: str = ''
+    action1: str = ''
+    action2: str = ''
+    action3: str = ''
+    action4: str = ''
+
+    cardID: int = 0
 
 class ListObject(UIBase):
     def __init__(self):
@@ -28,18 +45,7 @@ class ListObject(UIBase):
         self.empty = True
         self.captaCard = None
 
-        self.name = "-"
-        self.code = "-"
-        self.tier = "-"
-        
-        self.kind = None
-        self.grist = None
-        self.trait1 = None
-        self.trait2 = None
-        self.action1 = None
-        self.action2 = None
-        self.action3 = None
-        self.action4 = None
+        self.codeData = CodeData()
 
         self.prevTick = 0
     
@@ -75,20 +81,20 @@ class ListObject(UIBase):
             if self.captaCard:
                 self.create_appearance([[249, 64], color, [0, 0]],  [[10, 64], UIBase.modusForground, [239, 0]])
 
-                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.kind)).convert_alpha()
+                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
                 self.kindImage.set_alpha(125)
                 self.image.blit(self.kindImage, (185, 3))
 
-                nameTxt = self.font.render(self.name, True, (0,0,0))
+                nameTxt = self.font.render(self.codeData.name, True, (0,0,0))
                 self.image.blit(nameTxt, (3,3))
 
-                codeTxt = self.font.render(self.code, True, (0,0,0))
+                codeTxt = self.font.render(self.codeData.code, True, (0,0,0))
                 self.image.blit(codeTxt, (3,37))
 
-                tierTxt = self.font.render(self.tier, True, (0,0,0))
+                tierTxt = self.font.render(self.codeData.tier, True, (0,0,0))
                 self.image.blit(tierTxt, (129,37))
 
-            elif self.code == "-":
+            elif self.codeData and self.codeData.code == "-":
                 self.image.fill(color)
                 self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
                 self.kindImage.set_alpha(125)
@@ -98,20 +104,20 @@ class ListObject(UIBase):
                 self.image.blit(self.txt_surface, (3,3))
                 self.image.blit(self.txt_surface, (3,37))
                 self.image.blit(self.txt_surface, (129,37))
-            else:
-                UIBase.CodeDatabase.read_code(self.code, self)
+
+            elif self.codeData:
                 self.image.fill(color)
-                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.kind)).convert_alpha()
+                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
                 self.kindImage.set_alpha(125)
                 self.image.blit(self.kindImage, (185, 3))
 
-                nameTxt = self.font.render(self.name, True, (0,0,0))
+                nameTxt = self.font.render(self.codeData.name, True, (0,0,0))
                 self.image.blit(nameTxt, (3,3))
 
-                codeTxt = self.font.render(self.code, True, (0,0,0))
+                codeTxt = self.font.render(self.codeData.code, True, (0,0,0))
                 self.image.blit(codeTxt, (3,37))
 
-                tierTxt = self.font.render(self.tier, True, (0,0,0))
+                tierTxt = self.font.render(self.codeData.tier, True, (0,0,0))
                 self.image.blit(tierTxt, (129,37))
 
     def place_children(self):
@@ -176,9 +182,7 @@ class ListObject(UIBase):
         if UIBase.get_uiElem('RemoveCardButton').eject == True and self.interactable == True:
             if self.empty == False:
                 self.empty = True
-                self.name = "-"
-                self.code = "-"
-                self.tier = "-"
+                self.codeData = CodeData()
 
                 UIBase.get_uiElem('RemoveCardButton').eject = False
                 for elem in UIBase.get_group("ui"):
@@ -188,6 +192,7 @@ class ListObject(UIBase):
                         elem.save_list()
             else: 
                 UIBase.get_uiElem('PopUp')("You can\'t eject an empty card")
+
         elif self.interactable == True:
             if self.empty == False:
                 self.grabbed = True

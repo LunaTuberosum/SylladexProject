@@ -31,13 +31,14 @@ class FinishButton(UIBase):
                     if len(elem.text) == 0:
                         UIBase.get_uiElem('PopUp')('The card must have a name')
                         return
-                    self.card.name = elem.text
+                    name = elem.text
 
                 elif elem.job == "codeOverlay":
                     if len(elem.text) < 8:
                         UIBase.get_uiElem('PopUp')('Codes must be a 8 characters long')
                         return
-                    self.card.code = elem.text
+                    code = elem.text
+
                 elif elem.job == "tierOverlay":
                     if len(elem.text) == 0:
                         UIBase.get_uiElem('PopUp')('Cards must have a tier')
@@ -62,9 +63,10 @@ class FinishButton(UIBase):
                         UIBase.get_uiElem('PopUp')("Tier must be at least 1")
                         return
                     
-                    self.card.tier = elem.text
+                    tier = elem.text
                         
         self.card.writing = False   
+        UIBase.CodeDatabase.read_code(name, code, tier, self.card)
         self.card.redraw_card((255,255,255))
         self.card.empty = False
         for child in self.card.children:

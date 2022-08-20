@@ -1,4 +1,5 @@
 from lib2to3.pytree import Base
+import sys
 import pygame as pg
 
 from baseUI import UIBase
@@ -10,6 +11,7 @@ from .captchalogueCards.baseCard import BaseCard
 from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
 from .uiElements.cardList import CardList
+from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
 from .uiElements.customSettingAreaBox import CustomSettingAreaBox
 from .uiElements.customSettingButton import CustomSettingButton
@@ -41,6 +43,7 @@ UIBase.add_current_UI([
     ActionIcon, 
     AddCardButton, 
     CardList, 
+    CenterObj,
     ConsoleMessage, 
     CustomSettingAreaBox, 
     CustomSettingButton, 
@@ -74,9 +77,12 @@ def main(screen, clock, UIBase):
     globalPrevTick = pg.time.get_ticks()
 
     UIBase.get_uiElem('StackingArea')()
+    UIBase.get_uiElem('CenterObj')()
     UIBase.get_uiElem('SidebarButton')()
     UIBase.get_uiElem('GristCacheButton')()
     UIBase.get_uiElem('CustomSettingButton')()
+    BaseCard.load_cards()
+    moveCard = False
 
     while True:
 
@@ -85,9 +91,8 @@ def main(screen, clock, UIBase):
         for event in pg.event.get():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    for card in BaseCard.cards:
-                        if card.rect.collidepoint(pg.mouse.get_pos()) and card.selected == False:
-                            card.on_click()
+
+                    moveCard = True
 
                     for elem in UIBase.get_group("ui"):
                         if hasattr(elem, "active") and elem.active == True:
@@ -96,6 +101,7 @@ def main(screen, clock, UIBase):
                                 elem.exit_field()
                         if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
                             elem.on_click()
+                            moveCard = False
                             
                             if UIBase.get_uiElem('RemoveCardButton').eject == True:
                                 if len(UIBase.get_uiElem('CardList').children) == 0:
@@ -110,6 +116,12 @@ def main(screen, clock, UIBase):
                                     if isinstance(elem, UIBase.get_uiElem('ListObject')):    
                                         elem.redraw_card((255,255,255))
 
+                    if moveCard == True:
+                        for card in BaseCard.cards:
+                            if card.rect.collidepoint(pg.mouse.get_pos()) and card.selected == False:
+                                card.on_click()
+                                moveCard = False
+
                 elif event.button == 3:
                     for elem in UIBase.get_group("ui"):
                         if hasattr(elem, "on_altClick") and elem.rect.collidepoint(event.pos):
@@ -120,16 +132,29 @@ def main(screen, clock, UIBase):
                     if card.selected == True:
                         card.on_release()
 
+                if BaseCard.get_length() > 0:
+                    moveCard = False
+
                 for elem in UIBase.get_group("ui"):
                     if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                         elem.selected = False
                     
                     elif hasattr(elem, 'grabbed') and elem.grabbed == True:
-                        if elem.rect.x > 326 and elem.captaCard == None:
-                            elem.captaCard = BaseCard(elem.rect.topleft, elem)
-                            elem.redraw_card('#FFFFFF')
+                        if elem.rect.x > 326:
+                            if elem.captaCard == None:
+                                elem.captaCard = BaseCard(elem.rect.topleft, elem.codeData)
+                                elem.codeData.cardID = elem.captaCard.cardID
+                                elem.captaCard.codeData.cardID = elem.captaCard.cardID
+                                elem.redraw_card('#FFFFFF')
+
+                                for _elem in UIBase.get_group('ui'):
+                                    if isinstance(_elem, UIBase.get_uiElem('CardList')):
+                                        _elem.save_list()
+                                        break
+                            else:
+                                UIBase.get_uiElem('PopUp')('This card is already deployed')
                         else:
-                            UIBase.get_uiElem('PopUp')('This card is already deployed')
+                            UIBase.get_uiElem('PopUp')('Drag the card into the stacking area')
 
                         elem.rect.topleft = elem.prevPos
                         UIBase.get_group('layer').change_layer(elem, -1)
@@ -142,6 +167,14 @@ def main(screen, clock, UIBase):
                     if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
                         if elem.selected == True:
                             elem.move_bar(event.pos)
+
+                    if hasattr(elem, 'toolTipText'):
+                        for _elem in UIBase.get_group('ui'):
+                            if isinstance(_elem, UIBase.get_uiElem('ToolTip')) and elem.toolTipText == _elem.text:
+                                UIBase.remove_fromGroup(_elem)
+                                _elem.kill()
+                                globalPrevTick = pg.time.get_ticks()
+                                break
                 
                 for card in BaseCard.cards:
                     if card.selected == True:
@@ -149,6 +182,13 @@ def main(screen, clock, UIBase):
                         card.moving = True
                     else:
                         card.moving = False
+                
+                if BaseCard.get_length() > 0:
+                    if moveCard == True:
+                        BaseCard.move_all_cards(event.rel)
+                        for elem in UIBase.get_group('ui'):
+                            if isinstance(elem, UIBase.get_uiElem('CenterObj')):
+                                elem.move_self(event.rel)
 
             elif event.type == pg.MOUSEWHEEL:
                 for elem in UIBase.get_group("ui"):
@@ -169,6 +209,11 @@ def main(screen, clock, UIBase):
                             if isinstance(elem, UIBase.DebugUIInspector):
                                 UIBase.remove_fromGroup(elem)
                                 elem.kill()
+                elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_r:
+                    for elem in UIBase.get_group('ui'):
+                        if isinstance(elem, UIBase.get_uiElem('CenterObj')):
+                            elem.recenter()
+
                 elif event.key == pg.K_ESCAPE:
                     makeEscape = True
                     for elem in UIBase.get_group('ui'):
@@ -182,7 +227,6 @@ def main(screen, clock, UIBase):
 
                     if makeEscape == True:
                         UIBase.get_uiElem('EscapeMenu')()
-                    
                 else:
                     for elem in UIBase.get_group("ui"):
                         if hasattr(elem, 'typeing'):
@@ -192,23 +236,23 @@ def main(screen, clock, UIBase):
             if card.rect.collidepoint(pg.mouse.get_pos()):
                 if card.hovering == False:
                     card.hover()
+
             else:
                 if card.hovering == True:
-                    card.no_hover()
+                    card.no_hover()            
 
             card.update()
-            
 
         for elem in UIBase.get_group("ui"):
             if elem.rect.collidepoint(pg.mouse.get_pos()):
                 
                 if UIBase.DebugInspect == True:
                     dontMake = False
-                    for elem2 in UIBase.get_group('ui'):
-                        if isinstance(elem2, UIBase.DebugUIInspector):
-                            if elem2.currentIns == elem:
+                    for _elem in UIBase.get_group('ui'):
+                        if isinstance(_elem, UIBase.DebugUIInspector):
+                            if _elem.currentIns == elem:
                                 dontMake = True
-                            elif elem2 == elem:
+                            elif _elem == elem:
                                 dontMake = True
 
                     if dontMake == False:
@@ -229,6 +273,7 @@ def main(screen, clock, UIBase):
                             elem.alt_hover()
                         else:
                             elem.hover()
+
                 if hasattr(elem, "toolTipText"):
                     if hasattr(elem, "active") and elem.active == True:
                         pass
@@ -251,18 +296,15 @@ def main(screen, clock, UIBase):
                     elem.last = pg.time.get_ticks()
 
             if isinstance(elem, UIBase.get_uiElem('ToolTip')):
-                dontDelete = False
-                for elem2 in UIBase.get_group('ui'):
-                    if elem2.rect.collidepoint(pg.mouse.get_pos()) and hasattr(elem2, 'toolTipText'):
-                        if elem2.toolTipText == elem.text:
-                            dontDelete = True
+                for _elem in UIBase.get_group('ui'):
+                    if _elem.rect.collidepoint(pg.mouse.get_pos()):
+                        pass
+                    elif hasattr(_elem, 'toolTipText'):
+                        if _elem.toolTipText == elem.text:
                             UIBase.remove_fromGroup(elem)
                             elem.kill()
+                            globalPrevTick = pg.time.get_ticks()
                             break
-                if dontDelete == False:
-                    UIBase.remove_fromGroup(elem)
-                    elem.kill()
-                    globalPrevTick = pg.time.get_ticks()
 
             if hasattr(elem, "update"):
                 elem.update()
@@ -272,7 +314,8 @@ def main(screen, clock, UIBase):
         screen.fill('#B7B7B7')
         UIBase.get_group("ui").draw(screen)
         BaseCard.cards.draw(screen)
-        if UIBase.get_modus() == 'STACK' and StackManager.get_length(): StackManager.get_stack().draw(screen)
+        if UIBase.get_modus() == 'STACK' and StackManager.get_length(): 
+            StackManager.get_stack().draw(screen)
         CardOutline.currentOutline.draw(screen)
         UIBase.get_group("layer").draw(screen)
         pg.display.flip()

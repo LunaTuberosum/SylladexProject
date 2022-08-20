@@ -1,28 +1,61 @@
 import pygame as pg
 import pickle
 
+from baseUI import UIBase
+
 class StackManager():
     stack = pg.sprite.LayeredUpdates()
 
-    def get_stack():
-        return StackManager.stack
+    @classmethod
+    def get_stack(cls) -> pg.sprite.LayeredUpdates:
+        return cls.stack
 
-    def get_length():
-        return len(StackManager.stack)
+    @classmethod
+    def get_length(cls):
+        return len(cls.stack)
 
-    def get_top_card():
-        for index, card in enumerate(StackManager.stack):
-            if index == 0:
-                return card
+    @classmethod
+    def get_top_card(cls, situation):
+        if situation == 'distance':
+            for index, card in enumerate(cls.stack):
+                if index == cls.get_length()-2:
+                    return card
 
-    def add_toStack(card):
-        return StackManager.stack.add(card)
+        elif situation == 'remove':
+            for index, card in enumerate(cls.stack):
+                if index == cls.get_length()-1:
+                    return card
 
-    def save_stack():
-        with open("data/data.plk", "wb") as inStack:
-            pickle.dump(StackManager.get_stack(), inStack, -1)
+    @classmethod
+    def add_toStack(cls, card):
+        cls.stack.add(card)
+        cls.get_stack().change_layer(card, cls.get_length())
 
-    def load_stack():
-        with open("data/data.plk", "rb") as outStack:
-            StackManager.stack = pickle.load(outStack)
-            print(StackManager.get_stack())
+    @classmethod
+    def remove_fromStack(cls, card):
+        cls.stack.remove(card)
+        for index, card in enumerate(cls.get_stack()):
+            print(index, card.codeData.code)
+
+    @classmethod
+    def save_stack(cls):
+        tempArray = []
+        for card in StackManager.get_stack():
+            tempArray.append(card.codeData)
+
+        with open("sylladex/captchalogueCards/data/stackData.plk", "wb") as saveStack:
+            pickle.dump(tempArray, saveStack, -1)
+
+    @classmethod
+    def load_stack(cls, allCards):
+        with open("sylladex/captchalogueCards/data/stackData.plk", "rb") as loadStack:
+            tempArray = pickle.load(loadStack)
+
+        for codeData in tempArray:
+            for card in allCards:
+                if codeData == card.codeData:
+                    StackManager.add_toStack(card)
+                    break
+        for card in StackManager.get_stack(): UIBase.get_group('layer').change_layer(card, -2)
+        UIBase.get_uiElem('ConsoleMessage')('Loaded Stack')
+        

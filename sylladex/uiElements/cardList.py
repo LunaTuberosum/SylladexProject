@@ -3,6 +3,7 @@ import pygame as pg
 import pickle
 
 from baseUI import UIBase
+from ..captchalogueCards.baseCard import BaseCard
 
 
 class CardList(UIBase):
@@ -38,7 +39,7 @@ class CardList(UIBase):
         UIBase.get_uiElem('ConsoleMessage')('Saved List')
         tempList = []
         for card in self.children:
-            tempList.append([card.name, card.code, card.tier, card.empty])
+            tempList.append([card.codeData, card.empty])
 
         with open('sylladex/uiElements/data/uiList.plk', 'wb') as saveList:
             pickle.dump(tempList, saveList, -1)
@@ -51,11 +52,20 @@ class CardList(UIBase):
 
         for card in tempList:
             obj = UIBase.get_uiElem('ListObject')()
-            obj.name = card[0]
-            obj.code = card[1]
-            obj.tier = card[2]
-            obj.empty = card[3]
+
+            
+            if card[0]:
+                obj.codeData = card[0]
+
+                for _card in BaseCard.get_cardGroup():
+                    if _card.codeData == obj.codeData:
+                        obj.captaCard = _card
+                        break
+                obj.redraw_card('#FFFFFF')
+
+            obj.empty = card[1]
             self.children.append(obj)
+
         for elem in UIBase.get_group('ui'):
             if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
                 elem.text = str(len(self.children))
