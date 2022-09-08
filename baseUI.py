@@ -103,10 +103,8 @@ class UIBase(pg.sprite.Sprite):
         cls.modusAccent = cls.modusColor.get(cls.modus).get('accent')
 
         for elem in cls.get_group('ui'):
-            if elem.isMisc == False:
-                elem.image = pg.image.load(f'sylladex/uiElements/asset/{cls.get_modus()}/{elem.imageID}').convert_alpha()
-            elif isinstance(elem, UIBase.ScrollBar):
-                elem.image.fill(cls.modusForground)
+            if hasattr(elem, 'reloadSelf'):
+                elem.reloadSelf()
 
     @classmethod
     def get_modus(cls):

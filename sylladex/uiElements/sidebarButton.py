@@ -117,3 +117,6 @@ class SidebarButton(UIBase):
                         UIBase.remove_fromGroup(elem)
                         elem.kill()
 
+    def reloadSelf(self):
+        self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0]])
+

@@ -1,5 +1,3 @@
-from lib2to3.pytree import Base
-import sys
 import pygame as pg
 
 from baseUI import UIBase
@@ -95,6 +93,12 @@ def main(screen, clock, UIBase):
                     moveCard = True
 
                     for elem in UIBase.get_group("ui"):
+                        if isinstance(elem, UIBase.get_uiElem('ToolTip')):
+                            UIBase.remove_fromGroup(elem)
+                            elem.kill()
+                            globalPrevTick = pg.time.get_ticks()
+                        
+                    for elem in UIBase.get_group('ui'):
                         if hasattr(elem, "active") and elem.active == True:
                             if hasattr(elem, "exit_field"):
                                 elem.draw()
@@ -168,13 +172,12 @@ def main(screen, clock, UIBase):
                         if elem.selected == True:
                             elem.move_bar(event.pos)
 
-                    if hasattr(elem, 'toolTipText'):
-                        for _elem in UIBase.get_group('ui'):
-                            if isinstance(_elem, UIBase.get_uiElem('ToolTip')) and elem.toolTipText == _elem.text:
-                                UIBase.remove_fromGroup(_elem)
-                                _elem.kill()
-                                globalPrevTick = pg.time.get_ticks()
-                                break
+                    for elem in UIBase.get_group('ui'):
+                        if isinstance(elem, UIBase.get_uiElem('ToolTip')):
+                            UIBase.remove_fromGroup(elem)
+                            elem.kill()
+                            globalPrevTick = pg.time.get_ticks()
+                            break
                 
                 for card in BaseCard.cards:
                     if card.selected == True:

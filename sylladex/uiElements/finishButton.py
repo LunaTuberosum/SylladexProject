@@ -15,6 +15,9 @@ class FinishButton(UIBase):
         self.toolTipText = "Finish Captchalogueing a Card to your Deck" 
 
         self.hovering = False
+
+    def reloadSelf(self):
+        self.create_appearance([[140, 36], UIBase.modusBackground, [0, 0]],[[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusBackground]])
         
     def hover(self):
         self.create_appearance([[128, 30], UIBase.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIBase.modusForground]])

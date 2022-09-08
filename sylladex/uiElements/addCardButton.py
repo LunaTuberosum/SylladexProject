@@ -11,6 +11,9 @@ class AddCardButton(UIBase):
         self.toolTipText = "Captchalogue a Card to your Sylladex" 
         self.hovering = False
         
+    def reloadSelf(self):
+        self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0]])
+
     def hover(self):
         self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON_HOVER.png', [6, 0])
         self.hovering = True
@@ -23,11 +26,13 @@ class AddCardButton(UIBase):
         for item in UIBase.get_uiElem('CardList').children:
             if item.writing == True:
                 item.writing = False
+                item.empty = True
                 item.redraw_card((255,255,255))
                 self.toolTipText = "Captchalogue a Card to your Sylladex" 
                 
                 for child in item.children:
                     child.kill()
+                item.children.clear()
                 return
             if item.empty == True:
                 if item.interactable == True:
