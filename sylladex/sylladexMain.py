@@ -8,6 +8,7 @@ from .captchalogueCards.baseCard import BaseCard
 
 from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
+from .uiElements.cardInspector import CardInspector
 from .uiElements.cardList import CardList
 from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
@@ -40,6 +41,7 @@ from .uiElements.finishButton import FinishButton
 UIBase.add_current_UI([
     ActionIcon, 
     AddCardButton, 
+    CardInspector,
     CardList, 
     CenterObj,
     ConsoleMessage, 
@@ -79,6 +81,7 @@ def main(screen, clock, UIBase):
     UIBase.get_uiElem('SidebarButton')()
     UIBase.get_uiElem('GristCacheButton')()
     UIBase.get_uiElem('CustomSettingButton')()
+    UIBase.get_uiElem('CardInspector')()
     BaseCard.load_cards()
     moveCard = False
 
