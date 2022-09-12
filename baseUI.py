@@ -78,7 +78,7 @@ class UIBase(pg.sprite.Sprite):
             image = pg.image.load(options['image'][0]).convert_alpha()
             self.image.blit(image, options['image'][1])
         
-        elif 'texts' in options:
+        if 'texts' in options:
             for text in options['texts']:
                 if len(text) == 4:
                     _text = self.font.render(text[0], True, text[3])
