@@ -1,5 +1,3 @@
-from lib2to3.pytree import Base
-from operator import truediv
 import pickle
 import pygame as pg
 
@@ -71,6 +69,17 @@ class BaseCard(pg.sprite.Sprite):
         self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
         self.kind_image()
         self.hovering = False
+
+    def on_middleClick(self):
+        for elem in UIBase.get_group('ui'):
+            if isinstance(elem, UIBase.get_uiElem('CardInspector')):
+                UIBase.remove_fromGroup(elem)
+                elem.kill()
+                for child in elem.children:
+                    UIBase.remove_fromGroup(child)
+                    child.kill()
+        
+        UIBase.get_uiElem('CardInspector')(self.codeData)
 
     def on_click(self):
 

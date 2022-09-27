@@ -2,6 +2,7 @@ import pygame as pg
 from dataclasses import dataclass
 
 from baseUI import UIBase
+from sylladex.captchalogueCards import codeDatabase
 
 @dataclass
 class CodeData():
@@ -19,7 +20,7 @@ class CodeData():
     action4: str = ''
 
     cardID: int = 0
-
+    
 class ListObject(UIBase):
     def __init__(self):
         super().__init__(24, 127, (249, 64), 'CardListObject', (255,255,255))

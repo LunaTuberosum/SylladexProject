@@ -9,6 +9,7 @@ from .captchalogueCards.baseCard import BaseCard
 from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
 from .uiElements.cardInspector import CardInspector
+from .uiElements.cardInspectorButton import CardInspectorButton
 from .uiElements.cardList import CardList
 from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
@@ -42,6 +43,7 @@ UIBase.add_current_UI([
     ActionIcon, 
     AddCardButton, 
     CardInspector,
+    CardInspectorButton,
     CardList, 
     CenterObj,
     ConsoleMessage, 
@@ -81,7 +83,6 @@ def main(screen, clock, UIBase):
     UIBase.get_uiElem('SidebarButton')()
     UIBase.get_uiElem('GristCacheButton')()
     UIBase.get_uiElem('CustomSettingButton')()
-    UIBase.get_uiElem('CardInspector')()
     BaseCard.load_cards()
     moveCard = False
 
@@ -128,6 +129,10 @@ def main(screen, clock, UIBase):
                             if card.rect.collidepoint(pg.mouse.get_pos()) and card.selected == False:
                                 card.on_click()
                                 moveCard = False
+                elif event.button == 2:
+                    for card in BaseCard.get_cardGroup():
+                        if card.rect.collidepoint(event.pos):
+                            card.on_middleClick()
 
                 elif event.button == 3:
                     for elem in UIBase.get_group("ui"):

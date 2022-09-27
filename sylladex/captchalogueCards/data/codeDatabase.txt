@@ -3,7 +3,7 @@ Customkind,Customkind,
 ASSERT,0,/,/,AS,0,/,/,
 AR,0,/,/,AR,0,/,/,
 AC,0,/,/,AC,0,/,/,
-CUSTOM TRAIT 1,/,/,/,/,
+CUSTOM TRAIT 1,sdafjoaisdjflajsdiofj ijasdoifjoiasdj ijaso idjfoi joisdj foij sodjio fajsidsfj o ,sadfjlkajsd kjas dlkfjas idj oi jaosd ijsd jlkkjs dif jsldijflasdj lfiajsdlf ajsldif ,/sdjkfa lskdjf lkasjd flaksdjfailsdjflaksdj oasda fiajsdlifjaskdjf ,/sidajflka sdjl ajsdlkfj asdilfjalsdj falsdj fliasjdflijasdlifjal ,
 CUSTOM TRAIT 2,/,/,/,/,
 CUSTOM TRAIT 3,/,/,/,/,
 CUSTOM TRAIT 4,/,/,/,/

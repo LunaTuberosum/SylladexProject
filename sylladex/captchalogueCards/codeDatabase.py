@@ -1,5 +1,6 @@
 from random import *
 from math import *
+import pygame as pg
 
 from baseUI import UIBase
 
@@ -2982,7 +2983,7 @@ actionData = {
 }
 
 damgeNum = {
-    1: {
+    '1': {
         '1': '5',
         '2': '10',
         '3': '15',
@@ -2990,7 +2991,7 @@ damgeNum = {
         'DF': '3',
         'BR': '1d4'
     },
-    2: {
+    '2': {
         '1': '7',
         '2': '14',
         '3': '21',
@@ -2998,7 +2999,7 @@ damgeNum = {
         'DF': '5',
         'BR': '1d6'
     },
-    3: {
+    '3': {
         '1': '10',
         '2': '20',
         '3': '30',
@@ -3006,7 +3007,7 @@ damgeNum = {
         'DF': '5',
         'BR': '1d8'
     },
-    4: {
+    '4': {
         '1': '14',
         '2': '28',
         '3': '42',
@@ -3014,7 +3015,7 @@ damgeNum = {
         'DF': '6',
         'BR': '1d10'
     },
-    5: {
+    '5': {
         '1': '19',
         '2': '38',
         '3': '57',
@@ -3022,7 +3023,7 @@ damgeNum = {
         'DF': '7',
         'BR': '1d12'
     },
-    6: {
+    '6': {
         '1': '25',
         '2': '50',
         '3': '75',
@@ -3030,7 +3031,7 @@ damgeNum = {
         'DF': '8',
         'BR': '2d8'
     },
-    7: {
+    '7': {
         '1': '32',
         '2': '64',
         '3': '1596',
@@ -3038,7 +3039,7 @@ damgeNum = {
         'DF': '9',
         'BR': '2d10'
     },
-    8: {
+    '8': {
         '1': '40',
         '2': '80',
         '3': '120',
@@ -3046,7 +3047,7 @@ damgeNum = {
         'DF': '10',
         'BR': '2d12'
     },
-    9: {
+    '9': {
         '1': '49',
         '2': '98',
         '3': '147',
@@ -3054,7 +3055,7 @@ damgeNum = {
         'DF': '11',
         'BR': '3d10'
     },
-    10: {
+    '10': {
         '1': '59',
         '2': '118',
         '3': '177',
@@ -3062,7 +3063,7 @@ damgeNum = {
         'DF': '12',
         'BR': '3d12'
     },
-    11: {
+    '11': {
         '1': '70',
         '2': '140',
         '3': '210',
@@ -3070,7 +3071,7 @@ damgeNum = {
         'DF': '13',
         'BR': '4d10'
     },
-    12: {
+    '12': {
         '1': '82',
         '2': '164',
         '3': '246',
@@ -3078,7 +3079,7 @@ damgeNum = {
         'DF': '14',
         'BR': '5d10'
     },
-    13: {
+    '13': {
         '1': '95',
         '2': '190',
         '3': '285',
@@ -3086,7 +3087,7 @@ damgeNum = {
         'DF': '15',
         'BR': '6d10'
     },
-    14: {
+    '14': {
         '1': '109',
         '2': '218',
         '3': '327',
@@ -3094,7 +3095,7 @@ damgeNum = {
         'DF': '16',
         'BR': '7d10'
     },
-    15: {
+    '15': {
         '1': '114',
         '2': '124',
         '3': '248',
@@ -3102,7 +3103,7 @@ damgeNum = {
         'DF': '17',
         'BR': '8d10'
     },
-    16: {
+    '16': {
         '1': '140',
         '2': '280',
         '3': '420',
@@ -3202,65 +3203,65 @@ kind = {
 }
 
 action = {
-    'No Action': 'GUI/action/NO ACTION.png',
-    'ACCEDE': 'GUI/action/ACCEDE.png',
-    'ACCELERATE': 'GUI/action/ACCELERATE.png',
-    'ACCESSORIZE': 'GUI/action/ACCESSORIZE.png',
-    'ACCLAIM': 'GUI/action/ACCLAIM.png',
-    'ACCLIMATE': 'GUI/action/ACCLIMATE.png',
-    'ACCOMPLISH': 'GUI/action/ACCOMPLISH.png',
-    'ACCOUNT': 'GUI/action/ACCOUNT.png',
-    'ACCUMULATE': 'GUI/action/ACCUMULATE.png',
-    'ACCUSE': 'GUI/action/ACCUSE.png',
-    'ACERBATE': 'GUI/action/ACERBATE.png',
-    'ACKNOWLEDGE': 'GUI/action/ACKNOWLEDGE.png',
-    'ACQUAINT': 'GUI/action/ACQUAINT.png',
-    'ACQUIANT': 'GUI/action/ACQUIANT.png',
-    'ACQUIRE': 'GUI/action/ACQUIRE.png',
-    'ACTUALIZE': 'GUI/action/ACTUALIZE.png',
-    'ACTUATE': 'GUI/action/ACTUATE.png',
-    'ACUERE': 'GUI/action/ACUERE.png',
-    'ACUPRESSURE': 'GUI/action/ACUPRESSURE.png',
+    'No Action': 'sylladex/uiElements/asset/ACTION/NO ACTION.png',
+    'ACCEDE': 'sylladex/uiElements/asset/ACTION/ACCEDE.png',
+    'ACCELERATE': 'sylladex/uiElements/asset/ACTION/ACCELERATE.png',
+    'ACCESSORIZE': 'sylladex/uiElements/asset/ACTION/ACCESSORIZE.png',
+    'ACCLAIM': 'sylladex/uiElements/asset/ACTION/ACCLAIM.png',
+    'ACCLIMATE': 'sylladex/uiElements/asset/ACTION/ACCLIMATE.png',
+    'ACCOMPLISH': 'sylladex/uiElements/asset/ACTION/ACCOMPLISH.png',
+    'ACCOUNT': 'sylladex/uiElements/asset/ACTION/ACCOUNT.png',
+    'ACCUMULATE': 'sylladex/uiElements/asset/ACTION/ACCUMULATE.png',
+    'ACCUSE': 'sylladex/uiElements/asset/ACTION/ACCUSE.png',
+    'ACERBATE': 'sylladex/uiElements/asset/ACTION/ACERBATE.png',
+    'ACKNOWLEDGE': 'sylladex/uiElements/asset/ACTION/ACKNOWLEDGE.png',
+    'ACQUAINT': 'sylladex/uiElements/asset/ACTION/ACQUAINT.png',
+    'ACQUIANT': 'sylladex/uiElements/asset/ACTION/ACQUIANT.png',
+    'ACQUIRE': 'sylladex/uiElements/asset/ACTION/ACQUIRE.png',
+    'ACTUALIZE': 'sylladex/uiElements/asset/ACTION/ACTUALIZE.png',
+    'ACTUATE': 'sylladex/uiElements/asset/ACTION/ACTUATE.png',
+    'ACUERE': 'sylladex/uiElements/asset/ACTION/ACUERE.png',
+    'ACUPRESSURE': 'sylladex/uiElements/asset/ACTION/ACUPRESSURE.png',
 
-    'AGGRAVATE': 'GUI/action/AGGRAVATE.png',
-    'AGGREGATE': 'GUI/action/AGGREGATE.png',
-    'AGGRESS': 'GUI/action/AGGRESS.png',
+    'AGGRAVATE': 'sylladex/uiElements/asset/ACTION/AGGRAVATE.png',
+    'AGGREGATE': 'sylladex/uiElements/asset/ACTION/AGGREGATE.png',
+    'AGGRESS': 'sylladex/uiElements/asset/ACTION/AGGRESS.png',
 
-    'ARBITRATE': 'GUI/action/ARBITRATE.png',
-    'ARBORIZE': 'GUI/action/ARBORIZE.png',
-    'ARCHIVE': 'GUI/action/ARCHIVE.png',
-    'ARDOR': 'GUI/action/ARDOR.png',
-    'ARF': 'GUI/action/ARF.png',
-    'ARGUFY': 'GUI/action/ARGUFY.png',
-    'ARISE': 'GUI/action/ARISE.png',
-    'ARITHMETIZE': 'GUI/action/ARITHMETIZE.png',
-    'ARMAMENTIFY': 'GUI/action/ARMAMENTIFY.png',
-    'ARRAIGN': 'GUI/action/ARRAIGN.png',
-    'ARRANGE': 'GUI/action/ARRANGE.png',
-    'ARREST': 'GUI/action/ARREST.png',
-    'ARRIVE': 'GUI/action/ARRIVE.png',
-    'ARROGATE': 'GUI/action/ARROGATE.png',
-    'ARSENALIZE': 'GUI/action/ARSENALIZE.png',
-    'ARTICULATE': 'GUI/action/ARTICULATE.png',
-    'ARTILLERATE': 'GUI/action/ARTILLERATE.png',
+    'ARBITRATE': 'sylladex/uiElements/asset/ACTION/ARBITRATE.png',
+    'ARBORIZE': 'sylladex/uiElements/asset/ACTION/ARBORIZE.png',
+    'ARCHIVE': 'sylladex/uiElements/asset/ACTION/ARCHIVE.png',
+    'ARDOR': 'sylladex/uiElements/asset/ACTION/ARDOR.png',
+    'ARF': 'sylladex/uiElements/asset/ACTION/ARF.png',
+    'ARGUFY': 'sylladex/uiElements/asset/ACTION/ARGUFY.png',
+    'ARISE': 'sylladex/uiElements/asset/ACTION/ARISE.png',
+    'ARITHMETIZE': 'sylladex/uiElements/asset/ACTION/ARITHMETIZE.png',
+    'ARMAMENTIFY': 'sylladex/uiElements/asset/ACTION/ARMAMENTIFY.png',
+    'ARRAIGN': 'sylladex/uiElements/asset/ACTION/ARRAIGN.png',
+    'ARRANGE': 'sylladex/uiElements/asset/ACTION/ARRANGE.png',
+    'ARREST': 'sylladex/uiElements/asset/ACTION/ARREST.png',
+    'ARRIVE': 'sylladex/uiElements/asset/ACTION/ARRIVE.png',
+    'ARROGATE': 'sylladex/uiElements/asset/ACTION/ARROGATE.png',
+    'ARSENALIZE': 'sylladex/uiElements/asset/ACTION/ARSENALIZE.png',
+    'ARTICULATE': 'sylladex/uiElements/asset/ACTION/ARTICULATE.png',
+    'ARTILLERATE': 'sylladex/uiElements/asset/ACTION/ARTILLERATE.png',
 
-    'ASPHIXIATE': 'GUI/action/ASPHIXIATE.png',
-    'ASPIRE': 'GUI/action/ASPIRE.png',
-    'ASS': 'GUI/action/ASS.png',
-    'ASSAIL': 'GUI/action/ASSAIL.png',
-    'ASSASSINATE': 'GUI/action/ASSASSINATE.png',
-    'ASSAULT': 'GUI/action/ASSAULT.png',
-    'ASSEMBLE': 'GUI/action/ASSEMBLE.png',
-    'ASSERT': 'GUI/action/ASSERT.png',
-    'ASSESS': 'GUI/action/ASSESS.png',
-    'ASSEVERATE': 'GUI/action/ASSEVERATE.png',
-    'ASSIGN': 'GUI/action/ASSIGN.png',
-    'ASSIMILATE': 'GUI/action/ASSIMILATE.png',
-    'ASSIST': 'GUI/action/ASSIST.png',
-    'ASSURE': 'GUI/action/ASSURE.png',
-    'ASTONISH': 'GUI/action/ASTONISH.png',
-    'ASTOUND': 'GUI/action/ASTOUND.png',
-    'ASTRICT': 'GUI/action/ASTRICT.png',
+    'ASPHIXIATE': 'sylladex/uiElements/asset/ACTION/ASPHIXIATE.png',
+    'ASPIRE': 'sylladex/uiElements/asset/ACTION/ASPIRE.png',
+    'ASS': 'sylladex/uiElements/asset/ACTION/ASS.png',
+    'ASSAIL': 'sylladex/uiElements/asset/ACTION/ASSAIL.png',
+    'ASSASSINATE': 'sylladex/uiElements/asset/ACTION/ASSASSINATE.png',
+    'ASSAULT': 'sylladex/uiElements/asset/ACTION/ASSAULT.png',
+    'ASSEMBLE': 'sylladex/uiElements/asset/ACTION/ASSEMBLE.png',
+    'ASSERT': 'sylladex/uiElements/asset/ACTION/ASSERT.png',
+    'ASSESS': 'sylladex/uiElements/asset/ACTION/ASSESS.png',
+    'ASSEVERATE': 'sylladex/uiElements/asset/ACTION/ASSEVERATE.png',
+    'ASSIGN': 'sylladex/uiElements/asset/ACTION/ASSIGN.png',
+    'ASSIMILATE': 'sylladex/uiElements/asset/ACTION/ASSIMILATE.png',
+    'ASSIST': 'sylladex/uiElements/asset/ACTION/ASSIST.png',
+    'ASSURE': 'sylladex/uiElements/asset/ACTION/ASSURE.png',
+    'ASTONISH': 'sylladex/uiElements/asset/ACTION/ASTONISH.png',
+    'ASTOUND': 'sylladex/uiElements/asset/ACTION/ASTOUND.png',
+    'ASTRICT': 'sylladex/uiElements/asset/ACTION/ASTRICT.png',
 
 }
 
@@ -3345,6 +3346,22 @@ def get_actionName(symbol, position, wType):
     else:
         raise Exception(f'Couldn\'t find {symbol}')
 
+def get_actionImage(actionName, baseObject, pos):
+    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
+        customData = database.readlines()
+    
+    if actionName == 'No Action':
+        actionImage = pg.image.load(action.get('No Action')).convert_alpha()
+        baseObject.image.blit(actionImage, pos)
+
+    elif actionName == customData[2].split(',')[0]:
+
+        baseObject.children.append(UIBase.get_uiElem('ActionIcon')(baseObject.rect.x+pos[0], baseObject.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', actionName))
+
+    else:
+        actionImage = pg.image.load(action.get(actionName)).convert_alpha()
+        baseObject.image.blit(actionImage, pos)
+
 def find_kindImage(kindName):
     if kind.get(kindName):
         return kind.get(kindName)
@@ -3409,6 +3426,14 @@ def get_weaponType(weaponKind):
     else:    
         raise Exception(f'Could not find type for {weaponKind}')
         
+def get_damageNumValue(tier, value):
+    if damgeNum.get(tier):
+        if damgeNum.get(tier).get(value):
+            return damgeNum.get(tier).get(value)
+        else:
+            raise Exception(f'Could not find value {value} in {tier}') 
+    else:
+        raise Exception(f'Could not find tier {tier}')
 
 def change_codeValue(whichCustom, newCodeValue):
 

@@ -4,12 +4,13 @@ from baseUI import UIBase
 
 class ActionIcon(UIBase):
 
-    def __init__(self, x, y, job):
+    def __init__(self, x, y, job, imageItem = False, actionType = "NA", customName = ''):
         super().__init__(x, y, (180, 24), f'ActionIcon ({job})', (0,0,0))
 
         self.job = job
         self.active = False
         self.hovering = False
+        self.imageItem = imageItem
 
         self.toolTipText = f'Change name of {job}'
 
@@ -20,13 +21,27 @@ class ActionIcon(UIBase):
         self.meleeColor = '#FF4B2D'
         self.rangedColor = '#9B38F4'
         self.magicColor = '#6688FE'
-        self.currentColor = self.meleeColor
 
-        self.prefix = 'AS'
+        if self.imageItem == False:
+            self.currentColor = self.meleeColor
+
+            self.prefix = 'AS'
+
+            self.text = ''
+        else:
+            if actionType == "MELEE":
+                self.currentColor = self.meleeColor
+                self.prefix = 'AS'
+            elif actionType == "RANGED":
+                self.currentColor = self.rangedColor
+                self.prefix = 'AR'
+            elif actionType == "MAGIC":
+                self.currentColor = self.magicColor
+                self.prefix = 'AC'
+
+            self.text = customName[2:]
 
         self.create_appearance([[107, 22], self.currentColor, [0, 1]], [[101, 18], '#FFFFFF', [3, 3]])
-
-        self.text = ''
 
         txt_surf = self.font.render((self.prefix+self.text), False, self.currentColor)
         self.image.blit(txt_surf, [6, 8])
