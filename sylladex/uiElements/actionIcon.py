@@ -29,6 +29,8 @@ class ActionIcon(UIBase):
 
             self.text = ''
         else:
+            UIBase.get_group('layer').change_layer(self, 4)
+
             if actionType == "MELEE":
                 self.currentColor = self.meleeColor
                 self.prefix = 'AS'

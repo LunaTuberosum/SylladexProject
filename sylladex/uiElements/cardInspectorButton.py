@@ -29,3 +29,4 @@ class CardInspectorButton(UIBase):
         for child in self.cInspect.children:
             UIBase.remove_fromGroup(child)
             child.kill()
+        UIBase.get_uiElem('CardInspectorCheck').checks = []

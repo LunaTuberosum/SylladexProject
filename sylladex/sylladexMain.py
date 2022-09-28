@@ -10,6 +10,7 @@ from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
 from .uiElements.cardInspector import CardInspector
 from .uiElements.cardInspectorButton import CardInspectorButton
+from sylladex.uiElements.cardInspectorCheck import CardInspectorCheck
 from .uiElements.cardList import CardList
 from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
@@ -44,6 +45,7 @@ UIBase.add_current_UI([
     AddCardButton, 
     CardInspector,
     CardInspectorButton,
+    CardInspectorCheck,
     CardList, 
     CenterObj,
     ConsoleMessage, 

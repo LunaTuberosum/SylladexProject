@@ -78,7 +78,8 @@ class BaseCard(pg.sprite.Sprite):
                 for child in elem.children:
                     UIBase.remove_fromGroup(child)
                     child.kill()
-        
+        UIBase.get_uiElem('CardInspectorCheck').checks = []
+
         UIBase.get_uiElem('CardInspector')(self.codeData)
 
     def on_click(self):
