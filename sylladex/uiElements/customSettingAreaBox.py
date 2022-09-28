@@ -68,7 +68,7 @@ class CustomSettingAreaBox(UIBase):
                 UIBase.get_uiElem('ActionIcon')(self.rect.x, self.rect.y, f'{self.inputDetail}Icon'),
                 UIBase.get_uiElem('TextField')(self.rect.x+156, self.rect.y, 48, 24, 1, f'{self.inputDetail}Cost', f'Change {curAction}\'s cost', 'Num'),
                 UIBase.get_uiElem('TextField')(self.rect.x+252, self.rect.y, 48, 24, 1, f'{self.inputDetail}Dmg', f'Change {curAction}\'s damage', 'Num'),
-                UIBase.get_uiElem('LongTextField')(self.rect.x, self.rect.y+48, 300, 48, 30, 3, f'{self.inputDetail}Desc', f'Change {curAction}\'s description')
+                UIBase.get_uiElem('LongTextField')(self.rect.x, self.rect.y+48, 300, 48, 28, 3, f'{self.inputDetail}Desc', f'Change {curAction}\'s description')
             ]
 
             self.children[1].font = self.font
@@ -112,7 +112,7 @@ class CustomSettingAreaBox(UIBase):
                 self.create_appearance([[300, 72], '#1C4587', [6, 6]], [[300, 72], '#3C78D8', [0, 0]], colorKey = True, texts = [['TIER '+self.inputDetail[4:]+' DESCRIPTION', [150, 12], 'center']])
 
                 self.children = [
-                    UIBase.get_uiElem('LongTextField')(self.rect.x, self.rect.y+24, 300, 48, 30, 3, f'{self.inputDetail[4:]}Desc', f'Change the description for tiers {self.inputDetail[4:]}')
+                    UIBase.get_uiElem('LongTextField')(self.rect.x, self.rect.y+24, 300, 48, 28, 3, f'{self.inputDetail[4:]}Desc', f'Change the description for tiers {self.inputDetail[4:]}')
                 ]
 
                 self.children[0].font = self.font

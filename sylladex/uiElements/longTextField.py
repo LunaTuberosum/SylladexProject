@@ -45,18 +45,16 @@ class LongTextField(UIBase):
         for index, text in enumerate(_newText):
             if text[-1:] == '.': text = text[:-1] + ','
             
-            totalChar += len(text)
-            if totalChar > self.maxChar:
+            if totalChar + len(text) > self.maxChar:
                 self.lines[self.activeLineIndex] = self.activeLine
                 self.activeLineIndex += 1
                 self.activeLine = self.lines[self.activeLineIndex]
-                self.activeLine += text
-                self.activeLine += ' '
+                self.activeLine = text + ' '
                 totalChar = 0
+
             else:
-                self.activeLine += text
-                if index != len(_newText)-1:
-                    self.activeLine += ' '
+                self.activeLine += text + ' '
+                totalChar += len(text) + 1
 
         self.lines[self.activeLineIndex] = self.activeLine
         self.draw()
@@ -161,31 +159,14 @@ class LongTextField(UIBase):
         if self.active == True:
             if event.key == pg.K_BACKSPACE:
                 self.activeLine = self.activeLine[:-1]
-
-                if self.activeLineIndex > 0:
-                    _wordSections = self.lines[self.activeLineIndex-1].split()
-
-                    _totalCharCount = 0
-                    for _sect in _wordSections:
-                        _totalCharCount += len(_sect)
-
-                    wordSections = self.activeLine.split()
-
-                    totalCharCount = 0
-                    for sect in wordSections:
-                        totalCharCount += len(sect)
-                    
-                    if _totalCharCount + totalCharCount <= self.maxChar:
-                        self.lines[self.activeLineIndex] = ''
-                        self.activeLineIndex -= 1
-                        self.activeLine = self.lines[self.activeLineIndex]
-                        for index, sect in enumerate(wordSections):
-                            self.activeLine += sect
-                            if index != len(wordSections)-1:
-                                self.activeLine += ' '
         
                 self.lines[self.activeLineIndex] = self.activeLine
                 self.draw()
+
+                if self.activeLineIndex > 0:
+                    if len(self.activeLine) == 0:
+                        self.activeLineIndex -= 1
+                        self.activeLine = self.lines[self.activeLineIndex]
 
             elif event.key == pg.K_RETURN:
                 if self.activeLineIndex == 0 and (self.activeLine == '' or self.activeLine == ' '):
@@ -204,32 +185,19 @@ class LongTextField(UIBase):
 
                     totalCharCount = 0
                     for index, sect in enumerate(wordSections):
-                        totalCharCount += len(sect)
-                        if totalCharCount > self.maxChar:
-                            self.activeLineIndex += 1
+                        if totalCharCount + len(sect) > self.maxChar:
+                            self.activeLine = self.activeLine[:-len(sect)]
 
-                            if self.activeLineIndex > len(self.lines)-1:
-                                self.activeLineIndex -= 1
-                                self.activeLine = ''
-                                for _index, sect in enumerate(wordSections):
-                                    if _index == index:     
-                                        self.activeLine += sect[:-1]
-                                    else:
-                                        self.activeLine += sect
-                                self.lines[self.activeLineIndex] = self.activeLine
-                                self.draw()
+                            self.lines[self.activeLineIndex] = self.activeLine
+                            if self.activeLineIndex + 1 == self.maxLineCount:
                                 return
-
-                            self.lines[self.activeLineIndex-1] = ''
-                            for _index, sect in enumerate(wordSections):
-                                if _index == index:     
-                                    self.lines[self.activeLineIndex] += sect
-                                else:
-                                    self.lines[self.activeLineIndex-1] += sect
-                                    self.lines[self.activeLineIndex-1] += ' '
+                            
+                            self.activeLineIndex += 1
                             self.activeLine = self.lines[self.activeLineIndex]
-                            self.draw()
-                            return
+
+                            self.activeLine += sect
+                        else:
+                            totalCharCount += len(sect) + 1
 
                         self.lines[self.activeLineIndex] = self.activeLine
                         self.draw()
