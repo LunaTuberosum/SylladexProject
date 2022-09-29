@@ -41,18 +41,18 @@ class CardInspector(UIBase):
                 [codeDatabase.get_damageNumValue(self.codeData.tier, '3'), [283, 170], 'center'], 
                 [codeDatabase.get_damageNumValue(self.codeData.tier, 'BD'), [283, 195], 'center'], 
                 ['CST', [30, 331], 'center'], 
-                ['DMG', [30, 355], 'center'], 
-                ['CODE', [79, 390], 'center'], 
-                [self.codeData.code, [151, 391], "center"],
-                ['TIER', [223, 391], 'center'], 
-                [self.codeData.tier, [265, 391], "center"],
+                ['DMG', [30, 361], 'center'], 
+                ['CODE', [79, 399], 'center'], 
+                [self.codeData.code, [151, 399], "center"],
+                ['TIER', [223, 399], 'center'], 
+                [self.codeData.tier, [265, 399], "center"],
                 ['1', [247, 120], 'center'], 
                 ['2', [247, 146], 'center'], 
                 ['3', [247, 170], 'center'], 
                 ['BD', [247, 195], 'center'],
-                ['/', [60, 329], 'center'],
-                ['/', [60, 355], 'center'],
-                ['/', [192, 342], 'center'] #Max Char is 28
+                ['/', [60, 331], 'center'],
+                ['/', [60, 361], 'center'],
+                ['/', [192, 346], 'center'] #Max Char is 28
                 ]
             )
 
@@ -210,10 +210,11 @@ class CardInspector(UIBase):
                             curLine += 1
 
                     self.change_desc(lines, len(lines), True, actionInfo)
-
                 return
-        self.change_desc('/', 1)
-        self.prevDescType = 'None'
+
+        if self.prevDescType != 'None':
+            self.change_desc('/', 1)
+            self.prevDescType = 'None'
 
     def change_desc(self, new_desc, lineCount, isAction = False, actionData = None):
         self.create_appearance(
@@ -243,11 +244,11 @@ class CardInspector(UIBase):
                 [codeDatabase.get_damageNumValue(self.codeData.tier, '3'), [283, 170], 'center'], 
                 [codeDatabase.get_damageNumValue(self.codeData.tier, 'BD'), [283, 195], 'center'], 
                 ['CST', [30, 331], 'center'], 
-                ['DMG', [30, 355], 'center'], 
-                ['CODE', [79, 390], 'center'], 
-                [self.codeData.code, [151, 391], "center"],
-                ['TIER', [223, 391], 'center'], 
-                [self.codeData.tier, [265, 391], "center"],
+                ['DMG', [30, 361], 'center'], 
+                ['CODE', [79, 399], 'center'], 
+                [self.codeData.code, [151, 399], "center"],
+                ['TIER', [223, 399], 'center'], 
+                [self.codeData.tier, [265, 399], "center"],
                 ['1', [247, 120], 'center'], 
                 ['2', [247, 146], 'center'], 
                 ['3', [247, 170], 'center'], 
@@ -257,31 +258,31 @@ class CardInspector(UIBase):
 
         if isAction == False:
             self.create_appearance(texts = [
-                ['/', [60, 329], 'center'],
-                ['/', [60, 355], 'center']])
+                ['/', [60, 331], 'center'],
+                ['/', [60, 361], 'center']])
         else:
             self.create_appearance(texts = [
-                [actionData[0], [60, 329], 'center'],
-                [actionData[1], [60, 355], 'center']])
+                [actionData[0], [60, 331], 'center'],
+                [actionData[1], [60, 361], 'center']])
 
         
         if lineCount == 1:
-            self.create_appearance(texts = [[new_desc[0], [192, 342], 'center']])
+            self.create_appearance(texts = [[new_desc[0], [192, 346], 'center']])
         
         elif lineCount == 2:
-            self.create_appearance(texts = [[new_desc[0], [192, 333], 'center']])
-            self.create_appearance(texts = [[new_desc[1], [192, 351], 'center']])
+            self.create_appearance(texts = [[new_desc[0], [192, 337], 'center']])
+            self.create_appearance(texts = [[new_desc[1], [192, 355], 'center']])
         
         elif lineCount == 3:
-            self.create_appearance(texts = [[new_desc[0], [192, 327], 'center']])
-            self.create_appearance(texts = [[new_desc[1], [192, 343], 'center']])
-            self.create_appearance(texts = [[new_desc[2], [192, 356], 'center']])
+            self.create_appearance(texts = [[new_desc[0], [192, 328], 'center']])
+            self.create_appearance(texts = [[new_desc[1], [192, 346], 'center']])
+            self.create_appearance(texts = [[new_desc[2], [192, 364], 'center']])
         
         elif lineCount == 4:
-            self.create_appearance(texts = [[new_desc[0], [192, 327], 'center']])
-            self.create_appearance(texts = [[new_desc[1], [192, 343], 'center']])
-            self.create_appearance(texts = [[new_desc[2], [192, 356], 'center']])
-            self.create_appearance(texts = [[new_desc[3], [192, 369], 'center']])
+            self.create_appearance(texts = [[new_desc[0], [192, 326], 'center']])
+            self.create_appearance(texts = [[new_desc[1], [192, 342], 'center']])
+            self.create_appearance(texts = [[new_desc[2], [192, 355], 'center']])
+            self.create_appearance(texts = [[new_desc[3], [192, 368], 'center']])
 
         for child in self.children:
             if isinstance(child, UIBase.get_uiElem('ActionIcon')):
