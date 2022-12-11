@@ -1,14 +1,14 @@
 import pygame as pg
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 import settings
 from ..captchalogueCards.baseCard import BaseCard
 
 class CenterObj(UIBase):
     def __init__(self):
-        super().__init__(settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT/2, (1,1), 'CenterObj', '#FFFFFF')
+        super().__init__(settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT/2, 'CenterObj')
 
-        self.create_appearance(colorKey = True)
+        self.apperance = Apperance(self, (0,0), colorKey = True)
 
     def move_self(self, rel):
         self.rect.move_ip(rel)

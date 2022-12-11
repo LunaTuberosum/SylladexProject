@@ -1,15 +1,23 @@
 import pygame as pg
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 
 
 class GristCacheLimit(UIBase):
     def __init__(self, x):
-        super().__init__(x+212, 642, (290,42), 'GristCacheLimit', '#FFFFFF')
+        super().__init__(x+212, 642, 'GristCacheLimit')
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 16)
 
-        self.create_appearance([[284, 36], '#999999', [6, 6]], [[182, 36], '#C4C4C4', [0, 0]], [[102, 36], '#EFEFEF', [182, 0]], colorKey = True, texts = [['CACHE LIMIT', [92, 19], 'center']])
+        self.apperance = Apperance(
+            self, 
+            (290, 42),
+            [[284, 36], '#999999', [6, 6]], 
+            [[182, 36], '#C4C4C4', [0, 0]], 
+            [[102, 36], '#EFEFEF', [182, 0]], 
+            colorKey = True, 
+            texts = [['CACHE LIMIT', [92, 19], 'center']]
+            )
 
         self.toolTipText = 'The amount of each grist you can hold based on your Rung'
 

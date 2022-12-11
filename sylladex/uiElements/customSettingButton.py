@@ -1,23 +1,30 @@
 import pygame as pg
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 
 
 class CustomSettingButton(UIBase):
     def __init__(self):
-        super().__init__(0, 50, (70,70), 'CustomSettingButton', (0,0,0))
+        super().__init__(0, 50, 'CustomSettingButton')
 
-        self.create_appearance([[64, 64], '#666666', [0, 6]], [[64, 64], '#1155CC', [6, 0]], colorKey = True, image = ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]])
+        self.apperance = Apperance(
+            self,
+            (70,70),
+            [[64, 64], '#666666', [0, 6]], 
+            [[64, 64], '#1155CC', [6, 0]], 
+            colorKey = True, 
+            image = ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]]
+            )
 
         self.toolTipText = 'Open custom card code settings'
         self.hovering = False
     
     def hover(self):
-        self.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12])
+        self.apperance.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12])
         self.hovering = True
 
     def no_hover(self):
-        self.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12])
+        self.apperance.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12])
         self.hovering = False
 
     def on_click(self):

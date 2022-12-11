@@ -1,10 +1,10 @@
 import pygame as pg
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 
 
 class ToolTip(UIBase):
-    def __init__(self, pos, text):
+    def __init__(self, pos: tuple, text: str):
         self.text = text
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
@@ -13,7 +13,13 @@ class ToolTip(UIBase):
         width = self.txt_surface.get_width() + 6
         height = self.txt_surface.get_height() + 6
 
-        super().__init__(pos[0]+12, pos[1]+15, (width, height), 'ToolTip', (210,210,210))
+        super().__init__(pos[0]+12, pos[1]+15, 'ToolTip')
+
+        self.apperance = Apperance(
+            self, 
+            (width, height), 
+            [[width, height], '#D2D2D2', [0,0]]
+            )
 
         self.image.blit(self.txt_surface, [3, 3])
     

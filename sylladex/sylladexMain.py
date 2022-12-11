@@ -85,7 +85,7 @@ def main(screen, clock, UIBase):
     UIBase.get_uiElem('SidebarButton')()
     UIBase.get_uiElem('GristCacheButton')()
     UIBase.get_uiElem('CustomSettingButton')()
-    BaseCard.load_cards()
+    # BaseCard.load_cards()
     moveCard = False
 
     while True:

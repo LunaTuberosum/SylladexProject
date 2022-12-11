@@ -1,16 +1,22 @@
 import pygame as pg
 import pickle
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 
 
 class GristCache(UIBase):
     def __init__(self, x):
-        super().__init__(x, 626, (719,452), 'GristCache', '#999999')
+        super().__init__(x, 626, 'GristCache')
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
 
-        self.create_appearance([[713, 446], '#CCCCCC', [0, 6]], texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']])
+        self.apperance = Apperance(
+            self, 
+            (719,452),
+            [[719,452], '#999999', [0,0]],
+            [[713, 446], '#CCCCCC', [0, 6]], 
+            texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']]
+            )
 
         self.children = []
 
@@ -22,7 +28,7 @@ class GristCache(UIBase):
             elif index < 12: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-8)), 885, grist))
             elif index < 16: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-12)), 982, grist))
 
-        self.load_list()
+        # self.load_list()
 
     def save_cache(self):
         tempData = []
