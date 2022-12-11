@@ -3,6 +3,8 @@ from dataclasses import dataclass
 
 from baseUI import UIBase
 from sylladex.captchalogueCards import codeDatabase
+from sylladex.captchalogueCards.baseCard import BaseCard
+from sylladex.captchalogueCards.stackManager import StackManager
 
 @dataclass
 class CodeData():
@@ -10,7 +12,7 @@ class CodeData():
     code: str = "-"
     tier: str = "-"
     
-    kind: str = ''
+    kind: str = 'None'
     grist: str = ''
     trait1: str = ''
     trait2: str = ''
@@ -81,45 +83,21 @@ class ListObject(UIBase):
         if self.writing == False:
             if self.captaCard:
                 self.create_appearance([[249, 64], color, [0, 0]],  [[10, 64], UIBase.modusForground, [239, 0]])
-
-                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
-                self.kindImage.set_alpha(125)
-                self.image.blit(self.kindImage, (185, 3))
-
-                nameTxt = self.font.render(self.codeData.name, True, (0,0,0))
-                self.image.blit(nameTxt, (3,3))
-
-                codeTxt = self.font.render(self.codeData.code, True, (0,0,0))
-                self.image.blit(codeTxt, (3,37))
-
-                tierTxt = self.font.render(self.codeData.tier, True, (0,0,0))
-                self.image.blit(tierTxt, (129,37))
-
-            elif self.codeData and self.codeData.code == "-":
+            elif self.codeData or self.codeData.name == '-':
                 self.image.fill(color)
-                self.kindImage = pg.image.load("sylladex/uiElements/asset/KINDS/CustomKind.png").convert_alpha()
-                self.kindImage.set_alpha(125)
-                self.image.blit(self.kindImage, (185, 3))
 
-                self.txt_surface = self.font.render("-", True, (0,0,0))
-                self.image.blit(self.txt_surface, (3,3))
-                self.image.blit(self.txt_surface, (3,37))
-                self.image.blit(self.txt_surface, (129,37))
+            self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
+            self.kindImage.set_alpha(125)
+            self.image.blit(self.kindImage, (185, 3))
 
-            elif self.codeData:
-                self.image.fill(color)
-                self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
-                self.kindImage.set_alpha(125)
-                self.image.blit(self.kindImage, (185, 3))
+            nameTxt = self.font.render(self.codeData.name, True, (0,0,0))
+            self.image.blit(nameTxt, (3,3))
 
-                nameTxt = self.font.render(self.codeData.name, True, (0,0,0))
-                self.image.blit(nameTxt, (3,3))
+            codeTxt = self.font.render(self.codeData.code, True, (0,0,0))
+            self.image.blit(codeTxt, (3,37))
 
-                codeTxt = self.font.render(self.codeData.code, True, (0,0,0))
-                self.image.blit(codeTxt, (3,37))
-
-                tierTxt = self.font.render(self.codeData.tier, True, (0,0,0))
-                self.image.blit(tierTxt, (129,37))
+            tierTxt = self.font.render(self.codeData.tier, True, (0,0,0))
+            self.image.blit(tierTxt, (129,37))
 
     def place_children(self):
         self.children[0].rect.topleft = (self.rect.x+3, self.rect.y+3)
@@ -184,15 +162,26 @@ class ListObject(UIBase):
             if self.empty == False:
                 self.empty = True
                 self.codeData = CodeData()
+                if self.captaCard != None:
+                    if UIBase.get_modus() == 'STACK':
+                        if StackManager.in_stack(self.captaCard):
+                            StackManager.remove_fromStack(self.captaCard)
+                            StackManager.place_stack()
 
+                    BaseCard.remove_cardFromGroup(self.captaCard)
+                    self.captaCard = None
+                self.redraw_card((255,255,255))
                 UIBase.get_uiElem('RemoveCardButton').eject = False
-                for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.get_uiElem('ListObject')):
-                        elem.redraw_card((255,255,255))
-                    elif isinstance(elem, UIBase.get_uiElem('CardList')):
-                        elem.save_list()
+
+                UIBase.get_uiElem('CardList').save_list()
             else: 
-                UIBase.get_uiElem('PopUp')("You can\'t eject an empty card")
+                UIBase.get_uiElem('PopUp')('You can\'t eject an empty card')
+
+        elif UIBase.get_uiElem('EditCardButton').edit == True and self.interactable == True:
+            if self.empty == False:
+                pass
+            else:
+                UIBase.get_uiElem('PopUp')('You can\'t edit an empty card')
 
         elif self.interactable == True:
             if self.empty == False:

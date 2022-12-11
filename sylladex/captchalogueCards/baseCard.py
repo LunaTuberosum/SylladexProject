@@ -292,9 +292,6 @@ class BaseCard(pg.sprite.Sprite):
     @classmethod
     def remove_cardFromGroup(cls, card, temp=False):
         cls.get_cardGroup().remove(card)
-        for _card in StackManager.get_stack():
-            if _card == card:
-                StackManager.get_stack().remove(card)
         UIBase.get_group('layer').remove(card)
         card.kill()
 

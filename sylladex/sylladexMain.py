@@ -18,6 +18,7 @@ from .uiElements.customSettingAreaBox import CustomSettingAreaBox
 from .uiElements.customSettingButton import CustomSettingButton
 from .uiElements.customSettingMenu import CustomSettingMenu
 from .uiElements.customSettingSectionName import CustomSettingSectionName
+from .uiElements.editCardButton import EditCardButton
 from .uiElements.escapeMenu import EscapeMenu
 from .uiElements.escapeMenuOption import EscapeMenuOption
 from .uiElements.gristCache import GristCache
@@ -53,6 +54,7 @@ UIBase.add_current_UI([
     CustomSettingButton, 
     CustomSettingMenu, 
     CustomSettingSectionName, 
+    EditCardButton, 
     EscapeMenu, 
     EscapeMenuOption, 
     GristCache, 
@@ -116,15 +118,6 @@ def main(screen, clock, UIBase):
                             if UIBase.get_uiElem('RemoveCardButton').eject == True:
                                 if len(UIBase.get_uiElem('CardList').children) == 0:
                                     UIBase.get_uiElem('RemoveCardButton').eject = False
-                                else:
-                                    for elem in UIBase.get_group("ui"):
-                                        if isinstance(elem, UIBase.get_uiElem('ListObject')):    
-                                            elem.redraw_card((230,230,230))
-
-                            elif UIBase.get_uiElem('RemoveCardButton').eject == False:
-                                for elem in UIBase.get_group("ui"):
-                                    if isinstance(elem, UIBase.get_uiElem('ListObject')):    
-                                        elem.redraw_card((255,255,255))
 
                     if moveCard == True:
                         for card in BaseCard.cards:
@@ -282,7 +275,7 @@ def main(screen, clock, UIBase):
                 if isinstance(elem, UIBase.get_uiElem('PopUp')):
                     elem.negate = True
                 if hasattr(elem, "hover") and elem.hovering == False:
-                        if isinstance(elem, UIBase.get_uiElem('ListObject'))and UIBase.get_uiElem('RemoveCardButton').eject == True:
+                        if isinstance(elem, UIBase.get_uiElem('ListObject')) and (UIBase.get_uiElem('RemoveCardButton').eject == True or UIBase.get_uiElem('EditCardButton').edit == True):
                             elem.alt_hover()
                         else:
                             elem.hover()
@@ -298,7 +291,7 @@ def main(screen, clock, UIBase):
                 if hasattr(elem, "negate"):
                     elem.negate = False
                 if hasattr(elem, "no_hover")and elem.hovering == True:
-                    if isinstance(elem, UIBase.get_uiElem('ListObject'))and UIBase.get_uiElem('RemoveCardButton').eject == True:
+                    if isinstance(elem, UIBase.get_uiElem('ListObject')) and (UIBase.get_uiElem('RemoveCardButton').eject == True or UIBase.get_uiElem('EditCardButton').edit == True):
                         elem.alt_no_hover()
                     else:
                         elem.no_hover()

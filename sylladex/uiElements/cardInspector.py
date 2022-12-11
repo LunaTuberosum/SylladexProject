@@ -89,6 +89,10 @@ class CardInspector(UIBase):
             disIcon = pg.transform.scale(disIcon, [24, 24])
             self.image.blit(disIcon, [124+(25*index), 197])
 
+    def reloadSelf(self):
+        self.update()
+        self.prevDescType = 'Reload'
+
     def update(self):
         for check in UIBase.get_uiElem('CardInspectorCheck').checks:
             if check.selected == True:

@@ -2975,6 +2975,7 @@ kind = {
     'Bustkind': 'sylladex/uiElements/asset/KINDS/BustKind.png',
     'Furniturekind': 'sylladex/uiElements/asset/KINDS/FurnitureKind.png',
     'Vehiclekind': 'sylladex/uiElements/asset/KINDS/VehicleKind.png',
+    'None': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
 }
 
 action = {
@@ -3282,7 +3283,7 @@ def get_damageNumValue(tier, value):
     if damgeNum.get(tier):
         if damgeNum.get(tier).get(value):
             return damgeNum.get(tier).get(value)
-        else:
+        else:   
             raise Exception(f'Could not find value {value} in {tier}') 
     else:
         raise Exception(f'Could not find tier {tier}')

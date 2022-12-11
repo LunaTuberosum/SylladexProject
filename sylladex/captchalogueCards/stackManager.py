@@ -11,6 +11,13 @@ class StackManager():
         return cls.stack
 
     @classmethod
+    def in_stack(cls, card):
+        for _card in cls.get_stack():
+            if _card.codeData.cardID == card.codeData.cardID:
+                return True
+        return False
+
+    @classmethod
     def get_length(cls):
         return len(cls.stack)
 
@@ -34,8 +41,17 @@ class StackManager():
     @classmethod
     def remove_fromStack(cls, card):
         cls.stack.remove(card)
+        cls.save_stack()
+
+    @classmethod
+    def place_stack(cls):
         for index, card in enumerate(cls.get_stack()):
-            print(index, card.codeData.code)
+            if index == 0: 
+                prevCardRect = card.rect
+            else:
+                card.rect.x = prevCardRect.x - 15
+                card.rect.y = prevCardRect.y - 15
+                prevCardRect = card.rect
 
     @classmethod
     def save_stack(cls):

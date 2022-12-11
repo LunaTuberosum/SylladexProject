@@ -12,43 +12,47 @@ class CardList(UIBase):
     def __init__(self, x, y, size):
         super().__init__(x, y, size, 'CardList', '#A4A4A4')
         self.uiLayers.change_layer(self, -1)
-        
-    def add_toList(self):
-        self.children.append(UIBase.get_uiElem('ListObject')())
-        card = self.children[len(self.children)-1]
+    
+    @classmethod
+    def add_toList(cls):
+        cls.children.append(UIBase.get_uiElem('ListObject')())
+        card = cls.children[len(cls.children)-1]
         UIBase.add_toGroup(card)
         UIBase.uiLayers.change_layer(card, -1)
-        self.place_list()
-        self.save_list()
+        cls.place_list()
+        cls.save_list()
 
-    def remove_fromList(self, TextField):
-        if self.children[len(self.children)-1].empty == True:
-            self.children[len(self.children)-1].kill()
-            self.children.remove(self.children[len(self.children)-1])
-            self.save_list()
+    @classmethod
+    def remove_fromList(cls, TextField):
+        if cls.children[len(cls.children)-1].empty == True:
+            cls.children[len(cls.children)-1].kill()
+            cls.children.remove(cls.children[len(cls.children)-1])
+            cls.save_list()
         else:
             UIBase.get_uiElem('PopUp')("You can only remove empty cards. Eject cards first")
             for elem in UIBase.get_group('ui'):
                 if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
-                    elem.text = str(len(self.children))
+                    elem.text = str(len(cls.children))
                     elem.draw()
                     elem.no_hover()
             return
-        
-    def save_list(self):
+    
+    @classmethod
+    def save_list(cls):
         UIBase.get_uiElem('ConsoleMessage')('Saved List')
         tempList = []
-        for card in self.children:
+        for card in cls.children:
             tempList.append([card.codeData, card.empty])
 
         with open('sylladex/uiElements/data/uiList.plk', 'wb') as saveList:
             pickle.dump(tempList, saveList, -1)
 
-    def load_list(self):
+    @classmethod
+    def load_list(cls):
         with open('sylladex/uiElements/data/uiList.plk', 'rb') as saveList:
             tempList = pickle.load(saveList)
 
-        self.children.clear()
+        cls.children.clear()
 
         for card in tempList:
             obj = UIBase.get_uiElem('ListObject')()
@@ -64,11 +68,11 @@ class CardList(UIBase):
                 obj.redraw_card('#FFFFFF')
 
             obj.empty = card[1]
-            self.children.append(obj)
+            cls.children.append(obj)
 
         for elem in UIBase.get_group('ui'):
             if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
-                elem.text = str(len(self.children))
+                elem.text = str(len(cls.children))
                 elem.draw()
                 elem.no_hover()
 
