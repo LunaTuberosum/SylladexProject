@@ -4,7 +4,7 @@ from baseUI import UIBase, Apperance
 
 
 class GristInfoBox(UIBase):
-    def __init__(self, x, y, grist):
+    def __init__(self, x: int, y: int, grist: str):
         super().__init__(x, y, 'GristInfoBox')
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24, bold=True)
@@ -27,7 +27,18 @@ class GristInfoBox(UIBase):
 
         self.children = []
 
-        # self.children.append(UIBase.get_uiElem('TextField')(self.rect.x+53, self.rect.y+48, 111, 36, 7, f'{self.grist}NumBox', f'Let\'s you alter how much {self.grist} grist you have', 'Num', (67,178,222)))
-        # self.children[0].changeColors((239,239,239), (199,199,199), (179,179,179))
+        self.children.append(UIBase.get_uiElem('TextField')(
+            self.rect.x+53, 
+            self.rect.y+48, 
+            [111, 36], 
+            f'{self.grist}NumBox', 
+            f'Let\'s you alter how much {self.grist} grist you have', 
+            5, 
+            textColor=(67,178,222), 
+            textType='Num',
+            baseColors=[(239,239,239), (199,199,199), (179,179,179)],
+            align='center',
+            exitCommand=UIBase.find_curUI('GristCache').save_cache
+            ))
 
-        # self.children.append(UIBase.get_uiElem('GristProgressBar')(self))
+        self.children.append(UIBase.get_uiElem('GristProgressBar')(self))

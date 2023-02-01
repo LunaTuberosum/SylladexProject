@@ -1,23 +1,14 @@
 import pygame as pg
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 
 class TextField(UIBase):
 
-    def __init__(self, x, y, width, height, maxChar, job, toolTipText, textType, textColor=(0,0,0)):
-        super().__init__(x, y, (width, height), f'TextField ({job})', (255,255,255))
+    def __init__(self, x: int, y: int, size: tuple, job: str, toolTipText: str, maxChar: int, **kargs):
+        super().__init__(x, y, f'TextField ({job})')
 
-        self.textColor = textColor
-        self.textType = textType
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-        if self.textType == 'Num':
-            self.defultText = '0'
-            self.text = self.defultText
-        if self.textType == 'Txt':
-            self.defultText = ''
-            self.text = self.defultText
-        self.txt_surface = self.font.render(self.text, True, self.textColor)
-        self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+        self.kargs = kargs
+        self.size = size
 
         self.maxChar = maxChar
         self.job = job
@@ -26,201 +17,267 @@ class TextField(UIBase):
 
         self.toolTipText = toolTipText
 
-        self.baseColor = (255,255,255)
-        self.hoverColor = (230,230,230)
-        self.selectedColor = (170,170,170)
+        if 'textColor' in self.kargs: self.textColor = self.kargs['textColor']
+        else: self.textColor = '#000000'
 
-    def changeColors(self, base, hover, selected):
-        self.baseColor = base
-        self.hoverColor = hover
-        self.selectedColor = selected
+        if 'textType' in self.kargs: self.textType = self.kargs['textType']
+        else: self.textType = 'Txt'
 
-        self.no_hover()
+        if 'fontSize' in self.kargs: self.fontSize = self.kargs['fontSize']
+        else: self.fontSize = 24
+
+        if 'textFont' in self.kargs: self.textFont = self.kargs['textFont']
+        else: self.textFont = 'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf'
+        
+        self.font = pg.font.Font(self.textFont, self.fontSize)
+
+        if 'baseColors' in self.kargs:
+            self.baseColor = self.kargs['baseColors'][0]
+            self.hoverColor = self.kargs['baseColors'][1]
+            self.selectedColor = self.kargs['baseColors'][2]
+        else:
+            self.baseColor = (255,255,255)
+            self.hoverColor = (230,230,230)
+            self.selectedColor = (170,170,170)
+
+        if 'align' in self.kargs:
+            if self.kargs['align'] == 'center':
+                self.textPostion = [self.size[0]/2, self.size[1]/2]
+                self.alginment = 'center'
+            elif self.kargs['align'] == 'right':
+                self.textPostion = [self.size[0]-2, self.size[1]/2]
+                self.alginment = 'right'
+        else:
+            self.textPostion = [2, self.size[1]/2]
+            self.alginment = 'left'
+        
+        if 'exitCommand' in self.kargs: self.exitCommand = self.kargs['exitCommand']
+        else: self.exitCommand = None
+
+        if self.textType == 'Num':
+            self.defultText, self.text = '0', '0'
+
+        else:
+            self.defultText, self.text = '', ''
+
+        self.apperance = Apperance(
+            self,
+            self.size,
+            [self.size, self.baseColor, [0, 0]],
+            texts = [[self.text, self.textPostion, self.alginment, self.textColor]]
+        )
 
     def exit_field(self):
         self.active = False
-        
-        for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.get_uiElem('CardList')) and self.job == "numOfCards":
-                amount = int(self.text) - len(elem.children)
-                if amount < 0:
-                    for removeCard in range(0, amount*-1):
-                        elem.remove_fromList(self)
-                    elem.place_list()
-                else:
-                    for newCard in range(0, amount):
-                        elem.add_toList()
 
-            elif isinstance(elem, UIBase.get_uiElem('ToggleButton')):
-                if elem.job == 'meleeToggle':
-                    if elem.on == True:
-                        if self.job == 'action1Cost':
-                            UIBase.CodeDatabase.change_codeValue('Melee 1 Cost', self.text)
-                        elif self.job == 'action1Dmg':
-                            UIBase.CodeDatabase.change_codeValue('Melee 1 Dmg', self.text)
-                        elif self.job == 'action2Cost':
-                            UIBase.CodeDatabase.change_codeValue('Melee 2 Cost', self.text)
-                        elif self.job == 'action2Dmg':
-                            UIBase.CodeDatabase.change_codeValue('Melee 2 Dmg', self.text)
-                elif elem.job == 'rangedToggle':
-                    if elem.on == True:
-                        if self.job == 'action1Cost':
-                            UIBase.CodeDatabase.change_codeValue('Ranged 1 Cost', self.text)
-                        elif self.job == 'action1Dmg':
-                            UIBase.CodeDatabase.change_codeValue('Ranged 1 Dmg', self.text)
-                        elif self.job == 'action2Cost':
-                            UIBase.CodeDatabase.change_codeValue('Ranged 2 Cost', self.text)
-                        elif self.job == 'action2Dmg':
-                            UIBase.CodeDatabase.change_codeValue('Ranged 2 Dmg', self.text)
-                elif elem.job == 'magicToggle':
-                    if elem.on == True:
-                        if self.job == 'action1Cost':
-                            UIBase.CodeDatabase.change_codeValue('Magic 1 Cost', self.text)
-                        elif self.job == 'action1Dmg':
-                            UIBase.CodeDatabase.change_codeValue('Magic 1 Dmg', self.text)
-                        elif self.job == 'action2Cost':
-                            UIBase.CodeDatabase.change_codeValue('Magic 2 Cost', self.text)
-                        elif self.job == 'action2Dmg':
-                            UIBase.CodeDatabase.change_codeValue('Magic 2 Dmg', self.text)
+        if self.text == '':
+            self.text = self.defultText
 
-                elif elem.job == 't1Toggle':
-                    if elem.on == True:
-                        if self.job == 'traitName':
-                            UIBase.CodeDatabase.change_codeValue('Trait 1 Name', self.text)
-                elif elem.job == 't2Toggle':
-                    if elem.on == True:
-                        if self.job == 'traitName':
-                            UIBase.CodeDatabase.change_codeValue('Trait 2 Name', self.text)
-                elif elem.job == 't3Toggle':
-                    if elem.on == True:
-                        if self.job == 'traitName':
-                            UIBase.CodeDatabase.change_codeValue('Trait 3 Name', self.text)
-                elif elem.job == 't4Toggle':
-                    if elem.on == True:
-                        if self.job == 'traitName':
-                            UIBase.CodeDatabase.change_codeValue('Trait 4 Name', self.text)
+        self.apperance.options = {'texts': [[self.text, self.textPostion, self.alginment, self.textColor]]}
+        self.apperance.sizeColorPos = [[self.size, self.baseColor, [0,0]]]
 
-        if self.job == 'kind1Name':
-            UIBase.CodeDatabase.change_codeValue('Customkind 1', self.text)
-            self.job = f'{self.text}Name'
-            self.objName = f'TextField ({self.job})'
-            self.toolTipText = f'Changes the name of {self.text}'
-        elif self.job == 'kind2Name':
-            UIBase.CodeDatabase.change_codeValue('Customkind 2', self.text)
-            self.job = f'{self.text}Name'
-            self.objName = f'TextField ({self.job})'
-            self.toolTipText = f'Changes the name of {self.text}'
-                    
-        
-    def draw(self):
-        self.image.fill(self.selectedColor)
-        
-        self.txt_surface = self.font.render(self.text, True, self.textColor)
-        self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+        self.apperance.reload_apperance()       
 
-    def typeing(self, event):
+        if self.exitCommand: self.exitCommand() 
+
+    # def exit_field(self):
+    #     self.active = False
         
+    #     for elem in UIBase.get_group("ui"):
+    #         if isinstance(elem, UIBase.get_uiElem('CardList')) and self.job == "numOfCards":
+    #             amount = int(self.text) - len(elem.children)
+    #             if amount < 0:
+    #                 for removeCard in range(0, amount*-1):
+    #                     elem.remove_fromList(self)
+    #                 elem.place_list()
+    #             else:
+    #                 for newCard in range(0, amount):
+    #                     elem.add_toList()
+
+    #         elif isinstance(elem, UIBase.get_uiElem('ToggleButton')):
+    #             if elem.job == 'meleeToggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'action1Cost':
+    #                         UIBase.CodeDatabase.change_codeValue('Melee 1 Cost', self.text)
+    #                     elif self.job == 'action1Dmg':
+    #                         UIBase.CodeDatabase.change_codeValue('Melee 1 Dmg', self.text)
+    #                     elif self.job == 'action2Cost':
+    #                         UIBase.CodeDatabase.change_codeValue('Melee 2 Cost', self.text)
+    #                     elif self.job == 'action2Dmg':
+    #                         UIBase.CodeDatabase.change_codeValue('Melee 2 Dmg', self.text)
+    #             elif elem.job == 'rangedToggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'action1Cost':
+    #                         UIBase.CodeDatabase.change_codeValue('Ranged 1 Cost', self.text)
+    #                     elif self.job == 'action1Dmg':
+    #                         UIBase.CodeDatabase.change_codeValue('Ranged 1 Dmg', self.text)
+    #                     elif self.job == 'action2Cost':
+    #                         UIBase.CodeDatabase.change_codeValue('Ranged 2 Cost', self.text)
+    #                     elif self.job == 'action2Dmg':
+    #                         UIBase.CodeDatabase.change_codeValue('Ranged 2 Dmg', self.text)
+    #             elif elem.job == 'magicToggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'action1Cost':
+    #                         UIBase.CodeDatabase.change_codeValue('Magic 1 Cost', self.text)
+    #                     elif self.job == 'action1Dmg':
+    #                         UIBase.CodeDatabase.change_codeValue('Magic 1 Dmg', self.text)
+    #                     elif self.job == 'action2Cost':
+    #                         UIBase.CodeDatabase.change_codeValue('Magic 2 Cost', self.text)
+    #                     elif self.job == 'action2Dmg':
+    #                         UIBase.CodeDatabase.change_codeValue('Magic 2 Dmg', self.text)
+
+    #             elif elem.job == 't1Toggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'traitName':
+    #                         UIBase.CodeDatabase.change_codeValue('Trait 1 Name', self.text)
+    #             elif elem.job == 't2Toggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'traitName':
+    #                         UIBase.CodeDatabase.change_codeValue('Trait 2 Name', self.text)
+    #             elif elem.job == 't3Toggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'traitName':
+    #                         UIBase.CodeDatabase.change_codeValue('Trait 3 Name', self.text)
+    #             elif elem.job == 't4Toggle':
+    #                 if elem.on == True:
+    #                     if self.job == 'traitName':
+    #                         UIBase.CodeDatabase.change_codeValue('Trait 4 Name', self.text)
+
+    #     if self.job == 'kind1Name':
+    #         UIBase.CodeDatabase.change_codeValue('Customkind 1', self.text)
+    #         self.job = f'{self.text}Name'
+    #         self.objName = f'TextField ({self.job})'
+    #         self.toolTipText = f'Changes the name of {self.text}'
+    #     elif self.job == 'kind2Name':
+    #         UIBase.CodeDatabase.change_codeValue('Customkind 2', self.text)
+    #         self.job = f'{self.text}Name'
+    #         self.objName = f'TextField ({self.job})'
+    #         self.toolTipText = f'Changes the name of {self.text}'
+
+    def typing(self, event):
+
         if self.active == True:
+
+            if self.text == self.defultText:
+                self.text = ''
+
             if event.key == pg.K_BACKSPACE:
                 self.text = self.text[:-1]
-                self.draw()
 
             elif event.key == pg.K_RETURN:
-                
-                if len(self.text) > 1:
-                    if self.text[0] == '0':
-                        self.text = self.text[1:]
 
-                if len(self.job) > 6 and self.job[-6:] == 'NumBox':
-                    for elem in UIBase.get_group('ui'):
-                        if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
-                            if self.text > elem.limitNum:
-                                self.text = elem.limitNum
-                                self.draw()
-                            for elem in UIBase.get_group('ui'):
-                                if isinstance(elem, UIBase.get_uiElem('GristCache')):
-                                    elem.save_cache()
-                            
-                if self.text == "":
-                    if self.job == 'traitName':
-                        for elem in UIBase.get_group('ui'):
-                            if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
-                                if elem.job == 't1Toggle' and elem.on == True: 
-                                    self.text = 'CUSTOM TRAIT 1'
-                                    self.no_hover()
-                                if elem.job == 't2Toggle' and elem.on == True: 
-                                    self.text = 'CUSTOM TRAIT 2'
-                                    self.no_hover()
-                                if elem.job == 't3Toggle' and elem.on == True: 
-                                    self.text = 'CUSTOM TRAIT 3'
-                                    self.no_hover()
-                                if elem.job == 't4Toggle' and elem.on == True: 
-                                    self.text = 'CUSTOM TRAIT 4'
-                                    self.no_hover()
-
-                    elif self.textType == 'Num':
-                        self.text = self.defultText
-                        self.draw()
-                        for elem in UIBase.get_group('ui'):
-                            if isinstance(elem, UIBase.get_uiElem('GristCache')):
-                                elem.save_cache()
-                    elif self.textType == 'Txt':
-                        self.text = self.defultText
                 self.exit_field()
                 return
 
-            elif event.key == pg.K_TAB:
-                if pg.time.get_ticks() - UIBase.prevTick >= 1:
-                    if self.job == 'nameOverlay':
-                        nextText = 'codeOverlay'
-                    elif self.job == 'codeOverlay':
-                        nextText = 'tierOverlay'
-                    elif self.job == 'tierOverlay':
-                        nextText = 'nameOverlay'
-
-                    for elem in UIBase.get_group('ui'):
-                        if isinstance(elem, UIBase.get_uiElem('TextField')):
-                            if elem.job == nextText:
-                                elem.on_click()
-                                elem.draw()
-                                self.exit_field()
-                                self.no_hover()
-                                UIBase.prevTick = pg.time.get_ticks()
-
             else:
-                if event.key != pg.K_RETURN and len(self.text) < self.maxChar:
-                    
+                if len(self.text) < self.maxChar:
                     self.text += event.unicode
 
-                    if len(self.job) > 6 and self.job[-6:] == 'NumBox':
-                        isNum = False
-                        for num in range(0,10):
-                            if len(self.text) > 0 and self.text[-1] == str(num):
-                                isNum = True
-                        if isNum == False:
-                            if len(self.text) > 0:
-                                self.text = self.text[:-1]
+            self.apperance.options = {'texts': [[self.text, self.textPostion, self.alginment, self.textColor]]}
+            self.apperance.reload_apperance()
 
-                    self.draw()
+    # def typeing(self, event):
+        
+    #     if self.active == True:
+    #         if event.key == pg.K_BACKSPACE:
+    #             self.text = self.text[:-1]
+    #             self.draw()
+
+    #         elif event.key == pg.K_RETURN:
+                
+    #             if len(self.text) > 1:
+    #                 if self.text[0] == '0':
+    #                     self.text = self.text[1:]
+
+    #             if len(self.job) > 6 and self.job[-6:] == 'NumBox':
+    #                 for elem in UIBase.get_group('ui'):
+    #                     if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
+    #                         if self.text > elem.limitNum:
+    #                             self.text = elem.limitNum
+    #                             self.draw()
+    #                         for elem in UIBase.get_group('ui'):
+    #                             if isinstance(elem, UIBase.get_uiElem('GristCache')):
+    #                                 elem.save_cache()
+                            
+    #             if self.text == "":
+    #                 if self.job == 'traitName':
+    #                     for elem in UIBase.get_group('ui'):
+    #                         if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
+    #                             if elem.job == 't1Toggle' and elem.on == True: 
+    #                                 self.text = 'CUSTOM TRAIT 1'
+    #                                 self.no_hover()
+    #                             if elem.job == 't2Toggle' and elem.on == True: 
+    #                                 self.text = 'CUSTOM TRAIT 2'
+    #                                 self.no_hover()
+    #                             if elem.job == 't3Toggle' and elem.on == True: 
+    #                                 self.text = 'CUSTOM TRAIT 3'
+    #                                 self.no_hover()
+    #                             if elem.job == 't4Toggle' and elem.on == True: 
+    #                                 self.text = 'CUSTOM TRAIT 4'
+    #                                 self.no_hover()
+
+    #                 elif self.textType == 'Num':
+    #                     self.text = self.defultText
+    #                     self.draw()
+    #                     for elem in UIBase.get_group('ui'):
+    #                         if isinstance(elem, UIBase.get_uiElem('GristCache')):
+    #                             elem.save_cache()
+    #                 elif self.textType == 'Txt':
+    #                     self.text = self.defultText
+    #             self.exit_field()
+    #             return
+
+    #         elif event.key == pg.K_TAB:
+    #             if pg.time.get_ticks() - UIBase.prevTick >= 1:
+    #                 if self.job == 'nameOverlay':
+    #                     nextText = 'codeOverlay'
+    #                 elif self.job == 'codeOverlay':
+    #                     nextText = 'tierOverlay'
+    #                 elif self.job == 'tierOverlay':
+    #                     nextText = 'nameOverlay'
+
+    #                 for elem in UIBase.get_group('ui'):
+    #                     if isinstance(elem, UIBase.get_uiElem('TextField')):
+    #                         if elem.job == nextText:
+    #                             elem.on_click()
+    #                             elem.draw()
+    #                             self.exit_field()
+    #                             self.no_hover()
+    #                             UIBase.prevTick = pg.time.get_ticks()
+
+    #         else:
+    #             if event.key != pg.K_RETURN and len(self.text) < self.maxChar:
+                    
+    #                 self.text += event.unicode
+
+    #                 if len(self.job) > 6 and self.job[-6:] == 'NumBox':
+    #                     isNum = False
+    #                     for num in range(0,10):
+    #                         if len(self.text) > 0 and self.text[-1] == str(num):
+    #                             isNum = True
+    #                     if isNum == False:
+    #                         if len(self.text) > 0:
+    #                             self.text = self.text[:-1]
+
+    #                 self.draw()
 
     def hover(self):
         if self.active == False:
-            self.image.fill(self.hoverColor)
-            self.txt_surface = self.font.render(self.text, True, self.textColor)
-            self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+            self.apperance.options = {'texts': [[self.text, [self.size[0]/2, self.size[1]/2], self.kargs['align'] if 'align' in self.kargs else 'center', self.textColor]]}
+            self.apperance.sizeColorPos = [[self.size, self.hoverColor, [0,0]]]
+            self.apperance.reload_apperance()
             self.hovering = True
 
     def no_hover(self):
         if self.active == False:
-            self.image.fill(self.baseColor)
-            self.txt_surface = self.font.render(self.text, True, self.textColor)
-            self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+            self.apperance.options = {'texts': [[self.text, [self.size[0]/2, self.size[1]/2], self.kargs['align'] if 'align' in self.kargs else 'center', self.textColor]]}
+            self.apperance.sizeColorPos = [[self.size, self.baseColor, [0,0]]]
+            self.apperance.reload_apperance()
             self.hovering = False
 
     def on_click(self):
         self.active = True
-        self.image.fill(self.selectedColor)
-        self.txt_surface = self.font.render(self.text, True, self.textColor)
-        self.image.blit(self.txt_surface, (self.rect.w/2-self.txt_surface.get_width()/2, self.rect.h/2-self.txt_surface.get_height()/2))
+        self.apperance.sizeColorPos = [[self.size, self.selectedColor, [0,0]]]
+        self.apperance.reload_apperance()
         
         

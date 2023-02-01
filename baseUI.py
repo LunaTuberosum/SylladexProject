@@ -19,27 +19,33 @@ class Apperance():
         }
     }
 
-    def __init__(self, obj: object, baseSize: tuple, *sizeColorPos: list, **options):
+    def __init__(self, obj: object, baseSize: list, *sizeColorPos: list, **kargs):
+
+        self.baseSize = baseSize
 
         self.obj = obj
-        self.obj.image = pg.Surface(baseSize)
+        self.obj.image = pg.Surface(self.baseSize)
         self.obj.image.fill('#D8DDFF')
 
         self.sizeColorPos = sizeColorPos
-        self.options = options
+        self.options = kargs
 
-        self.reload_apperance()
         self.obj.rect = self.obj.image.get_rect(topleft=self.obj.rect)
+        self.reload_apperance()
 
     def reload_apperance(self):
 
-        if 'colorKey' in self.options and self.options['colorKey'] == True: self.obj.image.set_colorkey('#D8DDFF')
+
+        self.obj.image = pg.Surface(self.baseSize)
+        self.obj.image.fill('#D8DDFF')
+
+        if 'colorKey' in self.options: self.obj.image.set_colorkey('#D8DDFF')
 
         for rect in self.sizeColorPos:
             newRect = pg.Surface(rect[0])
             if rect[1] == 'ModusBackground':
                 newRect.fill(Apperance.modusColor.get(UIBase.get_modus()).get('background'))
-            elif rect[1] == 'ModusForegorund':
+            elif rect[1] == 'ModusForeground':
                 newRect.fill(Apperance.modusColor.get(UIBase.get_modus()).get('foreground'))
             elif rect[1] == 'ModusAccent':
                 newRect.fill(Apperance.modusColor.get(UIBase.get_modus()).get('accent'))
@@ -55,19 +61,19 @@ class Apperance():
         
         if 'texts' in self.options:
             for text in self.options['texts']:
-                if len(text) == 4:
-                    _text = self.obj.font.render(text[0], True, text[3])
-                else:
-                    _text = self.obj.font.render(text[0], True, (0,0,0))
+
+                if len(text) == 5: self.obj.font = pg.font.Font(text[4][0], text[4][1])
+
+                _text = self.obj.font.render(text[0], True, text[3])
 
                 if text[2] == 'center':
                     self.obj.image.blit(_text, [text[1][0]-(_text.get_width()/2), (text[1][1]-(_text.get_height()/2))])
                 elif text[2] == 'left':
                     self.obj.image.blit(_text, [text[1][0], (text[1][1]-(_text.get_height()/2))])
 
-    def reload_image(self, image: str, pos: list):
-        _image = pg.image.load(image).convert_alpha()
-        self.obj.image.blit(_image, pos)
+    def change_image(self, image: str, pos: list):
+        self.options['image'] = [image, pos]
+        self.reload_apperance()
 
 class UIBase(pg.sprite.Sprite):
     modus = "STACK"
@@ -115,6 +121,12 @@ class UIBase(pg.sprite.Sprite):
                 return True
 
         return False
+
+    @classmethod
+    def find_curUI(cls, elem: str) -> object:
+        for _elem in UIBase.get_group('ui'):
+            if isinstance(_elem, UIBase.get_uiElem(elem)):
+                return _elem
 
     @classmethod
     def set_modus(cls, modus: str):

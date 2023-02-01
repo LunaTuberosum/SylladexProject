@@ -107,7 +107,6 @@ def main(screen, clock, UIBase):
                     for elem in UIBase.get_group('ui'):
                         if hasattr(elem, "active") and elem.active == True:
                             if hasattr(elem, "exit_field"):
-                                elem.draw()
                                 elem.exit_field()
                         if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
                             elem.on_click()
@@ -242,8 +241,8 @@ def main(screen, clock, UIBase):
                         UIBase.get_uiElem('EscapeMenu')()
                 else:
                     for elem in UIBase.get_group("ui"):
-                        if hasattr(elem, 'typeing'):
-                            elem.typeing(event)
+                        if isinstance(elem, UIBase.get_uiElem('TextField')):
+                            elem.typing(event)
 
         for card in BaseCard.cards:
             if card.rect.collidepoint(pg.mouse.get_pos()):

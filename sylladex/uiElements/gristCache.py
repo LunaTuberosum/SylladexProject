@@ -1,12 +1,14 @@
+from sqlite3 import DatabaseError
 import pygame as pg
 import pickle
 
 from baseUI import UIBase, Apperance
+from sylladex.uiElements.sideBar import SideBar
 
 
 class GristCache(UIBase):
-    def __init__(self, x):
-        super().__init__(x, 626, 'GristCache')
+    def __init__(self):
+        super().__init__(0, 626, 'GristCache')
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
 
@@ -20,7 +22,7 @@ class GristCache(UIBase):
 
         self.children = []
 
-        self.children.append(UIBase.get_uiElem('GristCacheLimit')(x))
+        self.children.append(UIBase.get_uiElem('GristCacheLimit')())
 
         for index, grist in enumerate(['Build', 'Shale', 'Ruby', 'Cobalt', 'Chalk', 'Marble', 'Iron', 'Amber', 'Caulk', 'Tar', 'Uranium', 'Amethyst', 'Garnet', 'Artifact', 'Zillium', 'Diamond']):
             if index < 4: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*index), 692, grist))
@@ -28,7 +30,15 @@ class GristCache(UIBase):
             elif index < 12: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-8)), 885, grist))
             elif index < 16: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-12)), 982, grist))
 
-        # self.load_list()
+        self.load_list()
+
+    def update(self):
+        if UIBase.check_forUI('SideBar') and self.rect != 326:
+            self.rect.x = 326
+            self.repositionChildren()
+        elif not UIBase.check_forUI('SideBar') and self.rect.x != 0:
+            self.rect.x = 0
+            self.repositionChildren()
 
     def save_cache(self):
         tempData = []
@@ -42,15 +52,23 @@ class GristCache(UIBase):
             pickle.dump(tempData, saveCache, -1)
 
     def load_list(self):
+
         with open('sylladex/uiElements/data/uiCache.plk', 'rb') as saveCache:
             tempData = pickle.load(saveCache)
 
         
         for index, data in enumerate(tempData):
             self.children[index+1].children[0].text = data
-            self.children[index+1].children[0].draw()
-            self.children[index+1].children[0].no_hover()
-    
+
+            self.children[index+1].children[0].apperance.options = {'texts': [[
+                self.children[index+1].children[0].text, 
+                self.children[index+1].children[0].textPostion, 
+                self.children[index+1].children[0].alginment, 
+                self.children[index+1].children[0].textColor]]
+                }
+            
+            self.children[index+1].children[0].apperance.reload_apperance()
+
     def repositionChildren(self):
 
         for index, child in enumerate(self.children):

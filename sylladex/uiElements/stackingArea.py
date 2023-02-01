@@ -9,7 +9,7 @@ class StackingArea(UIBase):
 
         self.apperance = Apperance(
             self,
-            (1920, 36),
+            [1920, 36],
             [[1920, 36], 'ModusBackground', [0,0]],
-            [[1920, 24], 'ModusForegorund', [0,0]]
+            [[1920, 24], 'ModusForeground', [0,0]]
             )
