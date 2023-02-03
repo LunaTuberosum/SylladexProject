@@ -5,7 +5,7 @@ from baseUI import UIBase, Apperance
 
 class GristCacheLimit(UIBase):
     def __init__(self):
-        super().__init__(212, 642, 'GristCacheLimit')
+        super().__init__(212, 642, 'GristCacheLimit', 0)
 
         self.limitNum = '20480'
 

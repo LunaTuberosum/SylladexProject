@@ -5,7 +5,7 @@ from baseUI import UIBase, Apperance
 class TextField(UIBase):
 
     def __init__(self, x: int, y: int, size: tuple, job: str, toolTipText: str, maxChar: int, **kargs):
-        super().__init__(x, y, f'TextField ({job})')
+        super().__init__(x, y, f'TextField ({job})', kargs['layerChange'] if 'layerChange' in kargs else 1)
 
         self.kargs = kargs
         self.size = size

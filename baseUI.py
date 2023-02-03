@@ -1,3 +1,4 @@
+import math
 import pygame as pg
 
 class Apperance():
@@ -57,6 +58,7 @@ class Apperance():
         
         if 'image' in self.options: 
             image = pg.image.load(self.options['image'][0]).convert_alpha()
+            if 'imageAlpha' in self.options: image.set_alpha(self.options['imageAlpha'])
             self.obj.image.blit(image, self.options['image'][1])
         
         if 'texts' in self.options:
@@ -89,18 +91,18 @@ class UIBase(pg.sprite.Sprite):
     DebugInspect = False
     Insepctors = []
 
-    prevTick = pg.time.get_ticks()
-
-    def __init__(self, x: int, y: int, objName: str):
+    def __init__(self, x: int, y: int, objName: str, startLayer: int = 2, **args):
         super().__init__()
         UIBase.add_toGroup(self)
-        UIBase.uiLayers.add(self)
-        UIBase.uiLayers.change_layer(self, 1)
+        UIBase.change_layer(self, startLayer)
 
         self.objName = objName
 
         self.rect = [x, y]
         self.apperance = None
+
+        self.clock = pg.time.Clock()
+        self.currentTick = 0
 
     @classmethod
     def add_current_UI(cls, uiArray: list):
@@ -108,7 +110,7 @@ class UIBase(pg.sprite.Sprite):
             cls.currentUI[f'{elem.__name__}'] = elem
 
     @classmethod
-    def get_uiElem(cls, elem: object) -> object:
+    def get_uiElem(cls, elem: str) -> object:
         try:
             return UIBase.currentUI.get(elem)
         except:
@@ -152,6 +154,10 @@ class UIBase(pg.sprite.Sprite):
         cls.get_group("layer").add(elem)
 
     @classmethod
+    def change_layer(cls, elem: object, newLayer: int):
+        cls.get_group('layer').change_layer(elem, newLayer)
+
+    @classmethod
     def remove_fromGroup(cls, elem: object):
         cls.get_group("ui").remove(elem)
         cls.get_group("layer").remove(elem)
@@ -161,3 +167,9 @@ class UIBase(pg.sprite.Sprite):
                 UIBase.remove_fromGroup(child)
 
         elem.kill()
+
+    def lerp(a: int, b: int, t: float):
+        if a < b:
+            return math.ceil( a + (b - a) * t)
+        elif a > b:
+            return math.floor( a + (b - a) * t)

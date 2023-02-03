@@ -33,7 +33,7 @@ from .uiElements.popUp import PopUp
 from .uiElements.removeCardButton import RemoveCardButton
 from .uiElements.scrollBar import ScrollBar
 from .uiElements.sideBar import SideBar
-from .uiElements.sidebarButton import SidebarButton
+from .uiElements.sidebarButton import SideBarButton
 from .uiElements.stackingArea import StackingArea
 from .uiElements.textField import TextField
 from .uiElements.toggleButton import ToggleButton
@@ -68,7 +68,7 @@ UIBase.add_current_UI([
     RemoveCardButton, 
     ScrollBar, 
     SideBar, 
-    SidebarButton, 
+    SideBarButton, 
     StackingArea, 
     TextField, 
     ToggleButton, 
@@ -82,7 +82,7 @@ def main(screen, clock, UIBase):
 
     UIBase.get_uiElem('StackingArea')()
     UIBase.get_uiElem('CenterObj')()
-    UIBase.get_uiElem('SidebarButton')()
+    UIBase.get_uiElem('SideBarButton')()
     UIBase.get_uiElem('GristCacheButton')()
     UIBase.get_uiElem('CustomSettingButton')()
     # BaseCard.load_cards()
@@ -120,10 +120,10 @@ def main(screen, clock, UIBase):
                                         if isinstance(elem, UIBase.get_uiElem('ListObject')):    
                                             elem.redraw_card((230,230,230))
 
-                            elif UIBase.get_uiElem('RemoveCardButton').eject == False:
-                                for elem in UIBase.get_group("ui"):
-                                    if isinstance(elem, UIBase.get_uiElem('ListObject')):    
-                                        elem.redraw_card((255,255,255))
+                            # elif UIBase.get_uiElem('RemoveCardButton').eject == False:
+                            #     for elem in UIBase.get_group("ui"):
+                            #         if isinstance(elem, UIBase.get_uiElem('ListObject')):    
+                            #             elem.redraw_card((255,255,255))
 
                     if moveCard == True:
                         for card in BaseCard.cards:
@@ -256,6 +256,8 @@ def main(screen, clock, UIBase):
             card.update()
 
         for elem in UIBase.get_group("ui"):
+            elem.currentTick += elem.clock.tick(30)
+
             if elem.rect.collidepoint(pg.mouse.get_pos()):
                 
                 if UIBase.DebugInspect == True:

@@ -27,12 +27,6 @@ class CustomSettingButton(UIBase):
         self.apperance.change_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12])
         self.hovering = False
 
-    def update(self):
-        if UIBase.check_forUI('SideBar') and self.rect != 326:
-            self.rect.x = 326
-        elif not UIBase.check_forUI('SideBar') and self.rect.x != 0:
-            self.rect.x = 0
-
     def on_click(self):
         if self.toolTipText == 'Open custom card code settings':
             self.rect.x = 342

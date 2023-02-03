@@ -5,7 +5,7 @@ from baseUI import UIBase, Apperance
 
 class GristInfoBox(UIBase):
     def __init__(self, x: int, y: int, grist: str):
-        super().__init__(x, y, 'GristInfoBox')
+        super().__init__(x, y, 'GristInfoBox', 0)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24, bold=True)
         self.grist = grist
@@ -34,6 +34,7 @@ class GristInfoBox(UIBase):
             f'{self.grist}NumBox', 
             f'Let\'s you alter how much {self.grist} grist you have', 
             5, 
+            layerChange=0,
             textColor=(67,178,222), 
             textType='Num',
             baseColors=[(239,239,239), (199,199,199), (179,179,179)],

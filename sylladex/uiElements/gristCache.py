@@ -7,8 +7,8 @@ from sylladex.uiElements.sideBar import SideBar
 
 
 class GristCache(UIBase):
-    def __init__(self):
-        super().__init__(0, 626, 'GristCache')
+    def __init__(self, x):
+        super().__init__(x, 626, 'GristCache', 0)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
 
@@ -32,13 +32,21 @@ class GristCache(UIBase):
 
         self.load_list()
 
+        if UIBase.check_forUI('SideBar'):
+            self.toBeRect = 326
+        else:
+            self.toBeRect = 0
+
     def update(self):
-        if UIBase.check_forUI('SideBar') and self.rect != 326:
-            self.rect.x = 326
+        
+        if self.toBeRect != self.rect.x:
+            self.rect.x = UIBase.lerp(self.rect.x, self.toBeRect, 0.2)
             self.repositionChildren()
-        elif not UIBase.check_forUI('SideBar') and self.rect.x != 0:
-            self.rect.x = 0
-            self.repositionChildren()
+            UIBase.find_curUI('GristCacheButton').rect.x = self.rect.right
+
+        else:
+            if self.toBeRect == -719 or self.toBeRect == -390:
+                UIBase.remove_fromGroup(self)
 
     def save_cache(self):
         tempData = []

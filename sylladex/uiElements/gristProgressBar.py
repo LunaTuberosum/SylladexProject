@@ -13,7 +13,7 @@ class GristProgressBar(UIBase):
                 self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
                 break
 
-        super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, f'GristProgressBar ({self.parent.grist})')
+        super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, f'GristProgressBar ({self.parent.grist})', 0)
 
         self.apperance = Apperance(
             self,

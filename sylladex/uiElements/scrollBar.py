@@ -1,6 +1,6 @@
 import pygame as pg
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 
 
 class ScrollBar(UIBase):
@@ -16,7 +16,13 @@ class ScrollBar(UIBase):
             else:
                 size = 0
 
-        super().__init__(273, 196, (23, size), 'ScrollBar', '#999999')
+        super().__init__(273, 196, 'ScrollBar')
+
+        self.apperance = Apperance(
+            self, 
+            [23, size],
+            [[23, size], '#999999', [0, 0]]
+        )
 
         self.rectTemp = self.rect.y
 

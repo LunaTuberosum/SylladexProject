@@ -5,7 +5,7 @@ from baseUI import UIBase, Apperance
 
 class StackingArea(UIBase):
     def __init__(self):
-        super().__init__(0, 0, 'StackingArea')
+        super().__init__(0, 0, 'StackingArea', -1)
 
         self.apperance = Apperance(
             self,

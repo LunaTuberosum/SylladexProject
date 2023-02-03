@@ -3,13 +3,13 @@ import pygame as pg
 from baseUI import UIBase,Apperance
 
 
-class SidebarButton(UIBase):
+class SideBarButton(UIBase):
     def __init__(self):
         super().__init__(0, 536,  'SideBarButton')
 
         self.apperance = Apperance(
             self,
-            (70,70),
+            [70,70],
             [[64, 64], 'ModusBackground', [0, 6]], 
             [[64, 64], 'ModusAccent', [6, 0]], 
             colorKey = True, 
@@ -22,12 +22,12 @@ class SidebarButton(UIBase):
         self.inactive = False
 
     def hover(self):
-        self.reload_image(True)
         self.hovering = True
+        self.reload_image()
 
     def no_hover(self):
-        self.reload_image(False)
         self.hovering = False
+        self.reload_image()
 
     def update(self):
         if UIBase.check_forUI('CustomSettingMenu'):
@@ -35,8 +35,8 @@ class SidebarButton(UIBase):
             return
         self.inactive = False
 
-    def reload_image(self, hover: bool):
-        if hover == False:
+    def reload_image(self):
+        if self.hovering == False:
             if self.toolTipText == 'Opens Side Bar':
                 self.apperance.change_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0])
             elif self.toolTipText == 'Closes Side Bar':
@@ -86,4 +86,6 @@ class SidebarButton(UIBase):
                 self.apperance.change_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0])
                 self.rect.x = 0
 
-                UIBase.remove_fromGroup(UIBase.find_curUI('SideBar'))
+                UIBase.find_curUI('SideBar').toBeRect = -326
+
+                if UIBase.check_forUI('GristCache'): UIBase.find_curUI('GristCache').toBeRect = 0

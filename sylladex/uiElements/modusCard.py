@@ -45,7 +45,7 @@ class ModusCard(UIBase):
             
             elem.apperance.reload_apperance()  
             if hasattr(elem, 'reload_image'):
-                elem.reload_image(False)
+                elem.reload_image()
 
     def hover(self):
         self.rect.y = 898

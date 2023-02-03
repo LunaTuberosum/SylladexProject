@@ -8,7 +8,7 @@ class ConsoleMessage(UIBase):
 
     def __init__(self, text):
 
-        super().__init__(pg.display.get_surface().get_width()-((len(text)*11.5)+25), pg.display.get_surface().get_height()-40, f'ConsoleMessage ({text})')
+        super().__init__(pg.display.get_surface().get_width()-((len(text)*11.5)+25), pg.display.get_surface().get_height()-40, f'ConsoleMessage ({text})', 99)
 
         self.font = pg.font.Font('sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf', 24)
 
@@ -25,11 +25,9 @@ class ConsoleMessage(UIBase):
 
         ConsoleMessage.consoleMessages.append(self)
 
-        self.prevTick = pg.time.get_ticks()
-
     def update(self):
-        if pg.time.get_ticks() - self.prevTick >= 1000:
-            self.kill()
+        if self.currentTick >= 1000:
+            UIBase.remove_fromGroup(self)
             ConsoleMessage.consoleMessages.remove(self)
             #Fade to the right
         

@@ -2,16 +2,22 @@
 import pygame as pg
 import pickle
 
-from baseUI import UIBase
+from baseUI import UIBase, Apperance
 from ..captchalogueCards.baseCard import BaseCard
 
 
 class CardList(UIBase):
     children = []
 
-    def __init__(self, x, y, size):
-        super().__init__(x, y, size, 'CardList', '#A4A4A4')
-        self.uiLayers.change_layer(self, -1)
+    def __init__(self):
+        super().__init__(24, 196, 'CardList', 1)
+        self.apperance = Apperance(
+            self,
+            [249, 649],
+            [[249, 649], '#A4A4A4', [0, 0]], 
+        )
+
+        self.start_list()
         
     def add_toList(self):
         self.children.append(UIBase.get_uiElem('ListObject')())
@@ -56,12 +62,7 @@ class CardList(UIBase):
             
             if card[0]:
                 obj.codeData = card[0]
-
-                for _card in BaseCard.get_cardGroup():
-                    if _card.codeData == obj.codeData:
-                        obj.captaCard = _card
-                        break
-                obj.redraw_card('#FFFFFF')
+                obj.redraw_card()
 
             obj.empty = card[1]
             self.children.append(obj)
@@ -69,24 +70,16 @@ class CardList(UIBase):
         for elem in UIBase.get_group('ui'):
             if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
                 elem.text = str(len(self.children))
-                elem.draw()
-                elem.no_hover()
+                elem.exit_field()
 
     def start_list(self):
         self.load_list()
-        for card in self.children:
-            UIBase.add_toGroup(card)
-            UIBase.uiLayers.change_layer(card, -1)
         self.place_list()
 
     def place_list(self):
         offset = 70
         for card in self.children:
             
+            card.rect.x = self.rect.x
             card.rect.y = 127 + offset
             offset += 70
-        for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                UIBase.remove_fromGroup(elem)
-                elem.kill()
-        UIBase.get_uiElem('ScrollBar')()
