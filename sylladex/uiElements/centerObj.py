@@ -13,18 +13,18 @@ class CenterObj(UIBase):
     def move_self(self, rel):
         self.rect.move_ip(rel)
 
-    def recenter(self):
-        offSetX = settings.SCREEN_WIDTH/2 - self.rect.x
-        offSetY = settings.SCREEN_HEIGHT/2 - self.rect.y
+    def re_center(self):
+        _off_set_x = settings.SCREEN_WIDTH/2 - self.rect.x
+        _off_set_y = settings.SCREEN_HEIGHT/2 - self.rect.y
 
-        if offSetX == 0 and offSetY == 0:
+        if _off_set_x == 0 and _off_set_y == 0:
             return
 
         self.rect.x = settings.SCREEN_WIDTH/2
         self.rect.y = settings.SCREEN_HEIGHT/2
 
         for card in BaseCard.get_cardGroup():
-            card.rect.x += offSetX
-            card.rect.y += offSetY
+            card.rect.x += _off_set_x
+            card.rect.y += _off_set_y
 
-        UIBase.get_uiElem('ConsoleMessage')('Centered stacking area')
+        UIBase.get_ui_elem('ConsoleMessage')('Centered stacking area')

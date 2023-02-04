@@ -5,15 +5,15 @@ from baseUI import UIBase
 
 
 class CardInspectorButton(UIBase):
-    def __init__(self, cInspect):
-        super().__init__(cInspect.rect.x-70, cInspect.rect.y+((cInspect.rect.h/2)-35), (70,70), 'CardInspectorButton', (0,0,0))
+    def __init__(self, current_inspect):
+        super().__init__(current_inspect.rect.x-70, current_inspect.rect.y+((current_inspect.rect.h/2)-35), (70,70), 'CardInspectorButton', (0,0,0))
 
         self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
 
-        self.toolTipText = 'Closes Card Inspector'
+        self.tool_tip_text = 'Closes Card Inspector'
         self.hovering = False
 
-        self.cInspect = cInspect
+        self.current_inspect = current_inspect
 
     def hover(self):
         self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER.png', [6, 0])
@@ -24,9 +24,8 @@ class CardInspectorButton(UIBase):
         self.hovering = False
 
     def on_click(self):
-        UIBase.remove_fromGroup(self.cInspect)
-        self.cInspect.kill()
-        for child in self.cInspect.children:
-            UIBase.remove_fromGroup(child)
-            child.kill()
-        UIBase.get_uiElem('CardInspectorCheck').checks = []
+        UIBase.remove_from_group(self.current_inspect)
+        self.current_inspect.kill()
+        for child in self.current_inspect.children:
+            UIBase.remove_from_group(child)
+        UIBase.get_ui_elem('CardInspectorCheck').__checks = []

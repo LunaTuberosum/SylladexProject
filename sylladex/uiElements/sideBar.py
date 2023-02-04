@@ -29,9 +29,9 @@ class SideBar(UIBase):
                 ['FETCH MODUS', [21, 871], 'left', '#FFFFFF']])
 
         self.children = [
-            UIBase.get_uiElem('AddCardButton')(),
-            UIBase.get_uiElem('RemoveCardButton')(),
-            UIBase.get_uiElem('TextField')(
+            UIBase.get_ui_elem('AddCardButton')(),
+            UIBase.get_ui_elem('RemoveCardButton')(),
+            UIBase.get_ui_elem('TextField')(
                 242, 142, 
                 [53, 48], 
                 "numOfCards", 
@@ -43,22 +43,26 @@ class SideBar(UIBase):
                 fontSize=24,
                 ),
 
-            UIBase.get_uiElem('CardList')(),
-            UIBase.get_uiElem('ScrollBar')(),
+            UIBase.get_ui_elem('CardList')(),
+            UIBase.get_ui_elem('ScrollBar')(),
 
-            UIBase.get_uiElem('ModusCard')(33, 910, "STACK"),
-            UIBase.get_uiElem('ModusCard')(121, 910, "QUEUE"),
-            UIBase.get_uiElem('ModusCard')(209, 910, "TREE"),
+            UIBase.get_ui_elem('ModusCard')(33, "STACK"),
+            UIBase.get_ui_elem('ModusCard')(121, "QUEUE"),
+            UIBase.get_ui_elem('ModusCard')(209, "TREE"),
         ]
 
-        if UIBase.check_forUI('GristCache'): UIBase.find_curUI('GristCache').toBeRect = 326
+        if UIBase.check_for_ui('GristCache'): 
+            if UIBase.find_cur_ui('GristCache').to_be_rect != -719: 
+                UIBase.find_cur_ui('GristCache').to_be_rect = 326
+            else:
+                UIBase.find_cur_ui('GristCache').to_be_rect = -392
 
-        self.toBeRect = 0
+        self.to_be_rect = 0
 
     def update(self):
-        if self.rect.x != self.toBeRect:
+        if self.rect.x != self.to_be_rect:
 
-            self.rect.x = UIBase.lerp(self.rect.x, self.toBeRect, 0.2)
+            self.rect.x = UIBase.lerp(self.rect.x, self.to_be_rect, 0.2)
 
             self.children[0].rect.x = self.rect.x + 30
             self.children[1].rect.x = self.rect.x + 112
@@ -70,13 +74,10 @@ class SideBar(UIBase):
             self.children[6].rect.x = self.rect.x + 121
             self.children[7].rect.x = self.rect.x + 209
 
-            if not UIBase.find_curUI('GristCache'):
-                UIBase.find_curUI('GristCacheButton').rect.x = self.rect.right
-            UIBase.find_curUI('SideBarButton').rect.x = self.rect.right
-            UIBase.find_curUI('CustomSettingButton').rect.x = self.rect.right
+            if not UIBase.find_cur_ui('GristCache'):
+                UIBase.find_cur_ui('GristCacheButton').rect.x = self.rect.right
+            UIBase.find_cur_ui('SideBarButton').rect.x = self.rect.right
+            UIBase.find_cur_ui('CustomSettingButton').rect.x = self.rect.right
         else:
-            if self.toBeRect == -326:
-                UIBase.remove_fromGroup(self)
-
-    def reloadSelf(self):
-        self.apperance.reload_apperance()
+            if self.to_be_rect == -326:
+                UIBase.remove_from_group(self)

@@ -15,7 +15,7 @@ class AddCardButton(UIBase):
             image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0]]
             )
 
-        self.toolTipText = "Captchalogue a Card to your Sylladex" 
+        self.tool_tip_text = "Captchalogue a Card to your Sylladex" 
         self.hovering = False
         
     def reload_image(self):

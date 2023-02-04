@@ -5,13 +5,13 @@ import settings
 from sylladex.captchalogueCards import codeDatabase
 
 class CardInspector(UIBase):
-    def __init__(self, codeData):
+    def __init__(self, code_data):
         super().__init__(settings.SCREEN_WIDTH-343, settings.SCREEN_HEIGHT / 2 - 219.5, (343, 447), 'CardInspector', (209,158,255))
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
-        self.codeData = codeData
-        self.prevDescType = 'None'
+        self.code_data = code_data
+        self.prev_desc_type = 'None'
         UIBase.get_group('layer').change_layer(self, 3)
 
         self.create_appearance(
@@ -23,29 +23,29 @@ class CardInspector(UIBase):
             
             texts = [
                 ["NAME", [36, 47], "center"],
-                [self.codeData.name, [65, 47], "left"], 
-                [codeDatabase.get_weaponType(self.codeData.kind), [278, 83], "center"], 
+                [self.code_data.name, [65, 47], "left"], 
+                [codeDatabase.get_weaponkind_type(self.code_data.kind), [278, 83], "center"], 
                 ["TRAIT 1", [46, 83], "center"], 
-                [self.codeData.trait1, [110, 83], 'left'],
+                [self.code_data.trait_1, [110, 83], 'left'],
                 ["TRAIT 2", [46, 108], "center"], 
-                [self.codeData.trait2, [110, 108], 'left'],
+                [self.code_data.trait_2, [110, 108], 'left'],
                 ["ITEMKIND", [52, 133], "center"], 
-                [self.codeData.kind, [121, 133], 'left'],
+                [self.code_data.kind, [121, 133], 'left'],
                 ['GRIST TYPE', [64, 158], 'center'], 
-                [self.codeData.grist, [146, 158], 'left'],
+                [self.code_data.grist, [146, 158], 'left'],
                 ['EFFECTIVE', [68, 183], 'center'], 
                 ['INEFFECTIVE', [68, 208], 'center'], 
                 ['INSPECT INFORMATION', [159, 304], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, '1'), [283, 120], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, '2'), [283, 145], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, '3'), [283, 170], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, 'BD'), [283, 195], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, '1'), [283, 120], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, '2'), [283, 145], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, '3'), [283, 170], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, 'BD'), [283, 195], 'center'], 
                 ['CST', [30, 331], 'center'], 
                 ['DMG', [30, 361], 'center'], 
                 ['CODE', [79, 399], 'center'], 
-                [self.codeData.code, [151, 399], "center"],
+                [self.code_data.code, [151, 399], "center"],
                 ['TIER', [223, 399], 'center'], 
-                [self.codeData.tier, [265, 399], "center"],
+                [self.code_data.tier, [265, 399], "center"],
                 ['1', [247, 120], 'center'], 
                 ['2', [247, 146], 'center'], 
                 ['3', [247, 170], 'center'], 
@@ -57,166 +57,166 @@ class CardInspector(UIBase):
             )
 
         self.children = [
-            UIBase.get_uiElem('CardInspectorButton')(self),
-            UIBase.get_uiElem('CardInspectorCheck')(self.rect.x+81, self.rect.y+71, 'Trait1'),
-            UIBase.get_uiElem('CardInspectorCheck')(self.rect.x+81, self.rect.y+96, 'Trait2'),
-            UIBase.get_uiElem('CardInspectorCheck')(self.rect.x+27, self.rect.y+232, 'Action1'),
-            UIBase.get_uiElem('CardInspectorCheck')(self.rect.x+27, self.rect.y+257, 'Action2'),
-            UIBase.get_uiElem('CardInspectorCheck')(self.rect.x+159, self.rect.y+232, 'Action3'),
-            UIBase.get_uiElem('CardInspectorCheck')(self.rect.x+159, self.rect.y+257, 'Action4'),
+            UIBase.get_ui_elem('CardInspectorButton')(self),
+            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+71, 'Trait1'),
+            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+96, 'Trait2'),
+            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+232, 'Action1'),
+            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+257, 'Action2'),
+            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+232, 'Action3'),
+            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+257, 'Action4'),
         ]
 
-        codeDatabase.get_actionImage(self.codeData.action1, self, [51, 232])
-        codeDatabase.get_actionImage(self.codeData.action2, self, [51, 257])
-        codeDatabase.get_actionImage(self.codeData.action3, self, [183, 232])
-        codeDatabase.get_actionImage(self.codeData.action4, self, [183, 257])
+        codeDatabase.get_action_image(self.code_data.action_1, self, [51, 232])
+        codeDatabase.get_action_image(self.code_data.action_2, self, [51, 257])
+        codeDatabase.get_action_image(self.code_data.action_3, self, [183, 232])
+        codeDatabase.get_action_image(self.code_data.action_4, self, [183, 257])
 
-        kindIcon = pg.image.load(codeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
-        kindIcon = pg.transform.scale(kindIcon, [24, 24])
-        self.image.blit(kindIcon, [92, 121])
+        _kind_icon = pg.image.load(codeDatabase.find_kind_image(self.code_data.kind)).convert_alpha()
+        _kind_icon = pg.transform.scale(_kind_icon, [24, 24])
+        self.image.blit(_kind_icon, [92, 121])
 
-        gristIcon = pg.image.load(codeDatabase.find_gristImage(self.codeData.grist)).convert_alpha()
-        gristIcon = pg.transform.scale(gristIcon, [24, 24])
-        self.image.blit(gristIcon, [116, 146])
+        _grist_icon = pg.image.load(codeDatabase.find_grist_image(self.code_data.grist)).convert_alpha()
+        _grist_icon = pg.transform.scale(_grist_icon, [24, 24])
+        self.image.blit(_grist_icon, [116, 146])
 
-        for index, eff in enumerate(codeDatabase.gristData.get(self.codeData.grist).get('Effective')):
-            effIcon = pg.image.load(codeDatabase.find_gristImage(eff)).convert_alpha()
-            effIcon = pg.transform.scale(effIcon, [24, 24])
-            self.image.blit(effIcon, [124+(25*index), 171])
+        for _index, _eff in enumerate(codeDatabase.gristData.get(self.code_data.grist).get('Effective')):
+            _eff_icon = pg.image.load(codeDatabase.find_grist_image(_eff)).convert_alpha()
+            _eff_icon = pg.transform.scale(_eff_icon, [24, 24])
+            self.image.blit(_eff_icon, [124+(25*_index), 171])
 
-        for index, dis in enumerate(codeDatabase.gristData.get(self.codeData.grist).get('Diseffective')):
-            disIcon = pg.image.load(codeDatabase.find_gristImage(dis)).convert_alpha()
-            disIcon = pg.transform.scale(disIcon, [24, 24])
-            self.image.blit(disIcon, [124+(25*index), 197])
+        for _index, _diseff in enumerate(codeDatabase.gristData.get(self.code_data.grist).get('Diseffective')):
+            _diseff_icon = pg.image.load(codeDatabase.find_grist_image(_diseff)).convert_alpha()
+            _diseff_icon = pg.transform.scale(_diseff_icon, [24, 24])
+            self.image.blit(_diseff_icon, [124+(25*_index), 197])
 
     def update(self):
-        for check in UIBase.get_uiElem('CardInspectorCheck').checks:
-            if check.selected == True:
-                if check.job == 'Trait1' and self.prevDescType != 'Trait1':
-                    self.prevDescType = 'Trait1'
-                    traitDesc = codeDatabase.get_trat1Data(self.codeData.trait1, self.codeData.kind, int(self.codeData.tier)).split(' ')
-                    lines = ['']
+        for _check in UIBase.get_ui_elem('CardInspectorCheck').checks:
+            if _check.selected == True:
+                if _check.job == 'Trait1' and self.prev_desc_type != 'Trait1':
+                    self.prev_desc_type = 'Trait1'
+                    _trait_desc = codeDatabase.get_trat_1_data(self.code_data.trait_1, self.code_data.kind, int(self.code_data.tier)).split(' ')
+                    _lines = ['']
 
-                    wordMax = 0
-                    curLine = 0
-                    for word in traitDesc:
-                        if wordMax + len(word) < 28:
-                            wordMax += len(word) + 1
-                            lines[curLine] += f'{word} '
+                    _word_max = 0
+                    _cur_line = 0
+                    for _word in _trait_desc:
+                        if _word_max + len(_word) < 28:
+                            _word_max += len(_word) + 1
+                            _lines[_cur_line] += f'{_word} '
                         else:
-                            wordMax = len(word) + 1
-                            lines.append(f'{word}')
-                            curLine += 1
+                            _word_max = len(_word) + 1
+                            _lines.append(f'{_word}')
+                            _cur_line += 1
                     
-                    self.change_desc(lines, len(lines))
+                    self.change_desc(_lines, len(_lines))
 
-                elif check.job == 'Trait2' and self.prevDescType != 'Trait2':
-                    self.prevDescType = 'Trait2'
-                    traitDesc = codeDatabase.get_trat2Data(self.codeData.trait2, self.codeData.kind, int(self.codeData.tier)).split(' ')
-                    lines = ['']
+                elif _check.job == 'Trait2' and self.prev_desc_type != 'Trait2':
+                    self.prev_desc_type = 'Trait2'
+                    _trait_desc = codeDatabase.get_trat_2_data(self.code_data.trait_2, self.code_data.kind, int(self.code_data.tier)).split(' ')
+                    _lines = ['']
 
 
-                    wordMax = 0
-                    curLine = 0
-                    for word in traitDesc:
-                        if wordMax + len(word) < 28:
-                            wordMax += len(word) + 1
-                            lines[curLine] += f'{word} '
+                    _word_max = 0
+                    _cur_line = 0
+                    for _word in _trait_desc:
+                        if _word_max + len(_word) < 28:
+                            _word_max += len(_word) + 1
+                            _lines[_cur_line] += f'{_word} '
                         else:
-                            wordMax = len(word) + 1
-                            lines.append(f'{word} ')
-                            curLine += 1
+                            _word_max = len(_word) + 1
+                            _lines.append(f'{_word} ')
+                            _cur_line += 1
 
-                    self.change_desc(lines, len(lines))
+                    self.change_desc(_lines, len(_lines))
 
-                elif check.job == 'Action1' and self.prevDescType != 'Action1':
-                    self.prevDescType = 'Action1'
-                    actionInfo = codeDatabase.get_actionInfo(self.codeData.action1)
+                elif _check.job == 'Action1' and self.prev_desc_type != 'Action1':
+                    self.prev_desc_type = 'Action1'
+                    _action_info = codeDatabase.get_action_info(self.code_data.action_1)
 
-                    lines = ['']
+                    _lines = ['']
 
 
-                    wordMax = 0
-                    curLine = 0
-                    for word in actionInfo[2].split(' '):
-                        if wordMax + len(word) < 28:
-                            wordMax += len(word) + 1
-                            lines[curLine] += f'{word} '
+                    _word_max = 0
+                    _cur_line = 0
+                    for _word in _action_info[2].split(' '):
+                        if _word_max + len(_word) < 28:
+                            _word_max += len(_word) + 1
+                            _lines[_cur_line] += f'{_word} '
                         else:
-                            wordMax = len(word) + 1
-                            lines.append(f'{word} ')
-                            curLine += 1
+                            _word_max = len(_word) + 1
+                            _lines.append(f'{_word} ')
+                            _cur_line += 1
 
-                    self.change_desc(lines, len(lines), True, actionInfo)
+                    self.change_desc(_lines, len(_lines), True, _action_info)
 
-                elif check.job == 'Action2' and self.prevDescType != 'Action2':
-                    self.prevDescType = 'Action2'
-                    actionInfo = codeDatabase.get_actionInfo(self.codeData.action2)
+                elif _check.job == 'Action2' and self.prev_desc_type != 'Action2':
+                    self.prev_desc_type = 'Action2'
+                    _action_info = codeDatabase.get_action_info(self.code_data.action_2)
 
-                    lines = ['']
+                    _lines = ['']
 
 
-                    wordMax = 0
-                    curLine = 0
-                    for word in actionInfo[2].split(' '):
-                        if wordMax + len(word) < 28:
-                            wordMax += len(word) + 1
-                            lines[curLine] += f'{word} '
+                    _word_max = 0
+                    _cur_line = 0
+                    for _word in _action_info[2].split(' '):
+                        if _word_max + len(_word) < 28:
+                            _word_max += len(_word) + 1
+                            _lines[_cur_line] += f'{_word} '
                         else:
-                            wordMax = len(word) + 1
-                            lines.append(f'{word} ')
-                            curLine += 1
+                            _word_max = len(_word) + 1
+                            _lines.append(f'{_word} ')
+                            _cur_line += 1
 
-                    print(lines)
+                    print(_lines)
 
-                    self.change_desc(lines, len(lines), True, actionInfo)
+                    self.change_desc(_lines, len(_lines), True, _action_info)
 
-                elif check.job == 'Action3' and self.prevDescType != 'Action3':
-                    self.prevDescType = 'Action3'
-                    actionInfo = codeDatabase.get_actionInfo(self.codeData.action3)
+                elif _check.job == 'Action3' and self.prev_desc_type != 'Action3':
+                    self.prev_desc_type = 'Action3'
+                    _action_info = codeDatabase.get_action_info(self.code_data.action_3)
 
-                    lines = ['']
+                    _lines = ['']
 
 
-                    wordMax = 0
-                    curLine = 0
-                    for word in actionInfo[2].split(' '):
-                        if wordMax + len(word) < 28:
-                            wordMax += len(word) + 1
-                            lines[curLine] += f'{word} '
+                    _word_max = 0
+                    _cur_line = 0
+                    for _word in _action_info[2].split(' '):
+                        if _word_max + len(_word) < 28:
+                            _word_max += len(_word) + 1
+                            _lines[_cur_line] += f'{_word} '
                         else:
-                            wordMax = len(word) + 1
-                            lines.append(f'{word} ')
-                            curLine += 1
+                            _word_max = len(_word) + 1
+                            _lines.append(f'{_word} ')
+                            _cur_line += 1
 
-                    self.change_desc(lines, len(lines), True, actionInfo)
+                    self.change_desc(_lines, len(_lines), True, _action_info)
 
-                elif check.job == 'Action4' and self.prevDescType != 'Action4':
-                    self.prevDescType = 'Action4'
-                    actionInfo = codeDatabase.get_actionInfo(self.codeData.action4)
+                elif _check.job == 'Action4' and self.prev_desc_type != 'Action4':
+                    self.prev_desc_type = 'Action4'
+                    _action_info = codeDatabase.get_action_info(self.code_data.action_4)
 
-                    lines = ['']
+                    _lines = ['']
 
 
-                    wordMax = 0
-                    curLine = 0
-                    for word in actionInfo[2].split(' '):
-                        if wordMax + len(word) < 28:
-                            wordMax += len(word) + 1
-                            lines[curLine] += f'{word} '
+                    _word_max = 0
+                    _cur_line = 0
+                    for _word in _action_info[2].split(' '):
+                        if _word_max + len(_word) < 28:
+                            _word_max += len(_word) + 1
+                            _lines[_cur_line] += f'{_word} '
                         else:
-                            wordMax = len(word) + 1
-                            lines.append(f'{word} ')
-                            curLine += 1
+                            _word_max = len(_word) + 1
+                            _lines.append(f'{_word} ')
+                            _cur_line += 1
 
-                    self.change_desc(lines, len(lines), True, actionInfo)
+                    self.change_desc(_lines, len(_lines), True, _action_info)
                 return
 
-        if self.prevDescType != 'None':
+        if self.prev_desc_type != 'None':
             self.change_desc('/', 1)
-            self.prevDescType = 'None'
+            self.prev_desc_type = 'None'
 
-    def change_desc(self, new_desc, lineCount, isAction = False, actionData = None):
+    def change_desc(self, new_desc, line_count, is_action = False, action_data = None):
         self.create_appearance(
             colorKey = True, 
             
@@ -226,29 +226,29 @@ class CardInspector(UIBase):
             
             texts = [
                 ["NAME", [36, 47], "center"],
-                [self.codeData.name, [65, 47], "left"], 
-                [codeDatabase.get_weaponType(self.codeData.kind), [278, 83], "center"], 
+                [self.code_data.name, [65, 47], "left"], 
+                [codeDatabase.get_weaponkind_type(self.code_data.kind), [278, 83], "center"], 
                 ["TRAIT 1", [46, 83], "center"], 
-                [self.codeData.trait1, [110, 83], 'left'],
+                [self.code_data.trait_1, [110, 83], 'left'],
                 ["TRAIT 2", [46, 108], "center"], 
-                [self.codeData.trait2, [110, 108], 'left'],
+                [self.code_data.trait_2, [110, 108], 'left'],
                 ["ITEMKIND", [52, 133], "center"], 
-                [self.codeData.kind, [121, 133], 'left'],
+                [self.code_data.kind, [121, 133], 'left'],
                 ['GRIST TYPE', [64, 158], 'center'], 
-                [self.codeData.grist, [146, 158], 'left'],
+                [self.code_data.grist, [146, 158], 'left'],
                 ['EFFECTIVE', [68, 183], 'center'], 
                 ['INEFFECTIVE', [68, 208], 'center'], 
                 ['INSPECT INFORMATION', [159, 304], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, '1'), [283, 120], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, '2'), [283, 145], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, '3'), [283, 170], 'center'], 
-                [codeDatabase.get_damageNumValue(self.codeData.tier, 'BD'), [283, 195], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, '1'), [283, 120], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, '2'), [283, 145], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, '3'), [283, 170], 'center'], 
+                [codeDatabase.get_tier_damage_num(self.code_data.tier, 'BD'), [283, 195], 'center'], 
                 ['CST', [30, 331], 'center'], 
                 ['DMG', [30, 361], 'center'], 
                 ['CODE', [79, 399], 'center'], 
-                [self.codeData.code, [151, 399], "center"],
+                [self.code_data.code, [151, 399], "center"],
                 ['TIER', [223, 399], 'center'], 
-                [self.codeData.tier, [265, 399], "center"],
+                [self.code_data.tier, [265, 399], "center"],
                 ['1', [247, 120], 'center'], 
                 ['2', [247, 146], 'center'], 
                 ['3', [247, 170], 'center'], 
@@ -256,61 +256,61 @@ class CardInspector(UIBase):
                 ]
             )
 
-        if isAction == False:
+        if is_action == False:
             self.create_appearance(texts = [
                 ['/', [60, 331], 'center'],
                 ['/', [60, 361], 'center']])
         else:
             self.create_appearance(texts = [
-                [actionData[0], [60, 331], 'center'],
-                [actionData[1], [60, 361], 'center']])
+                [action_data[0], [60, 331], 'center'],
+                [action_data[1], [60, 361], 'center']])
 
         
-        if lineCount == 1:
+        if line_count == 1:
             self.create_appearance(texts = [[new_desc[0], [192, 346], 'center']])
         
-        elif lineCount == 2:
+        elif line_count == 2:
             self.create_appearance(texts = [[new_desc[0], [192, 337], 'center']])
             self.create_appearance(texts = [[new_desc[1], [192, 355], 'center']])
         
-        elif lineCount == 3:
+        elif line_count == 3:
             self.create_appearance(texts = [[new_desc[0], [192, 328], 'center']])
             self.create_appearance(texts = [[new_desc[1], [192, 346], 'center']])
             self.create_appearance(texts = [[new_desc[2], [192, 364], 'center']])
         
-        elif lineCount == 4:
+        elif line_count == 4:
             self.create_appearance(texts = [[new_desc[0], [192, 326], 'center']])
             self.create_appearance(texts = [[new_desc[1], [192, 342], 'center']])
             self.create_appearance(texts = [[new_desc[2], [192, 355], 'center']])
             self.create_appearance(texts = [[new_desc[3], [192, 368], 'center']])
 
-        for child in self.children:
-            if isinstance(child, UIBase.get_uiElem('ActionIcon')):
-                noAction = True
+        for _child in self.children:
+            if isinstance(_child, UIBase.get_ui_elem('ActionIcon')):
+                _no_action = True
                 break
             else:
-                noAction = False
+                _no_action = False
 
-        if noAction == False:
-            codeDatabase.get_actionImage(self.codeData.action1, self, [51, 232])
-            codeDatabase.get_actionImage(self.codeData.action2, self, [51, 257])
-            codeDatabase.get_actionImage(self.codeData.action3, self, [183, 232])
-            codeDatabase.get_actionImage(self.codeData.action4, self, [183, 257])
+        if _no_action == False:
+            codeDatabase.get_action_image(self.code_data.action_1, self, [51, 232])
+            codeDatabase.get_action_image(self.code_data.action_2, self, [51, 257])
+            codeDatabase.get_action_image(self.code_data.action_3, self, [183, 232])
+            codeDatabase.get_action_image(self.code_data.action_4, self, [183, 257])
 
-        kindIcon = pg.image.load(codeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
-        kindIcon = pg.transform.scale(kindIcon, [24, 24])
-        self.image.blit(kindIcon, [92, 121])
+        _kind_icon = pg.image.load(codeDatabase.find_kind_image(self.code_data.kind)).convert_alpha()
+        _kind_icon = pg.transform.scale(_kind_icon, [24, 24])
+        self.image.blit(_kind_icon, [92, 121])
 
-        gristIcon = pg.image.load(codeDatabase.find_gristImage(self.codeData.grist)).convert_alpha()
-        gristIcon = pg.transform.scale(gristIcon, [24, 24])
-        self.image.blit(gristIcon, [116, 146])
+        _grist_icon = pg.image.load(codeDatabase.find_grist_image(self.code_data.grist)).convert_alpha()
+        _grist_icon = pg.transform.scale(_grist_icon, [24, 24])
+        self.image.blit(_grist_icon, [116, 146])
 
-        for index, eff in enumerate(codeDatabase.gristData.get(self.codeData.grist).get('Effective')):
-            effIcon = pg.image.load(codeDatabase.find_gristImage(eff)).convert_alpha()
-            effIcon = pg.transform.scale(effIcon, [24, 24])
-            self.image.blit(effIcon, [124+(25*index), 171])
+        for _index, _eff in enumerate(codeDatabase.gristData.get(self.code_data.grist).get('Effective')):
+            _eff_icon = pg.image.load(codeDatabase.find_grist_image(_eff)).convert_alpha()
+            _eff_icon = pg.transform.scale(_eff_icon, [24, 24])
+            self.image.blit(_eff_icon, [124+(25*_index), 171])
 
-        for index, dis in enumerate(codeDatabase.gristData.get(self.codeData.grist).get('Diseffective')):
-            disIcon = pg.image.load(codeDatabase.find_gristImage(dis)).convert_alpha()
-            disIcon = pg.transform.scale(disIcon, [24, 24])
-            self.image.blit(disIcon, [124+(25*index), 196])
+        for _index, _diseff in enumerate(codeDatabase.gristData.get(self.code_data.grist).get('Diseffective')):
+            _diseff_icon = pg.image.load(codeDatabase.find_grist_image(_diseff)).convert_alpha()
+            _diseff_icon = pg.transform.scale(_diseff_icon, [24, 24])
+            self.image.blit(_diseff_icon, [124+(25*_index), 196])

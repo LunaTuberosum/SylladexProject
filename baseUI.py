@@ -2,7 +2,7 @@ import math
 import pygame as pg
 
 class Apperance():
-    modusColor = {
+    __modus_color = {
         'STACK': {
             'background': '#9B2448',
             'foreground' : '#FF00DC',
@@ -20,15 +20,15 @@ class Apperance():
         }
     }
 
-    def __init__(self, obj: object, baseSize: list, *sizeColorPos: list, **kargs):
+    def __init__(self, obj: object, base_size: list, *size_color_pos: list, **kargs):
 
-        self.baseSize = baseSize
+        self.base_size = base_size
 
         self.obj = obj
-        self.obj.image = pg.Surface(self.baseSize)
+        self.obj.image = pg.Surface(self.base_size)
         self.obj.image.fill('#D8DDFF')
 
-        self.sizeColorPos = sizeColorPos
+        self.size_color_pos = size_color_pos
         self.options = kargs
 
         self.obj.rect = self.obj.image.get_rect(topleft=self.obj.rect)
@@ -37,52 +37,52 @@ class Apperance():
     def reload_apperance(self):
 
 
-        self.obj.image = pg.Surface(self.baseSize)
+        self.obj.image = pg.Surface(self.base_size)
         self.obj.image.fill('#D8DDFF')
 
         if 'colorKey' in self.options: self.obj.image.set_colorkey('#D8DDFF')
 
-        for rect in self.sizeColorPos:
-            newRect = pg.Surface(rect[0])
-            if rect[1] == 'ModusBackground':
-                newRect.fill(Apperance.modusColor.get(UIBase.get_modus()).get('background'))
-            elif rect[1] == 'ModusForeground':
-                newRect.fill(Apperance.modusColor.get(UIBase.get_modus()).get('foreground'))
-            elif rect[1] == 'ModusAccent':
-                newRect.fill(Apperance.modusColor.get(UIBase.get_modus()).get('accent'))
+        for _rect in self.size_color_pos:
+            _rect_ = pg.Surface(_rect[0])
+            if _rect[1] == 'ModusBackground':
+                _rect_.fill(Apperance.__modus_color.get(UIBase.get_modus()).get('background'))
+            elif _rect[1] == 'ModusForeground':
+                _rect_.fill(Apperance.__modus_color.get(UIBase.get_modus()).get('foreground'))
+            elif _rect[1] == 'ModusAccent':
+                _rect_.fill(Apperance.__modus_color.get(UIBase.get_modus()).get('accent'))
             else:
-                newRect.fill(rect[1])
-            self.obj.image.blit(newRect, rect[2])
+                _rect_.fill(_rect[1])
+            self.obj.image.blit(_rect_, _rect[2])
 
         if 'alpha' in self.options: self.obj.image.set_alpha(self.options['alpha'])
         
         if 'image' in self.options: 
-            image = pg.image.load(self.options['image'][0]).convert_alpha()
-            if 'imageAlpha' in self.options: image.set_alpha(self.options['imageAlpha'])
-            self.obj.image.blit(image, self.options['image'][1])
+            _image = pg.image.load(self.options['image'][0]).convert_alpha()
+            if 'imageAlpha' in self.options: _image.set_alpha(self.options['imageAlpha'])
+            self.obj.image.blit(_image, self.options['image'][1])
         
         if 'texts' in self.options:
-            for text in self.options['texts']:
+            for _text in self.options['texts']:
 
-                if len(text) == 5: self.obj.font = pg.font.Font(text[4][0], text[4][1])
+                if len(_text) == 5: self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
 
-                _text = self.obj.font.render(text[0], True, text[3])
+                _text_ = self.obj.font.render(_text[0], True, _text[3])
 
-                if text[2] == 'center':
-                    self.obj.image.blit(_text, [text[1][0]-(_text.get_width()/2), (text[1][1]-(_text.get_height()/2))])
-                elif text[2] == 'left':
-                    self.obj.image.blit(_text, [text[1][0], (text[1][1]-(_text.get_height()/2))])
+                if _text[2] == 'center':
+                    self.obj.image.blit(_text_, [_text[1][0]-(_text_.get_width()/2), (_text[1][1]-(_text_.get_height()/2))])
+                elif _text[2] == 'left':
+                    self.obj.image.blit(_text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
 
     def change_image(self, image: str, pos: list):
         self.options['image'] = [image, pos]
         self.reload_apperance()
 
 class UIBase(pg.sprite.Sprite):
-    modus = "STACK"
-    uiElements = pg.sprite.Group()
-    uiLayers = pg.sprite.LayeredUpdates()
+    __modus = "STACK"
+    __ui_elements = pg.sprite.Group()
+    __ui_layers = pg.sprite.LayeredUpdates()
 
-    currentUI = {}
+    __current_ui = {}
 
     CodeDatabase = None
     CodeData = None
@@ -91,65 +91,65 @@ class UIBase(pg.sprite.Sprite):
     DebugInspect = False
     Insepctors = []
 
-    def __init__(self, x: int, y: int, objName: str, startLayer: int = 2, **args):
+    def __init__(self, x: int, y: int, obj_name: str, startLayer: int = 2, **args):
         super().__init__()
-        UIBase.add_toGroup(self)
+        UIBase.add_to_group(self)
         UIBase.change_layer(self, startLayer)
 
-        self.objName = objName
+        self.obj_name = obj_name
 
         self.rect = [x, y]
         self.apperance = None
 
         self.clock = pg.time.Clock()
-        self.currentTick = 0
+        self.current_tick = 0
 
     @classmethod
-    def add_current_UI(cls, uiArray: list):
-        for elem in uiArray:
-            cls.currentUI[f'{elem.__name__}'] = elem
+    def add_current_ui(cls, ui_array: list):
+        for _elem in ui_array:
+            cls.__current_ui[f'{_elem.__name__}'] = _elem
 
     @classmethod
-    def get_uiElem(cls, elem: str) -> object:
+    def get_ui_elem(cls, elem: str) -> object:
         try:
-            return UIBase.currentUI.get(elem)
+            return UIBase.__current_ui.get(elem)
         except:
             raise Exception(f'Could not find {elem} in current UI')
 
     @classmethod
-    def check_forUI(cls, elem: str) -> bool:
+    def check_for_ui(cls, elem: str) -> bool:
         for _elem in UIBase.get_group('ui'):
-            if isinstance(_elem, UIBase.get_uiElem(elem)):
+            if isinstance(_elem, UIBase.get_ui_elem(elem)):
                 return True
 
         return False
 
     @classmethod
-    def find_curUI(cls, elem: str) -> object:
+    def find_cur_ui(cls, elem: str) -> object:
         for _elem in UIBase.get_group('ui'):
-            if isinstance(_elem, UIBase.get_uiElem(elem)):
+            if isinstance(_elem, UIBase.get_ui_elem(elem)):
                 return _elem
 
     @classmethod
-    def set_modus(cls, modus: str):
-        cls.modus = modus
+    def set_modus(cls, _modus: str):
+        cls.__modus = _modus
 
-        for elem in cls.get_group('ui'):
-            elem.apperance.reload_apperance()
+        for _elem in cls.get_group('ui'):
+            _elem.apperance.reload_apperance()
 
     @classmethod
     def get_modus(cls) -> str:
-        return cls.modus
+        return cls.__modus
 
     @classmethod
-    def get_group(cls, whichGroup: str) -> pg.sprite.Group:
+    def get_group(cls, whichGroup: str) -> pg.sprite.Group | pg.sprite.LayeredUpdates:
         if whichGroup == "ui":
-            return cls.uiElements
+            return cls.__ui_elements
         elif whichGroup == "layer":
-            return cls.uiLayers
+            return cls.__ui_layers
 
     @classmethod
-    def add_toGroup(cls, elem: object):
+    def add_to_group(cls, elem: object):
         cls.get_group("ui").add(elem)
         cls.get_group("layer").add(elem)
 
@@ -158,18 +158,17 @@ class UIBase(pg.sprite.Sprite):
         cls.get_group('layer').change_layer(elem, newLayer)
 
     @classmethod
-    def remove_fromGroup(cls, elem: object):
+    def remove_from_group(cls, elem: object):
         cls.get_group("ui").remove(elem)
         cls.get_group("layer").remove(elem)
 
         if hasattr(elem, 'children'):
-            for child in elem.children:
-                UIBase.remove_fromGroup(child)
+            for _child in elem.children:
+                UIBase.remove_from_group(_child)
 
-        elem.kill()
-
-    def lerp(a: int, b: int, t: float):
-        if a < b:
-            return math.ceil( a + (b - a) * t)
-        elif a > b:
-            return math.floor( a + (b - a) * t)
+    @staticmethod
+    def lerp(start_point: int, end_point: int, speed: float) -> int:
+        if start_point < end_point:
+            return math.ceil( start_point + (end_point - start_point) * speed)
+        elif start_point > end_point:
+            return math.floor( start_point + (end_point - start_point) * speed)

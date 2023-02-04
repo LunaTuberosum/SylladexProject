@@ -12,52 +12,52 @@ class DebugUIInspector(UIBase):
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
         self.children = []
-        self.currentIns = elem
+        self.current_inspectie = elem
 
-        self.children.append(self.font.render(f'Name: {self.currentIns.objName}', False, 'white'))
-        if hasattr(self.currentIns, 'code'): self.children.append(self.font.render(f'Code: {self.currentIns.code}', False, 'white'))
-        if hasattr(self.currentIns, 'kind'): self.children.append(self.font.render(f'Kind: {self.currentIns.kind}', False, 'white'))
-        if hasattr(self.currentIns, 'grist'): self.children.append(self.font.render(f'Grist: {self.currentIns.grist}', False, 'white'))
-        if hasattr(self.currentIns, 'trait1'): self.children.append(self.font.render(f'Trait1: {self.currentIns.trait1}', False, 'white'))
-        if hasattr(self.currentIns, 'trait2'): self.children.append(self.font.render(f'Trait2: {self.currentIns.trait2}', False, 'white'))
-        if hasattr(self.currentIns, 'action1'): self.children.append(self.font.render(f'Action1: {self.currentIns.action1}', False, 'white'))
-        if hasattr(self.currentIns, 'action2'): self.children.append(self.font.render(f'Action2: {self.currentIns.action2}', False, 'white'))
-        if hasattr(self.currentIns, 'action3'): self.children.append(self.font.render(f'Action3: {self.currentIns.action3}', False, 'white'))
-        if hasattr(self.currentIns, 'action4'): self.children.append(self.font.render(f'Action4: {self.currentIns.action4}', False, 'white'))
+        self.children.append(self.font.render(f'Name: {self.current_inspectie.objName}', False, 'white'))
+        if hasattr(self.current_inspectie, 'code'): self.children.append(self.font.render(f'Code: {self.current_inspectie.code}', False, 'white'))
+        if hasattr(self.current_inspectie, 'kind'): self.children.append(self.font.render(f'Kind: {self.current_inspectie.kind}', False, 'white'))
+        if hasattr(self.current_inspectie, 'grist'): self.children.append(self.font.render(f'Grist: {self.current_inspectie.grist}', False, 'white'))
+        if hasattr(self.current_inspectie, 'trait1'): self.children.append(self.font.render(f'Trait1: {self.current_inspectie.trait1}', False, 'white'))
+        if hasattr(self.current_inspectie, 'trait2'): self.children.append(self.font.render(f'Trait2: {self.current_inspectie.trait2}', False, 'white'))
+        if hasattr(self.current_inspectie, 'action1'): self.children.append(self.font.render(f'Action1: {self.current_inspectie.action1}', False, 'white'))
+        if hasattr(self.current_inspectie, 'action2'): self.children.append(self.font.render(f'Action2: {self.current_inspectie.action2}', False, 'white'))
+        if hasattr(self.current_inspectie, 'action3'): self.children.append(self.font.render(f'Action3: {self.current_inspectie.action3}', False, 'white'))
+        if hasattr(self.current_inspectie, 'action4'): self.children.append(self.font.render(f'Action4: {self.current_inspectie.action4}', False, 'white'))
 
-        if hasattr(self.currentIns, 'toolTipText'): self.children.append(self.font.render(f'HasToolTip: {hasattr(self.currentIns, "toolTipText")}', False, 'white'))
-        self.children.append(self.font.render(f'Position: ({self.currentIns.rect.x}, {self.currentIns.rect.y})', False, 'white'))
-        self.children.append(self.font.render(f'Layer: {UIBase.get_group("layer").get_layer_of_sprite(self.currentIns)}', False, 'white'))
+        if hasattr(self.current_inspectie, 'toolTipText'): self.children.append(self.font.render(f'HasToolTip: {hasattr(self.current_inspectie, "toolTipText")}', False, 'white'))
+        self.children.append(self.font.render(f'Position: ({self.current_inspectie.rect.x}, {self.current_inspectie.rect.y})', False, 'white'))
+        self.children.append(self.font.render(f'Layer: {UIBase.get_group("layer").get_layer_of_sprite(self.current_inspectie)}', False, 'white'))
 
-        if hasattr(self.currentIns, 'children'): self.children.append(self.font.render(f'#ofChildren: {len(self.currentIns.children)}', False, 'white'))
-        if hasattr(self.currentIns, 'options'): 
+        if hasattr(self.current_inspectie, 'children'): self.children.append(self.font.render(f'#ofChildren: {len(self.current_inspectie.children)}', False, 'white'))
+        if hasattr(self.current_inspectie, 'options'): 
             self.children.append(self.font.render(f'Options: [', False, 'white'))
-            for index, option in enumerate(self.currentIns.options):
-                if index == 21:
-                    self.children.append(self.font.render(f'    ... {len(self.currentIns.options) - index} more ]', False, 'white'))
+            for _index, option in enumerate(self.current_inspectie.options):
+                if _index == 21:
+                    self.children.append(self.font.render(f'    ... {len(self.current_inspectie.options) - _index} more ]', False, 'white'))
                     break
-                elif index == len(self.currentIns.options)-1:
-                    self.children.append(self.font.render(f'    {index}: {option} ]', False, 'white'))
+                elif _index == len(self.current_inspectie.options)-1:
+                    self.children.append(self.font.render(f'    {_index}: {option} ]', False, 'white'))
                 else:
-                    self.children.append(self.font.render(f'    {index}: {option},', False, 'white'))
-        if hasattr(self.currentIns, 'currentOption'): self.children.append(self.font.render(f'Current Option: {self.currentIns.currentOption}', False, 'white'))
+                    self.children.append(self.font.render(f'    {_index}: {option},', False, 'white'))
+        if hasattr(self.current_inspectie, 'currentOption'): self.children.append(self.font.render(f'Current Option: {self.current_inspectie.currentOption}', False, 'white'))
 
-        newWidth = self.rect.w
-        for index, child in enumerate(self.children):
-            if child.get_width()+20 > newWidth:
-                newWidth = child.get_width()+20
+        _new_width = self.rect.w
+        for _index, child in enumerate(self.children):
+            if child.get_width()+20 > _new_width:
+                _new_width = child.get_width()+20
 
-        self.rect.w = newWidth
-        self.rect.h = 40+(index*30)
+        self.rect.w = _new_width
+        self.rect.h = 40+(_index*30)
         self.image = pg.transform.scale(self.image, (self.rect.w, self.rect.h))
         self.rect.x = pg.display.get_surface().get_width() - self.rect.w
 
-        for index, child in enumerate(self.children):
-            self.image.blit(child, (10, 10+(30*index)))
+        for _index, child in enumerate(self.children):
+            self.image.blit(child, (10, 10+(30*_index)))
 
     def update(self):
         
-        if self.currentIns.rect.collidepoint(pg.mouse.get_pos()):
+        if self.current_inspectie.rect.collidepoint(pg.mouse.get_pos()):
             pass
         else:
             UIBase.Insepctors.remove(self)

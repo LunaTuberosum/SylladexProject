@@ -16,41 +16,41 @@ class GristCacheButton(UIBase):
             image = ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
             )
 
-        self.toolTipText = "Opens Grist Cache" 
+        self.tool_tip_text = "Opens Grist Cache" 
 
         self.hovering = False
 
     def hover(self):
-        if self.toolTipText == 'Closes Grist Cache':
+        if self.tool_tip_text == 'Closes Grist Cache':
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
         else:
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
         self.hovering = True
 
     def no_hover(self):
-        if self.toolTipText == 'Closes Grist Cache':
+        if self.tool_tip_text == 'Closes Grist Cache':
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
         else:
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
         self.hovering = False
 
     def on_click(self):
-        if self.toolTipText == 'Opens Grist Cache':
+        if self.tool_tip_text == 'Opens Grist Cache':
 
-            self.toolTipText = 'Closes Grist Cache'
+            self.tool_tip_text = 'Closes Grist Cache'
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
 
-            if UIBase.check_forUI('SideBar'):
-                UIBase.get_uiElem('GristCache')(-390)
+            if UIBase.check_for_ui('SideBar'):
+                UIBase.get_ui_elem('GristCache')(-392)
             else:
-                UIBase.get_uiElem('GristCache')(-719)
+                UIBase.get_ui_elem('GristCache')(-719)
             
-        elif self.toolTipText == 'Closes Grist Cache':
+        elif self.tool_tip_text == 'Closes Grist Cache':
 
-            self.toolTipText = 'Opens Grist Cache'
+            self.tool_tip_text = 'Opens Grist Cache'
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
 
-            if UIBase.check_forUI('SideBar'):
-                UIBase.find_curUI('GristCache').toBeRect = -390
+            if UIBase.check_for_ui('SideBar'):
+                UIBase.find_cur_ui('GristCache').to_be_rect = -392
             else:
-                UIBase.find_curUI('GristCache').toBeRect = -719
+                UIBase.find_cur_ui('GristCache').to_be_rect = -719

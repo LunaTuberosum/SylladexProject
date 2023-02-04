@@ -4,230 +4,230 @@ from baseUI import UIBase
 
 class LongTextField(UIBase):
 
-    def __init__(self, x, y, width, height, maxChar, maxLineCount, job, toolTipText, textColor=(0,0,0)):
+    def __init__(self, x, y, width, height, max_char, max_line_count, job, tool_tip_text, text_color=(0,0,0)):
         super().__init__(x, y, (width, height), f'LongTextField ({job})', (255,255,255))
 
-        self.textColor = textColor
+        self.text_color = text_color
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
-        self.maxChar = maxChar
-        self.maxLineCount = maxLineCount
+        self.max_char = max_char
+        self.max_line_count = max_line_count
 
         self.job = job
         self.active = False
         self.hovering = False
 
-        self.toolTipText = toolTipText
+        self.tool_tip_text = tool_tip_text
 
-        self.baseColor = (255,255,255)
-        self.hoverColor = (230,230,230)
-        self.selectedColor = (170,170,170)
+        self.base_color = (255,255,255)
+        self.hover_color = (230,230,230)
+        self.selected_color = (170,170,170)
 
         self.lines = []
 
-        for line in range(self.maxLineCount):
+        for _line in range(self.max_line_count):
             self.lines.append('')
 
-        self.activeLine = self.lines[0]
-        self.activeLineIndex = 0
+        self.active_line = self.lines[0]
+        self.active_line_index = 0
 
     def starter_text(self, newText):
         self.lines = []
-        for line in range(self.maxLineCount):
+        for _line in range(self.max_line_count):
             self.lines.append('')
 
-        self.activeLineIndex = 0
-        self.activeLine = self.lines[self.activeLineIndex]
+        self.active_line_index = 0
+        self.active_line = self.lines[self.active_line_index]
       
-        _newText = newText.split()
+        _new_text = newText.split()
 
-        totalChar = 0
-        for index, text in enumerate(_newText):
-            if text[-1:] == '.': text = text[:-1] + ','
+        _total_char = 0
+        for _index, _text in enumerate(_new_text):
+            if _text[-1:] == '.': _text = _text[:-1] + ','
             
-            if totalChar + len(text) > self.maxChar:
-                self.lines[self.activeLineIndex] = self.activeLine
-                self.activeLineIndex += 1
-                self.activeLine = self.lines[self.activeLineIndex]
-                self.activeLine = text + ' '
-                totalChar = 0
+            if _total_char + len(_text) > self.max_char:
+                self.lines[self.active_line_index] = self.active_line
+                self.active_line_index += 1
+                self.active_line = self.lines[self.active_line_index]
+                self.active_line = _text + ' '
+                _total_char = 0
 
             else:
-                self.activeLine += text + ' '
-                totalChar += len(text) + 1
+                self.active_line += _text + ' '
+                _total_char += len(_text) + 1
 
-        self.lines[self.activeLineIndex] = self.activeLine
+        self.lines[self.active_line_index] = self.active_line
         self.draw()
         self.no_hover()
 
     def exit_field(self):
-        self.image.fill(self.baseColor)
+        self.image.fill(self.base_color)
         self.active = False
-        fullDesc = ''
+        _full_desc = ''
 
-        for line in self.lines:
-            _lines = line.split()
+        for _line in self.lines:
+            _lines = _line.split()
 
-            line = ''
+            _line = ''
             for _line in _lines:
                 if _line[-1:] == ',':
-                    line += _line[:-1]
-                    line += '.'
-                    line += ' '
+                    _line += _line[:-1]
+                    _line += '.'
+                    _line += ' '
                 else:
-                    line += _line
-                    line += ' '
-            fullDesc += line
+                    _line += _line
+                    _line += ' '
+            _full_desc += _line
 
         if self.job == 'action1Desc' or self.job == 'action2Desc':
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
-                    if elem.job == 'meleeToggle':
-                        if elem.on == True:
+            for _elem in UIBase.get_group('ui'):
+                if isinstance(_elem, UIBase.get_ui_elem('ToggleButton')):
+                    if _elem.job == 'meleeToggle':
+                        if _elem.on == True:
                             if self.job == 'action1Desc':
-                                UIBase.CodeDatabase.change_codeValue('Melee 1 Desc', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Melee 1 Desc', _full_desc)
                             elif self.job == 'action2Desc':
-                                UIBase.CodeDatabase.change_codeValue('Melee 2 Desc', fullDesc)
-                    if elem.job == 'rangedToggle':
-                        if elem.on == True:
+                                UIBase.CodeDatabase.change_code_value('Melee 2 Desc', _full_desc)
+                    if _elem.job == 'rangedToggle':
+                        if _elem.on == True:
                             if self.job == 'action1Desc':
-                                UIBase.CodeDatabase.change_codeValue('Ranged 1 Desc', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Ranged 1 Desc', _full_desc)
                             elif self.job == 'action2Desc':
-                                UIBase.CodeDatabase.change_codeValue('Ranged 2 Desc', fullDesc)
-                    if elem.job == 'magicToggle':
-                        if elem.on == True:
+                                UIBase.CodeDatabase.change_code_value('Ranged 2 Desc', _full_desc)
+                    if _elem.job == 'magicToggle':
+                        if _elem.on == True:
                             if self.job == 'action1Desc':
-                                UIBase.CodeDatabase.change_codeValue('Magic 1 Desc', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Magic 1 Desc', _full_desc)
                             elif self.job == 'action2Desc':
-                                UIBase.CodeDatabase.change_codeValue('Magic 2 Desc', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Magic 2 Desc', _full_desc)
         
         elif self.job == '1-4Desc' or self.job == '5-8Desc' or self.job == '9-12Desc' or self.job == '13-16Desc':
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
-                    if elem.job == 't1Toggle':
-                        if elem.on == True:
+            for _elem in UIBase.get_group('ui'):
+                if isinstance(_elem, UIBase.get_ui_elem('ToggleButton')):
+                    if _elem.job == 't1Toggle':
+                        if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 1 1-4', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 1 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 1 5-8', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 1 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 1 9-12', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 1 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 1 13-16', fullDesc)
-                    if elem.job == 't2Toggle':
-                        if elem.on == True:
+                                UIBase.CodeDatabase.change_code_value('Trait 1 13-16', _full_desc)
+                    if _elem.job == 't2Toggle':
+                        if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 2 1-4', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 2 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 2 5-8', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 2 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 2 9-12', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 2 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 2 13-16', fullDesc)
-                    if elem.job == 't3Toggle':
-                        if elem.on == True:
+                                UIBase.CodeDatabase.change_code_value('Trait 2 13-16', _full_desc)
+                    if _elem.job == 't3Toggle':
+                        if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 3 1-4', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 3 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 3 5-8', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 3 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 3 9-12', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 3 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 3 13-16', fullDesc)
-                    if elem.job == 't4Toggle':
-                        if elem.on == True:
+                                UIBase.CodeDatabase.change_code_value('Trait 3 13-16', _full_desc)
+                    if _elem.job == 't4Toggle':
+                        if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 4 1-4', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 4 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 4 5-8', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 4 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 4 9-12', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 4 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_codeValue('Trait 4 13-16', fullDesc)
+                                UIBase.CodeDatabase.change_code_value('Trait 4 13-16', _full_desc)
 
     def draw(self):
-        self.image.fill(self.selectedColor)
+        self.image.fill(self.selected_color)
 
-        sections = self.rect.h/len(self.lines)
+        _sections = self.rect.h/len(self.lines)
 
-        for index, line in enumerate(self.lines):
-            txt_surface = self.font.render(line, True, self.textColor)
-            self.image.blit(txt_surface, (self.rect.w/2-txt_surface.get_width()/2, (sections*index)+((sections/2)-txt_surface.get_height()/2)))
+        for _index, _line in enumerate(self.lines):
+            _txt_surface = self.font.render(_line, True, self.text_color)
+            self.image.blit(_txt_surface, (self.rect.w/2-_txt_surface.get_width()/2, (_sections*_index)+((_sections/2)-_txt_surface.get_height()/2)))
 
     def typeing(self, event):
 
         if self.active == True:
             if event.key == pg.K_BACKSPACE:
-                self.activeLine = self.activeLine[:-1]
+                self.active_line = self.active_line[:-1]
         
-                self.lines[self.activeLineIndex] = self.activeLine
+                self.lines[self.active_line_index] = self.active_line
                 self.draw()
 
-                if self.activeLineIndex > 0:
-                    if len(self.activeLine) == 0:
-                        self.activeLineIndex -= 1
-                        self.activeLine = self.lines[self.activeLineIndex]
+                if self.active_line_index > 0:
+                    if len(self.active_line) == 0:
+                        self.active_line_index -= 1
+                        self.active_line = self.lines[self.active_line_index]
 
             elif event.key == pg.K_RETURN:
-                if self.activeLineIndex == 0 and (self.activeLine == '' or self.activeLine == ' '):
-                    self.activeLine = '/'
+                if self.active_line_index == 0 and (self.active_line == '' or self.active_line == ' '):
+                    self.active_line = '/'
                 self.active = False
-                self.lines[self.activeLineIndex] = self.activeLine
+                self.lines[self.active_line_index] = self.active_line
                 self.exit_field()
                 self.draw()
                 return
 
             else:
                 if event.key != pg.K_RETURN:
-                    self.activeLine += event.unicode
+                    self.active_line += event.unicode
 
-                    wordSections = self.activeLine.split()
+                    wordSections = self.active_line.split()
 
                     totalCharCount = 0
-                    for index, sect in enumerate(wordSections):
-                        if totalCharCount + len(sect) > self.maxChar:
-                            self.activeLine = self.activeLine[:-len(sect)]
+                    for _index, sect in enumerate(wordSections):
+                        if totalCharCount + len(sect) > self.max_char:
+                            self.active_line = self.active_line[:-len(sect)]
 
-                            self.lines[self.activeLineIndex] = self.activeLine
-                            if self.activeLineIndex + 1 == self.maxLineCount:
+                            self.lines[self.active_line_index] = self.active_line
+                            if self.active_line_index + 1 == self.max_line_count:
                                 return
                             
-                            self.activeLineIndex += 1
-                            self.activeLine = self.lines[self.activeLineIndex]
+                            self.active_line_index += 1
+                            self.active_line = self.lines[self.active_line_index]
 
-                            self.activeLine += sect
+                            self.active_line += sect
                         else:
                             totalCharCount += len(sect) + 1
 
-                        self.lines[self.activeLineIndex] = self.activeLine
+                        self.lines[self.active_line_index] = self.active_line
                         self.draw()
 
     def hover(self):
         if self.active == False:
-            self.image.fill(self.hoverColor)
-            sections = self.rect.h/len(self.lines)
+            self.image.fill(self.hover_color)
+            _sections = self.rect.h/len(self.lines)
 
-            for index, line in enumerate(self.lines):
-                txt_surface = self.font.render(line, True, self.textColor)
-                self.image.blit(txt_surface, (self.rect.w/2-txt_surface.get_width()/2, (sections*index)+((sections/2)-txt_surface.get_height()/2)))
+            for _index, _line in enumerate(self.lines):
+                _txt_surface = self.font.render(_line, True, self.text_color)
+                self.image.blit(_txt_surface, (self.rect.w/2-_txt_surface.get_width()/2, (_sections*_index)+((_sections/2)-_txt_surface.get_height()/2)))
             self.hovering = True
 
     def no_hover(self):
         if self.active == False:
-            self.image.fill(self.baseColor)
-            sections = self.rect.h/len(self.lines)
+            self.image.fill(self.base_color)
+            _sections = self.rect.h/len(self.lines)
 
-            for index, line in enumerate(self.lines):
-                txt_surface = self.font.render(line, True, self.textColor)
-                self.image.blit(txt_surface, (self.rect.w/2-txt_surface.get_width()/2, (sections*index)+((sections/2)-txt_surface.get_height()/2)))
+            for _index, _line in enumerate(self.lines):
+                _txt_surface = self.font.render(_line, True, self.text_color)
+                self.image.blit(_txt_surface, (self.rect.w/2-_txt_surface.get_width()/2, (_sections*_index)+((_sections/2)-_txt_surface.get_height()/2)))
             self.hovering = False
 
     def on_click(self):
         self.active = True
-        sections = self.rect.h/len(self.lines)
+        _sections = self.rect.h/len(self.lines)
         self.draw()
 
-        for index, line in enumerate(self.lines):
-            txt_surface = self.font.render(line, True, self.textColor)
-            self.image.blit(txt_surface, (self.rect.w/2-txt_surface.get_width()/2, (sections*index)+((sections/2)-txt_surface.get_height()/2)))
+        for _index, _line in enumerate(self.lines):
+            _txt_surface = self.font.render(_line, True, self.text_color)
+            self.image.blit(_txt_surface, (self.rect.w/2-_txt_surface.get_width()/2, (_sections*_index)+((_sections/2)-_txt_surface.get_height()/2)))
         

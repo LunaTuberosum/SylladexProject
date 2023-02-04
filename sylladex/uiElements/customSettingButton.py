@@ -16,7 +16,7 @@ class CustomSettingButton(UIBase):
             image = ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]]
             )
 
-        self.toolTipText = 'Open custom card code settings'
+        self.tool_tip_text = 'Open custom card code settings'
         self.hovering = False
     
     def hover(self):
@@ -28,31 +28,28 @@ class CustomSettingButton(UIBase):
         self.hovering = False
 
     def on_click(self):
-        if self.toolTipText == 'Open custom card code settings':
+        if self.tool_tip_text == 'Open custom card code settings':
             self.rect.x = 342
-            self.toolTipText = 'Close custom card code settings'
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('SideBar')):
-                    UIBase.get_uiElem('CustomSettingMenu')(326)
+            self.tool_tip_text = 'Close custom card code settings'
+            for _elem in UIBase.get_group('ui'):
+                if isinstance(_elem, UIBase.get_ui_elem('SideBar')):
+                    UIBase.get_ui_elem('CustomSettingMenu')(326)
                     self.rect.x = 668
                     return
-            UIBase.get_uiElem('CustomSettingMenu')(0)
+            UIBase.get_ui_elem('CustomSettingMenu')(0)
 
-        elif self.toolTipText == 'Close custom card code settings':
+        elif self.tool_tip_text == 'Close custom card code settings':
 
             self.rect.x = 0
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('CustomSettingMenu')):
-                    UIBase.remove_fromGroup(elem)
-                    elem.kill()
-                    for child in elem.children:
-                        UIBase.remove_fromGroup(child)
-                        child.kill()
-                        if hasattr(child, 'children'):
-                            for child in child.children:
-                                UIBase.remove_fromGroup(child)
-                                child.kill()
-                elif isinstance(elem, UIBase.get_uiElem('SideBar')):
+            for _elem in UIBase.get_group('ui'):
+                if isinstance(_elem, UIBase.get_ui_elem('CustomSettingMenu')):
+                    UIBase.remove_from_group(_elem)
+                    for _child in _elem.children:
+                        UIBase.remove_from_group(_child)
+                        if hasattr(_child, 'children'):
+                            for _child in _child.children:
+                                UIBase.remove_from_group(_child)
+                elif isinstance(_elem, UIBase.get_ui_elem('SideBar')):
                     self.rect.x = 326        
             
-            self.toolTipText = 'Open custom card code settings'
+            self.tool_tip_text = 'Open custom card code settings'

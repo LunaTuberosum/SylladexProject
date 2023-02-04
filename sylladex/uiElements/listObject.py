@@ -12,12 +12,12 @@ class CodeData():
     
     kind: str = ''
     grist: str = ''
-    trait1: str = ''
-    trait2: str = ''
-    action1: str = ''
-    action2: str = ''
-    action3: str = ''
-    action4: str = ''
+    trait_1: str = ''
+    trait_2: str = ''
+    action_1: str = ''
+    action_2: str = ''
+    action_3: str = ''
+    action_4: str = ''
 
     cardID: int = 0
     
@@ -42,25 +42,25 @@ class ListObject(UIBase):
         self.children = []
 
         self.interactable = True
-        self.prevPos = None
+        self.prev_pos = None
         self.grabbed = False
         self.hovering = False
         self.writing = False
 
         self.empty = True
-        self.captaCard = None
+        self.capta_card = None
 
-        self.codeData = CodeData()
+        self.code_data = CodeData()
 
-        self.prevTick = 0
+        self.prev_tick = 0
     
 
     # def update(self):
-    #     if self.prevTick > 0:
-    #         if pg.time.get_ticks() - self.prevTick >= 500:
-    #             if self.captaCard.shaking == False:
-    #                 self.captaCard.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
-    #                 self.captaCard.kind_image()
+    #     if self.prev_tick > 0:
+    #         if pg.time.get_ticks() - self.prev_tick >= 500:
+    #             if self.capta_card.shaking == False:
+    #                 self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
+    #                 self.capta_card.kind_image()
 
     #     if self.grabbed == True:
     #         self.rect.left = pg.mouse.get_pos()[0] - 32
@@ -83,18 +83,18 @@ class ListObject(UIBase):
 
     def redraw_card(self):
         if self.writing == False:
-            if self.captaCard:
-                self.apperance.sizeColorPos = [[[249, 64], '#FFFFFF', [0, 0]],  [[10, 64], 'ModusForground', [239, 0]]]
+            if self.capta_card:
+                self.apperance.size_color_pos = [[[249, 64], '#FFFFFF', [0, 0]],  [[10, 64], 'ModusForground', [239, 0]]]
 
                 self.apperance.options = {
-                    'image': [UIBase.CodeDatabase.find_kindImage(self.codeData.kind), [185, 3]],
+                    'image': [UIBase.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
-                    [self.codeData.name, [6, 15], 'left', '#000000'],
-                    [self.codeData.code, [6, 49], 'left', '#000000'],
-                    [self.codeData.tier, [150, 49], 'left', '#000000']]}
+                    [self.code_data.name, [6, 15], 'left', '#000000'],
+                    [self.code_data.code, [6, 49], 'left', '#000000'],
+                    [self.code_data.tier, [150, 49], 'left', '#000000']]}
 
-            elif self.codeData.code == "-":
+            elif self.code_data.code == "-":
 
                 self.apperance.options = {
                     'image': ["sylladex/uiElements/asset/KINDS/CustomKind.png", [185, 3]],
@@ -104,15 +104,15 @@ class ListObject(UIBase):
                     ['-', [6, 49], 'left', '#000000'],
                     ['-', [150, 49], 'left', '#000000']]}
 
-            elif self.codeData:
+            elif self.code_data:
 
                 self.apperance.options = {
-                    'image': [UIBase.CodeDatabase.find_kindImage(self.codeData.kind), [185, 3]],
+                    'image': [UIBase.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
-                    [self.codeData.name, [6, 15], 'left', '#000000'],
-                    [self.codeData.code, [6, 49], 'left', '#000000'],
-                    [self.codeData.tier, [150, 49], 'left', '#000000']]}
+                    [self.code_data.name, [6, 15], 'left', '#000000'],
+                    [self.code_data.code, [6, 49], 'left', '#000000'],
+                    [self.code_data.tier, [150, 49], 'left', '#000000']]}
 
             self.apperance.reload_apperance()
 
@@ -148,25 +148,25 @@ class ListObject(UIBase):
     #                 elem.no_hover()
 
     def hover(self):
-        # if self.captaCard:
-        #     if self.prevTick == 0:
-        #         self.prevTick = pg.time.get_ticks()
+        # if self.capta_card:
+        #     if self.prev_tick == 0:
+        #         self.prev_tick = pg.time.get_ticks()
 
         if self.writing == False:
-            self.apperance.sizeColorPos = [[[249, 64], '#D1D1D1', [0,0]]]
+            self.apperance.size_color_pos = [[[249, 64], '#D1D1D1', [0,0]]]
             self.apperance.reload_apperance()
             self.hovering = True
 
     def no_hover(self):
         if self.writing == False:
-            self.apperance.sizeColorPos = [[[249, 64], '#FFFFFF', [0,0]]]
+            self.apperance.size_color_pos = [[[249, 64], '#FFFFFF', [0,0]]]
             self.apperance.reload_apperance()
             self.hovering = False
 
-        # if self.captaCard:
-        #     self.prevTick = 0
-        #     self.captaCard.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
-        #     self.captaCard.kind_image()
+        # if self.capta_card:
+        #     self.prev_tick = 0
+        #     self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+        #     self.capta_card.kind_image()
 
     # def alt_no_hover(self):
     #     self.redraw_card((230,230,230))
@@ -180,7 +180,7 @@ class ListObject(UIBase):
     #     if UIBase.get_uiElem('RemoveCardButton').eject == True and self.interactable == True:
     #         if self.empty == False:
     #             self.empty = True
-    #             self.codeData = CodeData()
+    #             self.code_data = CodeData()
 
     #             UIBase.get_uiElem('RemoveCardButton').eject = False
     #             for elem in UIBase.get_group("ui"):
@@ -194,5 +194,5 @@ class ListObject(UIBase):
     #     elif self.interactable == True:
     #         if self.empty == False:
     #             self.grabbed = True
-    #             self.prevPos = self.rect.topleft
+    #             self.prev_pos = self.rect.topleft
     #             UIBase.get_group('layer').change_layer(self, len(UIBase.get_group('ui')))

@@ -5,7 +5,7 @@ from baseUI import UIBase, Apperance
 
 class RemoveCardButton(UIBase):
 
-    eject = False
+    __eject = False
 
     def __init__(self):
         super().__init__(112, 50, 'RemoveCardButton', )
@@ -18,7 +18,7 @@ class RemoveCardButton(UIBase):
             colorKey = True, 
             image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/REMOVE_CARD_ICON.png', [6, 0]])
  
-        self.toolTipText = "Eject a Card from your Sylladex" 
+        self.tool_tip_text = "Eject a Card from your Sylladex" 
         self.hovering = False
         
     def reload_image(self):
@@ -35,12 +35,15 @@ class RemoveCardButton(UIBase):
         self.hovering = False
         self.reload_image()
         
+    @classmethod
+    def get_eject(cls):
+        return cls.__eject
     # def on_click(self):
-    #     if UIBase.get_uiElem('RemoveCardButton').eject == False:
-    #         UIBase.get_uiElem('RemoveCardButton').eject = True
+    #     if UIBase.get_uiElem('RemoveCardButton').__eject == False:
+    #         UIBase.get_uiElem('RemoveCardButton').__eject = True
             
     #     else:
-    #         UIBase.get_uiElem('RemoveCardButton').eject = False
+    #         UIBase.get_uiElem('RemoveCardButton').__eject = False
                 
                         
 

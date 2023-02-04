@@ -3,67 +3,67 @@ import pygame as pg
 from baseUI import UIBase
 
 class OptionToggle(UIBase):
-    def __init__(self,x, y, w, h, job, color, options, defultOption, customObj, showType):
+    def __init__(self,x, y, w, h, job, color, options, defult_option, custom_obj, show_type):
         super().__init__(x, y, (w,h), f'DropDown ({job})', color)
 
         self.job = job
         self.options = options
-        self.currentOption = defultOption
-        self.customObj = customObj
-        self.toolTipText = f'Change weapon type for {self.customObj}'
-        if showType == 'Image':
-            self.toolTipText = f'Change weaponkind icon for {self.customObj}'
-        self.showType = showType
+        self.current_option = defult_option
+        self.custom_obj = custom_obj
+        self.tool_tip_text = f'Change weapon type for {self.custom_obj}'
+        if show_type == 'Image':
+            self.tool_tip_text = f'Change weaponkind icon for {self.custom_obj}'
+        self.show_type = show_type
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 16)
 
-        for index, option in enumerate(self.options):
-            if option == self.currentOption:
-                self.currentIndex = index
+        for _index, _option in enumerate(self.options):
+            if _option == self.current_option:
+                self.current_index = _index
 
-        if self.showType == 'Text':
-            self.currentText = self.font.render(f'{self.currentOption}', True, (0,0,0))
-            self.image.blit(self.currentText, [(24-(self.currentText.get_width()/2)), 12-(self.currentText.get_height()/2)])
-        elif self.showType == 'Image':
-            self.currentImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.currentOption)).convert_alpha()
-            self.currentImage = pg.transform.scale(self.currentImage, (24,24))
-            self.image.blit(self.currentImage, [0,0])
+        if self.show_type == 'Text':
+            self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
+            self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
+        elif self.show_type == 'Image':
+            self.current_image = pg.image.load(UIBase.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
+            self.current_image = pg.transform.scale(self.current_image, (24,24))
+            self.image.blit(self.current_image, [0,0])
 
             
     def on_click(self):
-        self.currentIndex += 1
-        if self.currentIndex == len(self.options): self.currentIndex = 0
-        self.currentOption = self.options[self.currentIndex]
+        self.current_index += 1
+        if self.current_index == len(self.options): self.current_index = 0
+        self.current_option = self.options[self.current_index]
 
         self.image.fill('#C9DAF8')
 
-        if self.showType == 'Text':
-            self.currentText = self.font.render(f'{self.currentOption}', True, (0,0,0))
-            self.image.blit(self.currentText, [(24-(self.currentText.get_width()/2)), 12-(self.currentText.get_height()/2)])
+        if self.show_type == 'Text':
+            self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
+            self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
 
-            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Type', self.currentOption)
-        elif self.showType == 'Image':
-            self.currentImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.currentOption)).convert_alpha()
-            self.currentImage = pg.transform.scale(self.currentImage, (24,24))
-            self.image.blit(self.currentImage, [0,0])
+            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
+        elif self.show_type == 'Image':
+            self.current_image = pg.image.load(UIBase.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
+            self.current_image = pg.transform.scale(self.current_image, (24,24))
+            self.image.blit(self.current_image, [0,0])
 
-            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Icon', self.currentOption)
+            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)
 
     def on_altClick(self):
-        self.currentIndex -= 1
-        if self.currentIndex == -1: self.currentIndex = len(self.options)-1
-        self.currentOption = self.options[self.currentIndex]
+        self.current_index -= 1
+        if self.current_index == -1: self.current_index = len(self.options)-1
+        self.current_option = self.options[self.current_index]
 
         self.image.fill('#C9DAF8')
 
-        if self.showType == 'Text':
-            self.currentText = self.font.render(f'{self.currentOption}', True, (0,0,0))
-            self.image.blit(self.currentText, [(24-(self.currentText.get_width()/2)), 12-(self.currentText.get_height()/2)])
+        if self.show_type == 'Text':
+            self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
+            self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
 
-            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Type', self.currentOption)
-        elif self.showType == 'Image':
-            self.currentImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.currentOption)).convert_alpha()
-            self.currentImage = pg.transform.scale(self.currentImage, (24,24))
-            self.image.blit(self.currentImage, [0,0])
+            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
+        elif self.show_type == 'Image':
+            self.current_image = pg.image.load(UIBase.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
+            self.current_image = pg.transform.scale(self.current_image, (24,24))
+            self.image.blit(self.current_image, [0,0])
 
-            UIBase.CodeDatabase.change_codeValue(f'{self.customObj} Icon', self.currentOption)
+            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)

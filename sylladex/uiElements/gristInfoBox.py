@@ -27,7 +27,7 @@ class GristInfoBox(UIBase):
 
         self.children = []
 
-        self.children.append(UIBase.get_uiElem('TextField')(
+        self.children.append(UIBase.get_ui_elem('TextField')(
             self.rect.x+53, 
             self.rect.y+48, 
             [111, 36], 
@@ -39,7 +39,7 @@ class GristInfoBox(UIBase):
             textType='Num',
             baseColors=[(239,239,239), (199,199,199), (179,179,179)],
             align='center',
-            exitCommand=UIBase.find_curUI('GristCache').save_cache
+            exitCommand=UIBase.find_cur_ui('GristCache').save_cache
             ))
 
-        self.children.append(UIBase.get_uiElem('GristProgressBar')(self))
+        self.children.append(UIBase.get_ui_elem('GristProgressBar')(self))

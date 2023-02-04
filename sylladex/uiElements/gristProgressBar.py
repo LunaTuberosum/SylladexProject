@@ -6,12 +6,9 @@ from baseUI import UIBase, Apperance
 class GristProgressBar(UIBase):
     def __init__(self, parent: object):
         self.parent = parent
-        self.prevAmount = self.parent.children[0].text
+        self.prev_amount = self.parent.children[0].text
 
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
-                self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
-                break
+        self.progress = int(self.parent.children[0].text) / int(UIBase.find_cur_ui('GristCacheLimit').limit_num)
 
         super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, f'GristProgressBar ({self.parent.grist})', 0)
 
@@ -23,21 +20,19 @@ class GristProgressBar(UIBase):
         )
 
     def update(self):
-        if self.parent.children[0].text != self.prevAmount:
+        if self.parent.children[0].text != self.prev_amount:
 
             if self.parent.children[0].text == '':
-                self.prevAmount = 0
+                self.prev_amount = '0'
                 
                 self.progress = 0
 
             else: 
-                self.prevAmount = self.parent.children[0].text
+                self.prev_amount = self.parent.children[0].text
 
-                print(int(self.parent.children[0].text) / int(UIBase.find_curUI('GristCacheLimit').limitNum))
-                
-                self.progress = int(self.parent.children[0].text) / int(UIBase.find_curUI('GristCacheLimit').limitNum)
+                self.progress = int(self.parent.children[0].text) / int(UIBase.find_cur_ui('GristCacheLimit').limit_num)
 
-            self.apperance.sizeColorPos = [
+            self.apperance.size_color_pos = [
                 [[99*self.progress, 12], (67,178,222), [0,0]]
                 ]
 

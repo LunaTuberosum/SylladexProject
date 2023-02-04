@@ -4,81 +4,81 @@ from baseUI import UIBase, Apperance
 
 class TextField(UIBase):
 
-    def __init__(self, x: int, y: int, size: tuple, job: str, toolTipText: str, maxChar: int, **kargs):
+    def __init__(self, x: int, y: int, size: tuple, job: str, tool_tip_text: str, max_char: int, **kargs):
         super().__init__(x, y, f'TextField ({job})', kargs['layerChange'] if 'layerChange' in kargs else 1)
 
         self.kargs = kargs
         self.size = size
 
-        self.maxChar = maxChar
+        self.max_char = max_char
         self.job = job
         self.active = False
         self.hovering = False
 
-        self.toolTipText = toolTipText
+        self.tool_tip_text = tool_tip_text
 
-        if 'textColor' in self.kargs: self.textColor = self.kargs['textColor']
-        else: self.textColor = '#000000'
+        if 'textColor' in self.kargs: self.text_color = self.kargs['textColor']
+        else: self.text_color = '#000000'
 
-        if 'textType' in self.kargs: self.textType = self.kargs['textType']
-        else: self.textType = 'Txt'
+        if 'textType' in self.kargs: self.text_type = self.kargs['textType']
+        else: self.text_type = 'Txt'
 
-        if 'fontSize' in self.kargs: self.fontSize = self.kargs['fontSize']
-        else: self.fontSize = 24
+        if 'fontSize' in self.kargs: self.font_size = self.kargs['fontSize']
+        else: self.font_size = 24
 
-        if 'textFont' in self.kargs: self.textFont = self.kargs['textFont']
-        else: self.textFont = 'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf'
+        if 'textFont' in self.kargs: self.text_font = self.kargs['textFont']
+        else: self.text_font = 'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf'
         
-        self.font = pg.font.Font(self.textFont, self.fontSize)
+        self.font = pg.font.Font(self.text_font, self.font_size)
 
         if 'baseColors' in self.kargs:
-            self.baseColor = self.kargs['baseColors'][0]
-            self.hoverColor = self.kargs['baseColors'][1]
-            self.selectedColor = self.kargs['baseColors'][2]
+            self.base_color = self.kargs['baseColors'][0]
+            self.hover_color = self.kargs['baseColors'][1]
+            self.selected_color = self.kargs['baseColors'][2]
         else:
-            self.baseColor = (255,255,255)
-            self.hoverColor = (230,230,230)
-            self.selectedColor = (170,170,170)
+            self.base_color = (255,255,255)
+            self.hover_color = (230,230,230)
+            self.selected_color = (170,170,170)
 
         if 'align' in self.kargs:
             if self.kargs['align'] == 'center':
-                self.textPostion = [self.size[0]/2, self.size[1]/2]
+                self.text_postion = [self.size[0]/2, self.size[1]/2]
                 self.alginment = 'center'
             elif self.kargs['align'] == 'right':
-                self.textPostion = [self.size[0]-2, self.size[1]/2]
+                self.text_postion = [self.size[0]-2, self.size[1]/2]
                 self.alginment = 'right'
         else:
-            self.textPostion = [2, self.size[1]/2]
+            self.text_postion = [2, self.size[1]/2]
             self.alginment = 'left'
         
-        if 'exitCommand' in self.kargs: self.exitCommand = self.kargs['exitCommand']
-        else: self.exitCommand = None
+        if 'exitCommand' in self.kargs: self.exit_command = self.kargs['exitCommand']
+        else: self.exit_command = None
 
-        if self.textType == 'Num':
-            self.defultText, self.text = '0', '0'
+        if self.text_type == 'Num':
+            self.defult_text, self.text = '0', '0'
 
         else:
-            self.defultText, self.text = '', ''
+            self.defult_text, self.text = '', ''
 
         self.apperance = Apperance(
             self,
             self.size,
-            [self.size, self.baseColor, [0, 0]],
-            texts = [[self.text, self.textPostion, self.alginment, self.textColor]]
+            [self.size, self.base_color, [0, 0]],
+            texts = [[self.text, self.text_postion, self.alginment, self.text_color]]
         )
 
     def exit_field(self):
         self.active = False
 
         if self.text == '':
-            self.text = self.defultText
+            self.text = self.defult_text
 
-        self.apperance.options = {'texts': [[self.text, self.textPostion, self.alginment, self.textColor]]}
-        self.apperance.sizeColorPos = [[self.size, self.baseColor, [0,0]]]
+        self.apperance.options = {'texts': [[self.text, self.text_postion, self.alginment, self.text_color]]}
+        self.apperance.size_color_pos = [[self.size, self.base_color, [0,0]]]
 
         self.apperance.reload_apperance()       
 
-        if self.exitCommand: self.exitCommand() 
+        if self.exit_command: self.exit_command() 
 
     # def exit_field(self):
     #     self.active = False
@@ -147,18 +147,18 @@ class TextField(UIBase):
     #         UIBase.CodeDatabase.change_codeValue('Customkind 1', self.text)
     #         self.job = f'{self.text}Name'
     #         self.objName = f'TextField ({self.job})'
-    #         self.toolTipText = f'Changes the name of {self.text}'
+    #         self.tool_tip_text = f'Changes the name of {self.text}'
     #     elif self.job == 'kind2Name':
     #         UIBase.CodeDatabase.change_codeValue('Customkind 2', self.text)
     #         self.job = f'{self.text}Name'
     #         self.objName = f'TextField ({self.job})'
-    #         self.toolTipText = f'Changes the name of {self.text}'
+    #         self.tool_tip_text = f'Changes the name of {self.text}'
 
     def typing(self, event):
 
         if self.active == True:
 
-            if self.text == self.defultText:
+            if self.text == self.defult_text:
                 self.text = ''
 
             if event.key == pg.K_BACKSPACE:
@@ -170,10 +170,15 @@ class TextField(UIBase):
                 return
 
             else:
-                if len(self.text) < self.maxChar:
-                    self.text += event.unicode
+                if len(self.text) < self.max_char:
+                    if self.text_type == 'Num':
+                        for _num in range(0, 9):
+                            if event.unicode == str(_num):
+                                self.text += event.unicode
+                    else:
+                        self.text += event.unicode
 
-            self.apperance.options = {'texts': [[self.text, self.textPostion, self.alginment, self.textColor]]}
+            self.apperance.options = {'texts': [[self.text, self.text_postion, self.alginment, self.text_color]]}
             self.apperance.reload_apperance()
 
     # def typeing(self, event):
@@ -216,14 +221,14 @@ class TextField(UIBase):
     #                                 self.text = 'CUSTOM TRAIT 4'
     #                                 self.no_hover()
 
-    #                 elif self.textType == 'Num':
-    #                     self.text = self.defultText
+    #                 elif self.text_type == 'Num':
+    #                     self.text = self.defult_text
     #                     self.draw()
     #                     for elem in UIBase.get_group('ui'):
     #                         if isinstance(elem, UIBase.get_uiElem('GristCache')):
     #                             elem.save_cache()
-    #                 elif self.textType == 'Txt':
-    #                     self.text = self.defultText
+    #                 elif self.text_type == 'Txt':
+    #                     self.text = self.defult_text
     #             self.exit_field()
     #             return
 
@@ -246,7 +251,7 @@ class TextField(UIBase):
     #                             UIBase.prevTick = pg.time.get_ticks()
 
     #         else:
-    #             if event.key != pg.K_RETURN and len(self.text) < self.maxChar:
+    #             if event.key != pg.K_RETURN and len(self.text) < self.max_char:
                     
     #                 self.text += event.unicode
 
@@ -263,21 +268,21 @@ class TextField(UIBase):
 
     def hover(self):
         if self.active == False:
-            self.apperance.options = {'texts': [[self.text, [self.size[0]/2, self.size[1]/2], self.kargs['align'] if 'align' in self.kargs else 'center', self.textColor]]}
-            self.apperance.sizeColorPos = [[self.size, self.hoverColor, [0,0]]]
+            self.apperance.options = {'texts': [[self.text, [self.size[0]/2, self.size[1]/2], self.kargs['align'] if 'align' in self.kargs else 'center', self.text_color]]}
+            self.apperance.size_color_pos = [[self.size, self.hover_color, [0,0]]]
             self.apperance.reload_apperance()
             self.hovering = True
 
     def no_hover(self):
         if self.active == False:
-            self.apperance.options = {'texts': [[self.text, [self.size[0]/2, self.size[1]/2], self.kargs['align'] if 'align' in self.kargs else 'center', self.textColor]]}
-            self.apperance.sizeColorPos = [[self.size, self.baseColor, [0,0]]]
+            self.apperance.options = {'texts': [[self.text, [self.size[0]/2, self.size[1]/2], self.kargs['align'] if 'align' in self.kargs else 'center', self.text_color]]}
+            self.apperance.size_color_pos = [[self.size, self.base_color, [0,0]]]
             self.apperance.reload_apperance()
             self.hovering = False
 
     def on_click(self):
         self.active = True
-        self.apperance.sizeColorPos = [[self.size, self.selectedColor, [0,0]]]
+        self.apperance.size_color_pos = [[self.size, self.selected_color, [0,0]]]
         self.apperance.reload_apperance()
         
         

@@ -7,7 +7,7 @@ from ..captchalogueCards.baseCard import BaseCard
 
 
 class CardList(UIBase):
-    children = []
+    __list = []
 
     def __init__(self):
         super().__init__(24, 196, 'CardList', 1)
@@ -18,68 +18,75 @@ class CardList(UIBase):
         )
 
         self.start_list()
-        
-    def add_toList(self):
-        self.children.append(UIBase.get_uiElem('ListObject')())
-        card = self.children[len(self.children)-1]
-        UIBase.add_toGroup(card)
-        UIBase.uiLayers.change_layer(card, -1)
-        self.place_list()
-        self.save_list()
 
-    def remove_fromList(self, TextField):
-        if self.children[len(self.children)-1].empty == True:
-            self.children[len(self.children)-1].kill()
-            self.children.remove(self.children[len(self.children)-1])
-            self.save_list()
+    @classmethod
+    def get_list(cls):
+        return cls.__list
+        
+    @classmethod
+    def add_toList(cls):
+        cls.get_list().append(UIBase.get_ui_elem('ListObject')())
+        _card = cls.get_list()[len(cls.get_list())-1]
+        UIBase.add_to_group(_card)
+        cls.save_list()
+        UIBase.find_cur_ui('CardList').place_list()
+
+    @classmethod
+    def remove_from_list(cls):
+        if cls.get_list()[len(cls.get_list())-1].empty == True:
+            cls.get_list()[len(cls.get_list())-1].kill()
+            cls.get_list().remove(cls.get_list()[len(cls.get_list())-1])
+            cls.save_list()
         else:
-            UIBase.get_uiElem('PopUp')("You can only remove empty cards. Eject cards first")
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
-                    elem.text = str(len(self.children))
-                    elem.draw()
-                    elem.no_hover()
+            UIBase.get_ui_elem('PopUp')("You can only remove empty cards. Eject cards first")
+            for _elem in UIBase.get_group('ui'):
+                if isinstance(_elem, UIBase.get_ui_elem('TextField')) and _elem.job == 'numOfCards':
+                    _elem.text = str(len(cls.get_list()))
+                    _elem.exit_field()
             return
-        
-    def save_list(self):
-        UIBase.get_uiElem('ConsoleMessage')('Saved List')
-        tempList = []
-        for card in self.children:
-            tempList.append([card.codeData, card.empty])
 
-        with open('sylladex/uiElements/data/uiList.plk', 'wb') as saveList:
-            pickle.dump(tempList, saveList, -1)
+    @classmethod        
+    def save_list(cls):
+        UIBase.get_ui_elem('ConsoleMessage')('Saved List')
+        _tempList = []
+        for _card in cls.get_list():
+            _tempList.append([_card.code_data, _card.empty])
 
-    def load_list(self):
-        with open('sylladex/uiElements/data/uiList.plk', 'rb') as saveList:
-            tempList = pickle.load(saveList)
+        with open('sylladex/uiElements/data/uiList.plk', 'wb') as _save_list:
+            pickle.dump(_tempList, _save_list, -1)
 
-        self.children.clear()
+    @classmethod
+    def load_list(cls):
+        with open('sylladex/uiElements/data/uiList.plk', 'rb') as _save_list:
+            _tempList = pickle.load(_save_list)
 
-        for card in tempList:
-            obj = UIBase.get_uiElem('ListObject')()
+        cls.get_list().clear()
+
+        for _card in _tempList:
+            obj = UIBase.get_ui_elem('ListObject')()
 
             
-            if card[0]:
-                obj.codeData = card[0]
+            if _card[0]:
+                obj.code_data = _card[0]
                 obj.redraw_card()
 
-            obj.empty = card[1]
-            self.children.append(obj)
+            obj.empty = _card[1]
+            cls.get_list().append(obj)
 
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
-                elem.text = str(len(self.children))
-                elem.exit_field()
+        for _elem in UIBase.get_group('ui'):
+            if isinstance(_elem, UIBase.get_ui_elem('TextField')) and _elem.job == 'numOfCards':
+                _elem.text = str(len(cls.get_list()))
+                _elem.exit_field()
 
-    def start_list(self):
-        self.load_list()
-        self.place_list()
+    @classmethod
+    def start_list(cls):
+        cls.load_list()
+        UIBase.find_cur_ui('CardList').place_list()
 
     def place_list(self):
-        offset = 70
-        for card in self.children:
+        _offset = 70
+        for _card in self.get_list():
             
-            card.rect.x = self.rect.x
-            card.rect.y = 127 + offset
-            offset += 70
+            _card.rect.x = self.rect.x
+            _card.rect.y = 127 + _offset
+            _offset += 70

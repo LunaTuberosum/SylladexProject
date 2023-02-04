@@ -12,7 +12,7 @@ class FinishButton(UIBase):
 
         self.card = card
         UIBase.get_group('layer').change_layer(self, 1)
-        self.toolTipText = "Finish Captchalogueing a Card to your Deck" 
+        self.tool_tip_text = "Finish Captchalogueing a Card to your Deck" 
 
         self.hovering = False
 
@@ -28,53 +28,53 @@ class FinishButton(UIBase):
         self.hovering = False
         
     def on_click(self):
-        for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.get_uiElem('TextField')):
-                if elem.job == "nameOverlay":
-                    if len(elem.text) == 0:
-                        UIBase.get_uiElem('PopUp')('The card must have a name')
+        for _elem in UIBase.get_group("ui"):
+            if isinstance(_elem, UIBase.get_ui_elem('TextField')):
+                if _elem.job == "nameOverlay":
+                    if len(_elem.text) == 0:
+                        UIBase.get_ui_elem('PopUp')('The card must have a name')
                         return
-                    name = elem.text
+                    _name = _elem.text
 
-                elif elem.job == "codeOverlay":
-                    if len(elem.text) < 8:
-                        UIBase.get_uiElem('PopUp')('Codes must be a 8 characters long')
+                elif _elem.job == "codeOverlay":
+                    if len(_elem.text) < 8:
+                        UIBase.get_ui_elem('PopUp')('Codes must be a 8 characters long')
                         return
-                    code = elem.text
+                    _code = _elem.text
 
-                elif elem.job == "tierOverlay":
-                    if len(elem.text) == 0:
-                        UIBase.get_uiElem('PopUp')('Cards must have a tier')
+                elif _elem.job == "tierOverlay":
+                    if len(_elem.text) == 0:
+                        UIBase.get_ui_elem('PopUp')('Cards must have a tier')
                         return
 
-                    isNum = True
-                    for char in elem.text:
-                        for num in range(0,10):
-                            if char == str(num):
-                                isNum = True
+                    _is_num = True
+                    for _char in _elem.text:
+                        for _num in range(0,10):
+                            if _char == str(_num):
+                                _is_num = True
                                 break
                             else:
-                                isNum = False
-                        if isNum == False:
-                            UIBase.get_uiElem('PopUp')("Tier must only be numbers")
+                                _is_num = False
+                        if _is_num == False:
+                            UIBase.get_ui_elem('PopUp')("Tier must only be numbers")
                             return
 
-                    if int(elem.text) > 16:
-                        UIBase.get_uiElem('PopUp')("Tier can be no higher than 16")
+                    if int(_elem.text) > 16:
+                        UIBase.get_ui_elem('PopUp')("Tier can be no higher than 16")
                         return
-                    elif int(elem.text) == 0:
-                        UIBase.get_uiElem('PopUp')("Tier must be at least 1")
+                    elif int(_elem.text) == 0:
+                        UIBase.get_ui_elem('PopUp')("Tier must be at least 1")
                         return
                     
-                    tier = elem.text
+                    _tier = _elem.text
                         
         self.card.writing = False   
-        UIBase.CodeDatabase.read_code(name, code, tier, self.card)
+        UIBase.CodeDatabase.read_code(_name, _code, _tier, self.card)
         self.card.redraw_card((255,255,255))
         self.card.empty = False
         for child in self.card.children:
             child.kill()
         self.card.children.clear()
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('CardList')):
-                elem.save_list()
+        for _elem in UIBase.get_group('ui'):
+            if isinstance(_elem, UIBase.get_ui_elem('CardList')):
+                _elem.save_list()

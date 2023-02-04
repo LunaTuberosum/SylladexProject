@@ -40,7 +40,7 @@ from .uiElements.toggleButton import ToggleButton
 from .uiElements.toolTip import ToolTip
 from .uiElements.finishButton import FinishButton
 
-UIBase.add_current_UI([
+UIBase.add_current_ui([
     ActionIcon, 
     AddCardButton, 
     CardInspector,
@@ -76,139 +76,137 @@ UIBase.add_current_UI([
     FinishButton,
     ])
 
-def main(screen, clock, UIBase):
+def main(screen, clock):
 
-    globalPrevTick = pg.time.get_ticks()
+    global_prev_tick = pg.time.get_ticks()
 
-    UIBase.get_uiElem('StackingArea')()
-    UIBase.get_uiElem('CenterObj')()
-    UIBase.get_uiElem('SideBarButton')()
-    UIBase.get_uiElem('GristCacheButton')()
-    UIBase.get_uiElem('CustomSettingButton')()
+    UIBase.get_ui_elem('StackingArea')()
+    UIBase.get_ui_elem('CenterObj')()
+    UIBase.get_ui_elem('SideBarButton')()
+    UIBase.get_ui_elem('GristCacheButton')()
+    UIBase.get_ui_elem('CustomSettingButton')()
     # BaseCard.load_cards()
-    moveCard = False
+    _move_card = False
 
     while True:
 
-        nowTick = pg.time.get_ticks()
+        now_tick = pg.time.get_ticks()
 
         for event in pg.event.get():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
 
-                    moveCard = True
+                    _move_card = True
 
-                    for elem in UIBase.get_group("ui"):
-                        if isinstance(elem, UIBase.get_uiElem('ToolTip')):
-                            UIBase.remove_fromGroup(elem)
-                            elem.kill()
-                            globalPrevTick = pg.time.get_ticks()
+                    for _elem in UIBase.get_group("ui"):
+                        if isinstance(_elem, UIBase.get_ui_elem('ToolTip')):
+                            UIBase.remove_from_group(_elem)
+                            global_prev_tick = pg.time.get_ticks()
                         
-                    for elem in UIBase.get_group('ui'):
-                        if hasattr(elem, "active") and elem.active == True:
-                            if hasattr(elem, "exit_field"):
-                                elem.exit_field()
-                        if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
-                            elem.on_click()
-                            moveCard = False
+                    for _elem in UIBase.get_group('ui'):
+                        if hasattr(_elem, "active") and _elem.active == True:
+                            if hasattr(_elem, "exit_field"):
+                                _elem.exit_field()
+                        if hasattr(_elem, "on_click") and _elem.rect.collidepoint(event.pos):
+                            _elem.on_click()
+                            _move_card = False
                             
-                            if UIBase.get_uiElem('RemoveCardButton').eject == True:
-                                if len(UIBase.get_uiElem('CardList').children) == 0:
-                                    UIBase.get_uiElem('RemoveCardButton').eject = False
-                                else:
-                                    for elem in UIBase.get_group("ui"):
-                                        if isinstance(elem, UIBase.get_uiElem('ListObject')):    
-                                            elem.redraw_card((230,230,230))
+                            # if UIBase.get_ui_elem('RemoveCardButton').get_eject() == True:
+                            #     if len(UIBase.get_ui_elem('CardList').children) == 0:
+                            #         UIBase.get_ui_elem('RemoveCardButton').get_eject() = False
+                            #     else:
+                            #         for _elem in UIBase.get_group("ui"):
+                            #             if isinstance(_elem, UIBase.get_ui_elem('ListObject')):    
+                            #                 _elem.redraw_card((230,230,230))
 
-                            # elif UIBase.get_uiElem('RemoveCardButton').eject == False:
-                            #     for elem in UIBase.get_group("ui"):
-                            #         if isinstance(elem, UIBase.get_uiElem('ListObject')):    
-                            #             elem.redraw_card((255,255,255))
+                            # elif UIBase.get_ui_elem('RemoveCardButton').get_eject() == False:
+                            #     for _elem in UIBase.get_group("ui"):
+                            #         if isinstance(_elem, UIBase.get_ui_elem('ListObject')):    
+                            #             _elem.redraw_card((255,255,255))
 
-                    if moveCard == True:
-                        for card in BaseCard.cards:
-                            if card.rect.collidepoint(pg.mouse.get_pos()) and card.selected == False:
-                                card.on_click()
-                                moveCard = False
+                    if _move_card == True:
+                        for _card in BaseCard.cards:
+                            if _card.rect.collidepoint(pg.mouse.get_pos()) and _card.selected == False:
+                                _card.on_click()
+                                _move_card = False
                 elif event.button == 2:
-                    for card in BaseCard.get_cardGroup():
-                        if card.rect.collidepoint(event.pos):
-                            card.on_middleClick()
+                    for _card in BaseCard.get_cardGroup():
+                        if _card.rect.collidepoint(event.pos):
+                            _card.on_middleClick()
 
                 elif event.button == 3:
-                    for elem in UIBase.get_group("ui"):
-                        if hasattr(elem, "on_altClick") and elem.rect.collidepoint(event.pos):
-                            elem.on_altClick()
+                    for _elem in UIBase.get_group("ui"):
+                        if hasattr(_elem, "on_altClick") and _elem.rect.collidepoint(event.pos):
+                            _elem.on_altClick()
             
             elif event.type == pg.MOUSEBUTTONUP:
-                for card in BaseCard.cards:
-                    if card.selected == True:
-                        card.on_release()
+                for _card in BaseCard.cards:
+                    if _card.selected == True:
+                        _card.on_release()
 
                 if BaseCard.get_length() > 0:
-                    moveCard = False
+                    _move_card = False
 
-                for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                        elem.selected = False
+                for _elem in UIBase.get_group("ui"):
+                    if isinstance(_elem, UIBase.get_ui_elem('ScrollBar')):
+                        _elem.set_selected(False)
                     
-                    elif hasattr(elem, 'grabbed') and elem.grabbed == True:
-                        if elem.rect.x > 326:
-                            if elem.captaCard == None:
-                                elem.captaCard = BaseCard(elem.rect.topleft, elem.codeData)
-                                elem.codeData.cardID = elem.captaCard.cardID
-                                elem.captaCard.codeData.cardID = elem.captaCard.cardID
-                                elem.redraw_card('#FFFFFF')
+                    elif hasattr(_elem, 'grabbed') and _elem.grabbed == True:
+                        if _elem.rect.x > 326:
+                            if _elem.captaCard == None:
+                                _elem.captaCard = BaseCard(_elem.rect.topleft, _elem.codeData)
+                                _elem.codeData.cardID = _elem.captaCard.cardID
+                                _elem.captaCard.codeData.cardID = _elem.captaCard.cardID
+                                _elem.redraw_card('#FFFFFF')
 
                                 for _elem in UIBase.get_group('ui'):
-                                    if isinstance(_elem, UIBase.get_uiElem('CardList')):
+                                    if isinstance(_elem, UIBase.get_ui_elem('CardList')):
                                         _elem.save_list()
                                         break
                             else:
-                                UIBase.get_uiElem('PopUp')('This card is already deployed')
+                                UIBase.get_ui_elem('PopUp')('This _card is already deployed')
                         else:
-                            UIBase.get_uiElem('PopUp')('Drag the card into the stacking area')
+                            UIBase.get_ui_elem('PopUp')('Drag the _card into the stacking area')
 
-                        elem.rect.topleft = elem.prevPos
-                        UIBase.get_group('layer').change_layer(elem, -1)
-                        for child in elem.children:
-                            UIBase.get_group('layer').change_layer(elem, -1)   
-                        elem.grabbed = False
+                        _elem.rect.topleft = _elem.prevPos
+                        UIBase.get_group('layer').change_layer(_elem, -1)
+                        for child in _elem.children:
+                            UIBase.get_group('layer').change_layer(_elem, -1)   
+                        _elem.grabbed = False
             
             elif event.type == pg.MOUSEMOTION:
-                for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                        if elem.selected == True:
-                            elem.move_bar(event.pos)
+                for _elem in UIBase.get_group("ui"):
+                    if isinstance(_elem, UIBase.get_ui_elem('ScrollBar')):
+                        if _elem.get_selected() == True:
+                            _elem.move_bar(event.pos)
 
-                    for elem in UIBase.get_group('ui'):
-                        if isinstance(elem, UIBase.get_uiElem('ToolTip')):
-                            UIBase.remove_fromGroup(elem)
-                            elem.kill()
-                            globalPrevTick = pg.time.get_ticks()
+                    for _elem in UIBase.get_group('ui'):
+                        if isinstance(_elem, UIBase.get_ui_elem('ToolTip')):
+                            UIBase.remove_from_group(_elem)
+                            global_prev_tick = pg.time.get_ticks()
                             break
                 
-                for card in BaseCard.cards:
-                    if card.selected == True:
-                        card.move(event.rel)
-                        card.moving = True
+                for _card in BaseCard.cards:
+                    if _card.selected == True:
+                        _card.move(event.rel)
+                        _card.moving = True
                     else:
-                        card.moving = False
+                        _card.moving = False
                 
                 if BaseCard.get_length() > 0:
-                    if moveCard == True:
+                    if _move_card == True:
                         BaseCard.move_all_cards(event.rel)
-                        for elem in UIBase.get_group('ui'):
-                            if isinstance(elem, UIBase.get_uiElem('CenterObj')):
-                                elem.move_self(event.rel)
+                        for _elem in UIBase.get_group('ui'):
+                            if isinstance(_elem, UIBase.get_ui_elem('CenterObj')):
+                                _elem.move_self(event.rel)
 
             elif event.type == pg.MOUSEWHEEL:
-                for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.get_uiElem('CardList')):
-                        if elem.rect.collidepoint(pg.mouse.get_pos()):
-                            for elem in UIBase.get_group("ui"):
-                                if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                                    elem.move_bar_wheel(-event.y)
+                for _elem in UIBase.get_group("ui"):
+                    if isinstance(_elem, UIBase.get_ui_elem('CardList')):
+                        if _elem.rect.collidepoint(pg.mouse.get_pos()):
+                            for _elem in UIBase.get_group("ui"):
+                                if isinstance(_elem, UIBase.get_ui_elem('ScrollBar')):
+                                    _elem.move_bar_wheel(-event.y)
 
             if event.type == pg.KEYDOWN:
                 if event.mod == pg.KMOD_LCTRL and event.key == pg.K_i:
@@ -217,111 +215,109 @@ def main(screen, clock, UIBase):
                     else:
                         UIBase.DebugInspect = False
                         UIBase.Insepctors.clear()
-                        for elem in UIBase.get_group('ui'):
-                            if isinstance(elem, UIBase.DebugUIInspector):
-                                UIBase.remove_fromGroup(elem)
-                                elem.kill()
+                        for _elem in UIBase.get_group('ui'):
+                            if isinstance(_elem, UIBase.DebugUIInspector):
+                                UIBase.remove_from_group(_elem)
+
                 elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_r:
-                    for elem in UIBase.get_group('ui'):
-                        if isinstance(elem, UIBase.get_uiElem('CenterObj')):
-                            elem.recenter()
+                    for _elem in UIBase.get_group('ui'):
+                        if isinstance(_elem, UIBase.get_ui_elem('CenterObj')):
+                            _elem.recenter()
 
                 elif event.key == pg.K_ESCAPE:
-                    makeEscape = True
-                    for elem in UIBase.get_group('ui'):
-                        if isinstance(elem, UIBase.get_uiElem('EscapeMenu')):
-                            for child in elem.children:
-                                UIBase.remove_fromGroup(child)
+                    _load_escape_screen = True
+                    for _elem in UIBase.get_group('ui'):
+                        if isinstance(_elem, UIBase.get_ui_elem('EscapeMenu')):
+                            for child in _elem.children:
+                                UIBase.remove_from_group(child)
                                 child.kill()
-                            UIBase.remove_fromGroup(elem)
-                            elem.kill()
-                            makeEscape = False
+                            UIBase.remove_from_group(_elem)
+                            _load_escape_screen = False
 
-                    if makeEscape == True:
-                        UIBase.get_uiElem('EscapeMenu')()
+                    if _load_escape_screen == True:
+                        UIBase.get_ui_elem('EscapeMenu')()
                 else:
-                    for elem in UIBase.get_group("ui"):
-                        if isinstance(elem, UIBase.get_uiElem('TextField')):
-                            elem.typing(event)
+                    for _elem in UIBase.get_group("ui"):
+                        if isinstance(_elem, UIBase.get_ui_elem('TextField')):
+                            _elem.typing(event)
 
-        for card in BaseCard.cards:
-            if card.rect.collidepoint(pg.mouse.get_pos()):
-                if card.hovering == False:
-                    card.hover()
+        for _card in BaseCard.cards:
+            if _card.rect.collidepoint(pg.mouse.get_pos()):
+                if _card.hovering == False:
+                    _card.hover()
 
             else:
-                if card.hovering == True:
-                    card.no_hover()            
+                if _card.hovering == True:
+                    _card.no_hover()            
 
-            card.update()
+            _card.update()
 
-        for elem in UIBase.get_group("ui"):
-            elem.currentTick += elem.clock.tick(30)
+        for _elem in UIBase.get_group("ui"):
+            _elem.current_tick += _elem.clock.tick(30)
 
-            if elem.rect.collidepoint(pg.mouse.get_pos()):
+            if _elem.rect.collidepoint(pg.mouse.get_pos()):
                 
                 if UIBase.DebugInspect == True:
-                    dontMake = False
+                    _dont_make_debug = False
                     for _elem in UIBase.get_group('ui'):
                         if isinstance(_elem, UIBase.DebugUIInspector):
-                            if _elem.currentIns == elem:
-                                dontMake = True
-                            elif _elem == elem:
-                                dontMake = True
+                            if _elem.currentIns == _elem:
+                                _dont_make_debug = True
+                            elif _elem == _elem:
+                                _dont_make_debug = True
 
-                    if dontMake == False:
-                        UIBase.Insepctors.append(UIBase.DebugUIInspector(elem))
+                    if _dont_make_debug == False:
+                        UIBase.Insepctors.append(UIBase.DebugUIInspector(_elem))
 
                     for index, inspector in enumerate(UIBase.Insepctors):
                         if index == 0:
                             inspector.rect.x = (pg.display.get_surface().get_width()-10)-(inspector.rect.w)
-                            growingOffSet = inspector.rect.w+20
+                            _growing_off_set = inspector.rect.w+20
                         else:
-                            inspector.rect.x = (pg.display.get_surface().get_width()-10)-(growingOffSet)-(inspector.rect.w)
-                            growingOffSet += inspector.rect.w+20
+                            inspector.rect.x = (pg.display.get_surface().get_width()-10)-(_growing_off_set)-(inspector.rect.w)
+                            _growing_off_set += inspector.rect.w+20
 
-                if isinstance(elem, UIBase.get_uiElem('PopUp')):
-                    elem.negate = True
-                if hasattr(elem, "hover") and elem.hovering == False:
-                        if isinstance(elem, UIBase.get_uiElem('ListObject'))and UIBase.get_uiElem('RemoveCardButton').eject == True:
-                            elem.alt_hover()
+                if isinstance(_elem, UIBase.get_ui_elem('PopUp')):
+                    _elem.negate = True
+                if hasattr(_elem, "hover") and _elem.hovering == False:
+                        if isinstance(_elem, UIBase.get_ui_elem('ListObject'))and UIBase.get_ui_elem('RemoveCardButton').get_eject() == True:
+                            _elem.alt_hover()
                         else:
-                            elem.hover()
+                            _elem.hover()
 
-                if hasattr(elem, "toolTipText"):
-                    if hasattr(elem, "active") and elem.active == True:
+                if hasattr(_elem, "toolTipText"):
+                    if hasattr(_elem, "active") and _elem.active == True:
                         pass
-                    elif hasattr(elem, 'inactive') and elem.inactive == True:
+                    elif hasattr(_elem, 'inactive') and _elem.inactive == True:
                         pass
-                    elif nowTick - globalPrevTick >= 1300:
-                        UIBase.get_uiElem('ToolTip')(pg.mouse.get_pos(), elem.toolTipText)
+                    elif now_tick - global_prev_tick >= 1300:
+                        UIBase.get_ui_elem('ToolTip')(pg.mouse.get_pos(), _elem.toolTipText)
             else:
-                if hasattr(elem, "negate"):
-                    elem.negate = False
-                if hasattr(elem, "no_hover")and elem.hovering == True:
-                    if isinstance(elem, UIBase.get_uiElem('ListObject'))and UIBase.get_uiElem('RemoveCardButton').eject == True:
-                        elem.alt_no_hover()
+                if hasattr(_elem, "negate"):
+                    _elem.negate = False
+                if hasattr(_elem, "no_hover")and _elem.hovering == True:
+                    if isinstance(_elem, UIBase.get_ui_elem('ListObject'))and UIBase.get_ui_elem('RemoveCardButton').get_eject() == True:
+                        _elem.alt_no_hover()
                     else:
-                        elem.no_hover()
+                        _elem.no_hover()
 
-            if isinstance(elem, UIBase.get_uiElem('PopUp')) and  hasattr(elem, "last") and nowTick - elem.last >= elem.timer:
-                elem.remove()
-                if elem:
-                    elem.last = pg.time.get_ticks()
+            if isinstance(_elem, UIBase.get_ui_elem('PopUp')) and  hasattr(_elem, "last") and now_tick - _elem.last >= _elem.timer:
+                _elem.remove()
+                if _elem:
+                    _elem.last = pg.time.get_ticks()
 
-            if isinstance(elem, UIBase.get_uiElem('ToolTip')):
+            if isinstance(_elem, UIBase.get_ui_elem('ToolTip')):
                 for _elem in UIBase.get_group('ui'):
                     if _elem.rect.collidepoint(pg.mouse.get_pos()):
                         pass
                     elif hasattr(_elem, 'toolTipText'):
-                        if _elem.toolTipText == elem.text:
-                            UIBase.remove_fromGroup(elem)
-                            elem.kill()
-                            globalPrevTick = pg.time.get_ticks()
+                        if _elem.toolTipText == _elem.text:
+                            UIBase.remove_from_group(_elem)
+                            global_prev_tick = pg.time.get_ticks()
                             break
 
-            if hasattr(elem, "update"):
-                elem.update()
+            if hasattr(_elem, "update"):
+                _elem.update()
 
 
         clock.tick(30)

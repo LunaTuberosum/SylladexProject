@@ -4,7 +4,7 @@ from baseUI import UIBase, Apperance
 
 
 class ConsoleMessage(UIBase):
-    consoleMessages = []
+    __current_messages = []
 
     def __init__(self, text):
 
@@ -20,15 +20,15 @@ class ConsoleMessage(UIBase):
             texts=[[text, [10, 15], 'left', '#ffffff']]
         )
 
-        if len(ConsoleMessage.consoleMessages) > 0:
-            self.rect.y = ConsoleMessage.consoleMessages[-1].rect.y - 40
+        if len(ConsoleMessage.__current_messages) > 0:
+            self.rect.y = ConsoleMessage.__current_messages[-1].rect.y - 40
 
-        ConsoleMessage.consoleMessages.append(self)
+        ConsoleMessage.__current_messages.append(self)
 
     def update(self):
-        if self.currentTick >= 1000:
-            UIBase.remove_fromGroup(self)
-            ConsoleMessage.consoleMessages.remove(self)
+        if self.current_tick >= 1000:
+            UIBase.remove_from_group(self)
+            ConsoleMessage.__current_messages.remove(self)
             #Fade to the right
         
 

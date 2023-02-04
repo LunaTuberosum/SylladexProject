@@ -22,70 +22,71 @@ class GristCache(UIBase):
 
         self.children = []
 
-        self.children.append(UIBase.get_uiElem('GristCacheLimit')())
+        self.children.append(UIBase.get_ui_elem('GristCacheLimit')())
 
-        for index, grist in enumerate(['Build', 'Shale', 'Ruby', 'Cobalt', 'Chalk', 'Marble', 'Iron', 'Amber', 'Caulk', 'Tar', 'Uranium', 'Amethyst', 'Garnet', 'Artifact', 'Zillium', 'Diamond']):
-            if index < 4: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*index), 692, grist))
-            elif index < 8: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-4)), 789, grist))
-            elif index < 12: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-8)), 885, grist))
-            elif index < 16: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-12)), 982, grist))
+        for _index, grist in enumerate(['Build', 'Shale', 'Ruby', 'Cobalt', 'Chalk', 'Marble', 'Iron', 'Amber', 'Caulk', 'Tar', 'Uranium', 'Amethyst', 'Garnet', 'Artifact', 'Zillium', 'Diamond']):
+            if _index < 4: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*_index), 692, grist))
+            elif _index < 8: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-4)), 789, grist))
+            elif _index < 12: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-8)), 885, grist))
+            elif _index < 16: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-12)), 982, grist))
 
         self.load_list()
 
-        if UIBase.check_forUI('SideBar'):
-            self.toBeRect = 326
+        if UIBase.check_for_ui('SideBar'):
+            self.to_be_rect = 326
         else:
-            self.toBeRect = 0
+            self.to_be_rect = 0
 
     def update(self):
         
-        if self.toBeRect != self.rect.x:
-            self.rect.x = UIBase.lerp(self.rect.x, self.toBeRect, 0.2)
-            self.repositionChildren()
-            UIBase.find_curUI('GristCacheButton').rect.x = self.rect.right
+        if self.to_be_rect != self.rect.x:
+            self.rect.x = UIBase.lerp(self.rect.x, self.to_be_rect, 0.2)
+            self.reposition_children()
+            UIBase.find_cur_ui('GristCacheButton').rect.x = self.rect.right
 
         else:
-            if self.toBeRect == -719 or self.toBeRect == -390:
-                UIBase.remove_fromGroup(self)
+            if self.to_be_rect == -719 or self.to_be_rect == -392:
+                UIBase.remove_from_group(self)
 
     def save_cache(self):
-        tempData = []
-        UIBase.get_uiElem('ConsoleMessage')('Saved Cache')
+        _data = []
+        UIBase.get_ui_elem('ConsoleMessage')('Saved Cache')
 
-        for index, child in enumerate(self.children):
-            if index > 0:
-                tempData.append(child.children[0].text)
+        for _index, _child in enumerate(self.children):
+            if _index > 0:
+                _data.append(_child.children[0].text)
 
-        with open('sylladex/uiElements/data/uiCache.plk', 'wb') as saveCache:
-            pickle.dump(tempData, saveCache, -1)
+        with open('sylladex/uiElements/data/uiCache.plk', 'wb') as _save_cache:
+            pickle.dump(_data, _save_cache, -1)
 
     def load_list(self):
 
-        with open('sylladex/uiElements/data/uiCache.plk', 'rb') as saveCache:
-            tempData = pickle.load(saveCache)
+        with open('sylladex/uiElements/data/uiCache.plk', 'rb') as _save_cache:
+            _data = pickle.load(_save_cache)
 
         
-        for index, data in enumerate(tempData):
-            self.children[index+1].children[0].text = data
+        for _index, _data in enumerate(_data):
+            self.children[_index+1].children[0].text = _data
 
-            self.children[index+1].children[0].apperance.options = {'texts': [[
-                self.children[index+1].children[0].text, 
-                self.children[index+1].children[0].textPostion, 
-                self.children[index+1].children[0].alginment, 
-                self.children[index+1].children[0].textColor]]
+            self.children[_index+1].children[0].apperance.options = {'texts': [[
+                self.children[_index+1].children[0].text, 
+                self.children[_index+1].children[0].text_postion, 
+                self.children[_index+1].children[0].alginment, 
+                self.children[_index+1].children[0].text_color]]
                 }
             
-            self.children[index+1].children[0].apperance.reload_apperance()
+            self.children[_index+1].children[0].apperance.reload_apperance()
 
-    def repositionChildren(self):
+    def reposition_children(self):
 
-        for index, child in enumerate(self.children):
-            if index == 0: child.rect.x = self.rect.x+212
-            elif index < 5: child.rect.x = (self.rect.x+9) + (174*(index - 1))
-            elif index < 9: child.rect.x = (self.rect.x+9) + (174*(index - 5))
-            elif index < 13: child.rect.x = (self.rect.x+9) + (174*(index - 9))
-            elif index < 17: child.rect.x = (self.rect.x+9) + (174*(index - 13))
+        for _index, _child in enumerate(self.children):
+            if _index == 0: _child.rect.x = self.rect.x+212
+            elif _index < 5: _child.rect.x = (self.rect.x+9) + (174*(_index - 1))
+            elif _index < 9: _child.rect.x = (self.rect.x+9) + (174*(_index - 5))
+            elif _index < 13: _child.rect.x = (self.rect.x+9) + (174*(_index - 9))
+            elif _index < 17: _child.rect.x = (self.rect.x+9) + (174*(_index - 13))
 
-            if index > 0:
-                child.children[0].rect.x = child.rect.x+53
+            if _index > 0:
+                _child.children[0].rect.x = _child.rect.x+53
+                _child.children[1].rect.x = _child.rect.x+59
                 

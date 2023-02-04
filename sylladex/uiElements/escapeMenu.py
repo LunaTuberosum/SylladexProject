@@ -11,7 +11,7 @@ class EscapeMenu(UIBase):
         UIBase.get_group('layer').change_layer(self, 3)
 
         self.children = [
-            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+110,'Settings'),
-            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+171,'Tutorials'),
-            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+232,'To Desktop'),
-            UIBase.get_uiElem('EscapeMenuOption')(self.rect.x+110,self.rect.y+293,'Log Out'),]
+            UIBase.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+110,'Settings'),
+            UIBase.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+171,'Tutorials'),
+            UIBase.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+232,'To Desktop'),
+            UIBase.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+293,'Log Out'),]
