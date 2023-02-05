@@ -9,8 +9,14 @@ from ..captchalogueCards.baseCard import BaseCard
 class CardList(UIElement):
     __list = []
 
-    def __init__(self):
-        super().__init__(24, 196, 'CardList', 1)
+    def __init__(self, x, y):
+
+        super().__init__(
+            x,
+            y,
+            'CardList', 
+            3)
+
         self.apperance = Apperance(
             self,
             [249, 649],
@@ -77,7 +83,7 @@ class CardList(UIElement):
             if isinstance(_elem, UIElement.get_ui_elem('TextField')) and _elem.job == 'numOfCards':
                 _elem.text = str(len(cls.get_list()))
                 _elem.exit_field()
-
+ 
     @classmethod
     def start_list(cls):
         cls.load_list()

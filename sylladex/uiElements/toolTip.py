@@ -13,7 +13,7 @@ class ToolTip(UIElement):
         width = self.txt_surface.get_width() + 6
         height = self.txt_surface.get_height() + 6
 
-        super().__init__(pos[0]+12, pos[1]+15, 'ToolTip')
+        super().__init__(pos[0]+12, pos[1]+15, 'ToolTip', 99)
 
         self.apperance = Apperance(
             self, 

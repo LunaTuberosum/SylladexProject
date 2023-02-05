@@ -23,7 +23,13 @@ class CodeData():
     
 class ListObject(UIElement):
     def __init__(self):
-        super().__init__(24, 127, 'CardListObject', 1)
+
+        super().__init__(
+            24, 
+            127, 
+            'CardListObject', 
+            3
+            )
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf",24)
 
@@ -86,7 +92,7 @@ class ListObject(UIElement):
             if self.capta_card:
                 self.apperance.size_color_pos = [[[249, 64], '#FFFFFF', [0, 0]],  [[10, 64], 'ModusForground', [239, 0]]]
 
-                self.apperance.options = {
+                self.apperance.kargs = {
                     'image': [UIElement.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
@@ -96,7 +102,7 @@ class ListObject(UIElement):
 
             elif self.code_data.code == "-":
 
-                self.apperance.options = {
+                self.apperance.kargs = {
                     'image': ["sylladex/uiElements/asset/KINDS/CustomKind.png", [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
@@ -106,7 +112,7 @@ class ListObject(UIElement):
 
             elif self.code_data:
 
-                self.apperance.options = {
+                self.apperance.kargs = {
                     'image': [UIElement.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
                     'imageAlpha': 125,
                     'texts': [

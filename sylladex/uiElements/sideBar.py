@@ -5,7 +5,13 @@ from uiElement import UIElement, Apperance
 
 class SideBar(UIElement):
     def __init__(self):
-        super().__init__(-326, 0, 'SideBar')
+
+        super().__init__(
+            -326, 
+            0, 
+            'SideBar', 
+            4
+            )
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
 
@@ -29,26 +35,27 @@ class SideBar(UIElement):
                 ['FETCH MODUS', [21, 871], 'left', '#FFFFFF']])
 
         self.children = [
-            UIElement.get_ui_elem('AddCardButton')(),
-            UIElement.get_ui_elem('RemoveCardButton')(),
+            UIElement.get_ui_elem('AddCardButton')(self.rect.x + 30, self.rect.y + 50),
+            UIElement.get_ui_elem('RemoveCardButton')(self.rect.x + 112, self.rect.y + 50),
             UIElement.get_ui_elem('TextField')(
-                242, 142, 
+                self.rect.x + 242, 
+                self.rect.y + 142, 
                 [53, 48], 
                 "numOfCards", 
                 "The Number of Cards in you Sylladex", 
                 3,
-                layerChange=2,
+                startLayer=4,
                 textType='Num',
                 align='center',
                 fontSize=24,
                 ),
 
-            UIElement.get_ui_elem('CardList')(),
-            UIElement.get_ui_elem('ScrollBar')(),
+            UIElement.get_ui_elem('CardList')(self.rect.x + 24, self.rect.y + 196),
+            UIElement.get_ui_elem('ScrollBar')(self.rect.x + 273, self.rect.y + 196),
 
-            UIElement.get_ui_elem('ModusCard')(33, "STACK"),
-            UIElement.get_ui_elem('ModusCard')(121, "QUEUE"),
-            UIElement.get_ui_elem('ModusCard')(209, "TREE"),
+            UIElement.get_ui_elem('ModusCard')(self.rect.x + 33, self.rect.y + 910, "STACK"),
+            UIElement.get_ui_elem('ModusCard')(self.rect.x + 121, self.rect.y + 910, "QUEUE"),
+            UIElement.get_ui_elem('ModusCard')(self.rect.x + 209, self.rect.y + 910, "TREE"),
         ]
 
         if UIElement.check_for_ui('GristCache'): 
@@ -62,22 +69,14 @@ class SideBar(UIElement):
     def update(self):
         if self.rect.x != self.to_be_rect:
 
-            self.rect.x = UIElement.lerp(self.rect.x, self.to_be_rect, 0.2)
-
-            self.children[0].rect.x = self.rect.x + 30
-            self.children[1].rect.x = self.rect.x + 112
-            self.children[2].rect.x = self.rect.x + 242
-            self.children[3].rect.x = self.rect.x + 24
+            UIElement.move_element(self, [UIElement.lerp(self.rect.x, self.to_be_rect, 0.2), 0])
             self.children[3].place_list()
-            self.children[4].rect.x = self.rect.x + 273
-            self.children[5].rect.x = self.rect.x + 33
-            self.children[6].rect.x = self.rect.x + 121
-            self.children[7].rect.x = self.rect.x + 209
 
             if not UIElement.find_current_ui('GristCache'):
                 UIElement.find_current_ui('GristCacheButton').rect.x = self.rect.right
+            if not UIElement.find_current_ui('CustomSettingMenu'):
+                UIElement.find_current_ui('CustomSettingButton').rect.x = self.rect.right            
             UIElement.find_current_ui('SideBarButton').rect.x = self.rect.right
-            UIElement.find_current_ui('CustomSettingButton').rect.x = self.rect.right
         else:
             if self.to_be_rect == -326:
                 UIElement.remove_from_group(self)

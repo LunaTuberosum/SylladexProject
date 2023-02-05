@@ -6,7 +6,7 @@ from ..captchalogueCards.baseCard import BaseCard
 
 class CenterObj(UIElement):
     def __init__(self):
-        super().__init__(settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT/2, 'CenterObj')
+        super().__init__(settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT/2, 'CenterObj', -1)
 
         self.apperance = Apperance(self, (0,0), colorKey = True)
 

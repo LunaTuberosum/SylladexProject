@@ -5,7 +5,7 @@ from uiElement import UIElement,Apperance
 
 class SideBarButton(UIElement):
     def __init__(self):
-        super().__init__(0, 536,  'SideBarButton')
+        super().__init__(0, 536,  'SideBarButton', 1)
 
         self.apperance = Apperance(
             self,
@@ -19,21 +19,15 @@ class SideBarButton(UIElement):
         self.tool_tip_text = "Opens Side Bar"
 
         self.hovering = False
-        self.inactive = False
 
     def hover(self):
-        self.hovering = True
-        self.reload_image()
+        if not UIElement.check_for_ui('CustomSettingMenu'):
+            self.hovering = True
+            self.reload_image()
 
     def no_hover(self):
         self.hovering = False
         self.reload_image()
-
-    def update(self):
-        if UIElement.check_for_ui('CustomSettingMenu'):
-            self.inactive = True
-            return
-        self.inactive = False
 
     def reload_image(self):
         if self.hovering == False:
@@ -48,7 +42,7 @@ class SideBarButton(UIElement):
                 self.apperance.change_image(f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_HOVER_REVERESED.png', [6, 0])
 
     def on_click(self):
-        if self.inactive == False:
+        if not UIElement.check_for_ui('CustomSettingMenu'):
             if self.tool_tip_text == 'Opens Side Bar':
                 self.tool_tip_text = 'Closes Side Bar'
                 self.apperance.change_image(f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0])

@@ -5,7 +5,13 @@ from uiElement import UIElement, Apperance
 
 class GristCacheButton(UIElement):
     def __init__(self):
-        super().__init__(0, 928, 'GristCacheButton', 1)
+        
+        super().__init__(
+            0, 
+            928, 
+            'GristCacheButton', 
+            1
+            )
 
         self.apperance = Apperance(
             self,
@@ -41,9 +47,9 @@ class GristCacheButton(UIElement):
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
 
             if UIElement.check_for_ui('SideBar'):
-                UIElement.get_ui_elem('GristCache')(-392)
+                UIElement.get_ui_elem('GristCache')()
             else:
-                UIElement.get_ui_elem('GristCache')(-719)
+                UIElement.get_ui_elem('GristCache')()
             
         elif self.tool_tip_text == 'Closes Grist Cache':
 

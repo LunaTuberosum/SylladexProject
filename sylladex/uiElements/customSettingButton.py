@@ -5,11 +5,17 @@ from uiElement import UIElement, Apperance
 
 class CustomSettingButton(UIElement):
     def __init__(self):
-        super().__init__(0, 50, 'CustomSettingButton')
+        
+        super().__init__(
+            0, 
+            50, 
+            'CustomSettingButton', 
+            1
+            )
 
         self.apperance = Apperance(
             self,
-            (70,70),
+            [70,70],
             [[64, 64], '#666666', [0, 6]], 
             [[64, 64], '#1155CC', [6, 0]], 
             colorKey = True, 
@@ -29,27 +35,15 @@ class CustomSettingButton(UIElement):
 
     def on_click(self):
         if self.tool_tip_text == 'Open custom card code settings':
-            self.rect.x = 342
             self.tool_tip_text = 'Close custom card code settings'
-            for _elem in UIElement.get_group('ui'):
-                if isinstance(_elem, UIElement.get_ui_elem('SideBar')):
-                    UIElement.get_ui_elem('CustomSettingMenu')(326)
-                    self.rect.x = 668
-                    return
-            UIElement.get_ui_elem('CustomSettingMenu')(0)
+            
+            UIElement.get_ui_elem('CustomSettingMenu')()
 
         elif self.tool_tip_text == 'Close custom card code settings':
-
-            self.rect.x = 0
-            for _elem in UIElement.get_group('ui'):
-                if isinstance(_elem, UIElement.get_ui_elem('CustomSettingMenu')):
-                    UIElement.remove_from_group(_elem)
-                    for _child in _elem.children:
-                        UIElement.remove_from_group(_child)
-                        if hasattr(_child, 'children'):
-                            for _child in _child.children:
-                                UIElement.remove_from_group(_child)
-                elif isinstance(_elem, UIElement.get_ui_elem('SideBar')):
-                    self.rect.x = 326        
+            
+            if UIElement.find_current_ui('SideBar'):
+                UIElement.find_current_ui('CustomSettingMenu').to_be_rect = -22
+            else:
+                UIElement.find_current_ui('CustomSettingMenu').to_be_rect = -348
             
             self.tool_tip_text = 'Open custom card code settings'

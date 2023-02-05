@@ -4,12 +4,17 @@ from uiElement import UIElement, Apperance
 
 
 class ModusCard(UIElement):
-    def __init__(self, x, modus):
+    def __init__(self, x, y, modus):
 
         self.modus = modus
         self.tool_tip_text = f'Changes the modus to {self.modus} MODUS'
 
-        super().__init__(x, 910, f'ModusCard ({self.modus})')
+        super().__init__(
+            x, 
+            y, 
+            f'ModusCard ({self.modus})', 
+            4
+            )
 
         self.apperance = Apperance(
             self,
@@ -32,13 +37,13 @@ class ModusCard(UIElement):
         for elem in UIElement.get_group("ui"):
             if isinstance(elem, UIElement.get_ui_elem('ModusCard')):
                 if elem == self:
-                    elem.apperance.options = {
+                    elem.apperance.kargs = {
                     'colorKey': True, 
                     'image': [f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png', [0,0]]
                     }
                     self.rect.y = 907
                 else:
-                    elem.apperance.options = {
+                    elem.apperance.kargs = {
                         'colorKey': True, 
                         'image': [f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png', [6,6]]
                         }

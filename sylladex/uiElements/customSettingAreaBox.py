@@ -1,19 +1,16 @@
 import pygame as pg
 
-from uiElement import UIElement
+from uiElement import UIElement, Apperance
 
 class CustomSettingAreaBox(UIElement):
-    def __init__(self, parent, type_input, input_detail, y):
+    def __init__(self, x: int, y: int, type_input: str, input_detail: str):
+
         self.type_input = type_input
         self.input_detail = input_detail
-        self.parent = parent
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
-        if self.type_input == 'WEAPONKIND':
-            _width = 280
-            _height = 30
-        elif self.type_input == 'ACTION':
+        if self.type_input == 'ACTION':
             _width = 306
             _height = 102
         elif self.type_input == 'TRAIT':
@@ -25,36 +22,93 @@ class CustomSettingAreaBox(UIElement):
                 _height = 78
         
 
-        super().__init__(self.parent.rect.x+12, self.parent.rect.y+y, (_width,_height), f'CustomSettingAreaBox ({self.type_input})', (255,255,255))
+        super().__init__(
+            x, 
+            y, 
+            f'CustomSettingAreaBox ({self.type_input})',
+            2
+            )
 
         if self.type_input == 'WEAPONKIND':
-            self.create_appearance([[274, 24], '#1C4587', [6, 6]], [[274, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['NAME', [48, 12], 'center'], ['TYPE', [202, 12], 'center']])
+            self.apperance = Apperance(
+                self,
+                [280, 102],
+                [[274, 24], '#1C4587', [6, 6]], 
+                [[274, 24], '#3C78D8', [0, 0]], 
+                colorKey = True, 
+                texts = [
+                    ['NAME', [48, 12], 'center', '#000000'], 
+                    ['TYPE', [202, 12], 'center', '#000000']]
+                )
 
             with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
                 _custom_data = _database.readlines()
 
             if self.input_detail == 'kind1':
-                curImage = _custom_data[1].split(',')[0]
-                curKind = _custom_data[0].split(',')[0]
+                _curImage = _custom_data[1].split(',')[0]
+                _curKind = _custom_data[0].split(',')[0]
             elif self.input_detail == 'kind2':
-                curImage = _custom_data[1].split(',')[1]
-                curKind = _custom_data[0].split(',')[2]
+                _curImage = _custom_data[1].split(',')[1]
+                _curKind = _custom_data[0].split(',')[2]
 
             self.children = [
-                UIElement.get_ui_elem('OptionToggle')(self.rect.x, self.rect.y, 24, 24, f'{self.input_detail}Icon' ,'#C9DAF8', list(UIElement.CodeDatabase.kind.keys()), curImage, curKind, 'Image'),
-                UIElement.get_ui_elem('TextField')(self.rect.x+72, self.rect.y, 106, 24, 13, f'{self.input_detail}Name', f'Changes the name of {curKind}', 'Txt'),
-                UIElement.get_ui_elem('OptionToggle')(self.rect.x+226, self.rect.y, 48, 24, f'{self.input_detail}Type' ,'#C9DAF8', ['NA','MELEE','RANGED','MAGIC'], UIElement.CodeDatabase.get_weaponType(curKind), curKind, 'Text')
+                UIElement.get_ui_elem('OptionToggle')(
+                    self.rect.x, 
+                    self.rect.y, 
+                    [24, 24], 
+                    f'{self.input_detail}Icon',
+                    '#C9DAF8', 
+                    list(UIElement.CodeDatabase.kind_image.keys()), 
+                    _curImage,
+                     _curKind, 
+                     'Image'
+                     ),
+                
+                UIElement.get_ui_elem('TextField')(
+                    self.rect.x+72, 
+                    self.rect.y, 
+                    [106, 24], 
+                    f'{self.input_detail}Name',
+                    f'Changes the name of {_curKind}', 
+                    13, 
+                    startText=_curKind,
+                    startLayer=2,
+                    textFont="sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf",
+                    fontSize=18,
+                    baseColors=[
+                        '#C9DAF8',
+                        '#D9E2F1',
+                        '#9CB0D5',
+                    ]
+                    ),
+
+                UIElement.get_ui_elem('OptionToggle')(
+                    self.rect.x+226, 
+                    self.rect.y, 
+                    [48, 24], 
+                    f'{self.input_detail}Type',
+                    '#C9DAF8',
+                     ['NA','MELEE','RANGED','MAGIC'], 
+                     UIElement.CodeDatabase.get_weapon_type(_curKind), 
+                     _curKind, 
+                     'Text'
+                     )
             ]
 
-            self.children[1].text = curKind
-            self.children[1].font = self.font
-            self.children[1].baseColor = '#C9DAF8'
-            self.children[1].no_hover()
-            self.children[1].hoverColor = '#D9E2F1'
-            self.children[1].selectedColor = '#9CB0D5'
-
         elif self.type_input == 'ACTION':
-            self.create_appearance([[300, 96], '#1C4587', [6, 6]], [[300, 96], '#3C78D8', [0, 0]], colorKey = True, texts = [['COST', [132, 12], 'center'], ['DMG', [228, 12], 'center'], ['ACTION DESCRPTION', [150, 36], 'center']])
+
+            self.apperance = Apperance(
+                self,
+                [306, 102],
+                [[300, 96], '#1C4587', [6, 6]], 
+                [[300, 96], '#3C78D8', [0, 0]], 
+                colorKey = True, 
+                texts = [
+                    ['COST', [132, 12], 'center', '#000000'], 
+                    ['DMG', [228, 12], 'center', '#000000'], 
+                    ['ACTION DESCRPTION', [150, 36], 'center', '#000000']
+                    ]
+                )
 
             with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
                 _custom_data = _database.readlines()
@@ -66,29 +120,29 @@ class CustomSettingAreaBox(UIElement):
 
             self.children = [
                 UIElement.get_ui_elem('ActionIcon')(self.rect.x, self.rect.y, f'{self.input_detail}Icon'),
-                UIElement.get_ui_elem('TextField')(self.rect.x+156, self.rect.y, 48, 24, 1, f'{self.input_detail}Cost', f'Change {_cur_action}\'s cost', 'Num'),
-                UIElement.get_ui_elem('TextField')(self.rect.x+252, self.rect.y, 48, 24, 1, f'{self.input_detail}Dmg', f'Change {_cur_action}\'s damage', 'Num'),
-                UIElement.get_ui_elem('LongTextField')(self.rect.x, self.rect.y+48, 300, 48, 28, 3, f'{self.input_detail}Desc', f'Change {_cur_action}\'s description')
+            #     UIElement.get_ui_elem('TextField')(self.rect.x+156, self.rect.y, 48, 24, 1, f'{self.input_detail}Cost', f'Change {_cur_action}\'s cost', 'Num'),
+            #     UIElement.get_ui_elem('TextField')(self.rect.x+252, self.rect.y, 48, 24, 1, f'{self.input_detail}Dmg', f'Change {_cur_action}\'s damage', 'Num'),
+            #     UIElement.get_ui_elem('LongTextField')(self.rect.x, self.rect.y+48, 300, 48, 28, 3, f'{self.input_detail}Desc', f'Change {_cur_action}\'s description')
             ]
 
-            self.children[1].font = self.font
-            self.children[1].baseColor = '#C9DAF8'
-            self.children[1].no_hover()
-            self.children[1].hoverColor = '#D9E2F1'
-            self.children[1].selectedColor = '#9CB0D5'
+            # self.children[1].font = self.font
+            # self.children[1].baseColor = '#C9DAF8'
+            # self.children[1].no_hover()
+            # self.children[1].hoverColor = '#D9E2F1'
+            # self.children[1].selectedColor = '#9CB0D5'
 
-            self.children[2].defultText = '/'
-            self.children[2].font = self.font
-            self.children[2].baseColor = '#C9DAF8'
-            self.children[2].no_hover()
-            self.children[2].hoverColor = '#D9E2F1'
-            self.children[2].selectedColor = '#9CB0D5'
+            # self.children[2].defultText = '/'
+            # self.children[2].font = self.font
+            # self.children[2].baseColor = '#C9DAF8'
+            # self.children[2].no_hover()
+            # self.children[2].hoverColor = '#D9E2F1'
+            # self.children[2].selectedColor = '#9CB0D5'
 
-            self.children[3].font = self.font
-            self.children[3].baseColor = '#C9DAF8'
-            self.children[3].no_hover()
-            self.children[3].hoverColor = '#D9E2F1'
-            self.children[3].selectedColor = '#9CB0D5'
+            # self.children[3].font = self.font
+            # self.children[3].baseColor = '#C9DAF8'
+            # self.children[3].no_hover()
+            # self.children[3].hoverColor = '#D9E2F1'
+            # self.children[3].selectedColor = '#9CB0D5'
 
 
         elif self.type_input == 'TRAIT':

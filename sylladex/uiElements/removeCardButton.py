@@ -7,8 +7,14 @@ class RemoveCardButton(UIElement):
 
     __eject = False
 
-    def __init__(self):
-        super().__init__(112, 50, 'RemoveCardButton', )
+    def __init__(self, x, y):
+
+        super().__init__(
+            x, 
+            y, 
+            'RemoveCardButton', 
+            4
+            )
 
         self.apperance = Apperance(
             self,

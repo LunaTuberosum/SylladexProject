@@ -3,8 +3,14 @@ import pygame as pg
 from uiElement import UIElement, Apperance
 
 class AddCardButton(UIElement):
-    def __init__(self):
-        super().__init__(30, 50, 'AddCard')
+    def __init__(self, x, y):
+
+        super().__init__(
+            x, 
+            y, 
+            'AddCard', 
+            4
+            )
 
         self.apperance = Apperance(
             self,

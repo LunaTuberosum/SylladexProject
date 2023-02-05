@@ -22,7 +22,13 @@ class Apperance():
         }
     }
 
-    def __init__(self, obj: object, base_size: list, *size_color_pos: list, **kargs):
+    def __init__(
+        self, 
+        obj: object, 
+        base_size: list, 
+        *size_color_pos: list, 
+        **kargs
+        ):
 
         self.base_size = base_size
 
@@ -31,7 +37,7 @@ class Apperance():
         self.obj.image.fill('#D8DDFF')
 
         self.size_color_pos = size_color_pos
-        self.options = kargs
+        self.kargs = kargs
 
         self.obj.rect = self.obj.image.get_rect(topleft=self.obj.rect)
         self.reload_apperance()
@@ -42,7 +48,7 @@ class Apperance():
         self.obj.image = pg.Surface(self.base_size)
         self.obj.image.fill('#D8DDFF')
 
-        if 'colorKey' in self.options: self.obj.image.set_colorkey('#D8DDFF')
+        if 'colorKey' in self.kargs: self.obj.image.set_colorkey('#D8DDFF')
 
         for _rect in self.size_color_pos:
             _rect_ = pg.Surface(_rect[0])
@@ -56,15 +62,15 @@ class Apperance():
                 _rect_.fill(_rect[1])
             self.obj.image.blit(_rect_, _rect[2])
 
-        if 'alpha' in self.options: self.obj.image.set_alpha(self.options['alpha'])
+        if 'alpha' in self.kargs: self.obj.image.set_alpha(self.kargs['alpha'])
         
-        if 'image' in self.options: 
-            _image = pg.image.load(self.options['image'][0]).convert_alpha()
-            if 'imageAlpha' in self.options: _image.set_alpha(self.options['imageAlpha'])
-            self.obj.image.blit(_image, self.options['image'][1])
+        if 'image' in self.kargs: 
+            _image = pg.image.load(self.kargs['image'][0]).convert_alpha()
+            if 'imageAlpha' in self.kargs: _image.set_alpha(self.kargs['imageAlpha'])
+            self.obj.image.blit(_image, self.kargs['image'][1])
         
-        if 'texts' in self.options:
-            for _text in self.options['texts']:
+        if 'texts' in self.kargs:
+            for _text in self.kargs['texts']:
 
                 if len(_text) == 5: self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
 
@@ -76,7 +82,7 @@ class Apperance():
                     self.obj.image.blit(_text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
 
     def change_image(self, image: str, pos: list):
-        self.options['image'] = [image, pos]
+        self.kargs['image'] = [image, pos]
         self.reload_apperance()
 
 
@@ -96,7 +102,15 @@ class UIElement(pg.sprite.Sprite):
     DebugInspect = False
     Insepctors = []
 
-    def __init__(self, x: int, y: int, obj_name: str, startLayer: int = 2, **args):
+    def __init__(
+        self, 
+        x: int, 
+        y: int, 
+        obj_name: str, 
+        startLayer: int, 
+        **args
+        ):
+
         super().__init__()
         UIElement.add_to_group(self)
         UIElement.change_layer(self, startLayer)
@@ -108,6 +122,26 @@ class UIElement(pg.sprite.Sprite):
 
         self.clock = pg.time.Clock()
         self.current_tick = 0
+
+    @classmethod
+    def move_element(cls, elem: object, moveAmount: list):
+        if hasattr(elem, 'children'):
+            _child_offsets = []
+            for _child in elem.children:
+                _child_offsets.append([
+                    abs(elem.rect.x - _child.rect.x),
+                    abs(elem.rect.y - _child.rect.y)])
+            
+        elem.rect.x = moveAmount[0]
+        elem.rect.y = moveAmount[1]
+
+        if hasattr(elem, 'children'):
+            for _index, _child in enumerate(elem.children):
+                UIElement.move_element(
+                    _child,
+                    [elem.rect.x + _child_offsets[_index][0], 
+                    elem.rect.y + _child_offsets[_index][1]])
+
 
     @classmethod
     def add_current_ui(cls, ui_array: list):

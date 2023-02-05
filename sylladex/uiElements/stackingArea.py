@@ -5,7 +5,13 @@ from uiElement import UIElement, Apperance
 
 class StackingArea(UIElement):
     def __init__(self):
-        super().__init__(0, 0, 'StackingArea', -1)
+
+        super().__init__(
+            0, 
+            0, 
+            'StackingArea', 
+            1
+            )
 
         self.apperance = Apperance(
             self,

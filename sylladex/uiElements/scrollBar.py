@@ -6,7 +6,8 @@ from uiElement import UIElement, Apperance
 class ScrollBar(UIElement):
     __selected = False
 
-    def __init__(self):
+    def __init__(self, x, y):
+        
         if len(UIElement.get_ui_elem('CardList').get_list()) == 0:
             _size = 0
         else:
@@ -16,7 +17,12 @@ class ScrollBar(UIElement):
             else:
                 _size = 0
 
-        super().__init__(273, 196, 'ScrollBar')
+        super().__init__(
+            x, 
+            y,
+            'ScrollBar', 
+            4
+            )
 
         self.apperance = Apperance(
             self, 

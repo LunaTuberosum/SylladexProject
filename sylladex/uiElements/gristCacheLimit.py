@@ -4,8 +4,14 @@ from uiElement import UIElement, Apperance
 
 
 class GristCacheLimit(UIElement):
-    def __init__(self):
-        super().__init__(212, 642, 'GristCacheLimit', 0)
+    def __init__(self, x, y):
+
+        super().__init__(
+            x,
+            y,
+            'GristCacheLimit', 
+            1
+            )
 
         self.limit_num = '20480'
 
