@@ -3,7 +3,7 @@ import pygame as pg
 
 import math
 
-from baseUI import UIBase
+from uiElement import UIElement
 from .cardOutline import CardOutline
 
 from sylladex.captchalogueCards.stackManager import StackManager
@@ -13,7 +13,7 @@ class BaseCard(pg.sprite.Sprite):
     cards = pg.sprite.Group()
 
     def __init__(self, pos, codeData, loading=False):
-        super().__init__(UIBase.get_group('layer'), BaseCard.cards)
+        super().__init__(UIElement.get_group('layer'), BaseCard.cards)
 
         self.hovering = False
         self.selected = False
@@ -21,12 +21,12 @@ class BaseCard(pg.sprite.Sprite):
         self.codeData = codeData
         self.kindImage = None
 
-        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
 
         self.kind_image()
         
-        UIBase.get_group('layer').change_layer(self, -2)
+        UIElement.get_group('layer').change_layer(self, -2)
 
         self.cardID = BaseCard.get_length()
 
@@ -45,7 +45,7 @@ class BaseCard(pg.sprite.Sprite):
 
     def kind_image(self):
         if self.kindImage == None:
-            self.kindImage = pg.image.load(UIBase.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
+            self.kindImage = pg.image.load(UIElement.CodeDatabase.find_kindImage(self.codeData.kind)).convert_alpha()
         if self.selected == True:
             self.image.blit(self.kindImage, [15, 25])
         else:
@@ -54,37 +54,37 @@ class BaseCard(pg.sprite.Sprite):
     def hover(self):
         for card in BaseCard.cards:
             if card.hovering == True:
-                if UIBase.get_modus() == 'STACK':
+                if UIElement.get_modus() == 'STACK':
                     if StackManager.get_length() > 0:
                         if StackManager.get_stack().get_layer_of_sprite(self) > StackManager.get_stack().get_layer_of_sprite(card):
                             card.hovering = False
                             card.no_hover()
                             break
                 return
-        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
+        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
         self.kind_image()
         self.hovering = True        
 
     def no_hover(self):
-        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
         self.kind_image()
         self.hovering = False
 
     def on_middleClick(self):
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('CardInspector')):
-                UIBase.remove_fromGroup(elem)
+        for elem in UIElement.get_group('ui'):
+            if isinstance(elem, UIElement.get_uiElem('CardInspector')):
+                UIElement.remove_fromGroup(elem)
                 elem.kill()
                 for child in elem.children:
-                    UIBase.remove_fromGroup(child)
+                    UIElement.remove_fromGroup(child)
                     child.kill()
-        UIBase.get_uiElem('CardInspectorCheck').checks = []
+        UIElement.get_uiElem('CardInspectorCheck').checks = []
 
-        UIBase.get_uiElem('CardInspector')(self.codeData)
+        UIElement.get_uiElem('CardInspector')(self.codeData)
 
     def on_click(self):
 
-        if UIBase.get_modus() == 'STACK':
+        if UIElement.get_modus() == 'STACK':
             for card in StackManager.get_stack():
                 if card == self:
                     
@@ -94,13 +94,13 @@ class BaseCard(pg.sprite.Sprite):
                             if card != self:
                                 card.pulled = False
                                 card.selected = False
-                                card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+                                card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
                                 card.kind_image() 
                         StackManager.add_toStack(self)
                 
                         self.selected = True
-                        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_UP.png').convert_alpha()
-                        UIBase.get_group('layer').change_layer(self, 2)
+                        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png').convert_alpha()
+                        UIElement.get_group('layer').change_layer(self, 2)
                         self.kind_image()
                         return
 
@@ -108,25 +108,25 @@ class BaseCard(pg.sprite.Sprite):
                         if card != self:
                             card.selected = False
                             card.pulled = False
-                            card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+                            card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
                             card.kind_image()
                         else:
                             card.pulled = True
                             card.selected = True
                             self.prevPulledPos = self.rect.topleft
-                            self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_UP.png').convert_alpha()
+                            self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png').convert_alpha()
                             self.kind_image()
                             break
                     return
 
-        UIBase.get_group('layer').change_layer(self, 2)
+        UIElement.get_group('layer').change_layer(self, 2)
 
-        if UIBase.get_modus() == 'STACK':
+        if UIElement.get_modus() == 'STACK':
             if StackManager.get_length() > 0:
                 StackManager.add_toStack(self)
                 
         self.selected = True
-        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_UP.png').convert_alpha()
+        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png').convert_alpha()
         self.kind_image()
     
     def on_release(self):
@@ -138,18 +138,18 @@ class BaseCard(pg.sprite.Sprite):
             self.selected = False
             self.moving = False
             self.shaking = False
-            self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+            self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
             self.kind_image()
             return
 
-        elif UIBase.get_modus() == 'STACK':
+        elif UIElement.get_modus() == 'STACK':
             if StackManager.get_length() > 0 and self.shaking == False:
                 StackManager.get_stack().remove(self)
 
-        UIBase.get_group('layer').change_layer(self, -2)
+        UIElement.get_group('layer').change_layer(self, -2)
                 
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('CardList')):
+        for elem in UIElement.get_group('ui'):
+            if isinstance(elem, UIElement.get_uiElem('CardList')):
                 if self.rect.colliderect(elem):
                     for listObj in elem.children:
                         if listObj.codeData == self.codeData:
@@ -165,7 +165,7 @@ class BaseCard(pg.sprite.Sprite):
                     return
 
         self.selected = False
-        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA.png').convert_alpha()
+        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
         self.kind_image()
 
         self.combine()
@@ -195,7 +195,7 @@ class BaseCard(pg.sprite.Sprite):
         all_dis = []
 
         for card in BaseCard.get_cardGroup():
-            if UIBase.get_modus() == 'STACK':
+            if UIElement.get_modus() == 'STACK':
                 if StackManager.get_length() > 0:
                     if card == StackManager.get_top_card('distance'):
                         if CardOutline.currentOutline:
@@ -228,12 +228,12 @@ class BaseCard(pg.sprite.Sprite):
     def update(self):
         if self.pulled == True:
             self.shake_anaimation()
-            self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_UP.png').convert_alpha()
+            self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png').convert_alpha()
             self.kind_image()
 
         elif self.moving == True:
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('CardList')):
+            for elem in UIElement.get_group('ui'):
+                if isinstance(elem, UIElement.get_uiElem('CardList')):
                     if self.rect.colliderect(elem):
                         if self.prevPos:
                             
@@ -249,7 +249,7 @@ class BaseCard(pg.sprite.Sprite):
                         self.shaking = False
 
             if self.selected == True:
-                self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIBase.get_modus()}/CAPTA_UP.png').convert_alpha()
+                self.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png').convert_alpha()
                 self.kind_image()
 
 
@@ -270,11 +270,11 @@ class BaseCard(pg.sprite.Sprite):
     def move_all_cards(cls, rel):
         for card in cls.get_cardGroup():
             card.rect.move_ip(rel)
-            UIBase.get_group('layer').change_layer(card, -2)
+            UIElement.get_group('layer').change_layer(card, -2)
 
-        if UIBase.get_modus() == 'STACK': 
+        if UIElement.get_modus() == 'STACK': 
             for card in StackManager.get_stack():
-                UIBase.get_group('layer').change_layer(card, -2)
+                UIElement.get_group('layer').change_layer(card, -2)
 
     @classmethod
     def get_length(cls):
@@ -286,7 +286,7 @@ class BaseCard(pg.sprite.Sprite):
 
     @classmethod
     def add_cardToGroup(cls, card):
-        if UIBase.get_modus() == 'STACK':
+        if UIElement.get_modus() == 'STACK':
             return StackManager.add_toStack(card)
 
     @classmethod
@@ -295,14 +295,14 @@ class BaseCard(pg.sprite.Sprite):
         for _card in StackManager.get_stack():
             if _card == card:
                 StackManager.get_stack().remove(card)
-        UIBase.get_group('layer').remove(card)
+        UIElement.get_group('layer').remove(card)
         card.kill()
 
         if temp == False: BaseCard.save_cards()
 
     @classmethod
     def save_cards(cls):
-        UIBase.get_uiElem('ConsoleMessage')('Saved Cards')
+        UIElement.get_uiElem('ConsoleMessage')('Saved Cards')
         tempArray = []
         for card in cls.get_cardGroup():
             tempArray.append([card.codeData, card.rect.topleft])
@@ -310,7 +310,7 @@ class BaseCard(pg.sprite.Sprite):
         with open('sylladex/captchalogueCards/data/cardData.plk', 'wb') as cardSave:
             pickle.dump(tempArray, cardSave, -1)
 
-        if UIBase.get_modus() == 'STACK': StackManager.save_stack()
+        if UIElement.get_modus() == 'STACK': StackManager.save_stack()
 
     @classmethod
     def load_cards(cls):
@@ -321,5 +321,5 @@ class BaseCard(pg.sprite.Sprite):
         for card in tempArray:
             BaseCard(card[1], card[0], True)
 
-        if UIBase.get_modus() == 'STACK': StackManager.load_stack(BaseCard.get_cardGroup())
-        UIBase.get_uiElem('ConsoleMessage')('Loaded Cards')
+        if UIElement.get_modus() == 'STACK': StackManager.load_stack(BaseCard.get_cardGroup())
+        UIElement.get_uiElem('ConsoleMessage')('Loaded Cards')

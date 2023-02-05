@@ -1,10 +1,10 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 import settings
 from ..captchalogueCards.baseCard import BaseCard
 
-class CenterObj(UIBase):
+class CenterObj(UIElement):
     def __init__(self):
         super().__init__(settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT/2, 'CenterObj')
 
@@ -27,4 +27,4 @@ class CenterObj(UIBase):
             card.rect.x += _off_set_x
             card.rect.y += _off_set_y
 
-        UIBase.get_ui_elem('ConsoleMessage')('Centered stacking area')
+        UIElement.get_ui_elem('ConsoleMessage')('Centered stacking area')

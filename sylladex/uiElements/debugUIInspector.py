@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
 
-class DebugUIInspector(UIBase):
+class DebugUIInspector(UIElement):
     def __init__(self, elem):
         super().__init__(pg.display.get_surface().get_width()-160, 40, (150,150), 'DebugUIInspector', (50,50,50))
 
@@ -27,7 +27,7 @@ class DebugUIInspector(UIBase):
 
         if hasattr(self.current_inspectie, 'toolTipText'): self.children.append(self.font.render(f'HasToolTip: {hasattr(self.current_inspectie, "toolTipText")}', False, 'white'))
         self.children.append(self.font.render(f'Position: ({self.current_inspectie.rect.x}, {self.current_inspectie.rect.y})', False, 'white'))
-        self.children.append(self.font.render(f'Layer: {UIBase.get_group("layer").get_layer_of_sprite(self.current_inspectie)}', False, 'white'))
+        self.children.append(self.font.render(f'Layer: {UIElement.get_group("layer").get_layer_of_sprite(self.current_inspectie)}', False, 'white'))
 
         if hasattr(self.current_inspectie, 'children'): self.children.append(self.font.render(f'#ofChildren: {len(self.current_inspectie.children)}', False, 'white'))
         if hasattr(self.current_inspectie, 'options'): 
@@ -60,6 +60,6 @@ class DebugUIInspector(UIBase):
         if self.current_inspectie.rect.collidepoint(pg.mouse.get_pos()):
             pass
         else:
-            UIBase.Insepctors.remove(self)
-            UIBase.remove_fromGroup(self)
+            UIElement.Insepctors.remove(self)
+            UIElement.remove_fromGroup(self)
             self.kill()

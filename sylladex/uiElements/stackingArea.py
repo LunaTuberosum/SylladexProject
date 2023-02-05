@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class StackingArea(UIBase):
+class StackingArea(UIElement):
     def __init__(self):
         super().__init__(0, 0, 'StackingArea', -1)
 

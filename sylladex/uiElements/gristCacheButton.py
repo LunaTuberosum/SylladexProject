@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class GristCacheButton(UIBase):
+class GristCacheButton(UIElement):
     def __init__(self):
         super().__init__(0, 928, 'GristCacheButton', 1)
 
@@ -40,17 +40,17 @@ class GristCacheButton(UIBase):
             self.tool_tip_text = 'Closes Grist Cache'
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
 
-            if UIBase.check_for_ui('SideBar'):
-                UIBase.get_ui_elem('GristCache')(-392)
+            if UIElement.check_for_ui('SideBar'):
+                UIElement.get_ui_elem('GristCache')(-392)
             else:
-                UIBase.get_ui_elem('GristCache')(-719)
+                UIElement.get_ui_elem('GristCache')(-719)
             
         elif self.tool_tip_text == 'Closes Grist Cache':
 
             self.tool_tip_text = 'Opens Grist Cache'
             self.apperance.change_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
 
-            if UIBase.check_for_ui('SideBar'):
-                UIBase.find_cur_ui('GristCache').to_be_rect = -392
+            if UIElement.check_for_ui('SideBar'):
+                UIElement.find_current_ui('GristCache').to_be_rect = -392
             else:
-                UIBase.find_cur_ui('GristCache').to_be_rect = -719
+                UIElement.find_current_ui('GristCache').to_be_rect = -719

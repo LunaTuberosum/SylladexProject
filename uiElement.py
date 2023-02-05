@@ -1,6 +1,8 @@
 import math
 import pygame as pg
 
+# Class that creates UIElements apperance
+
 class Apperance():
     __modus_color = {
         'STACK': {
@@ -45,11 +47,11 @@ class Apperance():
         for _rect in self.size_color_pos:
             _rect_ = pg.Surface(_rect[0])
             if _rect[1] == 'ModusBackground':
-                _rect_.fill(Apperance.__modus_color.get(UIBase.get_modus()).get('background'))
+                _rect_.fill(Apperance.__modus_color.get(UIElement.get_modus()).get('background'))
             elif _rect[1] == 'ModusForeground':
-                _rect_.fill(Apperance.__modus_color.get(UIBase.get_modus()).get('foreground'))
+                _rect_.fill(Apperance.__modus_color.get(UIElement.get_modus()).get('foreground'))
             elif _rect[1] == 'ModusAccent':
-                _rect_.fill(Apperance.__modus_color.get(UIBase.get_modus()).get('accent'))
+                _rect_.fill(Apperance.__modus_color.get(UIElement.get_modus()).get('accent'))
             else:
                 _rect_.fill(_rect[1])
             self.obj.image.blit(_rect_, _rect[2])
@@ -77,7 +79,10 @@ class Apperance():
         self.options['image'] = [image, pos]
         self.reload_apperance()
 
-class UIBase(pg.sprite.Sprite):
+
+# Class that holds data for all UIElements
+
+class UIElement(pg.sprite.Sprite):
     __modus = "STACK"
     __ui_elements = pg.sprite.Group()
     __ui_layers = pg.sprite.LayeredUpdates()
@@ -93,8 +98,8 @@ class UIBase(pg.sprite.Sprite):
 
     def __init__(self, x: int, y: int, obj_name: str, startLayer: int = 2, **args):
         super().__init__()
-        UIBase.add_to_group(self)
-        UIBase.change_layer(self, startLayer)
+        UIElement.add_to_group(self)
+        UIElement.change_layer(self, startLayer)
 
         self.obj_name = obj_name
 
@@ -112,22 +117,22 @@ class UIBase(pg.sprite.Sprite):
     @classmethod
     def get_ui_elem(cls, elem: str) -> object:
         try:
-            return UIBase.__current_ui.get(elem)
+            return UIElement.__current_ui.get(elem)
         except:
             raise Exception(f'Could not find {elem} in current UI')
 
     @classmethod
     def check_for_ui(cls, elem: str) -> bool:
-        for _elem in UIBase.get_group('ui'):
-            if isinstance(_elem, UIBase.get_ui_elem(elem)):
+        for _elem in UIElement.get_group('ui'):
+            if isinstance(_elem, UIElement.get_ui_elem(elem)):
                 return True
 
         return False
 
     @classmethod
-    def find_cur_ui(cls, elem: str) -> object:
-        for _elem in UIBase.get_group('ui'):
-            if isinstance(_elem, UIBase.get_ui_elem(elem)):
+    def find_current_ui(cls, elem: str) -> object:
+        for _elem in UIElement.get_group('ui'):
+            if isinstance(_elem, UIElement.get_ui_elem(elem)):
                 return _elem
 
     @classmethod
@@ -164,7 +169,7 @@ class UIBase(pg.sprite.Sprite):
 
         if hasattr(elem, 'children'):
             for _child in elem.children:
-                UIBase.remove_from_group(_child)
+                UIElement.remove_from_group(_child)
 
     @staticmethod
     def lerp(start_point: int, end_point: int, speed: float) -> int:

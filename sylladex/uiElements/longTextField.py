@@ -1,8 +1,8 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
-class LongTextField(UIBase):
+class LongTextField(UIElement):
 
     def __init__(self, x, y, width, height, max_char, max_line_count, job, tool_tip_text, text_color=(0,0,0)):
         super().__init__(x, y, (width, height), f'LongTextField ({job})', (255,255,255))
@@ -80,70 +80,70 @@ class LongTextField(UIBase):
             _full_desc += _line
 
         if self.job == 'action1Desc' or self.job == 'action2Desc':
-            for _elem in UIBase.get_group('ui'):
-                if isinstance(_elem, UIBase.get_ui_elem('ToggleButton')):
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_ui_elem('ToggleButton')):
                     if _elem.job == 'meleeToggle':
                         if _elem.on == True:
                             if self.job == 'action1Desc':
-                                UIBase.CodeDatabase.change_code_value('Melee 1 Desc', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Melee 1 Desc', _full_desc)
                             elif self.job == 'action2Desc':
-                                UIBase.CodeDatabase.change_code_value('Melee 2 Desc', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Melee 2 Desc', _full_desc)
                     if _elem.job == 'rangedToggle':
                         if _elem.on == True:
                             if self.job == 'action1Desc':
-                                UIBase.CodeDatabase.change_code_value('Ranged 1 Desc', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Ranged 1 Desc', _full_desc)
                             elif self.job == 'action2Desc':
-                                UIBase.CodeDatabase.change_code_value('Ranged 2 Desc', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Ranged 2 Desc', _full_desc)
                     if _elem.job == 'magicToggle':
                         if _elem.on == True:
                             if self.job == 'action1Desc':
-                                UIBase.CodeDatabase.change_code_value('Magic 1 Desc', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Magic 1 Desc', _full_desc)
                             elif self.job == 'action2Desc':
-                                UIBase.CodeDatabase.change_code_value('Magic 2 Desc', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Magic 2 Desc', _full_desc)
         
         elif self.job == '1-4Desc' or self.job == '5-8Desc' or self.job == '9-12Desc' or self.job == '13-16Desc':
-            for _elem in UIBase.get_group('ui'):
-                if isinstance(_elem, UIBase.get_ui_elem('ToggleButton')):
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_ui_elem('ToggleButton')):
                     if _elem.job == 't1Toggle':
                         if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 1 1-4', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 1 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 1 5-8', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 1 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 1 9-12', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 1 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 1 13-16', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 1 13-16', _full_desc)
                     if _elem.job == 't2Toggle':
                         if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 2 1-4', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 2 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 2 5-8', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 2 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 2 9-12', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 2 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 2 13-16', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 2 13-16', _full_desc)
                     if _elem.job == 't3Toggle':
                         if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 3 1-4', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 3 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 3 5-8', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 3 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 3 9-12', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 3 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 3 13-16', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 3 13-16', _full_desc)
                     if _elem.job == 't4Toggle':
                         if _elem.on == True:
                             if self.job == '1-4Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 4 1-4', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 4 1-4', _full_desc)
                             elif self.job == '5-8Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 4 5-8', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 4 5-8', _full_desc)
                             elif self.job == '9-12Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 4 9-12', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 4 9-12', _full_desc)
                             elif self.job == '13-16Desc':
-                                UIBase.CodeDatabase.change_code_value('Trait 4 13-16', _full_desc)
+                                UIElement.CodeDatabase.change_code_value('Trait 4 13-16', _full_desc)
 
     def draw(self):
         self.image.fill(self.selected_color)

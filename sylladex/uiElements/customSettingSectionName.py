@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
 
-class CustomSettingSectionName(UIBase):
+class CustomSettingSectionName(UIElement):
     def __init__(self, parent, y, section):
         self.parent = parent
         self.section = section
@@ -19,8 +19,8 @@ class CustomSettingSectionName(UIBase):
 
     def update(self):
         if self.section == 'ACTIONS':
-            for _elem in UIBase.get_group('ui'):
-                if isinstance(_elem, UIBase.get_uiElem('ToggleButton')):
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_uiElem('ToggleButton')):
                     if _elem.job == 'meleeToggle':
                         if _elem.on == True:
                             self.create_appearance([[180, 24], '#1C4587', [6, 6]], [[180, 24], '#3C78D8', [0, 0]], colorKey = True, texts = [['CUSTOM MELEE ACTIONS', [90, 12], 'center']])

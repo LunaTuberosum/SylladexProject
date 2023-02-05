@@ -1,8 +1,8 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
-class ActionIcon(UIBase):
+class ActionIcon(UIElement):
 
     def __init__(self, x, y, job, image_item = False, action_type = "NA", custom_name = ''):
         super().__init__(x, y, (180, 24), f'ActionIcon ({job})', (0,0,0))
@@ -29,7 +29,7 @@ class ActionIcon(UIBase):
 
             self.text = ''
         else:
-            UIBase.get_group('layer').change_layer(self, 4)
+            UIElement.get_group('layer').change_layer(self, 4)
 
             if action_type == "MELEE":
                 self.current_color = self.melee_color
@@ -52,13 +52,13 @@ class ActionIcon(UIBase):
         self.active = False
         self.draw()
         if self.job == 'action1Icon':
-            if self.current_color == self.melee_color: UIBase.CodeDatabase.change_codeValue('Melee 1 Name', (self.prefix+self.text).upper())
-            elif self.current_color == self.melee_color: UIBase.CodeDatabase.change_codeValue('Ranged 1 Name', (self.prefix+self.text).upper())
-            elif self.current_color == self.melee_color: UIBase.CodeDatabase.change_codeValue('Magic 1 Name', (self.prefix+self.text).upper())
+            if self.current_color == self.melee_color: UIElement.CodeDatabase.change_codeValue('Melee 1 Name', (self.prefix+self.text).upper())
+            elif self.current_color == self.melee_color: UIElement.CodeDatabase.change_codeValue('Ranged 1 Name', (self.prefix+self.text).upper())
+            elif self.current_color == self.melee_color: UIElement.CodeDatabase.change_codeValue('Magic 1 Name', (self.prefix+self.text).upper())
         elif self.job == 'action2Icon':
-            if self.current_color == self.melee_color: UIBase.CodeDatabase.change_codeValue('Melee 2 Name', (self.prefix+self.text).upper())
-            elif self.current_color == self.melee_color: UIBase.CodeDatabase.change_codeValue('Ranged 2 Name', (self.prefix+self.text).upper())
-            elif self.current_color == self.melee_color: UIBase.CodeDatabase.change_codeValue('Magic 2 Name', (self.prefix+self.text).upper())
+            if self.current_color == self.melee_color: UIElement.CodeDatabase.change_codeValue('Melee 2 Name', (self.prefix+self.text).upper())
+            elif self.current_color == self.melee_color: UIElement.CodeDatabase.change_codeValue('Ranged 2 Name', (self.prefix+self.text).upper())
+            elif self.current_color == self.melee_color: UIElement.CodeDatabase.change_codeValue('Magic 2 Name', (self.prefix+self.text).upper())
 
     def draw(self):
         self.backgroundColor = pg.Surface((107,22))
@@ -96,8 +96,8 @@ class ActionIcon(UIBase):
         self.draw()
 
     def update(self):
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
+        for elem in UIElement.get_group('ui'):
+            if isinstance(elem, UIElement.get_uiElem('ToggleButton')):
                 if elem.job == 'meleeToggle' and elem.on == True:
                     self.current_color = self.melee_color
                     self.prefix = 'AS'

@@ -1,7 +1,7 @@
 import pygame as pg
 import pickle
 
-from baseUI import UIBase
+from uiElement import UIElement
 
 class StackManager():
     stack = pg.sprite.LayeredUpdates()
@@ -56,6 +56,6 @@ class StackManager():
                 if codeData == card.codeData:
                     StackManager.add_toStack(card)
                     break
-        for card in StackManager.get_stack(): UIBase.get_group('layer').change_layer(card, -2)
-        UIBase.get_uiElem('ConsoleMessage')('Loaded Stack')
+        for card in StackManager.get_stack(): UIElement.get_group('layer').change_layer(card, -2)
+        UIElement.get_uiElem('ConsoleMessage')('Loaded Stack')
         

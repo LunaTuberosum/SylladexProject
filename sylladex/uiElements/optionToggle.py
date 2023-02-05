@@ -1,8 +1,8 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
-class OptionToggle(UIBase):
+class OptionToggle(UIElement):
     def __init__(self,x, y, w, h, job, color, options, defult_option, custom_obj, show_type):
         super().__init__(x, y, (w,h), f'DropDown ({job})', color)
 
@@ -25,7 +25,7 @@ class OptionToggle(UIBase):
             self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
             self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
         elif self.show_type == 'Image':
-            self.current_image = pg.image.load(UIBase.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
+            self.current_image = pg.image.load(UIElement.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
             self.current_image = pg.transform.scale(self.current_image, (24,24))
             self.image.blit(self.current_image, [0,0])
 
@@ -41,13 +41,13 @@ class OptionToggle(UIBase):
             self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
             self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
 
-            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
+            UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
         elif self.show_type == 'Image':
-            self.current_image = pg.image.load(UIBase.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
+            self.current_image = pg.image.load(UIElement.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
             self.current_image = pg.transform.scale(self.current_image, (24,24))
             self.image.blit(self.current_image, [0,0])
 
-            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)
+            UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)
 
     def on_altClick(self):
         self.current_index -= 1
@@ -60,10 +60,10 @@ class OptionToggle(UIBase):
             self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
             self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
 
-            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
+            UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
         elif self.show_type == 'Image':
-            self.current_image = pg.image.load(UIBase.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
+            self.current_image = pg.image.load(UIElement.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
             self.current_image = pg.transform.scale(self.current_image, (24,24))
             self.image.blit(self.current_image, [0,0])
 
-            UIBase.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)
+            UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)

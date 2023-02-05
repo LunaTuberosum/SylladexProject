@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class ConsoleMessage(UIBase):
+class ConsoleMessage(UIElement):
     __current_messages = []
 
     def __init__(self, text):
@@ -27,7 +27,7 @@ class ConsoleMessage(UIBase):
 
     def update(self):
         if self.current_tick >= 1000:
-            UIBase.remove_from_group(self)
+            UIElement.remove_from_group(self)
             ConsoleMessage.__current_messages.remove(self)
             #Fade to the right
         

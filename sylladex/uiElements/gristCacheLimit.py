@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class GristCacheLimit(UIBase):
+class GristCacheLimit(UIElement):
     def __init__(self):
         super().__init__(212, 642, 'GristCacheLimit', 0)
 
@@ -25,8 +25,8 @@ class GristCacheLimit(UIBase):
         self.tool_tip_text = 'The amount of each grist you can hold based on your Rung'
 
     def update(self):
-        for _elem in UIBase.get_group('ui'):
-            if isinstance(_elem, UIBase.get_ui_elem('GristInfoBox')):
+        for _elem in UIElement.get_group('ui'):
+            if isinstance(_elem, UIElement.get_ui_elem('GristInfoBox')):
                 if _elem.children[0].active == False and int(_elem.children[0].text) > int(self.limit_num):
                     _elem.children[0].text = self.limit_num
                     _elem.children[0].exit_field()

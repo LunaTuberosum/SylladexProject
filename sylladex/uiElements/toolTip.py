@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class ToolTip(UIBase):
+class ToolTip(UIElement):
     def __init__(self, pos: tuple, text: str):
         self.text = text
 

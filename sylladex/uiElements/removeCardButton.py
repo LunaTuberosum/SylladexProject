@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class RemoveCardButton(UIBase):
+class RemoveCardButton(UIElement):
 
     __eject = False
 
@@ -16,16 +16,16 @@ class RemoveCardButton(UIBase):
             [[64, 64], 'ModusBackground', [0, 6]], 
             [[64, 64], 'ModusAccent', [6, 0]], 
             colorKey = True, 
-            image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/REMOVE_CARD_ICON.png', [6, 0]])
+            image = [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON.png', [6, 0]])
  
         self.tool_tip_text = "Eject a Card from your Sylladex" 
         self.hovering = False
         
     def reload_image(self):
         if self.hovering == False:
-            self.apperance.change_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/REMOVE_CARD_ICON.png', [6, 0],)
+            self.apperance.change_image(f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON.png', [6, 0],)
         else: 
-            self.apperance.change_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/REMOVE_CARD_ICON_HOVER.png', [6, 0])
+            self.apperance.change_image(f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON_HOVER.png', [6, 0])
 
     def hover(self):
         self.hovering = True
@@ -39,11 +39,11 @@ class RemoveCardButton(UIBase):
     def get_eject(cls):
         return cls.__eject
     # def on_click(self):
-    #     if UIBase.get_uiElem('RemoveCardButton').__eject == False:
-    #         UIBase.get_uiElem('RemoveCardButton').__eject = True
+    #     if UIElement.get_uiElem('RemoveCardButton').__eject == False:
+    #         UIElement.get_uiElem('RemoveCardButton').__eject = True
             
     #     else:
-    #         UIBase.get_uiElem('RemoveCardButton').__eject = False
+    #         UIElement.get_uiElem('RemoveCardButton').__eject = False
                 
                         
 

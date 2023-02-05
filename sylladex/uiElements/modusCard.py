@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class ModusCard(UIBase):
+class ModusCard(UIElement):
     def __init__(self, x, modus):
 
         self.modus = modus
@@ -20,7 +20,7 @@ class ModusCard(UIBase):
 
         self.hovering = False
         
-        if UIBase.get_modus() == self.modus:
+        if UIElement.get_modus() == self.modus:
             self.current = True
             self.apperance.change_image(f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png', [0,0])
             self.rect.y = 907
@@ -28,9 +28,9 @@ class ModusCard(UIBase):
             self.current = False
 
     def on_click(self):
-        UIBase.set_modus(self.modus)
-        for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.get_ui_elem('ModusCard')):
+        UIElement.set_modus(self.modus)
+        for elem in UIElement.get_group("ui"):
+            if isinstance(elem, UIElement.get_ui_elem('ModusCard')):
                 if elem == self:
                     elem.apperance.options = {
                     'colorKey': True, 

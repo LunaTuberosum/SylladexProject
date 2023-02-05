@@ -2,7 +2,7 @@ from random import *
 from math import *
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
 code_cypher = {
 
@@ -3059,7 +3059,7 @@ def read_code(name, code_num, tier, list_obj):
     _action3 = get_action_name(_code_array[6], '7', _wType)
     _action4 = get_action_name(_code_array[7], '8', _wType)
 
-    list_obj.codeData = UIBase.CodeData(name, code_num, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
+    list_obj.codeData = UIElement.CodeData(name, code_num, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
 
 def get_action_info(action_name):
     if action_data.get(action_name):
@@ -3152,7 +3152,7 @@ def get_action_image(action_name, base_object, pos):
 
     elif action_name == _custom_data[2].split(',')[0]:
 
-        base_object.children.append(UIBase.get_ui_elem('ActionIcon')(base_object.rect.x+pos[0], base_object.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', action_name))
+        base_object.children.append(UIElement.get_ui_elem('ActionIcon')(base_object.rect.x+pos[0], base_object.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', action_name))
 
     else:
         _action_image = pg.image.load(action_image.get(action_name)).convert_alpha()
@@ -3459,9 +3459,9 @@ def change_code_value(which_custom, new_code_value):
 
 
         _database.writelines([_line_1_,_line_2_,_line_3_,_line_4_,_line_5_,_line_6_,_line_7_,_line_8_,_line_9_])
-        UIBase.get_ui_elem('ConsoleMessage')('Saved Custom Settings')
+        UIElement.get_ui_elem('ConsoleMessage')('Saved Custom Settings')
 
-    for _list_obj in UIBase.find_cur_ui('CardList').list:
+    for _list_obj in UIElement.find_current_ui('CardList').list:
         _list_obj.redraw_card((255,255,255))
 
     

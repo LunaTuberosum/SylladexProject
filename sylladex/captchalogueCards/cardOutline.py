@@ -1,14 +1,14 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
 
 class CardOutline(pg.sprite.Sprite):
     currentOutline = pg.sprite.GroupSingle()
 
     def __init__(self, parent):
-        super().__init__(CardOutline.currentOutline, UIBase.get_group('layer'))
-        UIBase.get_group('layer').change_layer(self, -2)
+        super().__init__(CardOutline.currentOutline, UIElement.get_group('layer'))
+        UIElement.get_group('layer').change_layer(self, -2)
 
         self.focusedCard = parent
 
@@ -18,7 +18,7 @@ class CardOutline(pg.sprite.Sprite):
     @classmethod
     def destroy_outline(cls):
         for outline in CardOutline.currentOutline: 
-            UIBase.get_group('layer').remove(outline)
+            UIElement.get_group('layer').remove(outline)
             CardOutline.currentOutline.remove(outline)
             outline.kill()
 

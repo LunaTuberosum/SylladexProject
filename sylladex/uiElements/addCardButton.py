@@ -1,8 +1,8 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
-class AddCardButton(UIBase):
+class AddCardButton(UIElement):
     def __init__(self):
         super().__init__(30, 50, 'AddCard')
 
@@ -12,7 +12,7 @@ class AddCardButton(UIBase):
             [[64, 64], 'ModusBackground', [0, 6]], 
             [[64, 64], 'ModusAccent', [6, 0]], 
             colorKey = True, 
-            image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0]]
+            image = [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [6, 0]]
             )
 
         self.tool_tip_text = "Captchalogue a Card to your Sylladex" 
@@ -20,9 +20,9 @@ class AddCardButton(UIBase):
         
     def reload_image(self):
         if self.hovering == False:
-            self.apperance.change_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON.png', [6, 0],)
+            self.apperance.change_image(f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [6, 0],)
         else: 
-            self.apperance.change_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/ADD_CARD_ICON_HOVER.png', [6, 0])
+            self.apperance.change_image(f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON_HOVER.png', [6, 0])
 
     def hover(self):
         self.hovering = True
@@ -33,7 +33,7 @@ class AddCardButton(UIBase):
         self.reload_image()
     
     # def on_click(self):
-    #     for item in UIBase.get_uiElem('CardList').children:
+    #     for item in UIElement.get_uiElem('CardList').children:
     #         if item.writing == True:
     #             item.writing = False
     #             item.empty = True
@@ -51,8 +51,8 @@ class AddCardButton(UIBase):
 
     #                 return
     #             else:
-    #                 UIBase.get_uiElem('PopUp')('Empty card not in view')
+    #                 UIElement.get_uiElem('PopUp')('Empty card not in view')
 
     #                 return
-    #     UIBase.get_uiElem('PopUp')("You have no empty cards")
+    #     UIElement.get_uiElem('PopUp')("You have no empty cards")
         

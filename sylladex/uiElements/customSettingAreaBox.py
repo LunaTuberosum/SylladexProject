@@ -1,8 +1,8 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
-class CustomSettingAreaBox(UIBase):
+class CustomSettingAreaBox(UIElement):
     def __init__(self, parent, type_input, input_detail, y):
         self.type_input = type_input
         self.input_detail = input_detail
@@ -41,9 +41,9 @@ class CustomSettingAreaBox(UIBase):
                 curKind = _custom_data[0].split(',')[2]
 
             self.children = [
-                UIBase.get_ui_elem('OptionToggle')(self.rect.x, self.rect.y, 24, 24, f'{self.input_detail}Icon' ,'#C9DAF8', list(UIBase.CodeDatabase.kind.keys()), curImage, curKind, 'Image'),
-                UIBase.get_ui_elem('TextField')(self.rect.x+72, self.rect.y, 106, 24, 13, f'{self.input_detail}Name', f'Changes the name of {curKind}', 'Txt'),
-                UIBase.get_ui_elem('OptionToggle')(self.rect.x+226, self.rect.y, 48, 24, f'{self.input_detail}Type' ,'#C9DAF8', ['NA','MELEE','RANGED','MAGIC'], UIBase.CodeDatabase.get_weaponType(curKind), curKind, 'Text')
+                UIElement.get_ui_elem('OptionToggle')(self.rect.x, self.rect.y, 24, 24, f'{self.input_detail}Icon' ,'#C9DAF8', list(UIElement.CodeDatabase.kind.keys()), curImage, curKind, 'Image'),
+                UIElement.get_ui_elem('TextField')(self.rect.x+72, self.rect.y, 106, 24, 13, f'{self.input_detail}Name', f'Changes the name of {curKind}', 'Txt'),
+                UIElement.get_ui_elem('OptionToggle')(self.rect.x+226, self.rect.y, 48, 24, f'{self.input_detail}Type' ,'#C9DAF8', ['NA','MELEE','RANGED','MAGIC'], UIElement.CodeDatabase.get_weaponType(curKind), curKind, 'Text')
             ]
 
             self.children[1].text = curKind
@@ -65,10 +65,10 @@ class CustomSettingAreaBox(UIBase):
                 _cur_action = _custom_data[2].split(',')[4]
 
             self.children = [
-                UIBase.get_ui_elem('ActionIcon')(self.rect.x, self.rect.y, f'{self.input_detail}Icon'),
-                UIBase.get_ui_elem('TextField')(self.rect.x+156, self.rect.y, 48, 24, 1, f'{self.input_detail}Cost', f'Change {_cur_action}\'s cost', 'Num'),
-                UIBase.get_ui_elem('TextField')(self.rect.x+252, self.rect.y, 48, 24, 1, f'{self.input_detail}Dmg', f'Change {_cur_action}\'s damage', 'Num'),
-                UIBase.get_ui_elem('LongTextField')(self.rect.x, self.rect.y+48, 300, 48, 28, 3, f'{self.input_detail}Desc', f'Change {_cur_action}\'s description')
+                UIElement.get_ui_elem('ActionIcon')(self.rect.x, self.rect.y, f'{self.input_detail}Icon'),
+                UIElement.get_ui_elem('TextField')(self.rect.x+156, self.rect.y, 48, 24, 1, f'{self.input_detail}Cost', f'Change {_cur_action}\'s cost', 'Num'),
+                UIElement.get_ui_elem('TextField')(self.rect.x+252, self.rect.y, 48, 24, 1, f'{self.input_detail}Dmg', f'Change {_cur_action}\'s damage', 'Num'),
+                UIElement.get_ui_elem('LongTextField')(self.rect.x, self.rect.y+48, 300, 48, 28, 3, f'{self.input_detail}Desc', f'Change {_cur_action}\'s description')
             ]
 
             self.children[1].font = self.font
@@ -99,7 +99,7 @@ class CustomSettingAreaBox(UIBase):
                     _custom_data = _database.readlines()
 
                 self.children = [
-                    UIBase.get_ui_elem('TextField')(self.rect.x+48, self.rect.y, 108, 24, 13, 'traitName', f'Change the name of the trait', 'Txt')
+                    UIElement.get_ui_elem('TextField')(self.rect.x+48, self.rect.y, 108, 24, 13, 'traitName', f'Change the name of the trait', 'Txt')
                 ]
 
                 self.children[0].font = self.font
@@ -112,7 +112,7 @@ class CustomSettingAreaBox(UIBase):
                 self.create_appearance([[300, 72], '#1C4587', [6, 6]], [[300, 72], '#3C78D8', [0, 0]], colorKey = True, texts = [['TIER '+self.input_detail[4:]+' DESCRIPTION', [150, 12], 'center']])
 
                 self.children = [
-                    UIBase.get_ui_elem('LongTextField')(self.rect.x, self.rect.y+24, 300, 48, 28, 3, f'{self.input_detail[4:]}Desc', f'Change the description for tiers {self.input_detail[4:]}')
+                    UIElement.get_ui_elem('LongTextField')(self.rect.x, self.rect.y+24, 300, 48, 28, 3, f'{self.input_detail[4:]}Desc', f'Change the description for tiers {self.input_detail[4:]}')
                 ]
 
                 self.children[0].font = self.font
@@ -127,8 +127,8 @@ class CustomSettingAreaBox(UIBase):
                 _custom_data = _database.readlines()
 
         if self.type_input == 'ACTION':
-            for _elem in UIBase.get_group('ui'):
-                if isinstance(_elem, UIBase.get_ui_elem('ToggleButton')):
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_ui_elem('ToggleButton')):
                     if _elem.job == 'meleeToggle' and _elem.on == True:
                         if self.input_detail == 'action1':
                             if self.children[1].active == False:

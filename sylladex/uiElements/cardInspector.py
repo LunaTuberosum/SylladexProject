@@ -1,10 +1,10 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 import settings
 from sylladex.captchalogueCards import codeDatabase
 
-class CardInspector(UIBase):
+class CardInspector(UIElement):
     def __init__(self, code_data):
         super().__init__(settings.SCREEN_WIDTH-343, settings.SCREEN_HEIGHT / 2 - 219.5, (343, 447), 'CardInspector', (209,158,255))
 
@@ -12,13 +12,13 @@ class CardInspector(UIBase):
 
         self.code_data = code_data
         self.prev_desc_type = 'None'
-        UIBase.get_group('layer').change_layer(self, 3)
+        UIElement.get_group('layer').change_layer(self, 3)
 
         self.create_appearance(
             colorKey = True, 
             
             image = [
-                f'sylladex/uiElements/asset/{UIBase.get_modus()}/CARD_INSPECTOR.png', [0, 0]
+                f'sylladex/uiElements/asset/{UIElement.get_modus()}/CARD_INSPECTOR.png', [0, 0]
                 ], 
             
             texts = [
@@ -57,13 +57,13 @@ class CardInspector(UIBase):
             )
 
         self.children = [
-            UIBase.get_ui_elem('CardInspectorButton')(self),
-            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+71, 'Trait1'),
-            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+96, 'Trait2'),
-            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+232, 'Action1'),
-            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+257, 'Action2'),
-            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+232, 'Action3'),
-            UIBase.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+257, 'Action4'),
+            UIElement.get_ui_elem('CardInspectorButton')(self),
+            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+71, 'Trait1'),
+            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+96, 'Trait2'),
+            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+232, 'Action1'),
+            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+257, 'Action2'),
+            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+232, 'Action3'),
+            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+257, 'Action4'),
         ]
 
         codeDatabase.get_action_image(self.code_data.action_1, self, [51, 232])
@@ -90,7 +90,7 @@ class CardInspector(UIBase):
             self.image.blit(_diseff_icon, [124+(25*_index), 197])
 
     def update(self):
-        for _check in UIBase.get_ui_elem('CardInspectorCheck').checks:
+        for _check in UIElement.get_ui_elem('CardInspectorCheck').checks:
             if _check.selected == True:
                 if _check.job == 'Trait1' and self.prev_desc_type != 'Trait1':
                     self.prev_desc_type = 'Trait1'
@@ -108,7 +108,7 @@ class CardInspector(UIBase):
                             _lines.append(f'{_word}')
                             _cur_line += 1
                     
-                    self.change_desc(_lines, len(_lines))
+                    self.change_description(_lines, len(_lines))
 
                 elif _check.job == 'Trait2' and self.prev_desc_type != 'Trait2':
                     self.prev_desc_type = 'Trait2'
@@ -127,7 +127,7 @@ class CardInspector(UIBase):
                             _lines.append(f'{_word} ')
                             _cur_line += 1
 
-                    self.change_desc(_lines, len(_lines))
+                    self.change_description(_lines, len(_lines))
 
                 elif _check.job == 'Action1' and self.prev_desc_type != 'Action1':
                     self.prev_desc_type = 'Action1'
@@ -147,7 +147,7 @@ class CardInspector(UIBase):
                             _lines.append(f'{_word} ')
                             _cur_line += 1
 
-                    self.change_desc(_lines, len(_lines), True, _action_info)
+                    self.change_description(_lines, len(_lines), True, _action_info)
 
                 elif _check.job == 'Action2' and self.prev_desc_type != 'Action2':
                     self.prev_desc_type = 'Action2'
@@ -169,7 +169,7 @@ class CardInspector(UIBase):
 
                     print(_lines)
 
-                    self.change_desc(_lines, len(_lines), True, _action_info)
+                    self.change_description(_lines, len(_lines), True, _action_info)
 
                 elif _check.job == 'Action3' and self.prev_desc_type != 'Action3':
                     self.prev_desc_type = 'Action3'
@@ -189,7 +189,7 @@ class CardInspector(UIBase):
                             _lines.append(f'{_word} ')
                             _cur_line += 1
 
-                    self.change_desc(_lines, len(_lines), True, _action_info)
+                    self.change_description(_lines, len(_lines), True, _action_info)
 
                 elif _check.job == 'Action4' and self.prev_desc_type != 'Action4':
                     self.prev_desc_type = 'Action4'
@@ -209,19 +209,19 @@ class CardInspector(UIBase):
                             _lines.append(f'{_word} ')
                             _cur_line += 1
 
-                    self.change_desc(_lines, len(_lines), True, _action_info)
+                    self.change_description(_lines, len(_lines), True, _action_info)
                 return
 
         if self.prev_desc_type != 'None':
-            self.change_desc('/', 1)
+            self.change_description('/', 1)
             self.prev_desc_type = 'None'
 
-    def change_desc(self, new_desc, line_count, is_action = False, action_data = None):
+    def change_description(self, new_desc, line_count, is_action = False, action_data = None):
         self.create_appearance(
             colorKey = True, 
             
             image = [
-                f'sylladex/uiElements/asset/{UIBase.get_modus()}/CARD_INSPECTOR.png', [0, 0]
+                f'sylladex/uiElements/asset/{UIElement.get_modus()}/CARD_INSPECTOR.png', [0, 0]
                 ], 
             
             texts = [
@@ -285,7 +285,7 @@ class CardInspector(UIBase):
             self.create_appearance(texts = [[new_desc[3], [192, 368], 'center']])
 
         for _child in self.children:
-            if isinstance(_child, UIBase.get_ui_elem('ActionIcon')):
+            if isinstance(_child, UIElement.get_ui_elem('ActionIcon')):
                 _no_action = True
                 break
             else:

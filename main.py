@@ -2,17 +2,18 @@ import pygame as pg
 import settings
 from sylladex import sylladexMain
 
-from baseUI import UIBase
+from uiElement import UIElement
 
 from sylladex.captchalogueCards import codeDatabase
-
-from sylladex.uiElements.debugUIInspector import DebugUIInspector
 from sylladex.uiElements.listObject import CodeData
 
-UIBase.CodeDatabase = codeDatabase
-UIBase.CodeData = CodeData
+from sylladex.uiElements.debugUIInspector import DebugUIInspector
 
-UIBase.DebugUIInspector = DebugUIInspector
+
+UIElement.CodeDatabase = codeDatabase
+UIElement.CodeData = CodeData
+
+UIElement.DebugUIInspector = DebugUIInspector
 
 pg.init()
 

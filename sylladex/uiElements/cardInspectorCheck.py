@@ -1,8 +1,8 @@
-from baseUI import UIBase
+from uiElement import UIElement
 
 import pygame as pg
 
-class CardInspectorCheck(UIBase):
+class CardInspectorCheck(UIElement):
     __checks = []
 
     def __init__(self, x, y, job):
@@ -11,7 +11,7 @@ class CardInspectorCheck(UIBase):
         self.create_appearance([[16, 16], '#434343', [4,4]], [[12, 12], '#ffffff', [6, 6]], colorKey = True)
 
         CardInspectorCheck.__checks.append(self)
-        UIBase.get_group('layer').change_layer(self, 4)
+        UIElement.get_group('layer').change_layer(self, 4)
 
         self.job = job
 

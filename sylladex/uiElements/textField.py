@@ -1,8 +1,8 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
-class TextField(UIBase):
+class TextField(UIElement):
 
     def __init__(self, x: int, y: int, size: tuple, job: str, tool_tip_text: str, max_char: int, **kargs):
         super().__init__(x, y, f'TextField ({job})', kargs['layerChange'] if 'layerChange' in kargs else 1)
@@ -83,8 +83,8 @@ class TextField(UIBase):
     # def exit_field(self):
     #     self.active = False
         
-    #     for elem in UIBase.get_group("ui"):
-    #         if isinstance(elem, UIBase.get_uiElem('CardList')) and self.job == "numOfCards":
+    #     for elem in UIElement.get_group("ui"):
+    #         if isinstance(elem, UIElement.get_uiElem('CardList')) and self.job == "numOfCards":
     #             amount = int(self.text) - len(elem.children)
     #             if amount < 0:
     #                 for removeCard in range(0, amount*-1):
@@ -92,64 +92,64 @@ class TextField(UIBase):
     #                 elem.place_list()
     #             else:
     #                 for newCard in range(0, amount):
-    #                     elem.add_toList()
+    #                     elem.add_to_list()
 
-    #         elif isinstance(elem, UIBase.get_uiElem('ToggleButton')):
+    #         elif isinstance(elem, UIElement.get_uiElem('ToggleButton')):
     #             if elem.job == 'meleeToggle':
     #                 if elem.on == True:
     #                     if self.job == 'action1Cost':
-    #                         UIBase.CodeDatabase.change_codeValue('Melee 1 Cost', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Melee 1 Cost', self.text)
     #                     elif self.job == 'action1Dmg':
-    #                         UIBase.CodeDatabase.change_codeValue('Melee 1 Dmg', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Melee 1 Dmg', self.text)
     #                     elif self.job == 'action2Cost':
-    #                         UIBase.CodeDatabase.change_codeValue('Melee 2 Cost', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Melee 2 Cost', self.text)
     #                     elif self.job == 'action2Dmg':
-    #                         UIBase.CodeDatabase.change_codeValue('Melee 2 Dmg', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Melee 2 Dmg', self.text)
     #             elif elem.job == 'rangedToggle':
     #                 if elem.on == True:
     #                     if self.job == 'action1Cost':
-    #                         UIBase.CodeDatabase.change_codeValue('Ranged 1 Cost', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Ranged 1 Cost', self.text)
     #                     elif self.job == 'action1Dmg':
-    #                         UIBase.CodeDatabase.change_codeValue('Ranged 1 Dmg', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Ranged 1 Dmg', self.text)
     #                     elif self.job == 'action2Cost':
-    #                         UIBase.CodeDatabase.change_codeValue('Ranged 2 Cost', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Ranged 2 Cost', self.text)
     #                     elif self.job == 'action2Dmg':
-    #                         UIBase.CodeDatabase.change_codeValue('Ranged 2 Dmg', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Ranged 2 Dmg', self.text)
     #             elif elem.job == 'magicToggle':
     #                 if elem.on == True:
     #                     if self.job == 'action1Cost':
-    #                         UIBase.CodeDatabase.change_codeValue('Magic 1 Cost', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Magic 1 Cost', self.text)
     #                     elif self.job == 'action1Dmg':
-    #                         UIBase.CodeDatabase.change_codeValue('Magic 1 Dmg', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Magic 1 Dmg', self.text)
     #                     elif self.job == 'action2Cost':
-    #                         UIBase.CodeDatabase.change_codeValue('Magic 2 Cost', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Magic 2 Cost', self.text)
     #                     elif self.job == 'action2Dmg':
-    #                         UIBase.CodeDatabase.change_codeValue('Magic 2 Dmg', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Magic 2 Dmg', self.text)
 
     #             elif elem.job == 't1Toggle':
     #                 if elem.on == True:
     #                     if self.job == 'traitName':
-    #                         UIBase.CodeDatabase.change_codeValue('Trait 1 Name', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Trait 1 Name', self.text)
     #             elif elem.job == 't2Toggle':
     #                 if elem.on == True:
     #                     if self.job == 'traitName':
-    #                         UIBase.CodeDatabase.change_codeValue('Trait 2 Name', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Trait 2 Name', self.text)
     #             elif elem.job == 't3Toggle':
     #                 if elem.on == True:
     #                     if self.job == 'traitName':
-    #                         UIBase.CodeDatabase.change_codeValue('Trait 3 Name', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Trait 3 Name', self.text)
     #             elif elem.job == 't4Toggle':
     #                 if elem.on == True:
     #                     if self.job == 'traitName':
-    #                         UIBase.CodeDatabase.change_codeValue('Trait 4 Name', self.text)
+    #                         UIElement.CodeDatabase.change_codeValue('Trait 4 Name', self.text)
 
     #     if self.job == 'kind1Name':
-    #         UIBase.CodeDatabase.change_codeValue('Customkind 1', self.text)
+    #         UIElement.CodeDatabase.change_codeValue('Customkind 1', self.text)
     #         self.job = f'{self.text}Name'
     #         self.objName = f'TextField ({self.job})'
     #         self.tool_tip_text = f'Changes the name of {self.text}'
     #     elif self.job == 'kind2Name':
-    #         UIBase.CodeDatabase.change_codeValue('Customkind 2', self.text)
+    #         UIElement.CodeDatabase.change_codeValue('Customkind 2', self.text)
     #         self.job = f'{self.text}Name'
     #         self.objName = f'TextField ({self.job})'
     #         self.tool_tip_text = f'Changes the name of {self.text}'
@@ -195,19 +195,19 @@ class TextField(UIBase):
     #                     self.text = self.text[1:]
 
     #             if len(self.job) > 6 and self.job[-6:] == 'NumBox':
-    #                 for elem in UIBase.get_group('ui'):
-    #                     if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
+    #                 for elem in UIElement.get_group('ui'):
+    #                     if isinstance(elem, UIElement.get_uiElem('GristCacheLimit')):
     #                         if self.text > elem.limitNum:
     #                             self.text = elem.limitNum
     #                             self.draw()
-    #                         for elem in UIBase.get_group('ui'):
-    #                             if isinstance(elem, UIBase.get_uiElem('GristCache')):
+    #                         for elem in UIElement.get_group('ui'):
+    #                             if isinstance(elem, UIElement.get_uiElem('GristCache')):
     #                                 elem.save_cache()
                             
     #             if self.text == "":
     #                 if self.job == 'traitName':
-    #                     for elem in UIBase.get_group('ui'):
-    #                         if isinstance(elem, UIBase.get_uiElem('ToggleButton')):
+    #                     for elem in UIElement.get_group('ui'):
+    #                         if isinstance(elem, UIElement.get_uiElem('ToggleButton')):
     #                             if elem.job == 't1Toggle' and elem.on == True: 
     #                                 self.text = 'CUSTOM TRAIT 1'
     #                                 self.no_hover()
@@ -224,8 +224,8 @@ class TextField(UIBase):
     #                 elif self.text_type == 'Num':
     #                     self.text = self.defult_text
     #                     self.draw()
-    #                     for elem in UIBase.get_group('ui'):
-    #                         if isinstance(elem, UIBase.get_uiElem('GristCache')):
+    #                     for elem in UIElement.get_group('ui'):
+    #                         if isinstance(elem, UIElement.get_uiElem('GristCache')):
     #                             elem.save_cache()
     #                 elif self.text_type == 'Txt':
     #                     self.text = self.defult_text
@@ -233,7 +233,7 @@ class TextField(UIBase):
     #             return
 
     #         elif event.key == pg.K_TAB:
-    #             if pg.time.get_ticks() - UIBase.prevTick >= 1:
+    #             if pg.time.get_ticks() - UIElement.prevTick >= 1:
     #                 if self.job == 'nameOverlay':
     #                     nextText = 'codeOverlay'
     #                 elif self.job == 'codeOverlay':
@@ -241,14 +241,14 @@ class TextField(UIBase):
     #                 elif self.job == 'tierOverlay':
     #                     nextText = 'nameOverlay'
 
-    #                 for elem in UIBase.get_group('ui'):
-    #                     if isinstance(elem, UIBase.get_uiElem('TextField')):
+    #                 for elem in UIElement.get_group('ui'):
+    #                     if isinstance(elem, UIElement.get_uiElem('TextField')):
     #                         if elem.job == nextText:
     #                             elem.on_click()
     #                             elem.draw()
     #                             self.exit_field()
     #                             self.no_hover()
-    #                             UIBase.prevTick = pg.time.get_ticks()
+    #                             UIElement.prevTick = pg.time.get_ticks()
 
     #         else:
     #             if event.key != pg.K_RETURN and len(self.text) < self.max_char:

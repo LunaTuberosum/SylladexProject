@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class GristInfoBox(UIBase):
+class GristInfoBox(UIElement):
     def __init__(self, x: int, y: int, grist: str):
         super().__init__(x, y, 'GristInfoBox', 0)
 
@@ -27,7 +27,7 @@ class GristInfoBox(UIBase):
 
         self.children = []
 
-        self.children.append(UIBase.get_ui_elem('TextField')(
+        self.children.append(UIElement.get_ui_elem('TextField')(
             self.rect.x+53, 
             self.rect.y+48, 
             [111, 36], 
@@ -39,7 +39,7 @@ class GristInfoBox(UIBase):
             textType='Num',
             baseColors=[(239,239,239), (199,199,199), (179,179,179)],
             align='center',
-            exitCommand=UIBase.find_cur_ui('GristCache').save_cache
+            exitCommand=UIElement.find_current_ui('GristCache').save_cache
             ))
 
-        self.children.append(UIBase.get_ui_elem('GristProgressBar')(self))
+        self.children.append(UIElement.get_ui_elem('GristProgressBar')(self))

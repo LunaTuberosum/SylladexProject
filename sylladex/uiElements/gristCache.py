@@ -2,11 +2,11 @@ from sqlite3 import DatabaseError
 import pygame as pg
 import pickle
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 from sylladex.uiElements.sideBar import SideBar
 
 
-class GristCache(UIBase):
+class GristCache(UIElement):
     def __init__(self, x):
         super().__init__(x, 626, 'GristCache', 0)
 
@@ -22,17 +22,17 @@ class GristCache(UIBase):
 
         self.children = []
 
-        self.children.append(UIBase.get_ui_elem('GristCacheLimit')())
+        self.children.append(UIElement.get_ui_elem('GristCacheLimit')())
 
         for _index, grist in enumerate(['Build', 'Shale', 'Ruby', 'Cobalt', 'Chalk', 'Marble', 'Iron', 'Amber', 'Caulk', 'Tar', 'Uranium', 'Amethyst', 'Garnet', 'Artifact', 'Zillium', 'Diamond']):
-            if _index < 4: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*_index), 692, grist))
-            elif _index < 8: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-4)), 789, grist))
-            elif _index < 12: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-8)), 885, grist))
-            elif _index < 16: self.children.append(UIBase.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-12)), 982, grist))
+            if _index < 4: self.children.append(UIElement.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*_index), 692, grist))
+            elif _index < 8: self.children.append(UIElement.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-4)), 789, grist))
+            elif _index < 12: self.children.append(UIElement.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-8)), 885, grist))
+            elif _index < 16: self.children.append(UIElement.get_ui_elem('GristInfoBox')((self.rect.x+9)+(174*(_index-12)), 982, grist))
 
         self.load_list()
 
-        if UIBase.check_for_ui('SideBar'):
+        if UIElement.check_for_ui('SideBar'):
             self.to_be_rect = 326
         else:
             self.to_be_rect = 0
@@ -40,17 +40,17 @@ class GristCache(UIBase):
     def update(self):
         
         if self.to_be_rect != self.rect.x:
-            self.rect.x = UIBase.lerp(self.rect.x, self.to_be_rect, 0.2)
+            self.rect.x = UIElement.lerp(self.rect.x, self.to_be_rect, 0.2)
             self.reposition_children()
-            UIBase.find_cur_ui('GristCacheButton').rect.x = self.rect.right
+            UIElement.find_current_ui('GristCacheButton').rect.x = self.rect.right
 
         else:
             if self.to_be_rect == -719 or self.to_be_rect == -392:
-                UIBase.remove_from_group(self)
+                UIElement.remove_from_group(self)
 
     def save_cache(self):
         _data = []
-        UIBase.get_ui_elem('ConsoleMessage')('Saved Cache')
+        UIElement.get_ui_elem('ConsoleMessage')('Saved Cache')
 
         for _index, _child in enumerate(self.children):
             if _index > 0:

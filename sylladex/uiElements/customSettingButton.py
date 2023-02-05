@@ -1,9 +1,9 @@
 import pygame as pg
 
-from baseUI import UIBase, Apperance
+from uiElement import UIElement, Apperance
 
 
-class CustomSettingButton(UIBase):
+class CustomSettingButton(UIElement):
     def __init__(self):
         super().__init__(0, 50, 'CustomSettingButton')
 
@@ -31,25 +31,25 @@ class CustomSettingButton(UIBase):
         if self.tool_tip_text == 'Open custom card code settings':
             self.rect.x = 342
             self.tool_tip_text = 'Close custom card code settings'
-            for _elem in UIBase.get_group('ui'):
-                if isinstance(_elem, UIBase.get_ui_elem('SideBar')):
-                    UIBase.get_ui_elem('CustomSettingMenu')(326)
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_ui_elem('SideBar')):
+                    UIElement.get_ui_elem('CustomSettingMenu')(326)
                     self.rect.x = 668
                     return
-            UIBase.get_ui_elem('CustomSettingMenu')(0)
+            UIElement.get_ui_elem('CustomSettingMenu')(0)
 
         elif self.tool_tip_text == 'Close custom card code settings':
 
             self.rect.x = 0
-            for _elem in UIBase.get_group('ui'):
-                if isinstance(_elem, UIBase.get_ui_elem('CustomSettingMenu')):
-                    UIBase.remove_from_group(_elem)
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_ui_elem('CustomSettingMenu')):
+                    UIElement.remove_from_group(_elem)
                     for _child in _elem.children:
-                        UIBase.remove_from_group(_child)
+                        UIElement.remove_from_group(_child)
                         if hasattr(_child, 'children'):
                             for _child in _child.children:
-                                UIBase.remove_from_group(_child)
-                elif isinstance(_elem, UIBase.get_ui_elem('SideBar')):
+                                UIElement.remove_from_group(_child)
+                elif isinstance(_elem, UIElement.get_ui_elem('SideBar')):
                     self.rect.x = 326        
             
             self.tool_tip_text = 'Open custom card code settings'
