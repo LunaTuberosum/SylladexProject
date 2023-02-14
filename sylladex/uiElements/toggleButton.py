@@ -10,7 +10,7 @@ class ToggleButton(UIElement):
             x, 
             y,
             f'ToggleButton ({job})', 
-            4
+            2
             )
 
         self.job = job

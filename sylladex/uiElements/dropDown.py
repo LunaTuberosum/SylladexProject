@@ -9,7 +9,7 @@ class OptionToggle(UIElement):
             x, 
             y, 
             f'DropDown ({job})',
-            4
+            2
             )
 
         self.job = job

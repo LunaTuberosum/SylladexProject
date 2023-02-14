@@ -10,7 +10,8 @@ class ActionIcon(UIElement):
             x, 
             y, 
             f'ActionIcon ({job})',
-            4)
+            2
+            )
 
         self.job = job
         self.active = False
