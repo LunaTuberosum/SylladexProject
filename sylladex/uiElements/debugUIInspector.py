@@ -10,8 +10,7 @@ class DebugUIInspector(UIElement):
         self.create_appearance([[150,150], (50,50,50), [0,0]], alpha = 130)
 
         self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-
-        self.children = []
+        
         self.current_inspectie = elem
 
         self.children.append(self.font.render(f'Name: {self.current_inspectie.objName}', False, 'white'))

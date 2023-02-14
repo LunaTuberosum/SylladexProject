@@ -10,8 +10,8 @@ class EscapeMenu(UIElement):
         
         UIElement.get_group('layer').change_layer(self, 3)
 
-        self.children = [
-            UIElement.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+110,'Settings'),
-            UIElement.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+171,'Tutorials'),
-            UIElement.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+232,'To Desktop'),
-            UIElement.get_ui_elem('EscapeMenuOption')(self.rect.x+110,self.rect.y+293,'Log Out'),]
+        
+        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 110,'Settings'))
+        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 171,'Tutorials'))
+        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 232,'To Desktop'))
+        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 293,'Log Out'))

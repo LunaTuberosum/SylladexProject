@@ -51,22 +51,22 @@ class CustomSettingAreaBox(UIElement):
                 _curImage = _custom_data[1].split(',')[1]
                 _curKind = _custom_data[0].split(',')[2]
 
-            self.children = [
-                UIElement.get_ui_elem('OptionToggle')(
-                    self.rect.x, 
-                    self.rect.y, 
+            
+                self.add_child(UIElement.get_ui_elem('DropDown')(
+                    0, 
+                    0, 
                     [24, 24], 
                     f'{self.input_detail}Icon',
                     '#C9DAF8', 
                     list(UIElement.CodeDatabase.kind_image.keys()), 
                     _curImage,
-                     _curKind, 
-                     'Image'
-                     ),
+                    _curKind, 
+                    'Image'
+                    ))
                 
-                UIElement.get_ui_elem('TextField')(
-                    self.rect.x+72, 
-                    self.rect.y, 
+                self.add_child(UIElement.get_ui_elem('TextField')(
+                    72, 
+                    0, 
                     [106, 24], 
                     f'{self.input_detail}Name',
                     f'Changes the name of {_curKind}', 
@@ -80,20 +80,20 @@ class CustomSettingAreaBox(UIElement):
                         '#D9E2F1',
                         '#9CB0D5',
                     ]
-                    ),
+                    ))
 
-                UIElement.get_ui_elem('OptionToggle')(
-                    self.rect.x+226, 
-                    self.rect.y, 
+                self.add_child(UIElement.get_ui_elem('DropDown')(
+                    226, 
+                    0, 
                     [48, 24], 
                     f'{self.input_detail}Type',
                     '#C9DAF8',
-                     ['NA','MELEE','RANGED','MAGIC'], 
-                     UIElement.CodeDatabase.get_weapon_type(_curKind), 
-                     _curKind, 
-                     'Text'
-                     )
-            ]
+                    ['NA','MELEE','RANGED','MAGIC'], 
+                    UIElement.CodeDatabase.get_weapon_type(_curKind), 
+                    _curKind, 
+                    'Text'
+                    ))
+            
 
         elif self.type_input == 'ACTION':
 

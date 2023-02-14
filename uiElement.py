@@ -112,10 +112,13 @@ class UIElement(pg.sprite.Sprite):
         ):
 
         super().__init__()
+        
         UIElement.add_to_group(self)
         UIElement.change_layer(self, startLayer)
 
         self.obj_name = obj_name
+
+        self.children = []
 
         self.rect = [x, y]
         self.apperance = None
@@ -123,9 +126,20 @@ class UIElement(pg.sprite.Sprite):
         self.clock = pg.time.Clock()
         self.current_tick = 0
 
+    def add_child(self, elem):
+        self.children.append(elem)
+
+        elem.rect.x += self.rect.x
+        elem.rect.y += self.rect.y
+
+        if UIElement.has_children(elem):
+            for child in elem.children:
+                child.rect.x += self.rect.x
+                child.rect.y += self.rect.y
+
     @classmethod
     def move_element(cls, elem: object, moveAmount: list):
-        if hasattr(elem, 'children'):
+        if UIElement.has_children(elem):
             _child_offsets = []
             for _child in elem.children:
                 _child_offsets.append([
@@ -135,7 +149,7 @@ class UIElement(pg.sprite.Sprite):
         elem.rect.x = moveAmount[0]
         elem.rect.y = moveAmount[1]
 
-        if hasattr(elem, 'children'):
+        if UIElement.has_children(elem):
             for _index, _child in enumerate(elem.children):
                 UIElement.move_element(
                     _child,
@@ -201,9 +215,32 @@ class UIElement(pg.sprite.Sprite):
         cls.get_group("ui").remove(elem)
         cls.get_group("layer").remove(elem)
 
-        if hasattr(elem, 'children'):
+        if UIElement.has_children(elem):
             for _child in elem.children:
                 UIElement.remove_from_group(_child)
+
+    @classmethod
+    def has_children(cls, elem: object) -> bool:
+        if len(elem.children) > 0:
+            return True
+        return False
+
+    @classmethod
+    def get_parent(cls, elem: object) -> object:
+        for _elem in UIElement.get_group('ui'):
+            if len(_elem.children) > 0:
+                for child in _elem.children:
+                    if child == elem:
+                        return _elem
+
+    @classmethod
+    def is_child(cls, elem: object) -> bool:
+        for _elem in UIElement.get_group('ui'):
+            if len(_elem.children) > 0:
+                for child in _elem.children:
+                    if child == elem:
+                        return True
+        return False
 
     @staticmethod
     def lerp(start_point: int, end_point: int, speed: float) -> int:

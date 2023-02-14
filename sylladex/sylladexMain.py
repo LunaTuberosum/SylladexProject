@@ -10,7 +10,7 @@ from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
 from .uiElements.cardInspector import CardInspector
 from .uiElements.cardInspectorButton import CardInspectorButton
-from sylladex.uiElements.cardInspectorCheck import CardInspectorCheck
+from .uiElements.cardInspectorCheck import CardInspectorCheck
 from .uiElements.cardList import CardList
 from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
@@ -18,6 +18,7 @@ from .uiElements.customSettingAreaBox import CustomSettingAreaBox
 from .uiElements.customSettingButton import CustomSettingButton
 from .uiElements.customSettingMenu import CustomSettingMenu
 from .uiElements.customSettingSectionName import CustomSettingSectionName
+from .uiElements.dropDown import DropDown
 from .uiElements.escapeMenu import EscapeMenu
 from .uiElements.escapeMenuOption import EscapeMenuOption
 from .uiElements.gristCache import GristCache
@@ -28,7 +29,6 @@ from .uiElements.gristProgressBar import GristProgressBar
 from .uiElements.listObject import ListObject
 from .uiElements.longTextField import LongTextField
 from .uiElements.modusCard import ModusCard
-from .uiElements.optionToggle import OptionToggle
 from .uiElements.popUp import PopUp
 from .uiElements.removeCardButton import RemoveCardButton
 from .uiElements.scrollBar import ScrollBar
@@ -53,6 +53,7 @@ UIElement.add_current_ui([
     CustomSettingButton, 
     CustomSettingMenu, 
     CustomSettingSectionName, 
+    DropDown,
     EscapeMenu, 
     EscapeMenuOption, 
     GristCache, 
@@ -63,7 +64,6 @@ UIElement.add_current_ui([
     ListObject, 
     LongTextField, 
     ModusCard, 
-    OptionToggle, 
     PopUp, 
     RemoveCardButton, 
     ScrollBar, 

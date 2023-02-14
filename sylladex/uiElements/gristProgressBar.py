@@ -10,7 +10,11 @@ class GristProgressBar(UIElement):
 
         self.progress = int(self.parent.children[0].text) / int(UIElement.find_current_ui('GristCacheLimit').limit_num)
 
-        super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, f'GristProgressBar ({self.parent.grist})', 1)
+        super().__init__(
+            59, 
+            30, 
+            f'GristProgressBar ({self.parent.grist})', 
+            1)
 
         self.apperance = Apperance(
             self,

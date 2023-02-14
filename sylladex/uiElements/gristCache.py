@@ -26,9 +26,7 @@ class GristCache(UIElement):
             texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']]
             )
 
-        self.children = []
-
-        self.children.append(UIElement.get_ui_elem('GristCacheLimit')(self.rect.x + 212, self.rect.y + 16))
+        self.add_child(UIElement.get_ui_elem('GristCacheLimit')(212, 16))
 
         for _index, grist in enumerate(
             ['Build', 'Shale', 'Ruby', 'Cobalt', 
@@ -37,28 +35,28 @@ class GristCache(UIElement):
             'Garnet', 'Artifact', 'Zillium', 'Diamond']):
 
             if _index < 4: 
-                self.children.append(
+                self.add_child(
                     UIElement.get_ui_elem('GristInfoBox')(
-                        (self.rect.x+9)+(174*_index), 
-                        self.rect.y + 66, 
+                        (9)+(174*_index), 
+                        66, 
                         grist))
             elif _index < 8: 
-                self.children.append(
+                self.add_child(
                     UIElement.get_ui_elem('GristInfoBox')(
-                        (self.rect.x+9)+(174*(_index-4)), 
-                        self.rect.y + 163, 
+                        (9)+(174*(_index-4)), 
+                        163, 
                         grist))
             elif _index < 12: 
-                self.children.append(
+                self.add_child(
                     UIElement.get_ui_elem('GristInfoBox')(
-                        (self.rect.x+9)+(174*(_index-8)), 
-                        self.rect.y + 259, 
+                        (9)+(174*(_index-8)), 
+                        259, 
                         grist))
             elif _index < 16: 
-                self.children.append(
+                self.add_child(
                     UIElement.get_ui_elem('GristInfoBox')(
-                        (self.rect.x+9)+(174*(_index-12)), 
-                        self.rect.y + 356, 
+                        (9)+(174*(_index-12)), 
+                        356, 
                         grist))
 
         self.load_cache()
