@@ -2,7 +2,7 @@ import pygame as pg
 
 from uiElement import UIElement, Apperance
 
-class OptionToggle(UIElement):
+class DropDown(UIElement):
     def __init__(self, x: int, y: int, size: list, job: str, color: str, options: list, defult_option: str, custom_obj: str, show_type: str):
         
         super().__init__(

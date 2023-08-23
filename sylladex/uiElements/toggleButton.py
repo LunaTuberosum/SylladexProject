@@ -6,35 +6,77 @@ from uiElement import UIElement, Apperance
 class ToggleButton(UIElement):
     def __init__(self, x: int, y: int, job: str, text: str):
 
-        super().__init__(
-            x, 
-            y,
-            f'ToggleButton ({job})', 
-            2
-            )
-
         self.job = job
         self.text = text
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
+        super().__init__(
+            x,
+            y,
+            f'ToggleButton ({job}Toggle)',
+            2
+        )
+
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
         self.apperance = Apperance(
             self,
-            [30,30],
-            [[24,24], '#1C4587', [6,6]], 
-            [[24,24], '#3C78D8', [0,0]], 
-            colorKey = True,
-            texts = [[self.text, [12, 12], 'center', '#000000']], 
-            )
+            [30, 30],
+            [[24, 24], '#1C4587', [6, 6]],
+            [[24, 24], '#3C78D8', [0, 0]],
+            colorKey=True,
+            texts=[[self.text, [12, 12], 'center', '#000000']],
+        )
 
         self.on = False
         self.hovering = False
 
+    def check_if_toggle(self, section):
+        for _elem in UIElement.get_group("ui"):
+            if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == section:
+                if _elem.cur_toggle == self.text:
+                    if self.on == True:
+                        return
+                    self.on = True
+                    self.apperance.size_color_pos = [
+                        [[24, 24], '#1C4587', [6, 6]],
+                        [[24, 24], '#C9DAF8', [0, 0]],
+                    ]
+                else:
+                    if self.on == False:
+                        return
+                    self.on = False
+                    self.apperance.size_color_pos = [
+                        [[24, 24], '#1C4587', [6, 6]],
+                        [[24, 24], '#3C78D8', [0, 0]],
+                    ]
+                self.apperance.reload_apperance()
+
+    def update(self):
+        if self.job == "melee" or self.job == "ranged" or self.job == "magic":
+            self.check_if_toggle("ACTIONS")
+        elif self.job == "t1" or self.job == "t2" or self.job == "t3" or self.job == "t4":
+            self.check_if_toggle("TRAITS")
+
+    def on_click(self):
+        if self.job == "melee" or self.job == "ranged" or self.job == "magic":
+            for _elem in UIElement.get_group("ui"):
+                if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == "ACTIONS":
+                    _elem.cur_toggle = self.text
+                    _elem.apperance.kargs['texts'] = [[f"CUSTOM {(self.job).upper()} ACTIONS", [
+                        90, 12], 'center', '#000000']]
+                    _elem.apperance.reload_apperance()
+
+        elif self.job == "t1" or self.job == "t2" or self.job == "t3" or self.job == "t4":
+            for _elem in UIElement.get_group("ui"):
+                if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == "TRAITS":
+                    _elem.cur_toggle = self.text
+
     def hover(self):
         if self.on == False:
             self.apperance.size_color_pos = [
-                [[24,24], '#1C4587', [6,6]], 
-                [[24,24], '#C9DAF8', [0,0]], 
+                [[24, 24], '#1C4587', [6, 6]],
+                [[24, 24], '#C9DAF8', [0, 0]],
             ]
             self.apperance.reload_apperance()
 
@@ -43,124 +85,9 @@ class ToggleButton(UIElement):
     def no_hover(self):
         if self.on == False:
             self.apperance.size_color_pos = [
-                [[24,24], '#1C4587', [6,6]], 
-                [[24,24], '#3C78D8', [0,0]], 
+                [[24, 24], '#1C4587', [6, 6]],
+                [[24, 24], '#3C78D8', [0, 0]],
             ]
             self.apperance.reload_apperance()
 
             self.hovering = False
-
-    # def on_click(self):
-    #     with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-    #         _custom_data = _database.readlines()
-
-    #     if self.job == 'meleeToggle' or self.job == 'rangedToggle' or self.job == 'magicToggle':
-    #         if self.on == False:
-    #             for elem in UIElement.get_group('ui'):
-    #                 if isinstance(elem, UIElement.get_uiElem('ToggleButton')):
-                        
-    #                     if elem.job == 'meleeToggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-    #                     elif elem.job == 'rangedToggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-    #                     elif elem.job == 'magicToggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-
-    #                 if isinstance(elem, UIElement.get_uiElem('ActionIcon')):
-    #                     if elem.job == 'action1Icon':
-    #                         if self.job == 'meleeToggle': elem.text = _custom_data[2].split(',')[0][2:]
-    #                         elif self.job == 'rangedToggle': elem.text = _custom_data[3].split(',')[0][2:]
-    #                         elif self.job == 'magicToggle': elem.text = _custom_data[4].split(',')[0][2:]
-    #                         elem.draw()
-    #                     elif elem.job == 'action2Icon':
-    #                         if self.job == 'meleeToggle': elem.text = _custom_data[2].split(',')[4][2:]
-    #                         elif self.job == 'rangedToggle': elem.text = _custom_data[3].split(',')[4][2:]
-    #                         elif self.job == 'magicToggle': elem.text = _custom_data[4].split(',')[4][2:]
-    #                         elem.draw()
-
-    #                 elif isinstance(elem, UIElement.get_uiElem('TextField')):
-    #                     if elem.job == 'action1Cost':
-    #                         if self.job == 'meleeToggle': elem.text = _custom_data[2].split(',')[1]
-    #                         elif self.job == 'rangedToggle': elem.text = _custom_data[3].split(',')[1]
-    #                         elif self.job == 'magicToggle': elem.text = _custom_data[4].split(',')[1]
-    #                         elem.no_hover()
-    #                     elif elem.job == 'action2Cost':
-    #                         if self.job == 'meleeToggle': elem.text = _custom_data[2].split(',')[5]
-    #                         elif self.job == 'rangedToggle': elem.text = _custom_data[3].split(',')[5]
-    #                         elif self.job == 'magicToggle': elem.text = _custom_data[4].split(',')[5]
-    #                         elem.no_hover()
-
-    #                     elif elem.job == 'action1Dmg':
-    #                         if self.job == 'meleeToggle': elem.text = _custom_data[2].split(',')[2]
-    #                         elif self.job == 'rangedToggle': elem.text = _custom_data[3].split(',')[2]
-    #                         elif self.job == 'magicToggle': elem.text = _custom_data[4].split(',')[2]
-    #                         elem.no_hover()
-    #                     elif elem.job == 'action2Dmg':
-    #                         if self.job == 'meleeToggle': elem.text = _custom_data[2].split(',')[6]
-    #                         elif self.job == 'rangedToggle': elem.text = _custom_data[3].split(',')[6]
-    #                         elif self.job == 'magicToggle': elem.text = _custom_data[4].split(',')[6]
-    #                         elem.no_hover()
-                    
-    #                 elif isinstance(elem, UIElement.get_uiElem('LongTextField')):
-    #                     if elem.job == 'action1Desc':
-    #                         if self.job == 'meleeToggle': elem.starter_text(_custom_data[2].split(',')[3])
-    #                         elif self.job == 'rangedToggle': elem.starter_text(_custom_data[3].split(',')[3])
-    #                         elif self.job == 'magicToggle': elem.starter_text(_custom_data[4].split(',')[3])
-    #                     elif elem.job == 'action2Desc':
-    #                         if self.job == 'meleeToggle': elem.starter_text(_custom_data[2].split(',')[7])
-    #                         elif self.job == 'rangedToggle': elem.starter_text(_custom_data[3].split(',')[7])
-    #                         elif self.job == 'magicToggle': elem.starter_text(_custom_data[4].split(',')[7])
-            
-    #     elif self.job == 't1Toggle' or self.job == 't2Toggle' or self.job == 't3Toggle' or self.job == 't4Toggle':
-    #         if self.on == False:
-    #             for elem in UIElement.get_group('ui'):
-    #                 if isinstance(elem, UIElement.get_uiElem('ToggleButton')):
-                        
-    #                     if elem.job == 't1Toggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-    #                     elif elem.job == 't2Toggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-    #                     elif elem.job == 't3Toggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-    #                     elif elem.job == 't4Toggle': 
-    #                         elem.on = False
-    #                         elem.no_hover()
-
-    #                 elif isinstance(elem, UIElement.get_uiElem('TextField')):
-    #                     if elem.job == 'traitName':
-    #                         if self.job == 't1Toggle': elem.text = _custom_data[5].split(',')[0]
-    #                         elif self.job == 't2Toggle': elem.text = _custom_data[6].split(',')[0]
-    #                         elif self.job == 't3Toggle': elem.text = _custom_data[7].split(',')[0]
-    #                         elif self.job == 't4Toggle': elem.text = _custom_data[8].split(',')[0]
-    #                         elem.no_hover()
-
-    #                 elif isinstance(elem, UIElement.get_uiElem('LongTextField')):
-    #                     if elem.job == '1-4Desc':
-    #                         if self.job == 't1Toggle': elem.starter_text(_custom_data[5].split(',')[1])
-    #                         elif self.job == 't2Toggle': elem.starter_text(_custom_data[6].split(',')[1])
-    #                         elif self.job == 't3Toggle': elem.starter_text(_custom_data[7].split(',')[1])
-    #                         elif self.job == 't4Toggle': elem.starter_text(_custom_data[8].split(',')[1])
-    #                     if elem.job == '5-8Desc':
-    #                         if self.job == 't1Toggle': elem.starter_text(_custom_data[5].split(',')[2])
-    #                         elif self.job == 't2Toggle': elem.starter_text(_custom_data[6].split(',')[2])
-    #                         elif self.job == 't3Toggle': elem.starter_text(_custom_data[7].split(',')[2])
-    #                         elif self.job == 't4Toggle': elem.starter_text(_custom_data[8].split(',')[2])
-    #                     if elem.job == '9-12Desc':
-    #                         if self.job == 't1Toggle': elem.starter_text(_custom_data[5].split(',')[3])
-    #                         elif self.job == 't2Toggle': elem.starter_text(_custom_data[6].split(',')[3])
-    #                         elif self.job == 't3Toggle': elem.starter_text(_custom_data[7].split(',')[3])
-    #                         elif self.job == 't4Toggle': elem.starter_text(_custom_data[8].split(',')[3])
-    #                     if elem.job == '13-16Desc':
-    #                         if self.job == 't1Toggle': elem.starter_text(_custom_data[5].split(',')[4])
-    #                         elif self.job == 't2Toggle': elem.starter_text(_custom_data[6].split(',')[4])
-    #                         elif self.job == 't3Toggle': elem.starter_text(_custom_data[7].split(',')[4])
-    #                         elif self.job == 't4Toggle': elem.starter_text(_custom_data[8].split(',')[4])
-
-    #     self.hover()
-    #     self.on = True
