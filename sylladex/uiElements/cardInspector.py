@@ -55,16 +55,15 @@ class CardInspector(UIElement):
                 ['/', [192, 346], 'center'] #Max Char is 28
                 ]
             )
-
-        self.children = [
-            UIElement.get_ui_elem('CardInspectorButton')(self),
-            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+71, 'Trait1'),
-            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+81, self.rect.y+96, 'Trait2'),
-            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+232, 'Action1'),
-            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+27, self.rect.y+257, 'Action2'),
-            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+232, 'Action3'),
-            UIElement.get_ui_elem('CardInspectorCheck')(self.rect.x+159, self.rect.y+257, 'Action4'),
-        ]
+            
+        self.add_child(UIElement.get_ui_elem('CardInspectorButton')(self))
+        self.add_child(UIElement.get_ui_elem('CardInspectorCheck')(81, 71, 'Trait1'))
+        self.add_child(UIElement.get_ui_elem('CardInspectorCheck')(81, 96, 'Trait2'))
+        self.add_child(UIElement.get_ui_elem('CardInspectorCheck')(27, 232, 'Action1'))
+        self.add_child(UIElement.get_ui_elem('CardInspectorCheck')(27, 257, 'Action2'))
+        self.add_child(UIElement.get_ui_elem('CardInspectorCheck')(159, 232, 'Action3'))
+        self.add_child(UIElement.get_ui_elem('CardInspectorCheck')(159, 257, 'Action4'))
+        
 
         codeDatabase.get_action_image(self.code_data.action_1, self, [51, 232])
         codeDatabase.get_action_image(self.code_data.action_2, self, [51, 257])
