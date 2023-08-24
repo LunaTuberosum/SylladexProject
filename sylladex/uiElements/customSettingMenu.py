@@ -20,45 +20,44 @@ class CustomSettingMenu(UIElement):
             [[326, 732], '#1155CC', [0, 12]]
         )
 
-        self.children = [
-            UIElement.get_ui_elem('CustomSettingSectionName')(
-                self.rect.x + 12, self.rect.y + 36, 'WEAPONKINDS'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x + 12, self.rect.y + 66, "WEAPONKINDS", 'kind1'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x + 12, self.rect.y + 96, "WEAPONKINDS", 'kind2'),
-            UIElement.get_ui_elem('CustomSettingSectionName')(
-                self.rect.x + 12, self.rect.y + 126, 'ACTIONS'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+210, self.rect.y+126, 'melee', 'ME'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+240, self.rect.y+126, 'ranged', 'RA'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+270, self.rect.y+126, 'magic', 'MA'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x + 12, self.rect.y + 156, "ACTIONS", 'action1'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x + 12, self.rect.y + 258, "ACTIONS", 'action2'),
-            UIElement.get_ui_elem('CustomSettingSectionName')(
-                self.rect.x + 12, self.rect.y + 360, 'TRAITS'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+182, self.rect.y+390, 't1', '1'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+212, self.rect.y+390, 't2', '2'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+242, self.rect.y+390, 't3', '3'),
-            UIElement.get_ui_elem('ToggleButton')(
-                self.rect.x+272, self.rect.y+390, 't4', '4'),
-            # UIElement.get_ui_elem('CustomSettingAreaBox')(self, "TRAIT", 'name', 390),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x+12, self.rect.y+420, "TRAITS", 'tier 1-4'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x+12, self.rect.y+498, "TRAITS", 'tier 5-8'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x+12, self.rect.y+576, "TRAITS", 'tier 9-12'),
-            UIElement.get_ui_elem('CustomSettingAreaBox')(
-                self.rect.x+12, self.rect.y+654, "TRAITS", 'tier 13-16'),
-        ]
+        self.add_child(UIElement.get_ui_elem('CustomSettingSectionName')(
+            12, 36, 'WEAPONKINDS'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 66, "WEAPONKINDS", 'KIND1'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 96, "WEAPONKINDS", 'KIND2'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingSectionName')(
+            12, 126, 'ACTIONS'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            210, 126, 'melee', 'ME', 'Changes view to custom MELEE actions'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            240, 126, 'ranged', 'RA', 'Changes view to custom RANGED actions'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            270, 126, 'magic', 'MA', 'Changes view to custom MAGIC actions'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 156, "ACTIONS", 'ACTION1'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 258, "ACTIONS", 'ACTION2'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingSectionName')(
+            12, 360, 'TRAITS'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            182, 390, 'TRAIT1', '1',  'Changes view to custom TRAIT 1'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            212, 390, 'TRAIT2', '2',  'Changes view to custom TRAIT 2'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            242, 390, 'TRAIT3', '3',  'Changes view to custom TRAIT 3'))
+        self.add_child(UIElement.get_ui_elem('ToggleButton')(
+            272, 390, 'TRAIT4', '4',  'Changes view to custom TRAIT 4'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 390, "TRAITS", 'name'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 420, "TRAITS", 'tier 1-4'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 498, "TRAITS", 'tier 5-8'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 576, "TRAITS", 'tier 9-12'))
+        self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
+            12, 654, "TRAITS", 'tier 13-16'))
 
         if UIElement.find_current_ui('SideBar'):
             self.to_be_rect = 326

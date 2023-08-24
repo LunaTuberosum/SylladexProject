@@ -4,7 +4,7 @@ from uiElement import UIElement, Apperance
 
 
 class ToggleButton(UIElement):
-    def __init__(self, x: int, y: int, job: str, text: str):
+    def __init__(self, x: int, y: int, job: str, text: str, tool_tip_text: str):
 
         self.job = job
         self.text = text
@@ -30,6 +30,7 @@ class ToggleButton(UIElement):
 
         self.on = False
         self.hovering = False
+        self.tool_tip_text = tool_tip_text
 
     def check_if_toggle(self, section):
         for _elem in UIElement.get_group("ui"):
@@ -55,7 +56,7 @@ class ToggleButton(UIElement):
     def update(self):
         if self.job == "melee" or self.job == "ranged" or self.job == "magic":
             self.check_if_toggle("ACTIONS")
-        elif self.job == "t1" or self.job == "t2" or self.job == "t3" or self.job == "t4":
+        elif self.job == "TRAIT1" or self.job == "TRAIT2" or self.job == "TRAIT3" or self.job == "TRAIT4":
             self.check_if_toggle("TRAITS")
 
     def on_click(self):
@@ -67,7 +68,10 @@ class ToggleButton(UIElement):
                         90, 12], 'center', '#000000']]
                     _elem.apperance.reload_apperance()
 
-        elif self.job == "t1" or self.job == "t2" or self.job == "t3" or self.job == "t4":
+                elif isinstance(_elem, UIElement.get_ui_elem('ActionIcon')):
+                    _elem.change_type(self.job)
+
+        elif self.job == "TRAIT1" or self.job == "TRAIT2" or self.job == "TRAIT3" or self.job == "TRAIT4":
             for _elem in UIElement.get_group("ui"):
                 if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == "TRAITS":
                     _elem.cur_toggle = self.text

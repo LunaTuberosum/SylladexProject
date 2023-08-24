@@ -10,7 +10,7 @@ from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
 from .uiElements.cardInspector import CardInspector
 from .uiElements.cardInspectorButton import CardInspectorButton
-from .uiElements.cardInspectorCheck import CardInspectorCheck
+from sylladex.uiElements.cardInspectorCheck import CardInspectorCheck
 from .uiElements.cardList import CardList
 from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
@@ -189,8 +189,8 @@ def main(screen, clock):
                     for _elem in UIElement.get_group('ui'):
                         if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
                             UIElement.remove_from_group(_elem)
-                            global_prev_tick = pg.time.get_ticks()
                             break
+                    global_prev_tick = pg.time.get_ticks()
 
                 for _card in BaseCard.cards:
                     if _card.selected == True:
@@ -295,14 +295,15 @@ def main(screen, clock):
                     else:
                         _elem.hover()
 
-                if hasattr(_elem, "toolTipText"):
+                if hasattr(_elem, "tool_tip_text"):
                     if hasattr(_elem, "active") and _elem.active == True:
                         pass
                     elif hasattr(_elem, 'inactive') and _elem.inactive == True:
                         pass
                     elif now_tick - global_prev_tick >= 1300:
                         UIElement.get_ui_elem('ToolTip')(
-                            pg.mouse.get_pos(), _elem.toolTipText)
+                            pg.mouse.get_pos(), _elem.tool_tip_text)
+                        global_prev_tick = now_tick
             else:
                 if hasattr(_elem, "negate"):
                     _elem.negate = False

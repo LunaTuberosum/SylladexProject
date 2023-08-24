@@ -5,7 +5,7 @@ from uiElement import UIElement, Apperance
 
 class TextField(UIElement):
 
-    def __init__(self, x: int, y: int, size: tuple, job: str, tool_tip_text: str, max_char: int, **kargs):
+    def __init__(self, x: int, y: int, size: list, job: str, tool_tip_text: str, max_char: int, **kargs):
 
         super().__init__(
             x,
@@ -24,6 +24,17 @@ class TextField(UIElement):
 
         self.tool_tip_text = tool_tip_text
 
+        self.configure_kargs()
+
+        self.apperance = Apperance(
+            self,
+            self.size,
+            [self.size, self.base_color, [0, 0]],
+            texts=[[self.text, self.text_postion,
+                    self.alginment, self.text_color]]
+        )
+
+    def configure_kargs(self):
         if 'textColor' in self.kargs:
             self.text_color = self.kargs['textColor']
         else:
@@ -66,11 +77,6 @@ class TextField(UIElement):
             self.text_postion = [2, self.size[1]/2]
             self.alginment = 'left'
 
-        if 'exitCommand' in self.kargs:
-            self.exit_command = self.kargs['exitCommand']
-        else:
-            self.exit_command = None
-
         if self.text_type == 'Num':
             self.defult_text, self.text = '0', '0'
 
@@ -80,13 +86,10 @@ class TextField(UIElement):
         if 'startText' in self.kargs:
             self.text = self.kargs['startText']
 
-        self.apperance = Apperance(
-            self,
-            self.size,
-            [self.size, self.base_color, [0, 0]],
-            texts=[[self.text, self.text_postion,
-                    self.alginment, self.text_color]]
-        )
+        if 'exitCommand' in self.kargs:
+            self.exit_command = self.kargs['exitCommand']
+        else:
+            self.exit_command = None
 
     def exit_field(self):
         self.active = False
