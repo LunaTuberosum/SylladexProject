@@ -10,18 +10,10 @@ class GristProgressBar(UIElement):
 
         self.progress = 0
 
-<<<<<<< HEAD
         super().__init__(self.parent.rect.x+59, self.parent.rect.y +
                          30,
                          f'GristProgressBar ({self.parent.grist})',
                          1)
-=======
-        super().__init__(
-            59, 
-            30, 
-            f'GristProgressBar ({self.parent.grist})', 
-            1)
->>>>>>> cca865c4ad4c107bc42b2d3def2a7654e65648a7
 
         self.apperance = Apperance(
             self,

@@ -35,7 +35,6 @@ class SideBar(UIElement):
                 ['NUM OF CARDS', [133, 170], 'center', '#000000'],
                 ['FETCH MODUS', [21, 871], 'left', '#FFFFFF']])
 
-<<<<<<< HEAD
         self.children = [
             UIElement.get_ui_elem('AddCardButton')(
                 self.rect.x + 30, self.rect.y + 50),
@@ -63,29 +62,6 @@ class SideBar(UIElement):
             UIElement.get_ui_elem('ModusCard')(self.rect.x + 121, "QUEUE"),
             UIElement.get_ui_elem('ModusCard')(self.rect.x + 209, "TREE"),
         ]
-=======
-        self.add_child(UIElement.get_ui_elem('AddCardButton')(30, 50))
-        self.add_child(UIElement.get_ui_elem('RemoveCardButton')(112, 50))
-        self.add_child(UIElement.get_ui_elem('TextField')(
-            242, 
-            142, 
-            [53, 48], 
-            "numOfCards", 
-            "The Number of Cards in you Sylladex", 
-            3,
-            startLayer=4,
-            textType='Num',
-            align='center',
-            fontSize=24,
-            ))
-
-        self.add_child(UIElement.get_ui_elem('CardList')(24, 196))
-        self.add_child(UIElement.get_ui_elem('ScrollBar')(273, 196))
-
-        self.add_child(UIElement.get_ui_elem('ModusCard')(33, 910, "STACK"))
-        self.add_child(UIElement.get_ui_elem('ModusCard')(121, 910, "QUEUE"))
-        self.add_child(UIElement.get_ui_elem('ModusCard')(209, 910, "TREE"))
->>>>>>> cca865c4ad4c107bc42b2d3def2a7654e65648a7
 
         if UIElement.check_for_ui('GristCache'):
             if UIElement.find_current_ui('GristCache').to_be_rect != -719:
