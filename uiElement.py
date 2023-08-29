@@ -3,32 +3,33 @@ import pygame as pg
 
 # Class that creates UIElements apperance
 
+
 class Apperance():
     __modus_color = {
         'STACK': {
             'background': '#9B2448',
-            'foreground' : '#FF00DC',
+            'foreground': '#FF00DC',
             'accent': '#FF61DC'
         },
         'QUEUE': {
             'background': '#CF560C',
-            'foreground' : '#FF6000',
+            'foreground': '#FF6000',
             'accent': '#FF912B'
         },
         'TREE': {
             'background': '#7CA619',
-            'foreground' : '#96FF00',
+            'foreground': '#96FF00',
             'accent': '#CDFF2B'
         }
     }
 
     def __init__(
-        self, 
-        obj: object, 
-        base_size: list, 
-        *size_color_pos: list, 
+        self,
+        obj: object,
+        base_size: list,
+        *size_color_pos: list,
         **kargs
-        ):
+    ):
 
         self.base_size = base_size
 
@@ -44,42 +45,50 @@ class Apperance():
 
     def reload_apperance(self):
 
-
         self.obj.image = pg.Surface(self.base_size)
         self.obj.image.fill('#D8DDFF')
 
-        if 'colorKey' in self.kargs: self.obj.image.set_colorkey('#D8DDFF')
+        if 'colorKey' in self.kargs:
+            self.obj.image.set_colorkey('#D8DDFF')
 
         for _rect in self.size_color_pos:
             _rect_ = pg.Surface(_rect[0])
             if _rect[1] == 'ModusBackground':
-                _rect_.fill(Apperance.__modus_color.get(UIElement.get_modus()).get('background'))
+                _rect_.fill(Apperance.__modus_color.get(
+                    UIElement.get_modus()).get('background'))
             elif _rect[1] == 'ModusForeground':
-                _rect_.fill(Apperance.__modus_color.get(UIElement.get_modus()).get('foreground'))
+                _rect_.fill(Apperance.__modus_color.get(
+                    UIElement.get_modus()).get('foreground'))
             elif _rect[1] == 'ModusAccent':
-                _rect_.fill(Apperance.__modus_color.get(UIElement.get_modus()).get('accent'))
+                _rect_.fill(Apperance.__modus_color.get(
+                    UIElement.get_modus()).get('accent'))
             else:
                 _rect_.fill(_rect[1])
             self.obj.image.blit(_rect_, _rect[2])
 
-        if 'alpha' in self.kargs: self.obj.image.set_alpha(self.kargs['alpha'])
-        
-        if 'image' in self.kargs: 
+        if 'alpha' in self.kargs:
+            self.obj.image.set_alpha(self.kargs['alpha'])
+
+        if 'image' in self.kargs:
             _image = pg.image.load(self.kargs['image'][0]).convert_alpha()
-            if 'imageAlpha' in self.kargs: _image.set_alpha(self.kargs['imageAlpha'])
+            if 'imageAlpha' in self.kargs:
+                _image.set_alpha(self.kargs['imageAlpha'])
             self.obj.image.blit(_image, self.kargs['image'][1])
-        
+
         if 'texts' in self.kargs:
             for _text in self.kargs['texts']:
 
-                if len(_text) == 5: self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
+                if len(_text) == 5:
+                    self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
 
                 _text_ = self.obj.font.render(_text[0], True, _text[3])
 
                 if _text[2] == 'center':
-                    self.obj.image.blit(_text_, [_text[1][0]-(_text_.get_width()/2), (_text[1][1]-(_text_.get_height()/2))])
+                    self.obj.image.blit(_text_, [
+                                        _text[1][0]-(_text_.get_width()/2), (_text[1][1]-(_text_.get_height()/2))])
                 elif _text[2] == 'left':
-                    self.obj.image.blit(_text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
+                    self.obj.image.blit(
+                        _text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
 
     def change_image(self, image: str, pos: list):
         self.kargs['image'] = [image, pos]
@@ -98,21 +107,17 @@ class UIElement(pg.sprite.Sprite):
     CodeDatabase = None
     CodeData = None
 
-    DebugUIInspector = None
-    DebugInspect = False
-    Insepctors = []
-
     def __init__(
-        self, 
-        x: int, 
-        y: int, 
-        obj_name: str, 
-        startLayer: int, 
+        self,
+        x: int,
+        y: int,
+        obj_name: str,
+        startLayer: int,
         **args
-        ):
+    ):
 
         super().__init__()
-        
+
         UIElement.add_to_group(self)
         UIElement.change_layer(self, startLayer)
 
@@ -145,7 +150,7 @@ class UIElement(pg.sprite.Sprite):
                 _child_offsets.append([
                     abs(elem.rect.x - _child.rect.x),
                     abs(elem.rect.y - _child.rect.y)])
-            
+
         elem.rect.x = moveAmount[0]
         elem.rect.y = moveAmount[1]
 
@@ -153,9 +158,8 @@ class UIElement(pg.sprite.Sprite):
             for _index, _child in enumerate(elem.children):
                 UIElement.move_element(
                     _child,
-                    [elem.rect.x + _child_offsets[_index][0], 
-                    elem.rect.y + _child_offsets[_index][1]])
-
+                    [elem.rect.x + _child_offsets[_index][0],
+                     elem.rect.y + _child_offsets[_index][1]])
 
     @classmethod
     def add_current_ui(cls, ui_array: list):
@@ -245,6 +249,6 @@ class UIElement(pg.sprite.Sprite):
     @staticmethod
     def lerp(start_point: int, end_point: int, speed: float) -> int:
         if start_point < end_point:
-            return math.ceil( start_point + (end_point - start_point) * speed)
+            return math.ceil(start_point + (end_point - start_point) * speed)
         elif start_point > end_point:
-            return math.floor( start_point + (end_point - start_point) * speed)
+            return math.floor(start_point + (end_point - start_point) * speed)

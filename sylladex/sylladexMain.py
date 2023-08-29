@@ -10,7 +10,7 @@ from .uiElements.actionIcon import ActionIcon
 from .uiElements.addCardButton import AddCardButton
 from .uiElements.cardInspector import CardInspector
 from .uiElements.cardInspectorButton import CardInspectorButton
-from sylladex.uiElements.cardInspectorCheck import CardInspectorCheck
+from .uiElements.cardInspectorCheck import CardInspectorCheck
 from .uiElements.cardList import CardList
 from .uiElements.centerObj import CenterObj
 from .uiElements.consoleMessage import ConsoleMessage
@@ -18,6 +18,7 @@ from .uiElements.customSettingAreaBox import CustomSettingAreaBox
 from .uiElements.customSettingButton import CustomSettingButton
 from .uiElements.customSettingMenu import CustomSettingMenu
 from .uiElements.customSettingSectionName import CustomSettingSectionName
+from .uiElements.debugInspector import DebugInspector
 from .uiElements.dropDown import DropDown
 from .uiElements.escapeMenu import EscapeMenu
 from .uiElements.escapeMenuOption import EscapeMenuOption
@@ -53,6 +54,7 @@ UIElement.add_current_ui([
     CustomSettingButton,
     CustomSettingMenu,
     CustomSettingSectionName,
+    DebugInspector,
     DropDown,
     EscapeMenu,
     EscapeMenuOption,
@@ -87,7 +89,8 @@ def main(screen, clock):
     UIElement.get_ui_elem('GristCacheButton')()
     UIElement.get_ui_elem('CustomSettingButton')()
     # BaseCard.load_cards()
-    _move_card = False
+    move_card = False
+    debug_inspect = False
 
     while True:
 
@@ -97,7 +100,7 @@ def main(screen, clock):
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
 
-                    _move_card = True
+                    move_card = True
 
                     for _elem in UIElement.get_group("ui"):
                         if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
@@ -111,7 +114,7 @@ def main(screen, clock):
                                 pg.Rect.collidepoint()
                         if hasattr(_elem, "on_click") and _elem.rect.collidepoint(event.pos):
                             _elem.on_click()
-                            _move_card = False
+                            move_card = False
 
                             # if UIElement.get_ui_elem('RemoveCardButton').get_eject() == True:
                             #     if len(UIElement.get_ui_elem('CardList').children) == 0:
@@ -126,11 +129,11 @@ def main(screen, clock):
                             #         if isinstance(_elem, UIElement.get_ui_elem('ListObject')):
                             #             _elem.redraw_card((255,255,255))
 
-                    if _move_card == True:
+                    if move_card == True:
                         for _card in BaseCard.cards:
                             if _card.rect.collidepoint(pg.mouse.get_pos()) and _card.selected == False:
                                 _card.on_click()
-                                _move_card = False
+                                move_card = False
                 elif event.button == 2:
                     for _card in BaseCard.get_cardGroup():
                         if _card.rect.collidepoint(event.pos):
@@ -147,7 +150,7 @@ def main(screen, clock):
                         _card.on_release()
 
                 if BaseCard.get_length() > 0:
-                    _move_card = False
+                    move_card = False
 
                 for _elem in UIElement.get_group("ui"):
                     if isinstance(_elem, UIElement.get_ui_elem('ScrollBar')):
@@ -200,7 +203,7 @@ def main(screen, clock):
                         _card.moving = False
 
                 if BaseCard.get_length() > 0:
-                    if _move_card == True:
+                    if move_card == True:
                         BaseCard.move_all_cards(event.rel)
                         for _elem in UIElement.get_group('ui'):
                             if isinstance(_elem, UIElement.get_ui_elem('CenterObj')):
@@ -216,13 +219,14 @@ def main(screen, clock):
 
             if event.type == pg.KEYDOWN:
                 if event.mod == pg.KMOD_LCTRL and event.key == pg.K_i:
-                    if UIElement.DebugInspect == False:
-                        UIElement.DebugInspect = True
+                    if debug_inspect == False:
+                        debug_inspect = True
                     else:
-                        UIElement.DebugInspect = False
-                        UIElement.Insepctors.clear()
+                        debug_inspect = False
+                        UIElement.get_ui_elem(
+                            'DebugInspector').clear_inspectors()
                         for _elem in UIElement.get_group('ui'):
-                            if isinstance(_elem, UIElement.DebugUIInspector):
+                            if isinstance(_elem, UIElement.get_ui_elem('DebugInspector')):
                                 UIElement.remove_from_group(_elem)
 
                 elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_r:
@@ -263,28 +267,30 @@ def main(screen, clock):
 
             if _elem.rect.collidepoint(pg.mouse.get_pos()):
 
-                if UIElement.DebugInspect == True:
-                    _dont_make_debug = False
-                    for _elem in UIElement.get_group('ui'):
-                        if isinstance(_elem, UIElement.DebugUIInspector):
-                            if _elem.currentIns == _elem:
-                                _dont_make_debug = True
-                            elif _elem == _elem:
-                                _dont_make_debug = True
+                if debug_inspect == True:
+                    _make_inspector = True
+                    for _ins in UIElement.get_ui_elem('DebugInspector').get_current_ins():
+                        if _ins.current_inspectie == _elem:
+                            _make_inspector = False
 
-                    if _dont_make_debug == False:
-                        UIElement.Insepctors.append(
-                            UIElement.DebugUIInspector(_elem))
+                    if isinstance(_elem, UIElement.get_ui_elem('DebugInspector')):
+                        _make_inspector = False
 
-                    for index, inspector in enumerate(UIElement.Insepctors):
-                        if index == 0:
-                            inspector.rect.x = (
-                                pg.display.get_surface().get_width()-10)-(inspector.rect.w)
-                            _growing_off_set = inspector.rect.w+20
+                    if hasattr(_elem, 'interactable') and _elem.interactable == False:
+                        _make_inspector = False
+
+                    if _make_inspector == True:
+                        UIElement.get_ui_elem('DebugInspector')(_elem)
+
+                    for _index, _ins in enumerate(UIElement.get_ui_elem('DebugInspector').get_current_ins()):
+                        if _index == 0:
+                            _ins.rect.x = (
+                                pg.display.get_surface().get_width() - 10) - (_ins.rect.w)
+                            growingOffSet = _ins.rect.w + 20
                         else:
-                            inspector.rect.x = (pg.display.get_surface(
-                            ).get_width()-10)-(_growing_off_set)-(inspector.rect.w)
-                            _growing_off_set += inspector.rect.w+20
+                            _ins.rect.x = (pg.display.get_surface(
+                            ).get_width() - 10) - (growingOffSet)-(_ins.rect.w)
+                            growingOffSet += _ins.rect.w + 20
 
                 if isinstance(_elem, UIElement.get_ui_elem('PopUp')):
                     _elem.negate = True
