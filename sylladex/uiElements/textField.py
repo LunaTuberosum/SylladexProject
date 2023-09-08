@@ -30,8 +30,8 @@ class TextField(UIElement):
             self,
             self.size,
             [self.size, self.base_color, [0, 0]],
-            texts=[[self.text, self.text_postion,
-                    self.alginment, self.text_color]]
+            texts=[[self.text, self.get_text_position(),
+                    self.alginment[0], self.text_color]]
         )
 
     def configure_kargs(self):
@@ -66,22 +66,32 @@ class TextField(UIElement):
             self.hover_color = (230, 230, 230)
             self.selected_color = (170, 170, 170)
 
+        self.alginment = []
         if 'align' in self.kargs:
             if self.kargs['align'] == 'center':
-                self.text_postion = [self.size[0]/2, self.size[1]/2]
-                self.alginment = 'center'
+                self.alginment.append('center')
+
             elif self.kargs['align'] == 'right':
-                self.text_postion = [self.size[0]-2, self.size[1]/2]
-                self.alginment = 'right'
+                self.alginment.append('right')
         else:
-            self.text_postion = [2, self.size[1]/2]
-            self.alginment = 'left'
+            self.alginment.append('left')
+
+        if 'verticalAlign' in self.kargs:
+            if self.kargs['verticalAlign'] == 'top':
+                self.alginment.append('top')
+
+            elif self.kargs['verticalAlign'] == 'bottom':
+                self.alginment.append('bottom')
+        else:
+            self.alginment.append('center')
 
         if self.text_type == 'Num':
-            self.defult_text, self.text = '0', '0'
-
+            self.default_text = self.text = '0'
         else:
-            self.defult_text, self.text = '', ''
+            self.default_text = self.text = ''
+
+        if 'defaultText' in self.kargs:
+            self.default_text = self.text = self.kargs['defaultText']
 
         if 'startText' in self.kargs:
             self.text = self.kargs['startText']
@@ -95,22 +105,36 @@ class TextField(UIElement):
         self.active = False
 
         if self.text == '':
-            self.text = self.defult_text
+            self.text = self.default_text
 
-        self.apperance.kargs['texts'] = [
-            [self.text, self.text_postion, self.alginment, self.text_color]]
         self.apperance.size_color_pos = [[self.size, self.base_color, [0, 0]]]
-
-        self.apperance.reload_apperance()
+        self.reload_text()
 
         if self.exit_command:
             self.exit_command()
 
-    def typing(self, event):
+    def get_text_position(self):
+        _pos = []
+        if self.alginment[0] == 'center':
+            _pos.append(self.size[0] / 2)
+        elif self.alginment[0] == 'right':
+            _pos.append(self.size[0]-2)
+        else:
+            _pos.append(2)
 
+        if self.alginment[1] == 'up':
+            _pos.append(2)
+        elif self.alginment[1] == 'down':
+            _pos.append(self.size[1]-2)
+        else:
+            _pos.append(self.size[1] / 2)
+
+        return _pos
+
+    def typing(self, event):
         if self.active == True:
 
-            if self.text == self.defult_text:
+            if self.text == self.default_text:
                 self.text = ''
 
             if event.key == pg.K_BACKSPACE:
@@ -122,7 +146,7 @@ class TextField(UIElement):
                 return
 
             else:
-                if len(self.text) < self.max_char:
+                if len(self.text) <= self.max_char:
                     if self.text_type == 'Num':
                         for _num in range(0, 9):
                             if event.unicode == str(_num):
@@ -130,26 +154,26 @@ class TextField(UIElement):
                     else:
                         self.text += event.unicode
 
-            self.apperance.kargs['texts'] = [
-                [self.text, self.text_postion, self.alginment, self.text_color]]
-            self.apperance.reload_apperance()
+            self.reload_text()
+
+    def reload_text(self):
+        self.apperance.kargs['texts'] = [
+            [self.text, self.get_text_position(), self.alginment[0],
+             self.text_color]]
+        self.apperance.reload_apperance()
 
     def hover(self):
         if self.active == False:
-            self.apperance.kargs['texts'] = [[self.text, [self.size[0]/2, self.size[1]/2],
-                                              self.kargs['align'] if 'align' in self.kargs else 'center', self.text_color]]
             self.apperance.size_color_pos = [
                 [self.size, self.hover_color, [0, 0]]]
-            self.apperance.reload_apperance()
+            self.reload_text()
             self.hovering = True
 
     def no_hover(self):
         if self.active == False:
-            self.apperance.kargs['texts'] = [[self.text, [self.size[0]/2, self.size[1]/2],
-                                              self.kargs['align'] if 'align' in self.kargs else 'center', self.text_color]]
             self.apperance.size_color_pos = [
                 [self.size, self.base_color, [0, 0]]]
-            self.apperance.reload_apperance()
+            self.reload_text()
             self.hovering = False
 
     def on_click(self):

@@ -70,6 +70,7 @@ class CustomSettingAreaBox(UIElement):
                     '#9CB0D5'
                 ],
                 align='center',
+                defaultText='/',
                 startText='/'
             ))
 
@@ -88,7 +89,28 @@ class CustomSettingAreaBox(UIElement):
                     '#9CB0D5'
                 ],
                 align='center',
+                defaultText='/',
                 startText='/'
+            ))
+
+            self.add_child(UIElement.get_ui_elem('LongTextField')(
+                0,
+                48,
+                [300, 48],
+                f'{self.job}Description',
+                f'The description of custom {self.job}',
+                36,
+                startLayer=2,
+                fontSize=18,
+                baseColors=[
+                    '#C9DAF8',
+                    '#D9E2F1',
+                    '#9CB0D5'
+                ],
+                align='center',
+                maxLine=4,
+                defaultText='/',
+                startText='ARTIFACT CAN THINK, FEEL EMOTIONS, SPEAK, HAS A HIGHER INTELLIGENCE THAN A PERSON AND THINKS ITS BETTER THAN YOU'
             ))
 
         elif self.section == "TRAITS":

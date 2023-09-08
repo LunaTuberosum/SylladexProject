@@ -8,7 +8,7 @@ class GristInfoBox(UIElement):
         super().__init__(x, y, 'GristInfoBox', 1)
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24, bold=True)
+            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
         self.grist = grist
 
         self.apperance = Apperance(

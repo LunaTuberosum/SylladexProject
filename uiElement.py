@@ -82,7 +82,6 @@ class Apperance():
                     self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
 
                 _text_ = self.obj.font.render(_text[0], True, _text[3])
-
                 if _text[2] == 'center':
                     self.obj.image.blit(_text_, [
                                         _text[1][0]-(_text_.get_width()/2), (_text[1][1]-(_text_.get_height()/2))])
@@ -113,7 +112,6 @@ class UIElement(pg.sprite.Sprite):
         y: int,
         obj_name: str,
         startLayer: int,
-        **args
     ):
 
         super().__init__()
