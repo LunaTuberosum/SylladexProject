@@ -110,7 +110,7 @@ class CustomSettingAreaBox(UIElement):
                 align='center',
                 maxLine=4,
                 defaultText='/',
-                startText='ARTIFACT CAN THINK, FEEL EMOTIONS, SPEAK, HAS A HIGHER INTELLIGENCE THAN A PERSON AND THINKS ITS BETTER THAN YOU'
+                startText='/'
             ))
 
         elif self.section == "TRAITS":

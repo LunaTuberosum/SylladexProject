@@ -111,7 +111,6 @@ def main(screen, clock):
                         if hasattr(_elem, "active") and _elem.active == True:
                             if hasattr(_elem, "exit_field"):
                                 _elem.exit_field()
-                                pg.Rect.collidepoint()
                         if hasattr(_elem, "on_click") and _elem.rect.collidepoint(event.pos):
                             _elem.on_click()
                             move_card = False

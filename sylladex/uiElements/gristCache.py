@@ -78,29 +78,24 @@ class GristCache(UIElement):
                 UIElement.remove_from_group(self)
 
     def save_cache(self):
-        _data = []
-        UIElement.get_ui_elem('ConsoleMessage')('Saved Cache')
+        _data = {}
 
         for _index, _child in enumerate(self.children):
             if _index > 0:
-                _data.append(_child.children[0].text)
+                _data[_child.grist] = _child.children[0].text
 
-        with open('sylladex/uiElements/data/uiCache.plk', 'wb') as _save_cache:
+        with open('sylladex/uiElements/data/gristCache.plk', 'wb') as _save_cache:
             pickle.dump(_data, _save_cache, -1)
+
+        UIElement.get_ui_elem('ConsoleMessage')('Saved Cache')
 
     def load_cache(self):
 
-        with open('sylladex/uiElements/data/uiCache.plk', 'rb') as _save_cache:
+        with open('sylladex/uiElements/data/gristCache.plk', 'rb') as _save_cache:
             _data = pickle.load(_save_cache)
 
-        for _index, _data in enumerate(_data):
-            self.children[_index+1].children[0].text = _data
+        for _index in range(len(_data)):
+            _child = self.children[_index+1]
+            _child.children[0].text = _data[_child.grist]
 
-            self.children[_index+1].children[0].apperance.kargs = {'texts': [[
-                self.children[_index+1].children[0].text,
-                self.children[_index+1].children[0].text_postion,
-                self.children[_index+1].children[0].alginment,
-                self.children[_index+1].children[0].text_color]]
-            }
-
-            self.children[_index+1].children[0].apperance.reload_apperance()
+            _child.children[0].reload_text()
