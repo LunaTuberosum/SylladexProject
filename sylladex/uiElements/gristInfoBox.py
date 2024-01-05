@@ -26,10 +26,10 @@ class GristInfoBox(UIElement):
             texts=[[self.grist, [111, 11], 'center', '#000000']]
         )
 
-        self.children = [
+        self.add_child(
             UIElement.get_ui_elem('TextField')(
-                self.rect.x+53,
-                self.rect.y+48,
+                53,
+                48,
                 [111, 36],
                 f'{self.grist}NumBox',
                 f'Let\'s you alter how much {self.grist} grist you have',
@@ -40,6 +40,8 @@ class GristInfoBox(UIElement):
                 baseColors=[(239, 239, 239), (199, 199, 199), (179, 179, 179)],
                 align='center',
                 exitCommand=UIElement.find_current_ui('GristCache').save_cache
-            ),
+            )
+        )
+        self.add_child(
             UIElement.get_ui_elem('GristProgressBar')(self)
-        ]
+        )
