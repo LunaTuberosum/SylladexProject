@@ -1,4 +1,5 @@
 import pygame as pg
+import json
 
 from uiElement import UIElement, Apperance
 
@@ -19,6 +20,9 @@ class CustomSettingAreaBox(UIElement):
         self.font = pg.font.Font(
             "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
+
         if self.section == "WEAPONKINDS":
             self.apperance = Apperance(
                 self,
@@ -35,6 +39,8 @@ class CustomSettingAreaBox(UIElement):
             )
 
         elif self.section == "ACTIONS":
+            _actionData = _custom_data[self.job]
+
             self.apperance = Apperance(
                 self,
                 [306, 102],
@@ -53,7 +59,7 @@ class CustomSettingAreaBox(UIElement):
             )
 
             self.add_child(UIElement.get_ui_elem('ActionIcon')(
-                self.job))
+                self.job, True).setup_icon('melee', _actionData))
 
             self.add_child(UIElement.get_ui_elem('TextField')(
                 156,
@@ -70,8 +76,9 @@ class CustomSettingAreaBox(UIElement):
                     '#9CB0D5'
                 ],
                 align='center',
-                defaultText='/',
-                startText='/'
+                defaultText='0',
+                startText=_actionData['AS']['COST'],
+                exitCommand=self.save_action_data
             ))
 
             self.add_child(UIElement.get_ui_elem('TextField')(
@@ -90,7 +97,8 @@ class CustomSettingAreaBox(UIElement):
                 ],
                 align='center',
                 defaultText='/',
-                startText='/'
+                startText=_actionData['AS']['DAMAGE'],
+                exitCommand=self.save_action_data
             ))
 
             self.add_child(UIElement.get_ui_elem('LongTextField')(
@@ -110,7 +118,8 @@ class CustomSettingAreaBox(UIElement):
                 align='center',
                 maxLine=4,
                 defaultText='/',
-                startText='ARTIFACT CAN THINK, FEEL EMOTIONS, SPEAK, HAS A HIGHER INTELLIGENCE THAN A PERSON AND THINKS ITS BETTER THAN YOU'
+                startText=_actionData['AS']['DESCRIPTION'],
+                exitCommand=self.save_action_data
             ))
 
         elif self.section == "TRAITS":
@@ -144,3 +153,20 @@ class CustomSettingAreaBox(UIElement):
                          'center', '#000000'],
                     ]
                 )
+
+    def save_action_data(self):
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
+
+        _custom_data[self.job][self.children[0].prefix]['NAME'] = self.children[0].text
+        _custom_data[self.job][self.children[0].prefix]['COST'] = self.children[1].text
+        _custom_data[self.job][self.children[0].prefix]['DAMAGE'] = self.children[2].text
+        _custom_data[self.job][self.children[0].prefix]['DESCRIPTION'] = ''.join(
+            self.children[3].lines)
+
+        _new_custon_data = json.dumps(_custom_data, indent=4)
+
+        with open('sylladex/captchalogueCards/data/customData.json', 'w') as _custom_data_file:
+            _custom_data_file.write(_new_custon_data)
+
+        UIElement.get_ui_elem('ConsoleMessage')('Saved Custom')

@@ -9,24 +9,26 @@ class GristCacheLimit(UIElement):
         super().__init__(
             x,
             y,
-            'GristCacheLimit', 
+            'GristCacheLimit',
             1
-            )
+        )
 
         self.limit_num = '20480'
 
         self.apperance = Apperance(
-            self, 
+            self,
             (290, 42),
-            [[284, 36], '#999999', [6, 6]], 
-            [[182, 36], '#C4C4C4', [0, 0]], 
-            [[102, 36], '#EFEFEF', [182, 0]], 
-            colorKey = True, 
-            texts = [
-                ['CACHE LIMIT', [92, 19], 'center', '#000000', ["sylladex/uiElements/asset/MISC/fontstuck.ttf", 16]],
-                [self.limit_num, [233, 18], 'center', '#42B2DE', ["sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 32]]
-                ]
-            )
+            [[284, 36], '#999999', [6, 6]],
+            [[182, 36], '#C4C4C4', [0, 0]],
+            [[102, 36], '#EFEFEF', [182, 0]],
+            colorKey=True,
+            texts=[
+                ['CACHE LIMIT', [92, 19], 'center', '#000000', [
+                    "sylladex/uiElements/asset/MISC/fontstuck.ttf", 32]],
+                [self.limit_num, [233, 18], 'center', '#42B2DE', [
+                    "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 32]]
+            ]
+        )
 
         self.tool_tip_text = 'The amount of each grist you can hold based on your Rung'
 

@@ -14,7 +14,7 @@ class DebugInspector(UIElement):
             99)
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 12)
+            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 24)
 
         self.current_inspectie = elem
         self.params = self.set_param()

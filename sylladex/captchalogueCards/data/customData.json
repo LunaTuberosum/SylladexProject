@@ -1,0 +1,80 @@
+{
+    "KIND1": {
+        "ICON": "CUSTOMKIND",
+        "NAME": "CUSTOMKIND 1",
+        "TYPE": "MELEE"
+    },
+    "KIND2": {
+        "ICON": "CUSTOMKIND",
+        "NAME": "CUSTOMKIND 2",
+        "TYPE": "NA"
+    },
+    "ACTION1": {
+        "AS": {
+            "NAME": "SASSINATE",
+            "COST": "0",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AR": {
+            "NAME": "",
+            "COST": "0",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AC": {
+            "NAME": "KNOWLEDGE",
+            "COST": "0",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        }
+    },
+    "ACTION2": {
+        "AS": {
+            "NAME": "",
+            "COST": "0",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AR": {
+            "NAME": "",
+            "COST": "0",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AC": {
+            "NAME": "",
+            "COST": "0",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        }
+    },
+    "TRAIT1": {
+        "NAME": "CUSTOM TRAIT 1",
+        "1-4": "/",
+        "5-8": "/",
+        "9-12": "/",
+        "13-16": "/"
+    },
+    "TRAIT2": {
+        "NAME": "CUSTOM TRAIT 2",
+        "1-4": "/",
+        "5-8": "/",
+        "9-12": "/",
+        "13-16": "/"
+    },
+    "TRAIT3": {
+        "NAME": "CUSTOM TRAIT 3",
+        "1-4": "/",
+        "5-8": "/",
+        "9-12": "/",
+        "13-16": "/"
+    },
+    "TRAIT4": {
+        "NAME": "CUSTOM TRAIT 4",
+        "1-4": "/",
+        "5-8": "/",
+        "9-12": "/",
+        "13-16": "/"
+    }
+}

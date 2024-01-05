@@ -1,9 +1,0 @@
-Customkind 1,MELEE,Customkind 2,NA,
-Customkind,Customkind,
-ASSERT,0,/,/ ,AS,0,/,/ ,
-AR,0,/,/,AR,0,/,/,
-AC,0,/,/,AC,0,/,/,
-CUSTOM TRAIT 1,asjdf klasjd filjasdklf jails jdlifjalsidjfiasjdklf jlasd lifjasild d ,0 2 4 6 8 0 2 4 6 8 0 2 4 6 8 0 2 4 6 8 0 2 4 6 ,/,/,
-CUSTOM TRAIT 2,/,/,/,/,
-CUSTOM TRAIT 3,/,/,/,/,
-CUSTOM TRAIT 4,/,/,/,/

@@ -111,7 +111,6 @@ def main(screen, clock):
                         if hasattr(_elem, "active") and _elem.active == True:
                             if hasattr(_elem, "exit_field"):
                                 _elem.exit_field()
-                                pg.Rect.collidepoint()
                         if hasattr(_elem, "on_click") and _elem.rect.collidepoint(event.pos):
                             _elem.on_click()
                             move_card = False
@@ -249,6 +248,9 @@ def main(screen, clock):
                 else:
                     for _elem in UIElement.get_group("ui"):
                         if isinstance(_elem, UIElement.get_ui_elem('TextField')):
+                            _elem.typing(event)
+
+                        if isinstance(_elem, UIElement.get_ui_elem('ActionIcon')):
                             _elem.typing(event)
 
         for _card in BaseCard.cards:

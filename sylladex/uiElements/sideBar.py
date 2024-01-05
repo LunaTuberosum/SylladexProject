@@ -14,7 +14,7 @@ class SideBar(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
+            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 36)
 
         self.apperance = Apperance(
             self,

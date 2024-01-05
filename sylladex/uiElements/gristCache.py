@@ -15,7 +15,7 @@ class GristCache(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
+            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 36)
 
         self.apperance = Apperance(
             self,
@@ -98,8 +98,8 @@ class GristCache(UIElement):
 
             self.children[_index+1].children[0].apperance.kargs = {'texts': [[
                 self.children[_index+1].children[0].text,
-                self.children[_index+1].children[0].text_postion,
-                self.children[_index+1].children[0].alginment,
+                self.children[_index+1].children[0].get_text_position(),
+                self.children[_index+1].children[0].alginment[0],
                 self.children[_index+1].children[0].text_color]]
             }
 

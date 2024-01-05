@@ -1,3 +1,4 @@
+import json
 import pygame as pg
 
 from uiElement import UIElement, Apperance
@@ -61,20 +62,39 @@ class ToggleButton(UIElement):
 
     def on_click(self):
         if self.job == "melee" or self.job == "ranged" or self.job == "magic":
-            for _elem in UIElement.get_group("ui"):
-                if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == "ACTIONS":
-                    _elem.cur_toggle = self.text
-                    _elem.apperance.kargs['texts'] = [[f"CUSTOM {(self.job).upper()} ACTIONS", [
-                        90, 12], 'center', '#000000']]
-                    _elem.apperance.reload_apperance()
-
-                elif isinstance(_elem, UIElement.get_ui_elem('ActionIcon')):
-                    _elem.change_type(self.job)
+            self._action_toggle()
 
         elif self.job == "TRAIT1" or self.job == "TRAIT2" or self.job == "TRAIT3" or self.job == "TRAIT4":
             for _elem in UIElement.get_group("ui"):
                 if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == "TRAITS":
                     _elem.cur_toggle = self.text
+
+    def _action_toggle(self):
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
+
+        for _elem in UIElement.get_group("ui"):
+            if isinstance(_elem, UIElement.get_ui_elem("CustomSettingSectionName")) and _elem.section == "ACTIONS":
+                _elem.cur_toggle = self.text
+                _elem.apperance.kargs['texts'] = [[f"CUSTOM {(self.job).upper()} ACTIONS", [
+                    90, 12], 'center', '#000000']]
+                _elem.apperance.reload_apperance()
+
+            elif isinstance(_elem, UIElement.get_ui_elem('CustomSettingAreaBox')) and _elem.section == 'ACTIONS':
+
+                _elem.children[0].setup_icon(self.job, _custom_data[_elem.job])
+
+                _actionData = _custom_data[_elem.job][_elem.children[0].prefix]
+
+                _elem.children[1].text = _actionData['COST']
+                _elem.children[1].reload_text()
+
+                _elem.children[2].text = _actionData['DAMAGE']
+                _elem.children[2].reload_text()
+
+                _elem.children[3].text = _actionData['DESCRIPTION']
+                _elem.children[3].starter_text()
+                _elem.children[3].reload_text()
 
     def hover(self):
         if self.on == False:
