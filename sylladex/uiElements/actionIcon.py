@@ -103,10 +103,10 @@ class ActionIcon(UIElement):
 
     def reload_text(self):
         if self.active:
-            self.apperance.kargs['texts'] = [
+            self.apperance.kwargs['texts'] = [
                 [self.prefix + self.text + self.add_on, [5, 13], 'left', self.current_color]]
         else:
-            self.apperance.kargs['texts'] = [
+            self.apperance.kwargs['texts'] = [
                 [self.prefix + self.text, [5, 13], 'left', self.current_color]]
         self.apperance.reload_apperance()
 

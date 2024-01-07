@@ -13,7 +13,7 @@ class GristCacheLimit(UIElement):
             1
         )
 
-        self.limit_num = '20480'
+        self.limit_num = '0'
 
         self.apperance = Apperance(
             self,
@@ -31,6 +31,16 @@ class GristCacheLimit(UIElement):
         )
 
         self.tool_tip_text = 'The amount of each grist you can hold based on your Rung'
+
+    def change_cache_limit(self, limit_num: str):
+        self.limit_num = limit_num
+        self.apperance.kwargs['texts'] = [
+            ['CACHE LIMIT', [92, 19], 'center', '#000000', [
+                "sylladex/uiElements/asset/MISC/fontstuck.ttf", 32]],
+            [self.limit_num, [233, 18], 'center', '#42B2DE', [
+                "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 32]]
+        ]
+        self.apperance.reload_apperance()
 
     def update(self):
         for _elem in UIElement.get_group('ui'):

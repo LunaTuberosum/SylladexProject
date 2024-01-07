@@ -1,0 +1,444 @@
+{
+    "1": {
+        "CodeData": {
+            "name": "a",
+            "code": "aaaaaaaa",
+            "tier": "1",
+            "kind": "Shotgunkind",
+            "grist": "TAR",
+            "trait_1": "BOUNCY",
+            "trait_2": "SENTIENT",
+            "action_1": "AGRESS",
+            "action_2": "ARISE",
+            "action_3": "ARRIVE",
+            "action_4": "ARP",
+            "cardID": 1
+        },
+        "Empty": false
+    },
+    "2": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "3": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "4": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "5": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "6": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "7": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "8": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "9": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "10": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "11": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "12": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "13": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "14": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "15": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "16": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "17": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "18": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "19": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "20": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "21": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "22": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "23": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "24": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "25": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    },
+    "26": {
+        "CodeData": {
+            "name": "-",
+            "code": "-",
+            "tier": "-",
+            "kind": "",
+            "grist": "",
+            "trait_1": "",
+            "trait_2": "",
+            "action_1": "",
+            "action_2": "",
+            "action_3": "",
+            "action_4": "",
+            "cardID": 0
+        },
+        "Empty": true
+    }
+}

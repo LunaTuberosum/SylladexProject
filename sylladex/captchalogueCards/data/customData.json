@@ -1,11 +1,11 @@
 {
     "KIND1": {
-        "ICON": "CUSTOMKIND",
+        "ICON": "Customkind",
         "NAME": "CUSTOMKIND 1",
         "TYPE": "MELEE"
     },
     "KIND2": {
-        "ICON": "CUSTOMKIND",
+        "ICON": "Customkind",
         "NAME": "CUSTOMKIND 2",
         "TYPE": "NA"
     },

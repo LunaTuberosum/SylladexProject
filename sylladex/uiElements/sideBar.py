@@ -52,6 +52,7 @@ class SideBar(UIElement):
             textType='Num',
             align='center',
             fontSize=24,
+            exitCommand=UIElement.get_ui_elem('CardList').add_multi_to_list
         ))
 
         self.add_child(UIElement.get_ui_elem('CardList')(

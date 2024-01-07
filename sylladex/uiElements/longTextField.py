@@ -14,8 +14,8 @@ class LongTextField(TextField):
 
         self.starter_text()
 
-        if 'maxLine' in self.kargs:
-            self.max_line = self.kargs['maxLine']
+        if 'maxLine' in self.kwargs:
+            self.max_line = self.kwargs['maxLine']
         else:
             self.max_line = 1
 
@@ -64,7 +64,7 @@ class LongTextField(TextField):
             _texts.append([_line, self.get_text_position(
                 _i), self.alginment[0], self.text_color])
 
-        self.apperance.kargs['texts'] = _texts
+        self.apperance.kwargs['texts'] = _texts
         self.apperance.reload_apperance()
 
     def typing(self, event):

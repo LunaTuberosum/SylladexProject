@@ -1,3 +1,4 @@
+import json
 import pygame as pg
 import pickle
 
@@ -78,30 +79,33 @@ class GristCache(UIElement):
                 UIElement.remove_from_group(self)
 
     def save_cache(self):
-        _data = {}
+        with open('sylladex/uiElements/data/gristData.json', 'r') as _grist_data_file:
+            _grist_data = json.load(_grist_data_file)
 
-        for _index, _child in enumerate(self.children):
-            if _index > 0:
-                _data[_child.grist] = _child.children[0].text
+        for _child in self.children:
+            if not isinstance(_child, UIElement.get_ui_elem('GristInfoBox')):
+                _grist_data['CacheLimit'] = _child.limit_num
+                continue
 
-        with open('sylladex/uiElements/data/gristCache.plk', 'wb') as _save_cache:
-            pickle.dump(_data, _save_cache, -1)
+            _grist_data['Grist'][_child.grist] = _child.children[0].text
+
+        _new_grist_data = json.dumps(_grist_data, indent=4)
+
+        with open('sylladex/uiElements/data/gristData.json', 'w') as _grist_data_file:
+            _grist_data_file.write(_new_grist_data)
 
         UIElement.get_ui_elem('ConsoleMessage')('Saved Cache')
 
     def load_cache(self):
 
-        with open('sylladex/uiElements/data/gristCache.plk', 'rb') as _save_cache:
-            _data = pickle.load(_save_cache)
+        with open('sylladex/uiElements/data/gristData.json', 'r') as _grist_data_file:
+            _grist_data = json.load(_grist_data_file)
 
-        for _index, _data in enumerate(_data):
-            self.children[_index+1].children[0].text = _data
+        for _child in self.children:
+            if not isinstance(_child, UIElement.get_ui_elem('GristInfoBox')):
+                _child.change_cache_limit(_grist_data['CacheLimit'])
+                continue
 
-            self.children[_index+1].children[0].apperance.kargs = {'texts': [[
-                self.children[_index+1].children[0].text,
-                self.children[_index+1].children[0].get_text_position(),
-                self.children[_index+1].children[0].alginment[0],
-                self.children[_index+1].children[0].text_color]]
-            }
+            _child.children[0].text = _grist_data['Grist'][_child.grist]
 
             _child.children[0].reload_text()

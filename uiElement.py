@@ -28,7 +28,7 @@ class Apperance():
         obj: object,
         base_size: list,
         *size_color_pos: list,
-        **kargs
+        **kwargs
     ):
 
         self.base_size = base_size
@@ -38,7 +38,7 @@ class Apperance():
         self.obj.image.fill('#D8DDFF')
 
         self.size_color_pos = size_color_pos
-        self.kargs = kargs
+        self.kwargs = kwargs
 
         self.obj.rect = self.obj.image.get_rect(topleft=self.obj.rect)
         self.reload_apperance()
@@ -47,8 +47,9 @@ class Apperance():
 
         self.obj.image = pg.Surface(self.base_size)
         self.obj.image.fill('#D8DDFF')
+        self.obj.rect = self.obj.image.get_rect(topleft=self.obj.rect.topleft)
 
-        if 'colorKey' in self.kargs:
+        if 'colorKey' in self.kwargs:
             self.obj.image.set_colorkey('#D8DDFF')
 
         for _rect in self.size_color_pos:
@@ -66,17 +67,17 @@ class Apperance():
                 _rect_.fill(_rect[1])
             self.obj.image.blit(_rect_, _rect[2])
 
-        if 'alpha' in self.kargs:
-            self.obj.image.set_alpha(self.kargs['alpha'])
+        if 'alpha' in self.kwargs:
+            self.obj.image.set_alpha(self.kwargs['alpha'])
 
-        if 'image' in self.kargs:
-            _image = pg.image.load(self.kargs['image'][0]).convert_alpha()
-            if 'imageAlpha' in self.kargs:
-                _image.set_alpha(self.kargs['imageAlpha'])
-            self.obj.image.blit(_image, self.kargs['image'][1])
+        if 'image' in self.kwargs:
+            _image = pg.image.load(self.kwargs['image'][0]).convert_alpha()
+            if 'imageAlpha' in self.kwargs:
+                _image.set_alpha(self.kwargs['imageAlpha'])
+            self.obj.image.blit(_image, self.kwargs['image'][1])
 
-        if 'texts' in self.kargs:
-            for _text in self.kargs['texts']:
+        if 'texts' in self.kwargs:
+            for _text in self.kwargs['texts']:
 
                 if len(_text) == 5:
                     self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
@@ -90,7 +91,12 @@ class Apperance():
                         _text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
 
     def change_image(self, image: str, pos: list):
-        self.kargs['image'] = [image, pos]
+        self.kwargs['image'] = [image, pos]
+        self.reload_apperance()
+
+    def change_size(self, size: list, new_size_color_pos: list):
+        self.base_size = size
+        self.size_color_pos = new_size_color_pos
         self.reload_apperance()
 
 
@@ -180,9 +186,14 @@ class UIElement(pg.sprite.Sprite):
         return False
 
     @classmethod
-    def find_current_ui(cls, elem: str) -> object:
+    def find_current_ui(cls, elem: str, object_name: str = '') -> object:
         for _elem in UIElement.get_group('ui'):
             if isinstance(_elem, UIElement.get_ui_elem(elem)):
+                if object_name != '':
+                    if _elem.obj_name == object_name:
+                        return _elem
+                    else:
+                        continue
                 return _elem
 
     @classmethod

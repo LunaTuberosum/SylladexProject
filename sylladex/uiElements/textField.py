@@ -5,16 +5,16 @@ from uiElement import UIElement, Apperance
 
 class TextField(UIElement):
 
-    def __init__(self, x: int, y: int, size: list, job: str, tool_tip_text: str, max_char: int, **kargs):
+    def __init__(self, x: int, y: int, size: list, job: str, tool_tip_text: str, max_char: int, **kwargs):
 
         super().__init__(
             x,
             y,
             f'TextField ({job})',
-            kargs['startLayer'] if 'startLayer' in kargs else 1
+            kwargs['startLayer'] if 'startLayer' in kwargs else 1
         )
 
-        self.kargs = kargs
+        self.kwargs = kwargs
         self.size = size
 
         self.max_char = max_char
@@ -35,52 +35,52 @@ class TextField(UIElement):
         )
 
     def configure_kargs(self):
-        if 'textColor' in self.kargs:
-            self.text_color = self.kargs['textColor']
+        if 'textColor' in self.kwargs:
+            self.text_color = self.kwargs['textColor']
         else:
             self.text_color = '#000000'
 
-        if 'textType' in self.kargs:
-            self.text_type = self.kargs['textType']
+        if 'textType' in self.kwargs:
+            self.text_type = self.kwargs['textType']
         else:
             self.text_type = 'Txt'
 
-        if 'fontSize' in self.kargs:
-            self.font_size = self.kargs['fontSize']
+        if 'fontSize' in self.kwargs:
+            self.font_size = self.kwargs['fontSize']
         else:
             self.font_size = 24
 
-        if 'textFont' in self.kargs:
-            self.text_font = self.kargs['textFont']
+        if 'textFont' in self.kwargs:
+            self.text_font = self.kwargs['textFont']
         else:
             self.text_font = 'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf'
 
         self.font = pg.font.Font(self.text_font, self.font_size)
 
-        if 'baseColors' in self.kargs:
-            self.base_color = self.kargs['baseColors'][0]
-            self.hover_color = self.kargs['baseColors'][1]
-            self.selected_color = self.kargs['baseColors'][2]
+        if 'baseColors' in self.kwargs:
+            self.base_color = self.kwargs['baseColors'][0]
+            self.hover_color = self.kwargs['baseColors'][1]
+            self.selected_color = self.kwargs['baseColors'][2]
         else:
             self.base_color = (255, 255, 255)
             self.hover_color = (230, 230, 230)
             self.selected_color = (170, 170, 170)
 
         self.alginment = []
-        if 'align' in self.kargs:
-            if self.kargs['align'] == 'center':
+        if 'align' in self.kwargs:
+            if self.kwargs['align'] == 'center':
                 self.alginment.append('center')
 
-            elif self.kargs['align'] == 'right':
+            elif self.kwargs['align'] == 'right':
                 self.alginment.append('right')
         else:
             self.alginment.append('left')
 
-        if 'verticalAlign' in self.kargs:
-            if self.kargs['verticalAlign'] == 'top':
+        if 'verticalAlign' in self.kwargs:
+            if self.kwargs['verticalAlign'] == 'top':
                 self.alginment.append('top')
 
-            elif self.kargs['verticalAlign'] == 'bottom':
+            elif self.kwargs['verticalAlign'] == 'bottom':
                 self.alginment.append('bottom')
         else:
             self.alginment.append('center')
@@ -90,14 +90,14 @@ class TextField(UIElement):
         else:
             self.default_text = self.text = ''
 
-        if 'defaultText' in self.kargs:
-            self.default_text = self.text = self.kargs['defaultText']
+        if 'defaultText' in self.kwargs:
+            self.default_text = self.text = self.kwargs['defaultText']
 
-        if 'startText' in self.kargs:
-            self.text = self.kargs['startText']
+        if 'startText' in self.kwargs:
+            self.text = self.kwargs['startText']
 
-        if 'exitCommand' in self.kargs:
-            self.exit_command = self.kargs['exitCommand']
+        if 'exitCommand' in self.kwargs:
+            self.exit_command = self.kwargs['exitCommand']
         else:
             self.exit_command = None
 
@@ -157,7 +157,7 @@ class TextField(UIElement):
             self.reload_text()
 
     def reload_text(self):
-        self.apperance.kargs['texts'] = [
+        self.apperance.kwargs['texts'] = [
             [self.text, self.get_text_position(), self.alginment[0],
              self.text_color]]
         self.apperance.reload_apperance()

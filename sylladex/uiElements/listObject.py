@@ -1,15 +1,16 @@
 import pygame as pg
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 from uiElement import UIElement, Apperance
 from sylladex.captchalogueCards import codeDatabase
+
 
 @dataclass
 class CodeData():
     name: str = "-"
     code: str = "-"
     tier: str = "-"
-    
+
     kind: str = ''
     grist: str = ''
     trait_1: str = ''
@@ -20,23 +21,25 @@ class CodeData():
     action_4: str = ''
 
     cardID: int = 0
-    
+
+
 class ListObject(UIElement):
     def __init__(self):
 
         super().__init__(
-            24, 
-            127, 
-            'CardListObject', 
+            24,
+            127,
+            'CardListObject',
             3
-            )
+        )
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf",24)
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
 
         self.apperance = Apperance(
             self,
             [249, 64],
-            [[249, 64], '#FFFFFF', [0,0]],
+            [[249, 64], '#FFFFFF', [0, 0]],
             image=["sylladex/uiElements/asset/KINDS/CustomKind.png", [185, 3]],
             imageAlpha=125,
             texts=[
@@ -44,7 +47,7 @@ class ListObject(UIElement):
                 ['-', [6, 49], 'left', '#000000'],
                 ['-', [190, 49], 'left', '#000000']]
         )
-        
+
         self.interactable = True
         self.prev_pos = None
         self.grabbed = False
@@ -57,7 +60,22 @@ class ListObject(UIElement):
         self.code_data = CodeData()
 
         self.prev_tick = 0
-    
+
+    def create_code_data(self, inputs: dict):
+        self.code_data.name = inputs['name']
+        self.code_data.code = inputs['code']
+        self.code_data.tier = inputs['tier']
+        self.code_data.kind = inputs['kind']
+        self.code_data.grist = inputs['grist']
+        self.code_data.trait_1 = inputs['trait_1']
+        self.code_data.trait_2 = inputs['trait_2']
+        self.code_data.action_1 = inputs['action_1']
+        self.code_data.action_2 = inputs['action_2']
+        self.code_data.action_3 = inputs['action_3']
+        self.code_data.action_4 = inputs['action_4']
+        self.code_data.cardID = inputs['cardID']
+
+        self.redraw_card()
 
     # def update(self):
     #     if self.prev_tick > 0:
@@ -88,35 +106,36 @@ class ListObject(UIElement):
     def redraw_card(self):
         if self.writing == False:
             if self.capta_card:
-                self.apperance.size_color_pos = [[[249, 64], '#FFFFFF', [0, 0]],  [[10, 64], 'ModusForground', [239, 0]]]
+                self.apperance.size_color_pos = [
+                    [[249, 64], '#FFFFFF', [0, 0]],  [[10, 64], 'ModusForground', [239, 0]]]
 
-                self.apperance.kargs = {
+                self.apperance.kwargs = {
                     'image': [UIElement.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
-                    [self.code_data.name, [6, 15], 'left', '#000000'],
-                    [self.code_data.code, [6, 49], 'left', '#000000'],
-                    [self.code_data.tier, [150, 49], 'left', '#000000']]}
+                        [self.code_data.name, [6, 15], 'left', '#000000'],
+                        [self.code_data.code, [6, 49], 'left', '#000000'],
+                        [self.code_data.tier, [150, 49], 'left', '#000000']]}
 
             elif self.code_data.code == "-":
 
-                self.apperance.kargs = {
+                self.apperance.kwargs = {
                     'image': ["sylladex/uiElements/asset/KINDS/CustomKind.png", [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
-                    ['-', [6, 15], 'left', '#000000'],
-                    ['-', [6, 49], 'left', '#000000'],
-                    ['-', [150, 49], 'left', '#000000']]}
+                        ['-', [6, 15], 'left', '#000000'],
+                        ['-', [6, 49], 'left', '#000000'],
+                        ['-', [150, 49], 'left', '#000000']]}
 
             elif self.code_data:
 
-                self.apperance.kargs = {
+                self.apperance.kwargs = {
                     'image': [UIElement.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
                     'imageAlpha': 125,
                     'texts': [
-                    [self.code_data.name, [6, 15], 'left', '#000000'],
-                    [self.code_data.code, [6, 49], 'left', '#000000'],
-                    [self.code_data.tier, [150, 49], 'left', '#000000']]}
+                        [self.code_data.name, [6, 15], 'left', '#000000'],
+                        [self.code_data.code, [6, 49], 'left', '#000000'],
+                        [self.code_data.tier, [150, 49], 'left', '#000000']]}
 
             self.apperance.reload_apperance()
 
@@ -133,7 +152,6 @@ class ListObject(UIElement):
     #     self.children.append(UIElement.get_uiElem('TextField')(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "Txt"))
     #     self.children.append(UIElement.get_uiElem('TextField')(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "Txt"))
     #     self.children.append(UIElement.get_uiElem('TextField')(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "Txt"))
-        
 
     #     for child in self.children:
     #         UIElement.get_group('layer').change_layer(child, -1)
@@ -143,7 +161,6 @@ class ListObject(UIElement):
 
     #     self.children[0].active = True
     #     self.children[0].image.fill((170,170,170))
-
 
     #     for elem in UIElement.get_group("ui"):
     #         if hasattr(elem, "job"):
@@ -157,13 +174,13 @@ class ListObject(UIElement):
         #         self.prev_tick = pg.time.get_ticks()
 
         if self.writing == False:
-            self.apperance.size_color_pos = [[[249, 64], '#D1D1D1', [0,0]]]
+            self.apperance.size_color_pos = [[[249, 64], '#D1D1D1', [0, 0]]]
             self.apperance.reload_apperance()
             self.hovering = True
 
     def no_hover(self):
         if self.writing == False:
-            self.apperance.size_color_pos = [[[249, 64], '#FFFFFF', [0,0]]]
+            self.apperance.size_color_pos = [[[249, 64], '#FFFFFF', [0, 0]]]
             self.apperance.reload_apperance()
             self.hovering = False
 
@@ -192,7 +209,7 @@ class ListObject(UIElement):
     #                     elem.redraw_card((255,255,255))
     #                 elif isinstance(elem, UIElement.get_uiElem('CardList')):
     #                     elem.save_list()
-    #         else: 
+    #         else:
     #             UIElement.get_uiElem('PopUp')("You can\'t eject an empty card")
 
     #     elif self.interactable == True:
