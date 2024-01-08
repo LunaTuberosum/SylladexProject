@@ -1,26 +1,50 @@
 import pygame as pg
 import textwrap
 
-from uiElement import UIElement
+from uiElement import Apperance, UIElement
 
 
 class PopUp(UIElement):
-    def __init__(self, _text, question=False):
-        super().__init__(660, 380, (600, 320), 'PopUp', '#999999')
+    def __init__(self, text, question=False):
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 48)
 
-        self.create_appearance([[576, 296], '#D9D9D9', [12, 12]])
+        super().__init__(
+            660,
+            380,
+            'PopUp',
+            3
+        )
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 48)
-        _text_len = len(_text) // 26
-        _new_text = textwrap.wrap(_text, 26)
-        for _index, _text in enumerate(_new_text):
-            self.txt_surface = self.font.render(_text, True, (0,0,0))
-            self.image.blit(self.txt_surface, [self.rect.w/2-self.txt_surface.get_width()/2, (self.rect.h/4-self.txt_surface.get_height()/2)+(_index*self.rect.h/6)])
+        _lines = ['']
+        _new_text = text.split(' ')
 
-        UIElement.get_group('layer').change_layer(self, 3)
+        _total_char = 0
+        for _i, _text in enumerate(_new_text):
+            if _total_char + len(_text) >= 20:
+                _lines.append(_text + ' ')
+                _total_char = len(_text) + 1
+
+            else:
+                _lines[len(_lines) - 1] += _text + ' '
+                _total_char += len(_text) + 1
+
+        _texts = []
+        for _i, _line in enumerate(_lines):
+            _texts.append(
+                [_line, [330, 80 + (_i * 80)], 'center', '#000000'])
+
+        self.apperance = Apperance(
+            self,
+            [600, 320],
+            [[600, 320], '#999999', [0, 0]],
+            [[576, 296], '#D9D9D9', [12, 12]],
+            texts=_texts
+
+        )
 
         self.last = pg.time.get_ticks()
-        self.timer = 1200  
+        self.timer = 1200
         self.negate = False
 
     def remove(self):

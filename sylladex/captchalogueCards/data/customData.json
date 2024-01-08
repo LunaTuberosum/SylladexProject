@@ -31,7 +31,7 @@
     },
     "ACTION2": {
         "AS": {
-            "NAME": "",
+            "NAME": "SIMI",
             "COST": "0",
             "DAMAGE": "/",
             "DESCRIPTION": "/"

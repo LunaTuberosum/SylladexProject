@@ -36,6 +36,12 @@ class CardList(UIElement):
             'TextField', 'TextField (numOfCards)').text)
         _dif = _num - len(cls.get_list())
 
+        if _dif < 0:
+            for i in range(abs(_dif)):
+                cls.remove_from_list()
+            cls.save_list()
+            return
+
         for i in range(_dif):
             cls._add_to_list()
 
@@ -52,7 +58,6 @@ class CardList(UIElement):
         if cls.get_list()[len(cls.get_list())-1].empty == True:
             cls.get_list()[len(cls.get_list())-1].kill()
             cls.get_list().remove(cls.get_list()[len(cls.get_list())-1])
-            cls.save_list()
         else:
             UIElement.get_ui_elem('PopUp')(
                 "You can only remove empty cards. Eject cards first")

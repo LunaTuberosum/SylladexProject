@@ -11,60 +11,60 @@ code_cypher = {
     '!': {
         '1': 'KIND1',
         '2': 'ARTIFACT',
-        '3': 'CUSTOM TRAIT 1',
-        '4': 'CUSTOM TRAIT 3',
+        '3': 'TRAIT1',
+        '4': 'TRAIT3',
         '5': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
             'NA': 'No Action'
         },
         '6': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
             'NA': 'No Action'
         },
         '7': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
             'NA': 'No Action'
         },
         '8': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
             'NA': 'No Action'
         },
     },
     '?': {
         '1': 'KIND2',
         '2': 'ARTIFACT',
-        '3': 'CUSTOM TRAIT 2',
-        '4': 'CUSTOM TRAIT 4',
+        '3': 'TRAIT2',
+        '4': 'TRAIT4',
         '5': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
             'NA': 'No Action'
         },
         '6': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
             'NA': 'No Action'
         },
         '7': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
             'NA': 'No Action'
         },
         '8': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
             'NA': 'No Action'
         },
     },
@@ -3060,7 +3060,7 @@ def read_code(name, code_num, tier, list_obj):
     _action3 = get_action_name(_code_array[6], '7', _wType)
     _action4 = get_action_name(_code_array[7], '8', _wType)
 
-    list_obj.codeData = UIElement.CodeData(
+    list_obj.code_data = UIElement.CodeData(
         name, code_num, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
 
 
@@ -3068,21 +3068,10 @@ def get_action_info(action_name):
     if action_data.get(action_name):
         return action_data.get(action_name)
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-            _custom_data = _database.readlines()
-        if _custom_data[3].spit(',')[0] == action_name:
-            return [_custom_data[3].spit(',')[1], _custom_data[3].spit(',')[2], _custom_data[3].spit(',')[3]]
-        elif _custom_data[3].spit(',')[4] == action_name:
-            return [_custom_data[3].spit(',')[5], _custom_data[3].spit(',')[6], _custom_data[3].spit(',')[7]]
-        elif _custom_data[4].spit(',')[0] == action_name:
-            return [_custom_data[4].spit(',')[1], _custom_data[4].spit(',')[2], _custom_data[4].spit(',')[3]]
-        elif _custom_data[4].spit(',')[4] == action_name:
-            return [_custom_data[4].spit(',')[5], _custom_data[4].spit(',')[6], _custom_data[4].spit(',')[7]]
-        elif _custom_data[5].spit(',')[0] == action_name:
-            return [_custom_data[5].spit(',')[1], _custom_data[5].spit(',')[2], _custom_data[3].spit(',')[3]]
-        elif _custom_data[5].spit(',')[4] == action_name:
-            return [_custom_data[5].spit(',')[5], _custom_data[5].spit(',')[6], _custom_data[3].spit(',')[7]]
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
+        print(action_name)
         raise Exception(f'Cant find data for action_name {action_name}')
 
 
@@ -3090,53 +3079,36 @@ def get_action_name(symbol, position, wType):
     if code_cypher.get(symbol):
         if code_cypher.get(symbol).get(position):
             if code_cypher.get(symbol).get(position).get(wType):
-                if code_cypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 MELEE':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                        _custom_data = _database.readlines()
-                    if _custom_data[2].split(',')[0] == 'AS':
-                        return 'No Action'
-                    else:
-                        return _custom_data[2].split(',')[0]
+                with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+                    _custom_data = json.load(_custom_data_file)
 
-                if code_cypher.get(symbol).get(position).get(wType) == 'CUSTOM 2 MELEE':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                        _custom_data = _database.readlines()
-                    if _custom_data[2].split(',')[4] == 'AS':
-                        return 'No Action'
-                    else:
-                        return _custom_data[2].split(',')[4]
+                _type_ab = 'AS'
 
-                if code_cypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 RANGED':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                        _custom_data = _database.readlines()
-                    if _custom_data[3].split(',')[0] == 'AR':
-                        return 'No Action'
-                    else:
-                        return _custom_data[3].split(',')[0]
+                if wType == 'RANGED':
+                    _type_ab = 'AR'
+                elif wType == 'MAGIC':
+                    _type_ab = 'AC'
 
-                if code_cypher.get(symbol).get(position).get(wType) == 'CUSTOM 2 RANGED':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                        _custom_data = _database.readlines()
-                    if _custom_data[3].split(',')[4] == 'AR':
+                print(code_cypher.get(symbol).get(position).get(wType))
+                if code_cypher.get(symbol).get(position).get(wType) == 'ACTION1':
+                    if _custom_data['ACTION1'][_type_ab]['NAME'] == '':
                         return 'No Action'
-                    else:
-                        return _custom_data[3].split(',')[4]
+                    return _type_ab + _custom_data['ACTION1'][_type_ab]['NAME']
 
-                if code_cypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 MAGIC':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                        _custom_data = _database.readlines()
-                    if _custom_data[4].split(',')[0] == 'AC':
+                elif code_cypher.get(symbol).get(position).get(wType) == 'ACTION2':
+                    if _custom_data['ACTION2'][_type_ab]['NAME'] == '':
                         return 'No Action'
-                    else:
-                        return _custom_data[4].split(',')[0]
+                    return _type_ab + _custom_data['ACTION2'][_type_ab]['NAME']
 
-                if code_cypher.get(symbol).get(position).get(wType) == 'CUSTOM 3 MAGIC':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                        _custom_data = _database.readlines()
-                    if _custom_data[4].split(',')[4] == 'AC':
+                elif code_cypher.get(symbol).get(position).get(wType) == 'ACTION3':
+                    if _custom_data['ACTION3'][_type_ab]['NAME'] == '':
                         return 'No Action'
-                    else:
-                        return _custom_data[4].split(',')[4]
+                    return _type_ab + _custom_data['ACTION3'][_type_ab]['NAME']
+
+                elif code_cypher.get(symbol).get(position).get(wType) == 'ACTION4':
+                    if _custom_data['ACTION4'][_type_ab]['NAME'] == '':
+                        return 'No Action'
+                    return _type_ab + _custom_data['ACTION4'][_type_ab]['NAME']
                 else:
                     return code_cypher.get(symbol).get(position).get(wType)
             else:
@@ -3149,8 +3121,8 @@ def get_action_name(symbol, position, wType):
 
 
 def get_action_image(action_name, base_object, pos):
-    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-        _custom_data = _database.readlines()
+    with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+        _custom_data = json.load(_custom_data_file)
 
     if action_name == 'No Action':
         _action_image = pg.image.load(
@@ -3193,28 +3165,8 @@ def find_grist_image(grist_name):
 def get_code_value(symbol, position):
     if code_cypher.get(symbol):
         if code_cypher.get(symbol).get(position):
-            with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-                _custom_data = _database.readlines()
-            if code_cypher.get(symbol).get(position) == 'Customkind 1':
 
-                return _custom_data[0].split(',')[0]
-            elif code_cypher.get(symbol).get(position) == 'Customkind 2':
-
-                return _custom_data[0].split(',')[2]
-            elif code_cypher.get(symbol).get(position) == 'CUSTOM TRAIT 1':
-
-                return _custom_data[5].split(',')[0]
-            elif code_cypher.get(symbol).get(position) == 'CUSTOM TRAIT 2':
-
-                return _custom_data[6].split(',')[0]
-            elif code_cypher.get(symbol).get(position) == 'CUSTOM TRAIT 3':
-
-                return _custom_data[7].split(',')[0]
-            elif code_cypher.get(symbol).get(position) == 'CUSTOM TRAIT 4':
-
-                return _custom_data[8].split(',')[0]
-            else:
-                return code_cypher.get(symbol).get(position)
+            return code_cypher.get(symbol).get(position)
         else:
             raise Exception(f'Could not find position {position} in {symbol}')
     else:
@@ -3247,8 +3199,8 @@ def get_trat_1_data(trait, kind_name, tier):
                 raise Exception(
                     f'Could not find weapon kind_name for {kind_name}')
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-            _custom_data = _database.readlines()
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
         if _custom_data[5].split(',')[0] == trait:
             return _custom_data[5].split(',')[int(_tier_level)]
         elif _custom_data[6].split(',')[0] == trait:
@@ -3274,8 +3226,8 @@ def get_trat_2_data(trait, kind_name, tier):
         else:
             raise Exception('Invalid tier level')
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-            _custom_data = _database.readlines()
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
         if _custom_data[7].split(',')[0] == trait:
             return _custom_data[7].split(',')[int(_tier_level)]
         elif _custom_data[8].split(',')[0] == trait:
@@ -3286,13 +3238,13 @@ def get_trat_2_data(trait, kind_name, tier):
 
 def get_weapon_type(weaponkind):
     if weaponkind_type.get(weaponkind):
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-            _custom_data = _database.readlines()
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
-        if weaponkind == _custom_data[0].split(',')[0]:
-            return _custom_data[0].split(',')[1]
-        elif weaponkind == _custom_data[0].split(',')[2]:
-            return _custom_data[0].split(',')[3]
+        if weaponkind == 'KIND1':
+            return _custom_data['KIND1']['TYPE']
+        elif weaponkind == 'KIND2':
+            return _custom_data['KIND2']['TYPE']
         else:
             return weaponkind_type.get(weaponkind)
     else:
@@ -3307,181 +3259,3 @@ def get_tier_damage_num(tier, value):
             raise Exception(f'Could not find value {value} in {tier}')
     else:
         raise Exception(f'Could not find tier {tier}')
-
-
-def change_code_value(which_custom, new_code_value):
-
-    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as _database:
-        _custom_data = _database.readlines()
-
-    _line_1 = _custom_data[0].split(',')
-    _line_2 = _custom_data[1].split(',')
-    _line_3 = _custom_data[2].split(',')
-    _line_4 = _custom_data[3].split(',')
-    _line_5 = _custom_data[4].split(',')
-    _line_6 = _custom_data[5].split(',')
-    _line_7 = _custom_data[6].split(',')
-    _line_8 = _custom_data[7].split(',')
-    _line_9 = _custom_data[8].split(',')
-
-    _line_1_ = f'{_line_1[0]},{_line_1[1]},{_line_1[2]},{_line_1[3]},\n'
-    _line_2_ = f'{_line_2[0]},{_line_2[1]},\n'
-    _line_3_ = f'{_line_3[0]},{_line_3[1]},{_line_3[2]},{_line_3[3]},{_line_3[4]},{_line_3[5]},{_line_3[6]},{_line_3[7]},\n'
-    _line_4_ = f'{_line_4[0]},{_line_4[1]},{_line_4[2]},{_line_4[3]},{_line_4[4]},{_line_4[5]},{_line_4[6]},{_line_4[7]},\n'
-    _line_5_ = f'{_line_5[0]},{_line_5[1]},{_line_5[2]},{_line_5[3]},{_line_5[4]},{_line_5[5]},{_line_5[6]},{_line_5[7]},\n'
-    _line_6_ = f'{_line_6[0]},{_line_6[1]},{_line_6[2]},{_line_6[3]},{_line_6[4]},\n'
-    _line_7_ = f'{_line_7[0]},{_line_7[1]},{_line_7[2]},{_line_7[3]},{_line_7[4]},\n'
-    _line_8_ = f'{_line_8[0]},{_line_8[1]},{_line_8[2]},{_line_8[3]},{_line_8[4]},\n'
-    _line_9_ = f'{_line_9[0]},{_line_9[1]},{_line_9[2]},{_line_9[3]},{_line_9[4]}'
-
-    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'w') as _database:
-
-        # Customkind changing
-        if which_custom == 'Customkind 1':
-            _line_1_ = f'{new_code_value},{_line_1[1]},{_line_1[2]},{_line_1[3]},\n'
-
-        elif which_custom == 'Customkind 2':
-            _line_1_ = f'{_line_1[0]},{_line_1[1]},{new_code_value},{_line_1[3]},\n'
-
-        elif which_custom == f'{_line_1[0]} Type':
-            _line_1_ = f'{_line_1[0]},{new_code_value},{_line_1[2]},{_line_1[3]},\n'
-
-        elif which_custom == f'{_line_1[2]} Type':
-            _line_1_ = f'{_line_1[0]},{_line_1[1]},{_line_1[2]},{new_code_value},\n'
-
-        # Customkind icon changing
-        elif which_custom == f'{_line_1[0]} Icon':
-            _line_2_ = f'{new_code_value},{_line_2[1]},\n'
-
-        elif which_custom == f'{_line_1[2]} Icon':
-            _line_2_ = f'{_line_2[0]},{new_code_value},\n'
-
-        # Melee action_image changing
-        elif which_custom == 'Melee 1 Name':
-            _line_3_ = f'{new_code_value},{_line_3[1]},{_line_3[2]},{_line_3[3]},{_line_3[4]},{_line_3[5]},{_line_3[6]},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 2 Name':
-            _line_3_ = f'{_line_3[0]},{_line_3[1]},{_line_3[2]},{_line_3[3]},{new_code_value},{_line_3[5]},{_line_3[6]},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 1 Cost':
-            _line_3_ = f'{_line_3[0]},{new_code_value},{_line_3[2]},{_line_3[3]},{_line_3[4]},{_line_3[5]},{_line_3[6]},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 2 Cost':
-            _line_3_ = f'{_line_3[0]},{_line_3[1]},{_line_3[2]},{_line_3[3]},{_line_3[4]},{new_code_value},{_line_3[6]},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 1 Dmg':
-            _line_3_ = f'{_line_3[0]},{_line_3[1]},{new_code_value},{_line_3[3]},{_line_3[4]},{_line_3[5]},{_line_3[6]},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 2 Dmg':
-            _line_3_ = f'{_line_3[0]},{_line_3[1]},{_line_3[2]},{_line_3[3]},{_line_3[4]},{_line_3[5]},{new_code_value},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 1 Desc':
-            _line_3_ = f'{_line_3[0]},{_line_3[1]},{_line_3[2]},{new_code_value},{_line_3[4]},{_line_3[5]},{_line_3[6]},{_line_3[7]},\n'
-
-        elif which_custom == 'Melee 2 Desc':
-            _line_3_ = f'{_line_3[0]},{_line_3[1]},{_line_3[2]},{_line_3[3]},{_line_3[4]},{_line_3[5]},{_line_3[6]},{new_code_value},\n'
-
-        # Ranged action_image changing
-        elif which_custom == 'Ranged 1 Name':
-            _line_4_ = f'{new_code_value},{_line_4[1]},{_line_4[2]},{_line_4[3]},{_line_4[4]},{_line_4[5]},{_line_4[6]},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 2 Name':
-            _line_4_ = f'{_line_4[0]},{_line_4[1]},{_line_4[2]},{_line_4[3]},{new_code_value},{_line_4[5]},{_line_4[6]},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 1 Cost':
-            _line_4_ = f'{_line_4[0]},{new_code_value},{_line_4[2]},{_line_4[3]},{_line_4[4]},{_line_4[5]},{_line_4[6]},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 2 Cost':
-            _line_4_ = f'{_line_4[0]},{_line_4[1]},{_line_4[2]},{_line_4[3]},{_line_4[4]},{new_code_value},{_line_4[6]},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 1 Dmg':
-            _line_4_ = f'{_line_4[0]},{_line_4[1]},{new_code_value},{_line_4[3]},{_line_4[4]},{_line_4[5]},{_line_4[6]},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 2 Dmg':
-            _line_4_ = f'{_line_4[0]},{_line_4[1]},{_line_4[2]},{_line_4[3]},{_line_4[4]},{_line_4[5]},{new_code_value},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 1 Desc':
-            _line_4_ = f'{_line_4[0]},{_line_4[1]},{_line_4[2]},{new_code_value},{_line_4[4]},{_line_4[5]},{_line_4[6]},{_line_4[7]},\n'
-
-        elif which_custom == 'Ranged 2 Desc':
-            _line_4_ = f'{_line_4[0]},{_line_4[1]},{_line_4[2]},{_line_4[3]},{_line_4[4]},{_line_4[5]},{_line_4[6]},{new_code_value},\n'
-
-        # Magic action_image changing
-        elif which_custom == 'Magic 1 Name':
-            _line_5_ = f'{new_code_value},{_line_5[1]},{_line_5[2]},{_line_5[3]},{_line_5[4]},{_line_5[5]},{_line_5[6]},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 2 Name':
-            _line_5_ = f'{_line_5[0]},{_line_5[1]},{_line_5[2]},{_line_5[3]},{new_code_value},{_line_5[5]},{_line_5[6]},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 1 Cost':
-            _line_5_ = f'{_line_5[0]},{new_code_value},{_line_5[2]},{_line_5[3]},{_line_5[4]},{_line_5[5]},{_line_5[6]},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 2 Cost':
-            _line_5_ = f'{_line_5[0]},{_line_5[1]},{_line_5[2]},{_line_5[3]},{_line_5[4]},{new_code_value},{_line_5[6]},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 1 Dmg':
-            _line_5_ = f'{_line_5[0]},{_line_5[1]},{new_code_value},{_line_5[3]},{_line_5[4]},{_line_5[5]},{_line_5[6]},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 2 Dmg':
-            _line_5_ = f'{_line_5[0]},{_line_5[1]},{_line_5[2]},{_line_5[3]},{_line_5[4]},{_line_5[5]},{new_code_value},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 1 Desc':
-            _line_5_ = f'{_line_5[0]},{_line_5[1]},{_line_5[2]},{new_code_value},{_line_5[4]},{_line_5[5]},{_line_5[6]},{_line_5[7]},\n'
-
-        elif which_custom == 'Magic 2 Desc':
-            _line_5_ = f'{_line_5[0]},{_line_5[1]},{_line_5[2]},{_line_5[3]},{_line_5[4]},{_line_5[5]},{_line_5[6]},{new_code_value},\n'
-
-        # Custom trait 1 changing
-        elif which_custom == 'Trait 1 Name':
-            _line_6_ = f'{new_code_value},{_line_6[1]},{_line_6[2]},{_line_6[3]},{_line_6[4]},\n'
-        elif which_custom == 'Trait 1 1-4':
-            _line_6_ = f'{_line_6[0]},{new_code_value},{_line_6[2]},{_line_6[3]},{_line_6[4]},\n'
-        elif which_custom == 'Trait 1 5-8':
-            _line_6_ = f'{_line_6[0]},{_line_6[1]},{new_code_value},{_line_6[3]},{_line_6[4]},\n'
-        elif which_custom == 'Trait 1 9-12':
-            _line_6_ = f'{_line_6[0]},{_line_6[1]},{_line_6[2]},{new_code_value},{_line_6[4]},\n'
-        elif which_custom == 'Trait 1 13-16':
-            _line_6_ = f'{_line_6[0]},{_line_6[1]},{_line_6[2]},{_line_6[3]},{new_code_value},\n'
-
-        # Custom trait 2 changing
-        elif which_custom == 'Trait 2 Name':
-            _line_7_ = f'{new_code_value},{_line_7[1]},{_line_7[2]},{_line_7[3]},{_line_7[4]},\n'
-        elif which_custom == 'Trait 2 1-4':
-            _line_7_ = f'{_line_7[0]},{new_code_value},{_line_7[2]},{_line_7[3]},{_line_7[4]},\n'
-        elif which_custom == 'Trait 2 5-8':
-            _line_7_ = f'{_line_7[0]},{_line_7[1]},{new_code_value},{_line_7[3]},{_line_7[4]},\n'
-        elif which_custom == 'Trait 2 9-12':
-            _line_7_ = f'{_line_7[0]},{_line_7[1]},{_line_7[2]},{new_code_value},{_line_7[4]},\n'
-        elif which_custom == 'Trait 2 13-16':
-            _line_7_ = f'{_line_7[0]},{_line_7[1]},{_line_7[2]},{_line_7[3]},{new_code_value},\n'
-
-        # Custom trait 3 changing
-        elif which_custom == 'Trait 3 Name':
-            _line_8_ = f'{new_code_value},{_line_8[1]},{_line_8[2]},{_line_8[3]},{_line_8[4]},\n'
-        elif which_custom == 'Trait 3 1-4':
-            _line_8_ = f'{_line_8[0]},{new_code_value},{_line_8[2]},{_line_8[3]},{_line_8[4]},\n'
-        elif which_custom == 'Trait 3 5-8':
-            _line_8_ = f'{_line_8[0]},{_line_8[1]},{new_code_value},{_line_8[3]},{_line_8[4]},\n'
-        elif which_custom == 'Trait 3 9-12':
-            _line_8_ = f'{_line_8[0]},{_line_8[1]},{_line_8[2]},{new_code_value},{_line_8[4]},\n'
-        elif which_custom == 'Trait 3 13-16':
-            _line_8_ = f'{_line_8[0]},{_line_8[1]},{_line_8[2]},{_line_8[3]},{new_code_value},\n'
-
-        # Custom trait 4 changing
-        elif which_custom == 'Trait 4 Name':
-            _line_9_ = f'{new_code_value},{_line_9[1]},{_line_9[2]},{_line_9[3]},{_line_9[4]}'
-        elif which_custom == 'Trait 4 1-4':
-            _line_9_ = f'{_line_9[0]},{new_code_value},{_line_9[2]},{_line_9[3]},{_line_9[4]}'
-        elif which_custom == 'Trait 4 5-8':
-            _line_9_ = f'{_line_9[0]},{_line_9[1]},{new_code_value},{_line_9[3]},{_line_9[4]}'
-        elif which_custom == 'Trait 4 9-12':
-            _line_9_ = f'{_line_9[0]},{_line_9[1]},{_line_9[2]},{new_code_value},{_line_9[4]}'
-        elif which_custom == 'Trait 4 9-12':
-            _line_9_ = f'{_line_9[0]},{_line_9[1]},{_line_9[2]},{_line_9[3]},{new_code_value}'
-
-        _database.writelines([_line_1_, _line_2_, _line_3_, _line_4_,
-                             _line_5_, _line_6_, _line_7_, _line_8_, _line_9_])
-        UIElement.get_ui_elem('ConsoleMessage')('Saved Custom Settings')
-
-    for _list_obj in UIElement.find_current_ui('CardList').list:
-        _list_obj.redraw_card((255, 255, 255))

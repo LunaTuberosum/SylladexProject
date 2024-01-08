@@ -170,10 +170,10 @@ def main(screen, clock):
                                         break
                             else:
                                 UIElement.get_ui_elem('PopUp')(
-                                    'This _card is already deployed')
+                                    'This card is already deployed')
                         else:
                             UIElement.get_ui_elem('PopUp')(
-                                'Drag the _card into the stacking area')
+                                'Drag the card into the stacking area')
 
                         _elem.rect.topleft = _elem.prevPos
                         UIElement.get_group('layer').change_layer(_elem, -1)
@@ -186,7 +186,7 @@ def main(screen, clock):
                 for _elem in UIElement.get_group("ui"):
                     if isinstance(_elem, UIElement.get_ui_elem('ScrollBar')):
                         if _elem.get_selected() == True:
-                            _elem.move_bar(event.pos)
+                            _elem.move_bar(event.pos[1])
 
                     for _elem in UIElement.get_group('ui'):
                         if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
@@ -298,10 +298,7 @@ def main(screen, clock):
                     _elem.negate = True
 
                 if hasattr(_elem, "hover") and _elem.hovering == False:
-                    if isinstance(_elem, UIElement.get_ui_elem('ListObject')) and UIElement.get_ui_elem('RemoveCardButton').get_eject() == True:
-                        _elem.alt_hover()
-                    else:
-                        _elem.hover()
+                    _elem.hover()
 
                 if hasattr(_elem, "tool_tip_text"):
                     if hasattr(_elem, "active") and _elem.active == True:
@@ -317,10 +314,7 @@ def main(screen, clock):
                     _elem.negate = False
 
                 if hasattr(_elem, "no_hover") and _elem.hovering == True:
-                    if isinstance(_elem, UIElement.get_ui_elem('ListObject')) and UIElement.get_ui_elem('RemoveCardButton').get_eject() == True:
-                        _elem.alt_no_hover()
-                    else:
-                        _elem.no_hover()
+                    _elem.no_hover()
 
             if isinstance(_elem, UIElement.get_ui_elem('PopUp')) and hasattr(_elem, "last") and now_tick - _elem.last >= _elem.timer:
                 _elem.remove()

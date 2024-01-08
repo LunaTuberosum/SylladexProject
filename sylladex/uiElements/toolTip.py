@@ -9,7 +9,7 @@ class ToolTip(UIElement):
 
         self.font = pg.font.Font(
             "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-        width = self.font.render(self.text, True, (0, 0, 0)).get_width() + 12
+        _width = self.font.render(self.text, True, (0, 0, 0)).get_width() + 12
 
         super().__init__(
             pos[0]+12,
@@ -19,8 +19,8 @@ class ToolTip(UIElement):
 
         self.apperance = Apperance(
             self,
-            [width, 30],
-            [[width, 30], '#D2D2D2', [0, 0]],
+            [_width, 30],
+            [[_width, 30], '#D2D2D2', [0, 0]],
             texts=[[self.text, [6, 15],
                     'left', '#000000']]
         )

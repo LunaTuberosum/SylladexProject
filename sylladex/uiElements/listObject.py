@@ -77,31 +77,24 @@ class ListObject(UIElement):
 
         self.redraw_card()
 
-    # def update(self):
-    #     if self.prev_tick > 0:
-    #         if pg.time.get_ticks() - self.prev_tick >= 500:
-    #             if self.capta_card.shaking == False:
-    #                 self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
-    #                 self.capta_card.kind_image()
+    def update(self):
+        #     if self.prev_tick > 0:
+        #         if pg.time.get_ticks() - self.prev_tick >= 500:
+        #             if self.capta_card.shaking == False:
+        #                 self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
+        #                 self.capta_card.kind_image()
 
-    #     if self.grabbed == True:
-    #         self.rect.left = pg.mouse.get_pos()[0] - 32
-    #         self.rect.top = pg.mouse.get_pos()[1] - 32
-    #         self.redraw_card((255,255,255))
+        #     if self.grabbed == True:
+        #         self.rect.left = pg.mouse.get_pos()[0] - 32
+        #         self.rect.top = pg.mouse.get_pos()[1] - 32
+        #         self.redraw_card((255,255,255))
 
-    #         self.hovering = False
+        #         self.hovering = False
 
-    #     if self.rect.y >= 196 and self.rect.y <= 757:
-    #         self.interactable = True
-    #         if self.children:
-    #             for child in self.children:
-    #                 UIElement.get_group('layer').change_layer(child, -1)
-    #             UIElement.get_group('layer').change_layer(self.children[3], 1)
-    #     else:
-    #         self.interactable = False
-    #         if self.children:
-    #             for child in self.children:
-    #                 UIElement.get_group('layer').change_layer(child, -1)
+        if self.rect.y >= 196 and self.rect.y <= 757:
+            self.interactable = True
+        else:
+            self.interactable = False
 
     def redraw_card(self):
         if self.writing == False:
@@ -127,7 +120,7 @@ class ListObject(UIElement):
                         ['-', [6, 49], 'left', '#000000'],
                         ['-', [150, 49], 'left', '#000000']]}
 
-            elif self.code_data:
+            else:
 
                 self.apperance.kwargs = {
                     'image': [UIElement.CodeDatabase.find_kind_image(self.code_data.kind), [185, 3]],
@@ -139,34 +132,53 @@ class ListObject(UIElement):
 
             self.apperance.reload_apperance()
 
-    def place_children(self):
-        self.children[0].rect.topleft = (self.rect.x+3, self.rect.y+3)
-        self.children[1].rect.topleft = (self.rect.x+3, self.rect.y+35)
-        self.children[2].rect.topleft = (self.rect.x+129, self.rect.y+35)
-        self.children[3].rect.topleft = (78, self.rect.y+64)
+    def start_card(self):
 
-    # def start_card(self):
+        self.apperance.kwargs['texts'] = []
+        self.apperance.kwargs['imageAlpha'] = 0
+        self.apperance.reload_apperance()
+        self.writing = True
 
-    #     self.image.fill((255,255,255))
-    #     self.writing = True
-    #     self.children.append(UIElement.get_uiElem('TextField')(self.rect.x+3, self.rect.y+3, 243, 28, 22, "nameOverlay", "Input the name of the Captchalogue Card (A-z)", "Txt"))
-    #     self.children.append(UIElement.get_uiElem('TextField')(self.rect.x+3, self.rect.y+35, 105, 28, 8, "codeOverlay", "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)", "Txt"))
-    #     self.children.append(UIElement.get_uiElem('TextField')(self.rect.x+129, self.rect.y+35, 33, 28, 2, "tierOverlay", "Input the tier of the Captchalogue Card (1-16)", "Txt"))
+        self.add_child(
+            UIElement.get_ui_elem('TextField')(
+                6,
+                3,
+                [237, 28],
+                "nameOverlay",
+                "Input the name of the Captchalogue Card (A-Z, a-z)",
+                21,
+                startLayer=3,
+                baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
+            ))
+        self.add_child(
+            UIElement.get_ui_elem('TextField')(
+                6,
+                35,
+                [116, 28],
+                "codeOverlay",
+                "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)",
+                7,
+                startLayer=3,
+                baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
+            ))
+        self.add_child(
+            UIElement.get_ui_elem('TextField')(
+                150,
+                35,
+                [33, 28],
+                "tierOverlay",
+                "Input the tier of the Captchalogue Card (1-16)",
+                1,
+                textType='Num',
+                startLayer=3,
+                baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
+            ))
 
-    #     for child in self.children:
-    #         UIElement.get_group('layer').change_layer(child, -1)
-    #         child.changeColors((230,230,230), (200,200,200), (170,170,170))
-
-    #     self.children.append(UIElement.get_uiElem('FinishButton')(self))
-
-    #     self.children[0].active = True
-    #     self.children[0].image.fill((170,170,170))
-
-    #     for elem in UIElement.get_group("ui"):
-    #         if hasattr(elem, "job"):
-    #             if elem.job == "nameOverlay" or elem.job == "codeOverlay" or elem.job == "tierOverlay":
-    #                 elem.color = (235,235,235)
-    #                 elem.no_hover()
+        self.add_child(
+            UIElement.get_ui_elem('FinishButton')(
+                64,
+                self)
+        )
 
     def hover(self):
         # if self.capta_card:
@@ -189,28 +201,19 @@ class ListObject(UIElement):
         #     self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
         #     self.capta_card.kind_image()
 
-    # def alt_no_hover(self):
-    #     self.redraw_card((230,230,230))
-    #     self.hovering = False
+    def on_click(self):
+        if UIElement.get_ui_elem('RemoveCardButton').get_eject() and self.interactable:
+            if not self.empty:
+                self.empty = True
+                self.code_data = CodeData()
+                self.redraw_card()
 
-    # def alt_hover(self):
-    #     self.redraw_card((255,255,255))
-    #     self.hovering = True
-
-    # def on_click(self):
-    #     if UIElement.get_uiElem('RemoveCardButton').eject == True and self.interactable == True:
-    #         if self.empty == False:
-    #             self.empty = True
-    #             self.code_data = CodeData()
-
-    #             UIElement.get_uiElem('RemoveCardButton').eject = False
-    #             for elem in UIElement.get_group("ui"):
-    #                 if isinstance(elem, UIElement.get_uiElem('ListObject')):
-    #                     elem.redraw_card((255,255,255))
-    #                 elif isinstance(elem, UIElement.get_uiElem('CardList')):
-    #                     elem.save_list()
-    #         else:
-    #             UIElement.get_uiElem('PopUp')("You can\'t eject an empty card")
+                UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
+                UIElement.find_current_ui('RemoveCardButton').reload_image()
+                UIElement.find_current_ui('CardList').save_list()
+            else:
+                UIElement.get_ui_elem('PopUp')(
+                    "You can\'t eject an empty card")
 
     #     elif self.interactable == True:
     #         if self.empty == False:

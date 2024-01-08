@@ -1,80 +1,84 @@
 import pygame as pg
 
-from uiElement import UIElement
+from uiElement import Apperance, UIElement
+
 
 class FinishButton(UIElement):
-    def __init__(self, card):
-        super().__init__(78, card.rect.y+64, (140, 36), 'FinishButton', UIElement.modusBackground)
+    def __init__(self, y, card):
+        super().__init__(
+            54,
+            y,
+            'FinishButton',
+            4
+        )
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 36)
 
-        self.create_appearance([[128, 30], UIElement.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIElement.modusBackground]])
+        self.apperance = Apperance(
+            self,
+            [140, 36],
+            [[140, 36], 'ModusBackground', [0, 0]],
+            [[128, 30], 'ModusAccent', [6, 0]],
+            texts=[
+                ['FINISH', [70, 18], 'center', 'ModusBackground']
+            ]
+        )
 
         self.card = card
-        UIElement.get_group('layer').change_layer(self, 1)
-        self.tool_tip_text = "Finish Captchalogueing a Card to your Deck" 
+        self.tool_tip_text = "Finish Captchalogueing a Card to your Deck"
 
         self.hovering = False
 
-    def reloadSelf(self):
-        self.create_appearance([[140, 36], UIElement.modusBackground, [0, 0]],[[128, 30], UIElement.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIElement.modusBackground]])
-        
     def hover(self):
-        self.create_appearance([[128, 30], UIElement.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIElement.modusForground]])
+        self.apperance.kwargs['texts'] = [
+            ['FINISH', [70, 18], 'center', 'ModusForeground']
+        ]
+        self.apperance.reload_apperance()
         self.hovering = True
 
     def no_hover(self):
-        self.create_appearance([[128, 30], UIElement.modusAccent, [6, 0]], texts = [['FINISH', [70, 18], 'center', UIElement.modusBackground]])
+        self.apperance.kwargs['texts'] = [
+            ['FINISH', [70, 18], 'center', 'ModusBackground']
+        ]
+        self.apperance.reload_apperance()
         self.hovering = False
-        
+
     def on_click(self):
-        for _elem in UIElement.get_group("ui"):
-            if isinstance(_elem, UIElement.get_ui_elem('TextField')):
-                if _elem.job == "nameOverlay":
-                    if len(_elem.text) == 0:
-                        UIElement.get_ui_elem('PopUp')('The card must have a name')
-                        return
-                    _name = _elem.text
+        if len(self.card.children[0].text) == 0:
+            UIElement.get_ui_elem('PopUp')(
+                'The card must have a name')
+            return
 
-                elif _elem.job == "codeOverlay":
-                    if len(_elem.text) < 8:
-                        UIElement.get_ui_elem('PopUp')('Codes must be a 8 characters long')
-                        return
-                    _code = _elem.text
+        elif len(self.card.children[1].text) < 8:
+            UIElement.get_ui_elem('PopUp')(
+                'Codes must be a 8 characters long')
+            return
 
-                elif _elem.job == "tierOverlay":
-                    if len(_elem.text) == 0:
-                        UIElement.get_ui_elem('PopUp')('Cards must have a tier')
-                        return
+        elif len(self.card.children[2].text) == 0:
+            UIElement.get_ui_elem('PopUp')(
+                'Codes must be a 8 characters long')
+            return
 
-                    _is_num = True
-                    for _char in _elem.text:
-                        for _num in range(0,10):
-                            if _char == str(_num):
-                                _is_num = True
-                                break
-                            else:
-                                _is_num = False
-                        if _is_num == False:
-                            UIElement.get_ui_elem('PopUp')("Tier must only be numbers")
-                            return
+        if int(self.card.children[2].text) > 16:
+            UIElement.get_ui_elem('PopUp')(
+                "Tier can be no higher than 16")
+            return
+        elif int(self.card.children[2].text) == 0:
+            UIElement.get_ui_elem('PopUp')(
+                "Tier must be at least 1")
+            return
 
-                    if int(_elem.text) > 16:
-                        UIElement.get_ui_elem('PopUp')("Tier can be no higher than 16")
-                        return
-                    elif int(_elem.text) == 0:
-                        UIElement.get_ui_elem('PopUp')("Tier must be at least 1")
-                        return
-                    
-                    _tier = _elem.text
-                        
-        self.card.writing = False   
-        UIElement.CodeDatabase.read_code(_name, _code, _tier, self.card)
-        self.card.redraw_card((255,255,255))
+        self.card.writing = False
+        UIElement.CodeDatabase.read_code(
+            self.card.children[0].text, self.card.children[1].text, self.card.children[2].text, self.card)
+        self.card.redraw_card()
         self.card.empty = False
         for child in self.card.children:
             child.kill()
         self.card.children.clear()
-        for _elem in UIElement.get_group('ui'):
-            if isinstance(_elem, UIElement.get_ui_elem('CardList')):
-                _elem.save_list()
+
+        UIElement.get_ui_elem('CardList').save_list()
+        _add = UIElement.find_current_ui('AddCardButton')
+        _add.writing = False
+        _add.reload_image()

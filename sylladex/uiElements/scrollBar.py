@@ -53,22 +53,17 @@ class ScrollBar(UIElement):
 
     def move_bar(self, pos):
         _check_num = 625 / len(UIElement.get_ui_elem('CardList').get_list())
-        self.rect.y = pos[1]
-        if self.rect.y < 196:
-            self.rect.y = 196
-            for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                _list_obj.rect.y = 196 + \
-                    (70 * UIElement.get_ui_elem('CardList').get_list().index(_list_obj))
-                if _list_obj.children:
-                    _list_obj.place_children()
+        self.rect.y = pos
 
-        elif self.rect.y + self.rect.h > 821:
+        _move_amount = [0, 0]
+
+        if self.rect.y <= 196:
+            self.rect.y = 196
+            _move_amount = [0, 196]
+
+        elif self.rect.y + self.rect.h >= 821:
             self.rect.y = 821 - self.rect.h
-            for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                _list_obj.rect.y = 196 - (70 * ((len(UIElement.get_ui_elem('CardList').get_list(
-                ))-9) - UIElement.get_ui_elem('CardList').get_list().index(_list_obj)))
-                if _list_obj.children:
-                    _list_obj.place_children()
+            _move_amount = [0, 196]
 
         else:
             _num = _check_num
@@ -79,68 +74,31 @@ class ScrollBar(UIElement):
 
             for _check in _all_checks:
                 if self.rect.y >= _check:
-
                     if UIElement.get_ui_elem('CardList').get_list()[0].rect.y > 196 - (70 * _all_checks.index(_check)):
-
-                        for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                            _list_obj.rect.y -= 70
-                            if _list_obj.children:
-                                _list_obj.place_children()
+                        _move_amount = [0, -70]
 
                 if self.rect.y <= _check:
-
                     if UIElement.get_ui_elem('CardList').get_list()[0].rect.y < 196 - (70 * _all_checks.index(_check)):
+                        _move_amount = [0, 70]
 
-                        for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                            _list_obj.rect.y += 70
-                            if _list_obj.children:
-                                _list_obj.place_children()
+        for _list_obj in UIElement.get_ui_elem('CardList').get_list():
+            _indv_move_amount = [_list_obj.rect.x,  _list_obj.rect.y]
+
+            if self.rect.y == 196:
+                _indv_move_amount[1] = (70 * UIElement.get_ui_elem(
+                    'CardList').get_list().index(_list_obj))
+
+            elif self.rect.y == 821 - self.rect.h:
+                _indv_move_amount[1] = -(70 * ((len(UIElement.get_ui_elem('CardList').get_list(
+                ))-9) - UIElement.get_ui_elem('CardList').get_list().index(_list_obj)))
+
+            _indv_move_amount[0] += _move_amount[0]
+            _indv_move_amount[1] += _move_amount[1]
+
+            UIElement.move_element(_list_obj, _indv_move_amount)
 
     def move_bar_wheel(self, rel):
-        _check_num = 625 / len(UIElement.get_ui_elem('CardList').get_list())
-        self.rect.y += rel * 10
-        print(self.rect.bottom)
-        if self.rect.y < 196:
-            self.rect.y = 196
-            for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                _list_obj.rect.y = 196 + \
-                    (70 * UIElement.get_ui_elem('CardList').get_list().index(_list_obj))
-                if _list_obj.children:
-                    _list_obj.place_children()
-
-        elif self.rect.y + self.rect.h > 821:
-            self.rect.y = 821 - self.rect.h
-            for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                _list_obj.rect.y = 196 - (70 * ((len(UIElement.get_ui_elem('CardList').get_list(
-                ))-9) - UIElement.get_ui_elem('CardList').get_list().index(_list_obj)))
-                if _list_obj.children:
-                    _list_obj.place_children()
-
-        else:
-            _num = _check_num
-            _all_checks = []
-            for _new_check in range(0, len(UIElement.get_ui_elem('CardList').get_list())-9):
-                _all_checks.append(_num + 196)
-                _num += _check_num
-
-            for _check in _all_checks:
-                if self.rect.y >= _check:
-
-                    if UIElement.get_ui_elem('CardList').get_list()[0].rect.y > 196 - (70 * _all_checks.index(_check)):
-
-                        for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                            _list_obj.rect.y -= 70
-                            if _list_obj.children:
-                                _list_obj.place_children()
-
-                if self.rect.y <= _check:
-
-                    if UIElement.get_ui_elem('CardList').get_list()[0].rect.y < 196 - (70 * _all_checks.index(_check)):
-
-                        for _list_obj in UIElement.get_ui_elem('CardList').get_list():
-                            _list_obj.rect.y += 70
-                            if _list_obj.children:
-                                _list_obj.place_children()
+        self.move_bar(self.rect.y + (rel * 10))
 
     @classmethod
     def get_selected(cls):

@@ -148,7 +148,7 @@ class TextField(UIElement):
             else:
                 if len(self.text) <= self.max_char:
                     if self.text_type == 'Num':
-                        for _num in range(0, 9):
+                        for _num in range(0, 10):
                             if event.unicode == str(_num):
                                 self.text += event.unicode
                     else:

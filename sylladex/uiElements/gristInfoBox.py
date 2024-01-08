@@ -34,7 +34,7 @@ class GristInfoBox(UIElement):
                 f'{self.grist}NumBox',
                 f'Let\'s you alter how much {self.grist} grist you have',
                 5,
-                layerChange=1,
+                startLayer=1,
                 textColor=(67, 178, 222),
                 textType='Num',
                 baseColors=[(239, 239, 239), (199, 199, 199), (179, 179, 179)],

@@ -82,7 +82,17 @@ class Apperance():
                 if len(_text) == 5:
                     self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
 
-                _text_ = self.obj.font.render(_text[0], True, _text[3])
+                if _text[3] == 'ModusBackground':
+                    _text_ = self.obj.font.render(_text[0], True,
+                                                  Apperance.__modus_color.get(UIElement.get_modus()).get('background'))
+                elif _text[3] == 'ModusForeground':
+                    _text_ = self.obj.font.render(_text[0], True,
+                                                  Apperance.__modus_color.get(UIElement.get_modus()).get('foreground'))
+                elif _text[3] == 'ModusAccent':
+                    _text_ = self.obj.font.render(_text[0], True,
+                                                  Apperance.__modus_color.get(UIElement.get_modus()).get('accent'))
+                else:
+                    _text_ = self.obj.font.render(_text[0], True, _text[3])
                 if _text[2] == 'center':
                     self.obj.image.blit(_text_, [
                                         _text[1][0]-(_text_.get_width()/2), (_text[1][1]-(_text_.get_height()/2))])
