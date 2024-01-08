@@ -13,7 +13,7 @@ class ModusCard(UIElement):
             x,
             910,
             f'ModusCard ({self.modus})',
-            4
+            11
         )
 
         self.apperance = Apperance(
@@ -48,17 +48,13 @@ class ModusCard(UIElement):
         for elem in UIElement.get_group("ui"):
             if isinstance(elem, UIElement.get_ui_elem('ModusCard')):
                 if elem == self:
-                    elem.apperance.kargs = {
-                        'colorKey': True,
-                        'image': [f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png', [0, 0]]
-                    }
-                    self.rect.y = 907
+                    elem.apperance.change_image(
+                        f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS_ACTIVE.png', [0, 0])
+                    elem.rect.y = 907
                 else:
-                    elem.apperance.kargs = {
-                        'colorKey': True,
-                        'image': [f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png', [6, 6]]
-                    }
-                    self.rect.y = 910
+                    elem.apperance.change_image(
+                        f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png', [6, 6])
+                    elem.rect.y = 910
 
             elem.apperance.reload_apperance()
             if hasattr(elem, 'reload_image'):

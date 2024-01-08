@@ -20,6 +20,8 @@ from .uiElements.customSettingMenu import CustomSettingMenu
 from .uiElements.customSettingSectionName import CustomSettingSectionName
 from .uiElements.debugInspector import DebugInspector
 from .uiElements.dropDown import DropDown
+from .uiElements.dropDownBackground import DropDownBackground
+from .uiElements.dropDownOption import DropDownOption
 from .uiElements.escapeMenu import EscapeMenu
 from .uiElements.escapeMenuOption import EscapeMenuOption
 from .uiElements.gristCache import GristCache
@@ -56,6 +58,8 @@ UIElement.add_current_ui([
     CustomSettingSectionName,
     DebugInspector,
     DropDown,
+    DropDownBackground,
+    DropDownOption,
     EscapeMenu,
     EscapeMenuOption,
     GristCache,
@@ -107,12 +111,14 @@ def main(screen, clock):
                             UIElement.remove_from_group(_elem)
                             global_prev_tick = pg.time.get_ticks()
 
+                    _clicked_element = []
                     for _elem in UIElement.get_group('ui'):
                         if hasattr(_elem, "active") and _elem.active == True:
                             if hasattr(_elem, "exit_field"):
                                 _elem.exit_field()
-                        if hasattr(_elem, "on_click") and _elem.rect.collidepoint(event.pos):
-                            _elem.on_click()
+
+                        if _elem.rect.collidepoint(event.pos):
+                            _clicked_element.append(_elem)
                             move_card = False
 
                             # if UIElement.get_ui_elem('RemoveCardButton').get_eject() == True:
@@ -128,11 +134,16 @@ def main(screen, clock):
                             #         if isinstance(_elem, UIElement.get_ui_elem('ListObject')):
                             #             _elem.redraw_card((255,255,255))
 
+                    _clicked = UIElement.find_highest_elem(_clicked_element)
+                    if _clicked:
+                        _clicked.on_click()
+
                     if move_card == True:
                         for _card in BaseCard.cards:
                             if _card.rect.collidepoint(pg.mouse.get_pos()) and _card.selected == False:
                                 _card.on_click()
                                 move_card = False
+
                 elif event.button == 2:
                     for _card in BaseCard.get_cardGroup():
                         if _card.rect.collidepoint(event.pos):
@@ -264,6 +275,8 @@ def main(screen, clock):
 
             _card.update()
 
+        _hovered_element = []
+        _tooled_element = []
         for _elem in UIElement.get_group("ui"):
             _elem.current_tick += _elem.clock.tick(30)
 
@@ -297,23 +310,21 @@ def main(screen, clock):
                 if isinstance(_elem, UIElement.get_ui_elem('PopUp')):
                     _elem.negate = True
 
-                if hasattr(_elem, "hover") and _elem.hovering == False:
-                    _elem.hover()
+                if _elem.hovering == False:
+                    _hovered_element.append(_elem)
 
-                if hasattr(_elem, "tool_tip_text"):
-                    if hasattr(_elem, "active") and _elem.active == True:
-                        pass
-                    elif hasattr(_elem, 'inactive') and _elem.inactive == True:
-                        pass
-                    elif now_tick - global_prev_tick >= 1300:
-                        UIElement.get_ui_elem('ToolTip')(
-                            pg.mouse.get_pos(), _elem.tool_tip_text)
-                        global_prev_tick = now_tick
+                if hasattr(_elem, "active") and _elem.active == True:
+                    pass
+                elif hasattr(_elem, 'inactive') and _elem.inactive == True:
+                    pass
+                elif now_tick - global_prev_tick >= 1300:
+                    _tooled_element.append(_elem)
+
             else:
                 if hasattr(_elem, "negate"):
                     _elem.negate = False
 
-                if hasattr(_elem, "no_hover") and _elem.hovering == True:
+                if _elem.hovering == True:
                     _elem.no_hover()
 
             if isinstance(_elem, UIElement.get_ui_elem('PopUp')) and hasattr(_elem, "last") and now_tick - _elem.last >= _elem.timer:
@@ -333,6 +344,17 @@ def main(screen, clock):
 
             if hasattr(_elem, "update"):
                 _elem.update()
+
+        _hovered = UIElement.find_highest_elem(_hovered_element)
+        if _hovered:
+            _hovered.hover()
+
+        _tooled = UIElement.find_highest_elem(_tooled_element)
+        if _tooled:
+            if _tooled.tool_tip_text != '':
+                UIElement.get_ui_elem('ToolTip')(
+                    pg.mouse.get_pos(), _tooled.tool_tip_text)
+                global_prev_tick = now_tick
 
         clock.tick(30)
         screen.fill('#B7B7B7')

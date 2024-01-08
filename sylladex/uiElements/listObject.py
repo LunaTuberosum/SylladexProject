@@ -30,7 +30,7 @@ class ListObject(UIElement):
             24,
             127,
             'CardListObject',
-            3
+            12
         )
 
         self.font = pg.font.Font(
@@ -93,8 +93,10 @@ class ListObject(UIElement):
 
         if self.rect.y >= 196 and self.rect.y <= 757:
             self.interactable = True
+            UIElement.change_layer(self, 12)
         else:
             self.interactable = False
+            UIElement.change_layer(self, 9)
 
     def redraw_card(self):
         if self.writing == False:
@@ -147,7 +149,7 @@ class ListObject(UIElement):
                 "nameOverlay",
                 "Input the name of the Captchalogue Card (A-Z, a-z)",
                 21,
-                startLayer=3,
+                startLayer=13,
                 baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
             ))
         self.add_child(
@@ -158,7 +160,7 @@ class ListObject(UIElement):
                 "codeOverlay",
                 "Input the code of the Captchalogue Card (!, ?, 0-9, A-Z, a-z)",
                 7,
-                startLayer=3,
+                startLayer=13,
                 baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
             ))
         self.add_child(
@@ -170,7 +172,7 @@ class ListObject(UIElement):
                 "Input the tier of the Captchalogue Card (1-16)",
                 1,
                 textType='Num',
-                startLayer=3,
+                startLayer=13,
                 baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
             ))
 

@@ -11,7 +11,7 @@ class ActionIcon(UIElement):
             0,
             0,
             f'ActionIcon ({job})',
-            2
+            8
         )
 
         self.job = job

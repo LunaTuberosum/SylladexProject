@@ -13,7 +13,7 @@ class RemoveCardButton(UIElement):
             x,
             y,
             'RemoveCardButton',
-            4
+            11
         )
 
         self.apperance = Apperance(

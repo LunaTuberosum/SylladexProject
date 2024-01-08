@@ -136,6 +136,8 @@ class UIElement(pg.sprite.Sprite):
         UIElement.change_layer(self, startLayer)
 
         self.obj_name = obj_name
+        self.tool_tip_text = ''
+        self.hovering = False
 
         self.children = []
 
@@ -155,6 +157,15 @@ class UIElement(pg.sprite.Sprite):
             for child in elem.children:
                 child.rect.x += self.rect.x
                 child.rect.y += self.rect.y
+
+    def on_click(self):
+        pass
+
+    def hover(self):
+        pass
+
+    def no_hover(self):
+        pass
 
     @classmethod
     def move_element(cls, elem: object, moveAmount: list):
@@ -232,6 +243,23 @@ class UIElement(pg.sprite.Sprite):
     @classmethod
     def change_layer(cls, elem: object, newLayer: int):
         cls.get_group('layer').change_layer(elem, newLayer)
+
+    @classmethod
+    def find_highest_elem(cls, elem_collection: list) -> object:
+        if len(elem_collection) > 0:
+            _highest_elem = elem_collection[0]
+            for _elem in elem_collection:
+                if UIElement._compare_layer(_elem, _highest_elem):
+                    _highest_elem = _elem
+
+            return _highest_elem
+        else:
+            return None
+
+    @classmethod
+    def _compare_layer(cls, elem: object, other_elem: object) -> bool:
+        return UIElement.get_group('layer').get_layer_of_sprite(
+            elem) > UIElement.get_group('layer').get_layer_of_sprite(other_elem)
 
     @classmethod
     def remove_from_group(cls, elem: object):

@@ -12,7 +12,7 @@ class GristCache(UIElement):
             -392 if UIElement.find_current_ui('SideBar') else -719,
             626,
             'GristCache',
-            1
+            2
         )
 
         self.font = pg.font.Font(

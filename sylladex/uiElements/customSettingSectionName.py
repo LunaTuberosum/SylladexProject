@@ -13,7 +13,7 @@ class CustomSettingSectionName(UIElement):
             x,
             y,
             f'CustomSettingSectionName ({self.section})',
-            2
+            7
         )
 
         if self.section == 'ACTIONS':

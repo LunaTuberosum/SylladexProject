@@ -12,7 +12,7 @@ class ScrollBar(UIElement):
             x,
             y,
             'ScrollBar',
-            4
+            11
         )
 
         self.apperance = Apperance(

@@ -9,7 +9,7 @@ class FinishButton(UIElement):
             54,
             y,
             'FinishButton',
-            4
+            13
         )
 
         self.font = pg.font.Font(

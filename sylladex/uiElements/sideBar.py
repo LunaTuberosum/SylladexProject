@@ -10,7 +10,7 @@ class SideBar(UIElement):
             -326,
             0,
             'SideBar',
-            4
+            10
         )
 
         self.font = pg.font.Font(
@@ -48,7 +48,7 @@ class SideBar(UIElement):
             "numOfCards",
             "The Number of Cards in you Sylladex",
             3,
-            startLayer=4,
+            startLayer=11,
             textType='Num',
             align='center',
             fontSize=24,

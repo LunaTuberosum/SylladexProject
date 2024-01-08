@@ -9,8 +9,8 @@ class LongTextField(TextField):
         super().__init__(x, y, size, job, tool_tip_text, max_char, **kargs)
         self.reload_text()
 
-    def configure_kargs(self):
-        super().configure_kargs()
+    def configure_kwargs(self):
+        super().configure_kwargs()
 
         self.starter_text()
 

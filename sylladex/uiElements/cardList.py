@@ -16,12 +16,13 @@ class CardList(UIElement):
             x,
             y,
             'CardList',
-            3)
+            11
+        )
 
         self.apperance = Apperance(
             self,
-            [249, 649],
-            [[249, 649], '#A4A4A4', [0, 0]],
+            [249, 625],
+            [[249, 625], '#A4A4A4', [0, 0]],
         )
 
         self.start_list()
@@ -39,11 +40,9 @@ class CardList(UIElement):
         if _dif < 0:
             for i in range(abs(_dif)):
                 cls.remove_from_list()
-            cls.save_list()
-            return
-
-        for i in range(_dif):
-            cls._add_to_list()
+        else:
+            for i in range(_dif):
+                cls._add_to_list()
 
         cls.save_list()
         UIElement.find_current_ui('CardList').place_list()
@@ -64,7 +63,7 @@ class CardList(UIElement):
             for _elem in UIElement.get_group('ui'):
                 if isinstance(_elem, UIElement.get_ui_elem('TextField')) and _elem.job == 'numOfCards':
                     _elem.text = str(len(cls.get_list()))
-                    _elem.exit_field()
+                    _elem.reload_text()
             return
 
     @classmethod

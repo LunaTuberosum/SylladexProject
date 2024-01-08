@@ -13,7 +13,7 @@ class PopUp(UIElement):
             660,
             380,
             'PopUp',
-            3
+            999
         )
 
         _lines = ['']

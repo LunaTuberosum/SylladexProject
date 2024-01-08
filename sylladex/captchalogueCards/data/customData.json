@@ -1,7 +1,7 @@
 {
     "KIND1": {
-        "ICON": "Customkind",
-        "NAME": "CUSTOMKIND 1",
+        "ICON": "Bunnykind",
+        "NAME": "SLEEPYKIND",
         "TYPE": "MELEE"
     },
     "KIND2": {
@@ -12,19 +12,19 @@
     "ACTION1": {
         "AS": {
             "NAME": "SASSINATE",
-            "COST": "0",
+            "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"
         },
         "AR": {
             "NAME": "",
-            "COST": "0",
+            "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"
         },
         "AC": {
             "NAME": "KNOWLEDGE",
-            "COST": "0",
+            "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"
         }
@@ -32,29 +32,29 @@
     "ACTION2": {
         "AS": {
             "NAME": "SIMI",
-            "COST": "0",
+            "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"
         },
         "AR": {
             "NAME": "",
-            "COST": "0",
+            "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"
         },
         "AC": {
             "NAME": "",
-            "COST": "0",
+            "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"
         }
     },
     "TRAIT1": {
-        "NAME": "CUSTOM TRAIT 1",
-        "1-4": "/",
-        "5-8": "/",
-        "9-12": "/",
-        "13-16": "/"
+        "NAME": "PUPPYBOY",
+        "1-4": "THE OBJECT IS CUTE. ",
+        "5-8": "THE OBJECT IS CUTE AND HAS PUPPY EARS. ",
+        "9-12": "THE OBJECT IS CUTE, HAS PUPPY EARS, AND BITES. ",
+        "13-16": "THE OBJECT, HAS PUPPY EARS, BITES, AND LOVES TO BARK. "
     },
     "TRAIT2": {
         "NAME": "CUSTOM TRAIT 2",
@@ -64,11 +64,11 @@
         "13-16": "/"
     },
     "TRAIT3": {
-        "NAME": "CUSTOM TRAIT 3",
-        "1-4": "/",
-        "5-8": "/",
-        "9-12": "/",
-        "13-16": "/"
+        "NAME": "BUNNYGIRL",
+        "1-4": "THE OBJECT IS CUTE.",
+        "5-8": "THE OBJECT IS CUTE AND HAS BUNNY EARS.",
+        "9-12": "THE OBJECT IS CUTE, HAS BUNNY EARS, AND EATS CARROTS.",
+        "13-16": "THE OBJECT IS CUTE, HAS BUNNY EARS, EATS CARROTS, AND LOVES TO JUMP AROUND."
     },
     "TRAIT4": {
         "NAME": "CUSTOM TRAIT 4",

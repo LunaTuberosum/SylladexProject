@@ -10,7 +10,7 @@ class AddCardButton(UIElement):
             x,
             y,
             'AddCard',
-            4
+            11
         )
 
         self.apperance = Apperance(

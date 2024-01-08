@@ -15,7 +15,7 @@ class ToolTip(UIElement):
             pos[0]+12,
             pos[1]+15,
             'ToolTip',
-            99)
+            999)
 
         self.apperance = Apperance(
             self,

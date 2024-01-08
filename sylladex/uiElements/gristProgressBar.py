@@ -13,7 +13,8 @@ class GristProgressBar(UIElement):
         super().__init__(59,
                          30,
                          f'GristProgressBar ({self.parent.grist})',
-                         1)
+                         4
+                         )
 
         self.apperance = Apperance(
             self,

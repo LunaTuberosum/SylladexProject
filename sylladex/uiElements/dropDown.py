@@ -2,89 +2,161 @@ import pygame as pg
 
 from uiElement import UIElement, Apperance
 
+
 class DropDown(UIElement):
-    def __init__(self, x: int, y: int, size: list, job: str, color: str, options: list, defult_option: str, custom_obj: str, show_type: str):
-        
+    def __init__(self, x: int, y: int, size: list, job: str, tool_tip_text: str, options: list, defult_option: str, show_type: str, **kwargs: dict):
+
         super().__init__(
-            x, 
-            y, 
+            x,
+            y,
             f'DropDown ({job})',
-            2
-            )
+            kwargs['startLayer'] if 'startLayer' in kwargs else 1
+        )
+
+        self.kwargs = kwargs
+        self.size = size
 
         self.job = job
         self.options = options
         self.current_option = defult_option
 
-        self.custom_obj = custom_obj
-        self.tool_tip_text = f'Change weapon type for {self.custom_obj}'
-        
-        if show_type == 'Image':
-            self.tool_tip_text = f'Change weaponkind icon for {self.custom_obj}'
+        self.hovering = False
+
+        self.tool_tip_text = tool_tip_text
         self.show_type = show_type
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 16)
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
 
-        for _index, _option in enumerate(self.options):
-            if _option == self.current_option:
-                self.current_index = _index
+        self.configure_kwargs()
 
         if self.show_type == 'Text':
-
             self.apperance = Apperance(
-                self, 
-                size,
-                [size, color, [0, 0]],
-                texts=[[self.current_option, [size[0] / 2, size[1]/ 2], 'center', '#000000']]
+                self,
+                self.size,
+                [self.size, self.base_color, [0, 0]],
+                texts=[[self.current_option, [self.size[0] / 2,
+                                              self.size[1] / 2], 'center', '#000000']]
             )
+        elif self.show_type == 'Image':
+            self.apperance = Apperance(
+                self,
+                self.size,
+                [self.size, self.base_color, [0, 0]],
+                image=[self.lookup.get(self.current_option), [0, 0]]
+            )
+
+    def configure_kwargs(self):
+        if 'lookup' in self.kwargs:
+            self.lookup = self.kwargs['lookup']
+        elif self.show_type == 'Image':
+            raise Exception('Drop down with image show type needs a look up.')
+
+        if 'grid' in self.kwargs:
+            self.collum_num = self.kwargs['grid'][0]
+            self.row_num = self.kwargs['grid'][1]
+        else:
+            self.collum_num = 1
+            self.row_num = len(self.options)
+
+        if 'baseColors' in self.kwargs:
+            self.base_color = self.kwargs['baseColors'][0]
+            self.hover_color = self.kwargs['baseColors'][1]
+            self.selected_color = self.kwargs['baseColors'][2]
+        else:
+            self.base_color = (255, 255, 255)
+            self.hover_color = (230, 230, 230)
+            self.selected_color = (170, 170, 170)
+
+        if 'exitCommand' in self.kwargs:
+            self.exit_command = self.kwargs['exitCommand']
+        else:
+            self.exit_command = None
+
+    def reload_apperance(self):
+        _color = self.base_color
+        if self.hovering:
+            _color = self.hover_color
+
+        if self.show_type == 'Text':
+            self.apperance.kwargs['texts'] = [[self.current_option, [self.size[0] / 2,
+                                                                     self.size[1] / 2], 'center', '#000000']]
 
         elif self.show_type == 'Image':
+            self.apperance.change_image(
+                self.lookup.get(self.current_option), [0, 0])
 
-            self.apperance = Apperance(
-                self, 
-                size,
-                [size, color, [0, 0]],
-                image=[
-                    UIElement.CodeDatabase.find_kind_image(self.current_option),
-                    [0,0]
-                ]
-            )
+        self.apperance.size_color_pos = [[self.size, _color, [0, 0]]]
+        self.apperance.reload_apperance()
 
-            
-    # def on_click(self):
-    #     self.current_index += 1
-    #     if self.current_index == len(self.options): self.current_index = 0
-    #     self.current_option = self.options[self.current_index]
+    def hover(self):
+        if len(self.children) == 0:
+            self.hovering = True
+            self.reload_apperance()
 
-    #     self.image.fill('#C9DAF8')
+    def no_hover(self):
+        if len(self.children) == 0:
+            self.hovering = False
+            self.reload_apperance()
 
-    #     if self.show_type == 'Text':
-    #         self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
-    #         self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
+    def on_click(self):
+        if len(self.children) > 0:
+            self.exit_field()
+        else:
+            self.add_child(UIElement.get_ui_elem('DropDownBackground')(
+                6,
+                self.rect.h,
+                [(self.collum_num * self.rect.w),
+                 6 + (self.row_num * self.rect.h)],
+                '#1C4587',
+                UIElement.get_group(
+                    'layer').get_layer_of_sprite(self)
+            ))
 
-    #         UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
-    #     elif self.show_type == 'Image':
-    #         self.current_image = pg.image.load(UIElement.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
-    #         self.current_image = pg.transform.scale(self.current_image, (24,24))
-    #         self.image.blit(self.current_image, [0,0])
+            _i = 0
+            _x = 0
+            _y = self.rect.h
+            for _col in range(self.collum_num):
+                for _row in range(self.row_num):
+                    if self.show_type == 'Text':
+                        self.add_child(UIElement.get_ui_elem('DropDownOption')(
+                            _x,
+                            _y,
+                            self.size,
+                            self.show_type,
+                            self.options[_i],
+                            startLayer=UIElement.get_group(
+                                'layer').get_layer_of_sprite(self) + 1,
+                            baseColors=[
+                                '#C9DAF8',
+                                '#D9E2F1',
+                                '#9CB0D5'
+                            ]
+                        ))
+                    elif self.show_type == 'Image':
+                        self.add_child(UIElement.get_ui_elem('DropDownOption')(
+                            _x,
+                            _y,
+                            self.size,
+                            self.show_type,
+                            self.options[_i],
+                            startLayer=UIElement.get_group(
+                                'layer').get_layer_of_sprite(self) + 1,
+                            lookup=UIElement.CodeDatabase.kind_image_small,
+                            baseColors=[
+                                '#C9DAF8',
+                                '#D9E2F1',
+                                '#9CB0D5'
+                            ]
+                        ))
+                    _y += self.rect.h
+                    _i += 1
+                _x += self.rect.w
+                _y = self.rect.h
 
-    #         UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)
-
-    # def on_altClick(self):
-    #     self.current_index -= 1
-    #     if self.current_index == -1: self.current_index = len(self.options)-1
-    #     self.current_option = self.options[self.current_index]
-
-    #     self.image.fill('#C9DAF8')
-
-    #     if self.show_type == 'Text':
-    #         self.current_text = self.font.render(f'{self.current_option}', True, (0,0,0))
-    #         self.image.blit(self.current_text, [(24-(self.current_text.get_width()/2)), 12-(self.current_text.get_height()/2)])
-
-    #         UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Type', self.current_option)
-    #     elif self.show_type == 'Image':
-    #         self.current_image = pg.image.load(UIElement.CodeDatabase.find_kind_image(self.current_option)).convert_alpha()
-    #         self.current_image = pg.transform.scale(self.current_image, (24,24))
-    #         self.image.blit(self.current_image, [0,0])
-
-    #         UIElement.CodeDatabase.change_code_value(f'{self.custom_obj} Icon', self.current_option)
+    def exit_field(self):
+        if self.exit_command:
+            self.exit_command()
+        for _child in self.children:
+            _child.kill()
+        self.children.clear()

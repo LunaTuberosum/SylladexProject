@@ -10,7 +10,7 @@ class GristCacheLimit(UIElement):
             x,
             y,
             'GristCacheLimit',
-            1
+            3
         )
 
         self.limit_num = '0'

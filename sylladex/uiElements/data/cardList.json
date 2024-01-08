@@ -8,11 +8,11 @@
             "grist": "TAR",
             "trait_1": "BOUNCY",
             "trait_2": "SENTIENT",
-            "action_1": "AGRESS",
+            "action_1": "AGGRESS",
             "action_2": "ARISE",
             "action_3": "ARRIVE",
-            "action_4": "ARP",
-            "cardID": 1
+            "action_4": "ARF",
+            "cardID": 0
         },
         "Empty": false
     },
@@ -437,6 +437,23 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
+            "cardID": 0
+        },
+        "Empty": false
+    },
+    "27": {
+        "CodeData": {
+            "name": "!",
+            "code": "!!!!!!!!",
+            "tier": "11",
+            "kind": "KIND1",
+            "grist": "ARTIFACT",
+            "trait_1": "TRAIT1",
+            "trait_2": "TRAIT3",
+            "action_1": "ASSASSINATE",
+            "action_2": "ASSASSINATE",
+            "action_3": "ASSASSINATE",
+            "action_4": "ASSASSINATE",
             "cardID": 0
         },
         "Empty": false

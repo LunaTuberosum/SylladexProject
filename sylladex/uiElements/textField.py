@@ -5,7 +5,7 @@ from uiElement import UIElement, Apperance
 
 class TextField(UIElement):
 
-    def __init__(self, x: int, y: int, size: list, job: str, tool_tip_text: str, max_char: int, **kwargs):
+    def __init__(self, x: int, y: int, size: list, job: str, tool_tip_text: str, max_char: int, **kwargs: dict):
 
         super().__init__(
             x,
@@ -24,7 +24,7 @@ class TextField(UIElement):
 
         self.tool_tip_text = tool_tip_text
 
-        self.configure_kargs()
+        self.configure_kwargs()
 
         self.apperance = Apperance(
             self,
@@ -34,7 +34,7 @@ class TextField(UIElement):
                     self.alginment[0], self.text_color]]
         )
 
-    def configure_kargs(self):
+    def configure_kwargs(self):
         if 'textColor' in self.kwargs:
             self.text_color = self.kwargs['textColor']
         else:

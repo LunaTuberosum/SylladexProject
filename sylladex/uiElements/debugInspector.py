@@ -11,7 +11,7 @@ class DebugInspector(UIElement):
             pg.display.get_surface().get_width()-160,
             40,
             'DebugUIInspector',
-            99)
+            999)
 
         self.font = pg.font.Font(
             "sylladex/uiElements/asset/MISC/fontstuck.ttf", 24)
@@ -67,7 +67,7 @@ class DebugInspector(UIElement):
                 20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
             y += 10
 
-        _params.append([f'HasToolTip: {hasattr(self.current_inspectie, "tool_tip_text")}', [
+        _params.append([f'HasToolTip: {self.current_inspectie.tool_tip_text != ""}', [
             10, y + (len(_params) * 20)], 'left', '#FFFFFF'])
         _params.append([f'Position: ({self.current_inspectie.rect.x}, {self.current_inspectie.rect.y})', [
             10, y + (len(_params) * 20)], 'left', '#FFFFFF'])

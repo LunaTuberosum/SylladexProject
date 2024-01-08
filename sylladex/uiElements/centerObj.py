@@ -4,11 +4,17 @@ from uiElement import UIElement, Apperance
 import settings
 from ..captchalogueCards.baseCard import BaseCard
 
+
 class CenterObj(UIElement):
     def __init__(self):
-        super().__init__(settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT/2, 'CenterObj', -1)
+        super().__init__(
+            settings.SCREEN_WIDTH/2,
+            settings.SCREEN_HEIGHT/2,
+            'CenterObj',
+            -999
+        )
 
-        self.apperance = Apperance(self, (0,0), colorKey = True)
+        self.apperance = Apperance(self, (0, 0), colorKey=True)
 
     def move_self(self, rel):
         self.rect.move_ip(rel)
