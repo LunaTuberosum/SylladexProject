@@ -1,17 +1,42 @@
+import sys
 import pygame as pg
 
-from uiElement import UIElement
+from uiElement import Apperance, UIElement
+
 
 class EscapeMenu(UIElement):
     def __init__(self):
-        super().__init__(750, 360, (420, 360), 'EscapeMenu', (0,0,0))
+        super().__init__(
+            750,
+            360,
+            'EscapeMenu',
+            1000)
 
-        self.create_appearance([[420, 360], '#000000', [0, 0]], image = ['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]])
-        
-        UIElement.get_group('layer').change_layer(self, 3)
+        self.apperance = Apperance(
+            self,
+            [420, 360],
+            [[420, 360], '#000000', [0, 0]],
+            image=['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]]
+        )
 
-        
-        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 110,'Settings'))
-        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 171,'Tutorials'))
-        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 232,'To Desktop'))
-        self.add_child(UIElement.get_ui_elem('EscapeMenuOption')(110, 293,'Log Out'))
+        self.add_child(UIElement.get_ui_elem(
+            'EscapeMenuOption')(110, 110, 'Settings', self.settings))
+        self.add_child(UIElement.get_ui_elem(
+            'EscapeMenuOption')(110, 171, 'Tutorials', self.tutorials))
+        self.add_child(UIElement.get_ui_elem(
+            'EscapeMenuOption')(110, 232, 'To Desktop', self.to_desktop))
+        self.add_child(UIElement.get_ui_elem(
+            'EscapeMenuOption')(110, 293, 'Log Out', self.log_out))
+
+    def settings(self):
+        pass
+
+    def tutorials(self):
+        pass
+
+    def to_desktop(self):
+        pg.quit()
+        sys.exit()
+
+    def log_out(self):
+        pass

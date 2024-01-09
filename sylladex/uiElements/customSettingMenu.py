@@ -19,7 +19,8 @@ class CustomSettingMenu(UIElement):
             [348, 768],
             [[348, 768], '#666666', [0, 0]],
             [[326, 732], '#434343', [10, 24]],
-            [[326, 732], '#1155CC', [0, 12]]
+            [[326, 732], '#1155CC', [0, 12]],
+            colorKey=True,
         )
 
         self.add_child(UIElement.get_ui_elem('CustomSettingSectionName')(
