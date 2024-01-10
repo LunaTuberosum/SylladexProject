@@ -17,27 +17,22 @@ class StackManager():
         return len(cls.stack)
 
     @classmethod
-    def get_top_card(cls, situation: str) -> object:
-        if situation == 'distance':
-            for index, card in enumerate(cls.stack):
-                if index == cls.get_length()-2:
-                    return card
-
-        elif situation == 'remove':
-            for index, card in enumerate(cls.stack):
-                if index == cls.get_length()-1:
-                    return card
+    def get_top_card(cls) -> object:
+        return cls.get_stack().get_top_sprite()
 
     @classmethod
     def add_to_stack(cls, card: object):
-        cls.stack.add(card)
+        cls.get_stack().add(card)
         cls.get_stack().change_layer(card, cls.get_length())
 
     @classmethod
     def remove_from_stack(cls, card: object):
-        cls.stack.remove(card)
-        for index, card in enumerate(cls.get_stack()):
-            print(index, card.codeData.code)
+        cls.get_stack().remove(card)
+
+        if cls.get_length() == 1:
+            cls.get_stack().remove(cls.get_top_card)
+
+        cls.save_stack()
 
     @classmethod
     def save_stack(cls):

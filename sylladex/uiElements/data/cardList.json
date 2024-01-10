@@ -63,7 +63,7 @@
             "action_2": "ASSESS",
             "action_3": "ASSAULT",
             "action_4": "ASTRICT",
-            "cardID": 4
+            "cardID": 0
         },
         "Empty": false
     },
@@ -80,7 +80,7 @@
             "action_2": "ASSIMILATE",
             "action_3": "ASTRICT",
             "action_4": "ASSIMILATE",
-            "cardID": 8
+            "cardID": 5
         },
         "Empty": false
     },
@@ -97,7 +97,7 @@
             "action_2": "ASPHIXIATE",
             "action_3": "ASSEMBLE",
             "action_4": "ASSURE",
-            "cardID": 5
+            "cardID": 6
         },
         "Empty": false
     },
@@ -114,7 +114,7 @@
             "action_2": "ASTOUND",
             "action_3": "ASTONISH",
             "action_4": "ASSURE",
-            "cardID": 6
+            "cardID": 0
         },
         "Empty": false
     },
@@ -131,7 +131,7 @@
             "action_2": "ASSIST",
             "action_3": "ASSERT",
             "action_4": "ASTONISH",
-            "cardID": 9
+            "cardID": 0
         },
         "Empty": false
     },
@@ -148,7 +148,7 @@
             "action_2": "ASTRICT",
             "action_3": "ASTRICT",
             "action_4": "ASSEMBLE",
-            "cardID": 7
+            "cardID": 0
         },
         "Empty": false
     },

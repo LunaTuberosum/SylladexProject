@@ -126,10 +126,15 @@ def main(screen, clock):
                         _clicked.on_click()
 
                     if move_card == True:
+                        _clicked_card = []
                         for _card in BaseCard.get_cards():
                             if _card.rect.collidepoint(pg.mouse.get_pos()) and _card.selected == False:
-                                _card.on_click()
+                                _clicked_card.append(_card)
                                 move_card = False
+
+                        _clicked_c = BaseCard.find_highest_card(_clicked_card)
+                        if _clicked_c:
+                            _clicked_c.on_click()
 
                 # elif event.button == 2:
                 #     for _card in BaseCard.get_cards():
@@ -324,9 +329,16 @@ def main(screen, clock):
         clock.tick(30)
         screen.fill('#B7B7B7')
         UIElement.get_group("ui").draw(screen)
-        BaseCard.get_cards().draw(screen)
+
+        _temp_group = pg.sprite.LayeredUpdates()
+        for _card in BaseCard.get_cards():
+            _temp_group.add(_card)
+            _temp_group.change_layer(_card, -_card.rect.y)
+        _temp_group.draw(screen)
+        _temp_group.empty()
+        # BaseCard.get_cards().draw(screen)
+        CardOutline.current_outline.draw(screen)
         if UIElement.get_modus() == 'STACK' and StackManager.get_length():
             StackManager.get_stack().draw(screen)
-        CardOutline.currentOutline.draw(screen)
         UIElement.get_group("layer").draw(screen)
         pg.display.flip()

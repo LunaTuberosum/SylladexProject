@@ -15,8 +15,8 @@
             "cardID": 1
         },
         "TopLeft": [
-            236,
-            111
+            587,
+            356
         ]
     },
     "2": {
@@ -35,111 +35,11 @@
             "cardID": 2
         },
         "TopLeft": [
-            329,
-            105
+            617,
+            386
         ]
     },
     "3": {
-        "CodeData": {
-            "name": "d",
-            "code": "dddddddd",
-            "tier": "4",
-            "kind": "Scythekind",
-            "grist": "AMETHYST",
-            "trait_1": "COLD",
-            "trait_2": "ROCKET",
-            "action_1": "AGGREGATE",
-            "action_2": "ASSESS",
-            "action_3": "ASSAULT",
-            "action_4": "ASTRICT",
-            "cardID": 4
-        },
-        "TopLeft": [
-            153,
-            114
-        ]
-    },
-    "4": {
-        "CodeData": {
-            "name": "f",
-            "code": "ffffffff",
-            "tier": "6",
-            "kind": "Knifekind",
-            "grist": "IRON",
-            "trait_1": "IRRADAITED",
-            "trait_2": "SHITTY",
-            "action_1": "ASSAIL",
-            "action_2": "ASPHIXIATE",
-            "action_3": "ASSEMBLE",
-            "action_4": "ASSURE",
-            "cardID": 5
-        },
-        "TopLeft": [
-            787,
-            91
-        ]
-    },
-    "5": {
-        "CodeData": {
-            "name": "h",
-            "code": "hhhhhhhh",
-            "tier": "8",
-            "kind": "Cordkind",
-            "grist": "CHALK",
-            "trait_1": "ROCKET",
-            "trait_2": "SCIENTIFIC",
-            "action_1": "ASSAULT",
-            "action_2": "ASSIST",
-            "action_3": "ASSERT",
-            "action_4": "ASTONISH",
-            "cardID": 9
-        },
-        "TopLeft": [
-            437,
-            65
-        ]
-    },
-    "6": {
-        "CodeData": {
-            "name": "i",
-            "code": "iiiiiiii",
-            "tier": "9",
-            "kind": "Axekind",
-            "grist": "SHALE",
-            "trait_1": "COMPUTER",
-            "trait_2": "STORAGE",
-            "action_1": "AGGRESS",
-            "action_2": "ASTRICT",
-            "action_3": "ASTRICT",
-            "action_4": "ASSEMBLE",
-            "cardID": 7
-        },
-        "TopLeft": [
-            814,
-            132
-        ]
-    },
-    "7": {
-        "CodeData": {
-            "name": "k",
-            "code": "kkkkkkkk",
-            "tier": "11",
-            "kind": "Chainkind",
-            "grist": "RUBY",
-            "trait_1": "STORAGE",
-            "trait_2": "LIGHT SOURCE",
-            "action_1": "ASSEMBLE",
-            "action_2": "ASSAULT",
-            "action_3": "AGGRESS",
-            "action_4": "ASSIMILATE",
-            "cardID": 10
-        },
-        "TopLeft": [
-            791,
-            195
-        ]
-    },
-    "8": {
         "CodeData": {
             "name": "c",
             "code": "cccccccc",
@@ -155,31 +55,11 @@
             "cardID": 3
         },
         "TopLeft": [
-            813,
-            155
+            602,
+            371
         ]
     },
-    "9": {
-        "CodeData": {
-            "name": "g",
-            "code": "gggggggg",
-            "tier": "7",
-            "kind": "Shovelkind",
-            "grist": "MARBLE",
-            "trait_1": "SHARP",
-            "trait_2": "TRICKSTER",
-            "action_1": "ASSIGN",
-            "action_2": "ASTOUND",
-            "action_3": "ASTONISH",
-            "action_4": "ASSURE",
-            "cardID": 6
-        },
-        "TopLeft": [
-            789,
-            170
-        ]
-    },
-    "10": {
+    "4": {
         "CodeData": {
             "name": "e",
             "code": "eeeeeeee",
@@ -192,11 +72,31 @@
             "action_2": "ASSIMILATE",
             "action_3": "ASTRICT",
             "action_4": "ASSIMILATE",
-            "cardID": 8
+            "cardID": 5
         },
         "TopLeft": [
-            742,
-            154
+            557,
+            326
+        ]
+    },
+    "5": {
+        "CodeData": {
+            "name": "f",
+            "code": "ffffffff",
+            "tier": "6",
+            "kind": "Knifekind",
+            "grist": "IRON",
+            "trait_1": "IRRADAITED",
+            "trait_2": "SHITTY",
+            "action_1": "ASSAIL",
+            "action_2": "ASPHIXIATE",
+            "action_3": "ASSEMBLE",
+            "action_4": "ASSURE",
+            "cardID": 6
+        },
+        "TopLeft": [
+            572,
+            341
         ]
     }
 }

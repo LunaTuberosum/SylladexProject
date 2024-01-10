@@ -1,1 +1,82 @@
-{}
+{
+    "1": {
+        "CodeData": {
+            "name": "b",
+            "code": "bbbbbbbb",
+            "tier": "2",
+            "kind": "Pencilkind",
+            "grist": "AMBER",
+            "trait_1": "HOT",
+            "trait_2": "MAGICAL",
+            "action_1": "ACQUAINT",
+            "action_2": "ACQUIRE",
+            "action_3": "ACCEDE",
+            "action_4": "ACCESSORIZE",
+            "cardID": 2
+        }
+    },
+    "2": {
+        "CodeData": {
+            "name": "c",
+            "code": "cccccccc",
+            "tier": "3",
+            "kind": "Brushkind",
+            "grist": "URANIUM",
+            "trait_1": "HOT",
+            "trait_2": "EXQUISITE",
+            "action_1": "ACKNOWLEDGE",
+            "action_2": "ACCLAIM",
+            "action_3": "ACCUMULATE",
+            "action_4": "ACQUIRE",
+            "cardID": 3
+        }
+    },
+    "3": {
+        "CodeData": {
+            "name": "a",
+            "code": "aaaaaaaa",
+            "tier": "1",
+            "kind": "Shotgunkind",
+            "grist": "TAR",
+            "trait_1": "BOUNCY",
+            "trait_2": "SENTIENT",
+            "action_1": "AGGRESS",
+            "action_2": "ARISE",
+            "action_3": "ARRIVE",
+            "action_4": "ARF",
+            "cardID": 1
+        }
+    },
+    "4": {
+        "CodeData": {
+            "name": "f",
+            "code": "ffffffff",
+            "tier": "6",
+            "kind": "Knifekind",
+            "grist": "IRON",
+            "trait_1": "IRRADAITED",
+            "trait_2": "SHITTY",
+            "action_1": "ASSAIL",
+            "action_2": "ASPHIXIATE",
+            "action_3": "ASSEMBLE",
+            "action_4": "ASSURE",
+            "cardID": 6
+        }
+    },
+    "5": {
+        "CodeData": {
+            "name": "e",
+            "code": "eeeeeeee",
+            "tier": "5",
+            "kind": "Scissorkind",
+            "grist": "GARNET",
+            "trait_1": "ELECTRIC",
+            "trait_2": "SPIRITUAL",
+            "action_1": "AGGRAVATE",
+            "action_2": "ASSIMILATE",
+            "action_3": "ASTRICT",
+            "action_4": "ASSIMILATE",
+            "cardID": 5
+        }
+    }
+}
