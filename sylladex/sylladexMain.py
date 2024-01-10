@@ -336,9 +336,9 @@ def main(screen, clock):
             _temp_group.change_layer(_card, -_card.rect.y)
         _temp_group.draw(screen)
         _temp_group.empty()
-        # BaseCard.get_cards().draw(screen)
-        CardOutline.current_outline.draw(screen)
         if UIElement.get_modus() == 'STACK' and StackManager.get_length():
             StackManager.get_stack().draw(screen)
+        CardOutline.current_outline.draw(screen)
         UIElement.get_group("layer").draw(screen)
+        BaseCard.grabbed_card.draw(screen)
         pg.display.flip()

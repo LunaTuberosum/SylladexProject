@@ -12,7 +12,7 @@
             "action_2": "ARISE",
             "action_3": "ARRIVE",
             "action_4": "ARF",
-            "cardID": 1
+            "cardID": 0
         },
         "Empty": false
     },
@@ -29,7 +29,7 @@
             "action_2": "ACQUIRE",
             "action_3": "ACCEDE",
             "action_4": "ACCESSORIZE",
-            "cardID": 2
+            "cardID": 0
         },
         "Empty": false
     },
@@ -46,7 +46,7 @@
             "action_2": "ACCLAIM",
             "action_3": "ACCUMULATE",
             "action_4": "ACQUIRE",
-            "cardID": 3
+            "cardID": 0
         },
         "Empty": false
     },
@@ -80,7 +80,7 @@
             "action_2": "ASSIMILATE",
             "action_3": "ASTRICT",
             "action_4": "ASSIMILATE",
-            "cardID": 5
+            "cardID": 0
         },
         "Empty": false
     },
@@ -97,7 +97,7 @@
             "action_2": "ASPHIXIATE",
             "action_3": "ASSEMBLE",
             "action_4": "ASSURE",
-            "cardID": 6
+            "cardID": 0
         },
         "Empty": false
     },

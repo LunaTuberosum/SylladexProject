@@ -12,13 +12,13 @@ from .stackManager import StackManager
 
 class BaseCard(pg.sprite.Sprite):
     __cards = pg.sprite.Group()
+    grabbed_card = pg.sprite.GroupSingle()
 
     def __init__(
             self,
             pos: list,
     ):
-        super().__init__(BaseCard.get_cards(), UIElement.get_group('layer'))
-        UIElement.get_group('layer').change_layer(self, -999)
+        super().__init__(BaseCard.get_cards())
 
         self.hovering = False
         self.selected = False
@@ -87,35 +87,20 @@ class BaseCard(pg.sprite.Sprite):
     #     UIElement.get_uiElem('CardInspector')(self.codeData)
 
     def on_click(self):
-        if not StackManager.get_stack().has(self):
-            UIElement.get_group('layer').change_layer(self, 999)
+        BaseCard.grabbed_card.add(self)
 
         if UIElement.get_modus() == 'STACK':
             for card in StackManager.get_stack():
                 if card == self and self == StackManager.get_top_card():
                     StackManager.remove_from_stack(self)
-                    UIElement.get_group('layer').change_layer(self, 999)
                     self.selected = True
                     return
-
-        #     UIElement.get_group('layer').change_layer(self, 2)
-
-        #     if UIElement.get_modus() == 'STACK':
-        #         if StackManager.get_length() > 0:
-        #             StackManager.add_toStack(self)
 
         self.selected = True
         self.redraw_card()
 
     def on_release(self):
-        if not StackManager.get_stack().has(self):
-            UIElement.get_group('layer').change_layer(self, -999)
-
-        #     elif UIElement.get_modus() == 'STACK':
-        #         if StackManager.get_length() > 0 and self.shaking == False:
-        #             StackManager.get_stack().remove(self)
-
-        #     UIElement.get_group('layer').change_layer(self, -2)
+        BaseCard.grabbed_card.empty()
 
         _elem = UIElement.find_current_ui('CardList')
         if _elem and self.rect.colliderect(_elem):
