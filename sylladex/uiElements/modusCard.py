@@ -20,16 +20,19 @@ class ModusCard(UIElement):
             self,
             [78, 102],
             colorKey=True,
-            image=[
-                f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS.png', [6, 6]]
+            images=[
+                [f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS.png', [6, 6]]
+            ]
         )
 
         self.hovering = False
 
         if UIElement.get_modus() == self.modus:
             self.current = True
-            self.apperance.change_image(
-                f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png', [0, 0])
+            self.apperance.change_images(
+                [
+                    [f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png', [0, 0]]
+                ])
             self.rect.y = 907
         else:
             self.current = False
@@ -48,12 +51,16 @@ class ModusCard(UIElement):
         for elem in UIElement.get_group("ui"):
             if isinstance(elem, UIElement.get_ui_elem('ModusCard')):
                 if elem == self:
-                    elem.apperance.change_image(
-                        f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS_ACTIVE.png', [0, 0])
+                    elem.apperance.change_images(
+                        [
+                            [f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS_ACTIVE.png', [0, 0]]
+                        ])
                     elem.rect.y = 907
                 else:
-                    elem.apperance.change_image(
-                        f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png', [6, 6])
+                    elem.apperance.change_images(
+                        [
+                            [f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png', [6, 6]]
+                        ])
                     elem.rect.y = 910
 
             elem.apperance.reload_apperance()

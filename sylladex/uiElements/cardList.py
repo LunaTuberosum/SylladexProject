@@ -111,7 +111,13 @@ class CardList(UIElement):
 
             _obj.create_code_data(_card['CodeData'])
 
+            for _c in BaseCard.get_cards():
+                if _c.code_data.cardID == _obj.code_data.cardID:
+                    _obj.capta_card = _c
+                    break
+
             _obj.empty = _card['Empty']
+            _obj.redraw_card()
             cls.get_list().append(_obj)
 
         for _elem in UIElement.get_group('ui'):

@@ -53,7 +53,7 @@ class ScrollBar(UIElement):
 
     def move_bar(self, pos):
         _check_num = 625 / len(UIElement.get_ui_elem('CardList').get_list())
-        self.rect.y = pos
+        self.rect.move_ip([0, pos])
 
         _move_amount = [0, 0]
 
@@ -98,7 +98,7 @@ class ScrollBar(UIElement):
             UIElement.move_element(_list_obj, _indv_move_amount)
 
     def move_bar_wheel(self, rel):
-        self.move_bar(self.rect.y + (rel * 10))
+        self.move_bar(rel * 10)
 
     @classmethod
     def get_selected(cls):

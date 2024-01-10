@@ -107,7 +107,9 @@ class TextField(UIElement):
         if self.text == '':
             self.text = self.default_text
 
-        self.apperance.size_color_pos = [[self.size, self.base_color, [0, 0]]]
+        self.apperance.size_color_pos = [
+            [self.size, self.base_color, [0, 0]]
+        ]
         self.reload_text()
 
         if self.exit_command:
@@ -159,13 +161,15 @@ class TextField(UIElement):
     def reload_text(self):
         self.apperance.kwargs['texts'] = [
             [self.text, self.get_text_position(), self.alginment[0],
-             self.text_color]]
+             self.text_color]
+        ]
         self.apperance.reload_apperance()
 
     def hover(self):
         if self.active == False:
             self.apperance.size_color_pos = [
-                [self.size, self.hover_color, [0, 0]]]
+                [self.size, self.hover_color, [0, 0]]
+            ]
             self.reload_text()
             self.hovering = True
 

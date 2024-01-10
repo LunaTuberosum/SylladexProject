@@ -36,7 +36,9 @@ class DropDownOption(UIElement):
                 self,
                 self.size,
                 [self.size, self.base_color, [0, 0]],
-                image=[self.lookup.get(self.option), [0, 0]]
+                images=[
+                    [self.lookup.get(self.option), [0, 0]]
+                ]
             )
 
     def configure_kwargs(self):

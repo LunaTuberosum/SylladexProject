@@ -70,11 +70,12 @@ class Apperance():
         if 'alpha' in self.kwargs:
             self.obj.image.set_alpha(self.kwargs['alpha'])
 
-        if 'image' in self.kwargs:
-            _image = pg.image.load(self.kwargs['image'][0]).convert_alpha()
-            if 'imageAlpha' in self.kwargs:
-                _image.set_alpha(self.kwargs['imageAlpha'])
-            self.obj.image.blit(_image, self.kwargs['image'][1])
+        if 'images' in self.kwargs:
+            for _image in self.kwargs['images']:
+                _img = pg.image.load(_image[0]).convert_alpha()
+                if 'imageAlpha' in self.kwargs:
+                    _img.set_alpha(self.kwargs['imageAlpha'])
+                self.obj.image.blit(_img, _image[1])
 
         if 'texts' in self.kwargs:
             for _text in self.kwargs['texts']:
@@ -100,8 +101,8 @@ class Apperance():
                     self.obj.image.blit(
                         _text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
 
-    def change_image(self, image: str, pos: list):
-        self.kwargs['image'] = [image, pos]
+    def change_images(self, images: list):
+        self.kwargs['images'] = images
         self.reload_apperance()
 
     def change_size(self, size: list, new_size_color_pos: list):
@@ -249,7 +250,7 @@ class UIElement(pg.sprite.Sprite):
         if len(elem_collection) > 0:
             _highest_elem = elem_collection[0]
             for _elem in elem_collection:
-                if UIElement._compare_layer(_elem, _highest_elem):
+                if cls._compare_layer(_elem, _highest_elem):
                     _highest_elem = _elem
 
             return _highest_elem
@@ -258,17 +259,17 @@ class UIElement(pg.sprite.Sprite):
 
     @classmethod
     def _compare_layer(cls, elem: object, other_elem: object) -> bool:
-        return UIElement.get_group('layer').get_layer_of_sprite(
-            elem) > UIElement.get_group('layer').get_layer_of_sprite(other_elem)
+        return cls.get_group('layer').get_layer_of_sprite(
+            elem) > cls.get_group('layer').get_layer_of_sprite(other_elem)
 
     @classmethod
     def remove_from_group(cls, elem: object):
         cls.get_group("ui").remove(elem)
         cls.get_group("layer").remove(elem)
 
-        if UIElement.has_children(elem):
+        if cls.has_children(elem):
             for _child in elem.children:
-                UIElement.remove_from_group(_child)
+                cls.remove_from_group(_child)
 
     @classmethod
     def has_children(cls, elem: object) -> bool:
@@ -278,7 +279,7 @@ class UIElement(pg.sprite.Sprite):
 
     @classmethod
     def get_parent(cls, elem: object) -> object:
-        for _elem in UIElement.get_group('ui'):
+        for _elem in cls.get_group('ui'):
             if len(_elem.children) > 0:
                 for child in _elem.children:
                     if child == elem:
@@ -286,7 +287,7 @@ class UIElement(pg.sprite.Sprite):
 
     @classmethod
     def is_child(cls, elem: object) -> bool:
-        for _elem in UIElement.get_group('ui'):
+        for _elem in cls.get_group('ui'):
             if len(_elem.children) > 0:
                 for child in _elem.children:
                     if child == elem:

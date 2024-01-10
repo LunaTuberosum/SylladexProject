@@ -16,7 +16,9 @@ class EscapeMenu(UIElement):
             self,
             [420, 360],
             [[420, 360], '#000000', [0, 0]],
-            image=['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]]
+            images=[
+                ['sylladex/uiElements/asset/MISC/ESCAPE_MENU.png', [0, 0]]
+            ]
         )
 
         self.add_child(UIElement.get_ui_elem(

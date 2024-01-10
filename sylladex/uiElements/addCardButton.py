@@ -20,7 +20,9 @@ class AddCardButton(UIElement):
             [[64, 64], 'ModusAccent', [6, 0]],
             colorKey=True,
             image=[
-                f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [6, 0]]
+                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [
+                    6, 0]]
+            ]
         )
 
         self.tool_tip_text = "Captchalogue a Card to your Sylladex"
@@ -29,11 +31,17 @@ class AddCardButton(UIElement):
 
     def reload_image(self):
         if self.hovering == False and self.writing == False:
-            self.apperance.change_image(
-                f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [6, 0],)
+            self.apperance.change_images(
+                [
+                    [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [
+                        6, 0]]
+                ])
         else:
-            self.apperance.change_image(
-                f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON_HOVER.png', [6, 0])
+            self.apperance.change_images(
+                [
+                    [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON_HOVER.png', [
+                        6, 0]]
+                ])
 
     def hover(self):
         if self.writing == True:

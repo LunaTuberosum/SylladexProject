@@ -92,7 +92,7 @@ def main(screen, clock):
     UIElement.get_ui_elem('SideBarButton')()
     UIElement.get_ui_elem('GristCacheButton')()
     UIElement.get_ui_elem('CustomSettingButton')()
-    # BaseCard.load_cards()
+    BaseCard.load_cards()
     move_card = False
     debug_inspect = False
 
@@ -121,33 +121,20 @@ def main(screen, clock):
                             _clicked_element.append(_elem)
                             move_card = False
 
-                            # if UIElement.get_ui_elem('RemoveCardButton').get_eject() == True:
-                            #     if len(UIElement.get_ui_elem('CardList').children) == 0:
-                            #         UIElement.get_ui_elem('RemoveCardButton').get_eject() = False
-                            #     else:
-                            #         for _elem in UIElement.get_group("ui"):
-                            #             if isinstance(_elem, UIElement.get_ui_elem('ListObject')):
-                            #                 _elem.redraw_card((230,230,230))
-
-                            # elif UIElement.get_ui_elem('RemoveCardButton').get_eject() == False:
-                            #     for _elem in UIElement.get_group("ui"):
-                            #         if isinstance(_elem, UIElement.get_ui_elem('ListObject')):
-                            #             _elem.redraw_card((255,255,255))
-
                     _clicked = UIElement.find_highest_elem(_clicked_element)
                     if _clicked:
                         _clicked.on_click()
 
                     if move_card == True:
-                        for _card in BaseCard.cards:
+                        for _card in BaseCard.get_cards():
                             if _card.rect.collidepoint(pg.mouse.get_pos()) and _card.selected == False:
                                 _card.on_click()
                                 move_card = False
 
-                elif event.button == 2:
-                    for _card in BaseCard.get_cardGroup():
-                        if _card.rect.collidepoint(event.pos):
-                            _card.on_middleClick()
+                # elif event.button == 2:
+                #     for _card in BaseCard.get_cards():
+                #         if _card.rect.collidepoint(event.pos):
+                #             _card.on_middleClick()
 
                 elif event.button == 3:
                     for _elem in UIElement.get_group("ui"):
@@ -155,7 +142,7 @@ def main(screen, clock):
                             _elem.on_altClick()
 
             elif event.type == pg.MOUSEBUTTONUP:
-                for _card in BaseCard.cards:
+                for _card in BaseCard.get_cards():
                     if _card.selected == True:
                         _card.on_release()
 
@@ -167,45 +154,24 @@ def main(screen, clock):
                         _elem.set_selected(False)
 
                     elif hasattr(_elem, 'grabbed') and _elem.grabbed == True:
-                        if _elem.rect.x > 326:
-                            if _elem.captaCard == None:
-                                _elem.captaCard = BaseCard(
-                                    _elem.rect.topleft, _elem.codeData)
-                                _elem.codeData.cardID = _elem.captaCard.cardID
-                                _elem.captaCard.codeData.cardID = _elem.captaCard.cardID
-                                _elem.redraw_card('#FFFFFF')
-
-                                for _elem in UIElement.get_group('ui'):
-                                    if isinstance(_elem, UIElement.get_ui_elem('CardList')):
-                                        _elem.save_list()
-                                        break
-                            else:
-                                UIElement.get_ui_elem('PopUp')(
-                                    'This card is already deployed')
-                        else:
-                            UIElement.get_ui_elem('PopUp')(
-                                'Drag the card into the stacking area')
-
-                        _elem.rect.topleft = _elem.prevPos
-                        UIElement.get_group('layer').change_layer(_elem, -1)
-                        for child in _elem.children:
-                            UIElement.get_group(
-                                'layer').change_layer(_elem, -1)
-                        _elem.grabbed = False
+                        _elem.on_release(event.pos)
 
             elif event.type == pg.MOUSEMOTION:
                 for _elem in UIElement.get_group("ui"):
                     if isinstance(_elem, UIElement.get_ui_elem('ScrollBar')):
                         if _elem.get_selected() == True:
-                            _elem.move_bar(event.pos[1])
+                            _elem.move_bar(event.rel[1])
 
-                    for _elem in UIElement.get_group('ui'):
-                        if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
-                            UIElement.remove_from_group(_elem)
-                            break
+                    if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
+                        UIElement.remove_from_group(_elem)
+                        break
+
+                    if isinstance(_elem, UIElement.get_ui_elem('ListObject')):
+                        _elem.move(event.rel)
+
                     global_prev_tick = pg.time.get_ticks()
 
-                for _card in BaseCard.cards:
+                for _card in BaseCard.get_cards():
                     if _card.selected == True:
                         _card.move(event.rel)
                         _card.moving = True
@@ -239,10 +205,8 @@ def main(screen, clock):
                             if isinstance(_elem, UIElement.get_ui_elem('DebugInspector')):
                                 UIElement.remove_from_group(_elem)
 
-                elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_r:
-                    for _elem in UIElement.get_group('ui'):
-                        if isinstance(_elem, UIElement.get_ui_elem('CenterObj')):
-                            _elem.recenter()
+                elif event.key == pg.K_SPACE:
+                    UIElement.find_current_ui('CenterObj').recenter()
 
                 elif event.key == pg.K_ESCAPE:
                     _load_escape_screen = True
@@ -264,21 +228,25 @@ def main(screen, clock):
                         if isinstance(_elem, UIElement.get_ui_elem('ActionIcon')):
                             _elem.typing(event)
 
-        for _card in BaseCard.cards:
+        _hovered_card = []
+        for _card in BaseCard.get_cards():
+            _card.no_hover()
+
             if _card.rect.collidepoint(pg.mouse.get_pos()):
                 if _card.hovering == False:
-                    _card.hover()
-
-            else:
-                if _card.hovering == True:
-                    _card.no_hover()
+                    _hovered_card.append(_card)
 
             _card.update()
+
+        _hovered_c = BaseCard.find_highest_card(_hovered_card)
+        if _hovered_c:
+            _hovered_c.hover()
 
         _hovered_element = []
         _tooled_element = []
         for _elem in UIElement.get_group("ui"):
             _elem.current_tick += _elem.clock.tick(30)
+            _elem.no_hover()
 
             if _elem.rect.collidepoint(pg.mouse.get_pos()):
 
@@ -324,9 +292,6 @@ def main(screen, clock):
                 if hasattr(_elem, "negate"):
                     _elem.negate = False
 
-                if _elem.hovering == True:
-                    _elem.no_hover()
-
             if isinstance(_elem, UIElement.get_ui_elem('PopUp')) and hasattr(_elem, "last") and now_tick - _elem.last >= _elem.timer:
                 _elem.remove()
                 if _elem:
@@ -359,7 +324,7 @@ def main(screen, clock):
         clock.tick(30)
         screen.fill('#B7B7B7')
         UIElement.get_group("ui").draw(screen)
-        BaseCard.cards.draw(screen)
+        BaseCard.get_cards().draw(screen)
         if UIElement.get_modus() == 'STACK' and StackManager.get_length():
             StackManager.get_stack().draw(screen)
         CardOutline.currentOutline.draw(screen)

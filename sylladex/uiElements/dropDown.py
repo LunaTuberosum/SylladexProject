@@ -43,7 +43,9 @@ class DropDown(UIElement):
                 self,
                 self.size,
                 [self.size, self.base_color, [0, 0]],
-                image=[self.lookup.get(self.current_option), [0, 0]]
+                images=[
+                    [self.lookup.get(self.current_option), [0, 0]]
+                ]
             )
 
     def configure_kwargs(self):
@@ -83,8 +85,10 @@ class DropDown(UIElement):
                                                                      self.size[1] / 2], 'center', '#000000']]
 
         elif self.show_type == 'Image':
-            self.apperance.change_image(
-                self.lookup.get(self.current_option), [0, 0])
+            self.apperance.change_images(
+                [
+                    [self.lookup.get(self.current_option), [0, 0]]
+                ])
 
         self.apperance.size_color_pos = [[self.size, _color, [0, 0]]]
         self.apperance.reload_apperance()

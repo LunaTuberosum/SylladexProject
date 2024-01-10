@@ -12,7 +12,7 @@
             "action_2": "ARISE",
             "action_3": "ARRIVE",
             "action_4": "ARF",
-            "cardID": 0
+            "cardID": 1
         },
         "Empty": false
     },
@@ -29,7 +29,7 @@
             "action_2": "ACQUIRE",
             "action_3": "ACCEDE",
             "action_4": "ACCESSORIZE",
-            "cardID": 0
+            "cardID": 2
         },
         "Empty": false
     },
@@ -46,7 +46,7 @@
             "action_2": "ACCLAIM",
             "action_3": "ACCUMULATE",
             "action_4": "ACQUIRE",
-            "cardID": 0
+            "cardID": 3
         },
         "Empty": false
     },
@@ -63,7 +63,7 @@
             "action_2": "ASSESS",
             "action_3": "ASSAULT",
             "action_4": "ASTRICT",
-            "cardID": 0
+            "cardID": 4
         },
         "Empty": false
     },
@@ -80,7 +80,7 @@
             "action_2": "ASSIMILATE",
             "action_3": "ASTRICT",
             "action_4": "ASSIMILATE",
-            "cardID": 0
+            "cardID": 8
         },
         "Empty": false
     },
@@ -97,7 +97,7 @@
             "action_2": "ASPHIXIATE",
             "action_3": "ASSEMBLE",
             "action_4": "ASSURE",
-            "cardID": 0
+            "cardID": 5
         },
         "Empty": false
     },
@@ -114,7 +114,7 @@
             "action_2": "ASTOUND",
             "action_3": "ASTONISH",
             "action_4": "ASSURE",
-            "cardID": 0
+            "cardID": 6
         },
         "Empty": false
     },
@@ -131,7 +131,7 @@
             "action_2": "ASSIST",
             "action_3": "ASSERT",
             "action_4": "ASTONISH",
-            "cardID": 0
+            "cardID": 9
         },
         "Empty": false
     },
@@ -148,7 +148,7 @@
             "action_2": "ASTRICT",
             "action_3": "ASTRICT",
             "action_4": "ASSEMBLE",
-            "cardID": 0
+            "cardID": 7
         },
         "Empty": false
     },
@@ -182,7 +182,7 @@
             "action_2": "ASSAULT",
             "action_3": "AGGRESS",
             "action_4": "ASSIMILATE",
-            "cardID": 0
+            "cardID": 10
         },
         "Empty": false
     },
