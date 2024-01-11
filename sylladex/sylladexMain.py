@@ -215,6 +215,10 @@ def main(screen, clock):
                             if isinstance(_elem, UIElement.get_ui_elem('DebugInspector')):
                                 UIElement.remove_from_group(_elem)
 
+                elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_SPACE:
+                    UIElement.find_current_ui('CenterObj').only_center_self()
+                    BaseCard.save_cards()
+
                 elif event.key == pg.K_SPACE:
                     UIElement.find_current_ui('CenterObj').recenter()
 

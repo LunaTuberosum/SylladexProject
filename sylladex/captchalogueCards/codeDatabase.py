@@ -2296,32 +2296,30 @@ trait_2_desc = {
         }
     },
     'COMPUTER': {
-        'WEAPON': {
-            '1': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-            '2': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-            '3': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-            '4': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-        }
+        '1': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
+        '2': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
+        '3': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
+        '4': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
     },
     'SENTIENT': {
         '1': {
@@ -3146,6 +3144,10 @@ def read_code(name, code_num, tier, list_obj):
     elif _trait2 == 'EXQUISITE':
         _grist = 'DIAMOND'
 
+    elif _trait2 == 'SHITTY':
+        _grist = 'ARTIFACT'
+        tier = '1'
+
     _wType = get_weapon_type(_kind, _trait2)
     _action1 = get_action_name(_code_array[4], '5', _wType)
     _action2 = get_action_name(_code_array[5], '6', _wType)
@@ -3319,7 +3321,6 @@ def get_trait_1_data(code_data: object):
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)
 
-
         if _tier_level == '1':
             return _custom_data[code_data.trait_1]['1-4']
         elif _tier_level == '2':
@@ -3360,8 +3361,12 @@ def get_trait_2_data(code_data: object):
             return _custom_data[code_data.trait_2]['13-16']
 
 
-def get_weapon_type(weaponkind, trait_2):
-    if (trait_2 == 'TRICKSTER'):
+def get_weapon_type(weaponkind: str, trait_2: str):
+    if trait_2 == 'TRICKSTER':
+        return 'MAGIC'
+    elif trait_2 == 'MAGICAL':
+        return 'MAGIC'
+    elif trait_2 == 'GRIMDARK':
         return 'MAGIC'
 
     if weaponkind_type.get(weaponkind):

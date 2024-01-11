@@ -15,8 +15,8 @@
             "cardID": 1
         },
         "TopLeft": [
-            1644,
-            760
+            1144,
+            644
         ]
     },
     "2": {
@@ -35,11 +35,31 @@
             "cardID": 2
         },
         "TopLeft": [
-            1629,
-            745
+            1129,
+            629
         ]
     },
     "3": {
+        "CodeData": {
+            "name": "c",
+            "code": "cccccccc",
+            "tier": "3",
+            "kind": "Brushkind",
+            "grist": "DIAMOND",
+            "trait_1": "HOT",
+            "trait_2": "EXQUISITE",
+            "action_1": "ACKNOWLEDGE",
+            "action_2": "ACCLAIM",
+            "action_3": "ACCUMULATE",
+            "action_4": "ACQUIRE",
+            "cardID": 3
+        },
+        "TopLeft": [
+            1114,
+            614
+        ]
+    },
+    "4": {
         "CodeData": {
             "name": "d",
             "code": "dddddddd",
@@ -55,11 +75,11 @@
             "cardID": 4
         },
         "TopLeft": [
-            1599,
-            715
+            1099,
+            599
         ]
     },
-    "4": {
+    "5": {
         "CodeData": {
             "name": "e",
             "code": "eeeeeeee",
@@ -75,11 +95,11 @@
             "cardID": 5
         },
         "TopLeft": [
-            1584,
-            700
+            1084,
+            584
         ]
     },
-    "5": {
+    "6": {
         "CodeData": {
             "name": "f",
             "code": "ffffffff",
@@ -95,11 +115,31 @@
             "cardID": 6
         },
         "TopLeft": [
-            1569,
-            685
+            1069,
+            569
         ]
     },
-    "6": {
+    "7": {
+        "CodeData": {
+            "name": "g",
+            "code": "gggggggg",
+            "tier": "7",
+            "kind": "Shovelkind",
+            "grist": "ZILLIUM",
+            "trait_1": "SHARP",
+            "trait_2": "TRICKSTER",
+            "action_1": "ASSIGN",
+            "action_2": "ASTOUND",
+            "action_3": "ASTONISH",
+            "action_4": "ASSURE",
+            "cardID": 7
+        },
+        "TopLeft": [
+            1054,
+            554
+        ]
+    },
+    "8": {
         "CodeData": {
             "name": "h",
             "code": "hhhhhhhh",
@@ -115,11 +155,11 @@
             "cardID": 8
         },
         "TopLeft": [
-            1539,
-            655
+            1039,
+            539
         ]
     },
-    "7": {
+    "9": {
         "CodeData": {
             "name": "i",
             "code": "iiiiiiii",
@@ -135,11 +175,11 @@
             "cardID": 9
         },
         "TopLeft": [
-            1524,
-            640
+            1024,
+            524
         ]
     },
-    "8": {
+    "10": {
         "CodeData": {
             "name": "j",
             "code": "jjjjjjjj",
@@ -155,11 +195,11 @@
             "cardID": 10
         },
         "TopLeft": [
-            1509,
-            625
+            1009,
+            509
         ]
     },
-    "9": {
+    "11": {
         "CodeData": {
             "name": "k",
             "code": "kkkkkkkk",
@@ -175,11 +215,11 @@
             "cardID": 11
         },
         "TopLeft": [
-            1494,
-            610
+            994,
+            494
         ]
     },
-    "10": {
+    "12": {
         "CodeData": {
             "name": "l",
             "code": "llllllll",
@@ -195,11 +235,11 @@
             "cardID": 12
         },
         "TopLeft": [
-            1479,
-            595
+            979,
+            479
         ]
     },
-    "11": {
+    "13": {
         "CodeData": {
             "name": "m",
             "code": "mmmmmmmm",
@@ -215,11 +255,11 @@
             "cardID": 13
         },
         "TopLeft": [
-            1464,
-            580
+            964,
+            464
         ]
     },
-    "12": {
+    "14": {
         "CodeData": {
             "name": "n",
             "code": "nnnnnnnn",
@@ -228,18 +268,18 @@
             "grist": "AMBER",
             "trait_1": "CANDY",
             "trait_2": "GRIMDARK",
-            "action_1": "ASSURE",
+            "action_1": "ACTUALIZE",
             "action_2": "AGGRAVATE",
-            "action_3": "ASTOUND",
-            "action_4": "ASSIGN",
+            "action_3": "ACUERE",
+            "action_4": "ACKNOWLEDGE",
             "cardID": 14
         },
         "TopLeft": [
-            1449,
-            565
+            949,
+            449
         ]
     },
-    "13": {
+    "15": {
         "CodeData": {
             "name": "o",
             "code": "oooooooo",
@@ -255,11 +295,11 @@
             "cardID": 15
         },
         "TopLeft": [
-            1434,
-            550
+            934,
+            434
         ]
     },
-    "14": {
+    "16": {
         "CodeData": {
             "name": "p",
             "code": "pppppppp",
@@ -275,11 +315,11 @@
             "cardID": 16
         },
         "TopLeft": [
-            1419,
-            535
+            919,
+            419
         ]
     },
-    "15": {
+    "17": {
         "CodeData": {
             "name": "q",
             "code": "qqqqqqqq",
@@ -295,17 +335,17 @@
             "cardID": 17
         },
         "TopLeft": [
-            1404,
-            520
+            904,
+            404
         ]
     },
-    "16": {
+    "18": {
         "CodeData": {
             "name": "r",
             "code": "rrrrrrrr",
             "tier": "2",
             "kind": "Cardkind",
-            "grist": "IRON",
+            "grist": "DIAMOND",
             "trait_1": "HOT",
             "trait_2": "EXQUISITE",
             "action_1": "ACCLAIM",
@@ -315,11 +355,11 @@
             "cardID": 18
         },
         "TopLeft": [
-            1389,
-            505
+            889,
+            389
         ]
     },
-    "17": {
+    "19": {
         "CodeData": {
             "name": "s",
             "code": "ssssssss",
@@ -335,11 +375,11 @@
             "cardID": 19
         },
         "TopLeft": [
-            1374,
-            490
+            874,
+            374
         ]
     },
-    "18": {
+    "20": {
         "CodeData": {
             "name": "t",
             "code": "tttttttt",
@@ -355,17 +395,17 @@
             "cardID": 20
         },
         "TopLeft": [
-            1359,
-            475
+            859,
+            359
         ]
     },
-    "19": {
+    "21": {
         "CodeData": {
             "name": "u",
             "code": "uuuuuuuu",
-            "tier": "5",
+            "tier": "1",
             "kind": "Hatkind",
-            "grist": "SHALE",
+            "grist": "ARTIFACT",
             "trait_1": "IRRADAITED",
             "trait_2": "SHITTY",
             "action_1": "No Action",
@@ -375,11 +415,31 @@
             "cardID": 21
         },
         "TopLeft": [
-            1344,
-            460
+            844,
+            344
         ]
     },
-    "20": {
+    "22": {
+        "CodeData": {
+            "name": "v",
+            "code": "vvvvvvvv",
+            "tier": "6",
+            "kind": "Glasseskind",
+            "grist": "ZILLIUM",
+            "trait_1": "SHARP",
+            "trait_2": "TRICKSTER",
+            "action_1": "ACCELERATE",
+            "action_2": "ACKNOWLEDGE",
+            "action_3": "ACTUALIZE",
+            "action_4": "ACUPRESSURE",
+            "cardID": 22
+        },
+        "TopLeft": [
+            829,
+            329
+        ]
+    },
+    "23": {
         "CodeData": {
             "name": "w",
             "code": "wwwwwwww",
@@ -395,11 +455,11 @@
             "cardID": 23
         },
         "TopLeft": [
-            1314,
-            430
+            814,
+            314
         ]
     },
-    "21": {
+    "24": {
         "CodeData": {
             "name": "x",
             "code": "xxxxxxxx",
@@ -415,11 +475,11 @@
             "cardID": 24
         },
         "TopLeft": [
-            1299,
-            415
+            799,
+            299
         ]
     },
-    "22": {
+    "25": {
         "CodeData": {
             "name": "y",
             "code": "yyyyyyyy",
@@ -435,11 +495,11 @@
             "cardID": 25
         },
         "TopLeft": [
-            1284,
-            400
+            784,
+            284
         ]
     },
-    "23": {
+    "26": {
         "CodeData": {
             "name": "z",
             "code": "zzzzzzzz",
@@ -455,68 +515,28 @@
             "cardID": 26
         },
         "TopLeft": [
-            1269,
-            385
+            769,
+            269
         ]
     },
-    "24": {
+    "27": {
         "CodeData": {
-            "name": "g",
-            "code": "gggggggg",
-            "tier": "7",
-            "kind": "Shovelkind",
-            "grist": "ZILLIUM",
-            "trait_1": "SHARP",
-            "trait_2": "TRICKSTER",
-            "action_1": "ASSIGN",
-            "action_2": "ASTOUND",
-            "action_3": "ASTONISH",
-            "action_4": "ASSURE",
+            "name": "!",
+            "code": "!!!!!!!!",
+            "tier": "11",
+            "kind": "KIND1",
+            "grist": "ARTIFACT",
+            "trait_1": "TRAIT1",
+            "trait_2": "TRAIT3",
+            "action_1": "No Action",
+            "action_2": "No Action",
+            "action_3": "No Action",
+            "action_4": "No Action",
             "cardID": 27
         },
         "TopLeft": [
-            1554,
-            670
-        ]
-    },
-    "25": {
-        "CodeData": {
-            "name": "c",
-            "code": "cccccccc",
-            "tier": "3",
-            "kind": "Brushkind",
-            "grist": "DIAMOND",
-            "trait_1": "HOT",
-            "trait_2": "EXQUISITE",
-            "action_1": "ACKNOWLEDGE",
-            "action_2": "ACCLAIM",
-            "action_3": "ACCUMULATE",
-            "action_4": "ACQUIRE",
-            "cardID": 27
-        },
-        "TopLeft": [
-            1614,
-            730
-        ]
-    },
-    "26": {
-        "CodeData": {
-            "name": "v",
-            "code": "vvvvvvvv",
-            "tier": "6",
-            "kind": "Glasseskind",
-            "grist": "ZILLIUM",
-            "trait_1": "SHARP",
-            "trait_2": "TRICKSTER",
-            "action_1": "ACCELERATE",
-            "action_2": "ACKNOWLEDGE",
-            "action_3": "ACTUALIZE",
-            "action_4": "ACUPRESSURE",
-            "cardID": 27
-        },
-        "TopLeft": [
-            1329,
-            445
+            754,
+            254
         ]
     }
 }

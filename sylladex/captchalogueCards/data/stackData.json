@@ -44,7 +44,7 @@
             "action_2": "ACCLAIM",
             "action_3": "ACCUMULATE",
             "action_4": "ACQUIRE",
-            "cardID": 27
+            "cardID": 3
         }
     },
     "4": {
@@ -108,7 +108,7 @@
             "action_2": "ASTOUND",
             "action_3": "ASTONISH",
             "action_4": "ASSURE",
-            "cardID": 27
+            "cardID": 7
         }
     },
     "8": {
@@ -216,10 +216,10 @@
             "grist": "AMBER",
             "trait_1": "CANDY",
             "trait_2": "GRIMDARK",
-            "action_1": "ASSURE",
+            "action_1": "ACTUALIZE",
             "action_2": "AGGRAVATE",
-            "action_3": "ASTOUND",
-            "action_4": "ASSIGN",
+            "action_3": "ACUERE",
+            "action_4": "ACKNOWLEDGE",
             "cardID": 14
         }
     },
@@ -277,7 +277,7 @@
             "code": "rrrrrrrr",
             "tier": "2",
             "kind": "Cardkind",
-            "grist": "IRON",
+            "grist": "DIAMOND",
             "trait_1": "HOT",
             "trait_2": "EXQUISITE",
             "action_1": "ACCLAIM",
@@ -323,9 +323,9 @@
         "CodeData": {
             "name": "u",
             "code": "uuuuuuuu",
-            "tier": "5",
+            "tier": "1",
             "kind": "Hatkind",
-            "grist": "SHALE",
+            "grist": "ARTIFACT",
             "trait_1": "IRRADAITED",
             "trait_2": "SHITTY",
             "action_1": "No Action",
@@ -348,7 +348,7 @@
             "action_2": "ACKNOWLEDGE",
             "action_3": "ACTUALIZE",
             "action_4": "ACUPRESSURE",
-            "cardID": 27
+            "cardID": 22
         }
     },
     "23": {
@@ -413,6 +413,22 @@
             "action_3": "No Action",
             "action_4": "No Action",
             "cardID": 26
+        }
+    },
+    "27": {
+        "CodeData": {
+            "name": "!",
+            "code": "!!!!!!!!",
+            "tier": "11",
+            "kind": "KIND1",
+            "grist": "ARTIFACT",
+            "trait_1": "TRAIT1",
+            "trait_2": "TRAIT3",
+            "action_1": "No Action",
+            "action_2": "No Action",
+            "action_3": "No Action",
+            "action_4": "No Action",
+            "cardID": 27
         }
     }
 }

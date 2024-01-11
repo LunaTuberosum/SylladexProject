@@ -19,6 +19,10 @@ class CenterObj(UIElement):
     def move_self(self, rel):
         self.rect.move_ip(rel)
 
+    def only_center_self(self):
+        self.rect.x = settings.SCREEN_WIDTH/2
+        self.rect.y = settings.SCREEN_HEIGHT/2
+
     def recenter(self):
         _off_set_x = settings.SCREEN_WIDTH/2 - self.rect.x
         _off_set_y = settings.SCREEN_HEIGHT/2 - self.rect.y

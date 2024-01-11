@@ -21,7 +21,7 @@ class PopUp(UIElement):
 
         _total_char = 0
         for _i, _text in enumerate(_new_text):
-            if _total_char + len(_text) >= 20:
+            if _total_char + len(_text) >= 25:
                 _lines.append(_text + ' ')
                 _total_char = len(_text) + 1
 

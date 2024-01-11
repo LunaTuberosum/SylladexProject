@@ -83,7 +83,9 @@ class ListObject(UIElement):
     def update(self):
         if self.prev_tick > 0:
             if pg.time.get_ticks() - self.prev_tick >= 500:
-                self.capta_card.highlight = True
+                if self.capta_card:
+
+                    self.capta_card.highlight = True
 
         if self.rect.y >= 196 and self.rect.y <= 757:
             self.interactable = True
@@ -141,6 +143,7 @@ class ListObject(UIElement):
                     [UIElement.CodeDatabase.find_kind_image(
                         self.code_data.kind), [185, 3]]
                 ])
+                self.apperance.kwargs['imageAlpha'] = 125
 
                 self.apperance.kwargs['texts'] = [
                     [self.code_data.name, [6, 15], 'left', '#000000'],
@@ -218,6 +221,10 @@ class ListObject(UIElement):
     def on_click(self):
         if UIElement.get_ui_elem('RemoveCardButton').get_eject() and self.interactable:
             if not self.empty:
+                if self.capta_card:
+                    UIElement.get_ui_elem('PopUp')(
+                        "Remove card from stacking area before clearing data")
+                    return
                 self.empty = True
                 self.code_data = CodeData()
                 self.redraw_card()
@@ -228,6 +235,7 @@ class ListObject(UIElement):
             else:
                 UIElement.get_ui_elem('PopUp')(
                     "You can\'t eject an empty card")
+                return
 
         elif self.interactable == True:
             if self.empty == False:
