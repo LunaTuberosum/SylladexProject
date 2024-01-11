@@ -18,13 +18,10 @@ from .uiElements.customSettingAreaBox import CustomSettingAreaBox
 from .uiElements.customSettingButton import CustomSettingButton
 from .uiElements.customSettingMenu import CustomSettingMenu
 from .uiElements.customSettingSectionName import CustomSettingSectionName
-<<<<<<< HEAD
-=======
 from .uiElements.debugInspector import DebugInspector
 from .uiElements.dropDown import DropDown
 from .uiElements.dropDownBackground import DropDownBackground
 from .uiElements.dropDownOption import DropDownOption
->>>>>>> CodeAndVisual
 from .uiElements.editCardButton import EditCardButton
 from .uiElements.escapeMenu import EscapeMenu
 from .uiElements.escapeMenuOption import EscapeMenuOption
@@ -55,34 +52,6 @@ UIElement.add_current_ui([
     CardInspectorCheck,
     CardList,
     CenterObj,
-<<<<<<< HEAD
-    ConsoleMessage, 
-    CustomSettingAreaBox, 
-    CustomSettingButton, 
-    CustomSettingMenu, 
-    CustomSettingSectionName, 
-    EditCardButton, 
-    EscapeMenu, 
-    EscapeMenuOption, 
-    GristCache, 
-    GristCacheButton, 
-    GristCacheLimit, 
-    GristInfoBox, 
-    GristProgressBar, 
-    ListObject, 
-    LongTextField, 
-    ModusCard, 
-    OptionToggle, 
-    PopUp, 
-    RemoveCardButton, 
-    ScrollBar, 
-    SideBar, 
-    SidebarButton, 
-    StackingArea, 
-    TextField, 
-    ToggleButton, 
-    ToolTip, 
-=======
     ConsoleMessage,
     CustomSettingAreaBox,
     CustomSettingButton,
@@ -112,7 +81,6 @@ UIElement.add_current_ui([
     TextField,
     ToggleButton,
     ToolTip,
->>>>>>> CodeAndVisual
     FinishButton,
 ])
 
@@ -140,26 +108,6 @@ def main(screen, clock):
 
                     move_card = True
 
-<<<<<<< HEAD
-                    for elem in UIBase.get_group("ui"):
-                        if isinstance(elem, UIBase.get_uiElem('ToolTip')):
-                            UIBase.remove_fromGroup(elem)
-                            elem.kill()
-                            globalPrevTick = pg.time.get_ticks()
-                        
-                    for elem in UIBase.get_group('ui'):
-                        if hasattr(elem, "active") and elem.active == True:
-                            if hasattr(elem, "exit_field"):
-                                elem.draw()
-                                elem.exit_field()
-                        if hasattr(elem, "on_click") and elem.rect.collidepoint(event.pos):
-                            elem.on_click()
-                            moveCard = False
-                            
-                            if UIBase.get_uiElem('RemoveCardButton').eject == True:
-                                if len(UIBase.get_uiElem('CardList').children) == 0:
-                                    UIBase.get_uiElem('RemoveCardButton').eject = False
-=======
                     for _elem in UIElement.get_group("ui"):
                         if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
                             UIElement.remove_from_group(_elem)
@@ -189,7 +137,6 @@ def main(screen, clock):
                         _clicked_c = BaseCard.find_highest_card(_clicked_card)
                         if _clicked_c:
                             _clicked_c.on_click()
->>>>>>> CodeAndVisual
 
                 elif event.button == 2:
                     _clicked_card = []
@@ -368,65 +315,8 @@ def main(screen, clock):
                 if _elem:
                     _elem.last = pg.time.get_ticks()
 
-<<<<<<< HEAD
-        for elem in UIBase.get_group("ui"):
-            if elem.rect.collidepoint(pg.mouse.get_pos()):
-                
-                if UIBase.DebugInspect == True:
-                    dontMake = False
-                    for _elem in UIBase.get_group('ui'):
-                        if isinstance(_elem, UIBase.DebugUIInspector):
-                            if _elem.currentIns == elem:
-                                dontMake = True
-                            elif _elem == elem:
-                                dontMake = True
-
-                    if dontMake == False:
-                        UIBase.Insepctors.append(UIBase.DebugUIInspector(elem))
-
-                    for index, inspector in enumerate(UIBase.Insepctors):
-                        if index == 0:
-                            inspector.rect.x = (pg.display.get_surface().get_width()-10)-(inspector.rect.w)
-                            growingOffSet = inspector.rect.w+20
-                        else:
-                            inspector.rect.x = (pg.display.get_surface().get_width()-10)-(growingOffSet)-(inspector.rect.w)
-                            growingOffSet += inspector.rect.w+20
-
-                if isinstance(elem, UIBase.get_uiElem('PopUp')):
-                    elem.negate = True
-                if hasattr(elem, "hover") and elem.hovering == False:
-                        if isinstance(elem, UIBase.get_uiElem('ListObject')) and (UIBase.get_uiElem('RemoveCardButton').eject == True or UIBase.get_uiElem('EditCardButton').edit == True):
-                            elem.alt_hover()
-                        else:
-                            elem.hover()
-
-                if hasattr(elem, "toolTipText"):
-                    if hasattr(elem, "active") and elem.active == True:
-                        pass
-                    elif hasattr(elem, 'inactive') and elem.inactive == True:
-                        pass
-                    elif nowTick - globalPrevTick >= 1300:
-                        UIBase.get_uiElem('ToolTip')(pg.mouse.get_pos(), elem.toolTipText)
-            else:
-                if hasattr(elem, "negate"):
-                    elem.negate = False
-                if hasattr(elem, "no_hover")and elem.hovering == True:
-                    if isinstance(elem, UIBase.get_uiElem('ListObject')) and (UIBase.get_uiElem('RemoveCardButton').eject == True or UIBase.get_uiElem('EditCardButton').edit == True):
-                        elem.alt_no_hover()
-                    else:
-                        elem.no_hover()
-
-            if isinstance(elem, UIBase.get_uiElem('PopUp')) and  hasattr(elem, "last") and nowTick - elem.last >= elem.timer:
-                elem.remove()
-                if elem:
-                    elem.last = pg.time.get_ticks()
-
-            if isinstance(elem, UIBase.get_uiElem('ToolTip')):
-                for _elem in UIBase.get_group('ui'):
-=======
             if isinstance(_elem, UIElement.get_ui_elem('ToolTip')):
                 for _elem in UIElement.get_group('ui'):
->>>>>>> CodeAndVisual
                     if _elem.rect.collidepoint(pg.mouse.get_pos()):
                         pass
                     elif hasattr(_elem, 'toolTipText'):
