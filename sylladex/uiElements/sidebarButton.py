@@ -105,6 +105,8 @@ class SideBarButton(UIElement):
             self.rect.x = 0
 
             UIElement.find_current_ui('SideBar').to_be_rect = -326
+            UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
+            UIElement.get_ui_elem('EditCardButton').change_edit(False)
 
             if UIElement.check_for_ui('GristCache'):
                 if UIElement.find_current_ui('GristCache').to_be_rect != -392:

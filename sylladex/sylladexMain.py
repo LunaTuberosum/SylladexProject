@@ -22,6 +22,7 @@ from .uiElements.debugInspector import DebugInspector
 from .uiElements.dropDown import DropDown
 from .uiElements.dropDownBackground import DropDownBackground
 from .uiElements.dropDownOption import DropDownOption
+from .uiElements.editCardButton import EditCardButton
 from .uiElements.escapeMenu import EscapeMenu
 from .uiElements.escapeMenuOption import EscapeMenuOption
 from .uiElements.gristCache import GristCache
@@ -60,6 +61,7 @@ UIElement.add_current_ui([
     DropDown,
     DropDownBackground,
     DropDownOption,
+    EditCardButton,
     EscapeMenu,
     EscapeMenuOption,
     GristCache,

@@ -457,5 +457,22 @@
             "cardID": 27
         },
         "Empty": false
+    },
+    "28": {
+        "CodeData": {
+            "name": "!",
+            "code": "!!!!!!!!",
+            "tier": "13",
+            "kind": "KIND1",
+            "grist": "ARTIFACT",
+            "trait_1": "TRAIT1",
+            "trait_2": "TRAIT3",
+            "action_1": "No Action",
+            "action_2": "No Action",
+            "action_3": "No Action",
+            "action_4": "No Action",
+            "cardID": 0
+        },
+        "Empty": false
     }
 }

@@ -41,6 +41,8 @@ class SideBar(UIElement):
             28, 48))
         self.add_child(UIElement.get_ui_elem('RemoveCardButton')(
             110, 48))
+        self.add_child(UIElement.get_ui_elem('EditCardButton')(
+            218, 48))
         self.add_child(UIElement.get_ui_elem('TextField')(
             242,
             142,
@@ -80,7 +82,7 @@ class SideBar(UIElement):
 
             UIElement.move_element(
                 self, [UIElement.lerp(self.rect.x, self.to_be_rect, 0.2), 0])
-            self.children[3].place_list()
+            UIElement.find_current_ui('CardList').place_list()
 
             if not UIElement.find_current_ui('GristCache'):
                 UIElement.find_current_ui(

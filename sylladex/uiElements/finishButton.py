@@ -70,8 +70,14 @@ class FinishButton(UIElement):
             return
 
         self.card.writing = False
+        _id = self.card.code_data.cardID
         UIElement.CodeDatabase.read_code(
             self.card.children[0].text, self.card.children[1].text, self.card.children[2].text, self.card)
+        self.card.code_data.cardID = _id
+
+        if self.card.capta_card:
+            self.card.capta_card.code_data = self.card.code_data
+
         self.card.redraw_card()
         self.card.empty = False
         for child in self.card.children:

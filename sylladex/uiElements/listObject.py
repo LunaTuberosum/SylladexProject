@@ -111,6 +111,7 @@ class ListObject(UIElement):
                     [[249, 64], _color, [0, 0]],
                     [[64, 64], 'ModusAccent', [185, 0]]
                 ]
+                self.apperance.kwargs['imageAlpha'] = 125
 
                 self.apperance.kwargs['texts'] = [
                     [self.code_data.name, [6, 15], 'left', '#000000'],
@@ -218,23 +219,43 @@ class ListObject(UIElement):
             self.redraw_card()
 
     def on_click(self):
-        if UIElement.get_ui_elem('RemoveCardButton').get_eject() and self.interactable:
-            if not self.empty:
-                if self.capta_card:
-                    UIElement.get_ui_elem('PopUp')(
-                        "Remove card from stacking area before clearing data")
-                    return
-                self.empty = True
-                self.code_data = CodeData()
-                self.redraw_card()
+        if self.writing:
+            return
 
-                UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
-                UIElement.find_current_ui('RemoveCardButton').reload_image()
-                UIElement.find_current_ui('CardList').save_list()
-            else:
+        if UIElement.get_ui_elem('RemoveCardButton').get_eject() and self.interactable:
+            if self.empty:
                 UIElement.get_ui_elem('PopUp')(
                     "You can\'t eject an empty card")
                 return
+
+            if self.capta_card:
+                UIElement.get_ui_elem('PopUp')(
+                    "Remove card from stacking area before clearing data")
+                return
+
+            UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
+            self.empty = True
+            self.code_data = CodeData()
+            self.redraw_card()
+
+            UIElement.find_current_ui('RemoveCardButton').reload_image()
+            UIElement.find_current_ui('CardList').save_list()
+
+        elif UIElement.get_ui_elem('EditCardButton').get_edit() and self.interactable:
+            if self.empty:
+                UIElement.get_ui_elem('PopUp')(
+                    "You can\'t edit an empty card")
+                return
+
+            UIElement.get_ui_elem('EditCardButton').change_edit(False)
+
+            self.start_card()
+            self.children[0].text = self.code_data.name
+            self.children[0].reload_text()
+            self.children[1].text = self.code_data.code
+            self.children[1].reload_text()
+            self.children[2].text = self.code_data.tier
+            self.children[2].reload_text()
 
         elif self.interactable == True:
             if self.empty == False:
