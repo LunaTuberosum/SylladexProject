@@ -27,9 +27,11 @@ class GristInfoBox(UIElement):
             [[111, 36], '#EFEFEF', [53, 48]],
             colorKey=True,
             images=[
-                [f'sylladex/uiElements/asset/GRIST/{self.grist}.png', [6, 22]]
+                [f'sylladex/uiElements/asset/GRISTS/{self.grist}.png', [6, 22]]
             ],
-            texts=[[self.grist, [111, 11], 'center', '#000000']]
+            texts=[
+                [self.grist, [111, 11], 'center', '#000000']
+            ]
         )
 
         self.add_child(

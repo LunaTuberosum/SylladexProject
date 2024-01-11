@@ -38,9 +38,9 @@ class SideBar(UIElement):
         )
 
         self.add_child(UIElement.get_ui_elem('AddCardButton')(
-            30, 50))
+            28, 48))
         self.add_child(UIElement.get_ui_elem('RemoveCardButton')(
-            112, 50))
+            110, 48))
         self.add_child(UIElement.get_ui_elem('TextField')(
             242,
             142,

@@ -84,7 +84,6 @@ class ListObject(UIElement):
         if self.prev_tick > 0:
             if pg.time.get_ticks() - self.prev_tick >= 500:
                 if self.capta_card:
-
                     self.capta_card.highlight = True
 
         if self.rect.y >= 196 and self.rect.y <= 757:

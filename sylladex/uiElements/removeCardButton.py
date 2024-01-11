@@ -18,30 +18,47 @@ class RemoveCardButton(UIElement):
 
         self.apperance = Apperance(
             self,
-            [70, 70],
-            [[64, 64], 'ModusBackground', [0, 6]],
-            [[64, 64], 'ModusAccent', [6, 0]],
+            [74, 74],
+            [[64, 64], 'ModusBackground', [2, 8]],
+            [[64, 64], 'ModusAccent', [8, 2]],
             colorKey=True,
             images=[
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON.png', [
-                    6, 0]]
+                    8, 2]]
             ])
 
         self.tool_tip_text = 'Eject a Card from your Sylladex'
         self.hovering = False
 
     def reload_image(self):
-        if self.hovering == False and UIElement.get_ui_elem('RemoveCardButton').get_eject() == False:
+        if UIElement.get_ui_elem('RemoveCardButton').get_eject():
+            self.apperance.size_color_pos = [
+                [[68, 68], '#FFFFFF', [0, 6]],
+                [[68, 68], '#FFFFFF', [6, 0]],
+                [[64, 64], 'ModusBackground', [2, 8]],
+                [[64, 64], 'ModusAccent', [8, 2]],
+            ]
+
+        else:
+            self.apperance.size_color_pos = [
+                [[64, 64], 'ModusBackground', [2, 8]],
+                [[64, 64], 'ModusAccent', [8, 2]],
+            ]
+
+        if not self.hovering:
+
             self.apperance.change_images(
                 [
                     [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON.png', [
-                        6, 0]]
+                        8, 2]]
                 ])
+
         else:
+
             self.apperance.change_images(
                 [
                     [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON_HOVER.png', [
-                        6, 0]]
+                        8, 2]]
                 ])
 
     def hover(self):
