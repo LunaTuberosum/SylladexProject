@@ -77,6 +77,7 @@ class FinishButton(UIElement):
 
         if self.card.capta_card:
             self.card.capta_card.code_data = self.card.code_data
+            self.card.capta_card.redraw_card()
 
         self.card.redraw_card()
         self.card.empty = False

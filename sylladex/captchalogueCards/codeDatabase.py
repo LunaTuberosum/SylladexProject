@@ -3127,7 +3127,7 @@ action_image = {
 }
 
 
-def read_code(name, code_num, tier, list_obj):
+def read_code(name: str, code_num: str, tier: str, list_obj: object):
     if len(code_num) >= 9:
         raise Exception('Codes can not be longer than 8 characters')
     elif len(code_num) <= 7:

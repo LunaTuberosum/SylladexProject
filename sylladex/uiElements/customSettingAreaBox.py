@@ -111,6 +111,23 @@ class CustomSettingAreaBox(UIElement):
             exitCommand=self.save_kind_data
         ))
 
+    def update_card_and_list(self):
+        _card_list = UIElement.find_current_ui('CardList')
+        if _card_list:
+            for _card in _card_list.get_list():
+                if '!' in _card.code_data.code or '?' in _card.code_data.code:
+                    _id = _card.code_data.cardID
+
+                    UIElement.CodeDatabase.read_code(
+                        _card.code_data.name, _card.code_data.code, _card.code_data.tier, _card)
+
+                    _card.code_data.cardID = _id
+                    _card.card.redraw_card()
+
+                    if _card.capta_card:
+                        _card.capta_card.code_data = _card.code_data
+                        _card.capta_card.redraw_card()
+
     def save_kind_data(self):
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)
@@ -123,10 +140,11 @@ class CustomSettingAreaBox(UIElement):
 
         with open('sylladex/captchalogueCards/data/customData.json', 'w') as _custom_data_file:
             _custom_data_file.write(_new_custon_data)
+        self.update_card_and_list()
 
         UIElement.get_ui_elem('ConsoleMessage')('Saved Custom')
 
-    def create_action_area(self, _custom_data):
+    def create_action_area(self, _custom_data: dict):
         _action_data = _custom_data[self.job]
 
         self.apperance = Apperance(
@@ -224,10 +242,11 @@ class CustomSettingAreaBox(UIElement):
 
         with open('sylladex/captchalogueCards/data/customData.json', 'w') as _custom_data_file:
             _custom_data_file.write(_new_custon_data)
+        self.update_card_and_list()
 
         UIElement.get_ui_elem('ConsoleMessage')('Saved Custom')
 
-    def create_trait_area(self, _custom_data):
+    def create_trait_area(self, _custom_data: dict):
         _trait = 'TRAIT' + UIElement.find_current_ui("CustomSettingSectionName",
                                                      "CustomSettingSectionName (TRAITS)").cur_toggle
         _trait_data = _custom_data[_trait]
@@ -321,5 +340,6 @@ class CustomSettingAreaBox(UIElement):
 
         with open('sylladex/captchalogueCards/data/customData.json', 'w') as _custom_data_file:
             _custom_data_file.write(_new_custon_data)
+        self.update_card_and_list()
 
         UIElement.get_ui_elem('ConsoleMessage')('Saved Custom')

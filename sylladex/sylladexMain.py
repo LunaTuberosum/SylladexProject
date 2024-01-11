@@ -217,11 +217,13 @@ def main(screen, clock):
                             if isinstance(_elem, UIElement.get_ui_elem('DebugInspector')):
                                 UIElement.remove_from_group(_elem)
 
-                elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_SPACE:
+                elif event.mod == pg.KMOD_LCTRL and event.key == pg.K_HOME:
                     UIElement.find_current_ui('CenterObj').only_center_self()
                     BaseCard.save_cards()
+                    UIElement.get_ui_elem('ConsoleMessage')(
+                        'Saved new center')
 
-                elif event.key == pg.K_SPACE:
+                elif event.key == pg.K_HOME:
                     UIElement.find_current_ui('CenterObj').recenter()
 
                 elif event.key == pg.K_ESCAPE:
@@ -236,13 +238,13 @@ def main(screen, clock):
 
                     if _load_escape_screen == True:
                         UIElement.get_ui_elem('EscapeMenu')()
-                else:
-                    for _elem in UIElement.get_group("ui"):
-                        if isinstance(_elem, UIElement.get_ui_elem('TextField')):
-                            _elem.typing(event)
 
-                        if isinstance(_elem, UIElement.get_ui_elem('ActionIcon')):
-                            _elem.typing(event)
+                for _elem in UIElement.get_group("ui"):
+                    if isinstance(_elem, UIElement.get_ui_elem('TextField')):
+                        _elem.typing(event)
+
+                    if isinstance(_elem, UIElement.get_ui_elem('ActionIcon')):
+                        _elem.typing(event)
 
         _hovered_card = []
         for _card in BaseCard.get_cards():
