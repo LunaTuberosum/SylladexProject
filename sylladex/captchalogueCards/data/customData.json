@@ -11,10 +11,10 @@
     },
     "ACTION1": {
         "AS": {
-            "NAME": "",
+            "NAME": "BRACADBRA",
             "COST": "/",
             "DAMAGE": "/",
-            "DESCRIPTION": "/"
+            "DESCRIPTION": "CAST SHITTY RAINBOW SPELLS "
         },
         "AR": {
             "NAME": "RTIFYUI",

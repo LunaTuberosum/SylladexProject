@@ -23,6 +23,7 @@ class CardInspectorCheck(UIElement):
 
         self.job = job
         self.exit_command = exit_command
+        self.tool_tip_text = f'Look at information about {self.job}'
 
         self.selected = False
 

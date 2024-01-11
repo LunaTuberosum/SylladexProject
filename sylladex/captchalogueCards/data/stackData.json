@@ -440,10 +440,10 @@
             "grist": "ARTIFACT",
             "trait_1": "TRAIT1",
             "trait_2": "TRAIT3",
-            "action_1": "No Action",
-            "action_2": "No Action",
-            "action_3": "No Action",
-            "action_4": "No Action",
+            "action_1": "ACTION1",
+            "action_2": "ACTION1",
+            "action_3": "ACTION1",
+            "action_4": "ACTION1",
             "cardID": 28
         }
     }

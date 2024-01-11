@@ -5,13 +5,13 @@ from uiElement import UIElement, Apperance
 
 class ActionIcon(UIElement):
 
-    def __init__(self, job: str, can_interact=False):
+    def __init__(self, x: int, y: int, job: str, can_interact: bool = False, start_layer: int = 8):
 
         super().__init__(
-            0,
-            0,
+            x,
+            y,
             f'ActionIcon ({job})',
-            8
+            start_layer
         )
 
         self.job = job
@@ -19,7 +19,8 @@ class ActionIcon(UIElement):
         self.active = False
         self.hovering = False
 
-        self.tool_tip_text = f'Change name of {self.job}'
+        if self.can_interact:
+            self.tool_tip_text = f'Change name of {self.job}'
 
         self.font = pg.font.Font(
             "sylladex/uiElements/asset/MISC/fontstuck.ttf", 17)

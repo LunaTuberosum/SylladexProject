@@ -47,6 +47,7 @@ class CardList(UIElement):
         cls.save_list()
         UIElement.find_current_ui('CardList').place_list()
         UIElement.find_current_ui('ScrollBar').update_size()
+        UIElement.find_current_ui('ScrollBar').rect.y = 196
 
     @classmethod
     def _add_to_list(cls):

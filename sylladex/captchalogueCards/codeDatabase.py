@@ -3166,13 +3166,13 @@ def get_action_info(action_name: str, w_type: str):
             _custom_data = json.load(_custom_data_file)
 
         if w_type == 'MELEE':
-            return [_custom_data[action_name]['AS']['COST'], _custom_data[action_name]['AS']['DMG'], _custom_data[action_name]['AS']['DESCRIPTION']]
+            return [_custom_data[action_name]['AS']['COST'], _custom_data[action_name]['AS']['DAMAGE'], _custom_data[action_name]['AS']['DESCRIPTION']]
 
         elif w_type == 'RANGED':
-            return [_custom_data[action_name]['AR']['COST'], _custom_data[action_name]['AR']['DMG'], _custom_data[action_name]['AR']['DESCRIPTION']]
+            return [_custom_data[action_name]['AR']['COST'], _custom_data[action_name]['AR']['DAMAGE'], _custom_data[action_name]['AR']['DESCRIPTION']]
 
         elif w_type == 'MAGIC':
-            return [_custom_data[action_name]['AC']['COST'], _custom_data[action_name]['AC']['DMG'], _custom_data[action_name]['AC']['DESCRIPTION']]
+            return [_custom_data[action_name]['AC']['COST'], _custom_data[action_name]['AC']['DAMAGE'], _custom_data[action_name]['AC']['DESCRIPTION']]
 
         raise Exception(f'Cant find data for action_name {action_name}')
 
@@ -3181,37 +3181,7 @@ def get_action_name(symbol, position, wType):
     if code_cypher.get(symbol):
         if code_cypher.get(symbol).get(position):
             if code_cypher.get(symbol).get(position).get(wType):
-                with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
-                    _custom_data = json.load(_custom_data_file)
-
-                _type_ab = 'AS'
-
-                if wType == 'RANGED':
-                    _type_ab = 'AR'
-                elif wType == 'MAGIC':
-                    _type_ab = 'AC'
-
-                if code_cypher.get(symbol).get(position).get(wType) == 'ACTION1':
-                    if _custom_data['ACTION1'][_type_ab]['NAME'] == '':
-                        return 'No Action'
-                    return _type_ab + _custom_data['ACTION1'][_type_ab]['NAME']
-
-                elif code_cypher.get(symbol).get(position).get(wType) == 'ACTION2':
-                    if _custom_data['ACTION2'][_type_ab]['NAME'] == '':
-                        return 'No Action'
-                    return _type_ab + _custom_data['ACTION2'][_type_ab]['NAME']
-
-                elif code_cypher.get(symbol).get(position).get(wType) == 'ACTION3':
-                    if _custom_data['ACTION3'][_type_ab]['NAME'] == '':
-                        return 'No Action'
-                    return _type_ab + _custom_data['ACTION3'][_type_ab]['NAME']
-
-                elif code_cypher.get(symbol).get(position).get(wType) == 'ACTION4':
-                    if _custom_data['ACTION4'][_type_ab]['NAME'] == '':
-                        return 'No Action'
-                    return _type_ab + _custom_data['ACTION4'][_type_ab]['NAME']
-                else:
-                    return code_cypher.get(symbol).get(position).get(wType)
+                return code_cypher.get(symbol).get(position).get(wType)
             else:
                 raise Exception(
                     f'Couldn\'t find {wType} action_image at {position} in {symbol}')
@@ -3221,17 +3191,24 @@ def get_action_name(symbol, position, wType):
         raise Exception(f'Couldn\'t find {symbol}')
 
 
-def get_action_image(action_name):
+def get_action_image(action_name: str, w_type: str, _x: int, _y: int):
     with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
         _custom_data = json.load(_custom_data_file)
 
     if action_name == 'No Action':
         return action_image.get('No Action')
 
-    # elif action_name == _custom_data[2].split(',')[0]:
+    elif action_name[:6] == 'ACTION':
 
-    #     base_object.children.append(UIElement.get_ui_elem('ActionIcon')(
-    #         base_object.rect.x+pos[0], base_object.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', action_name))
+        _action = UIElement.get_ui_elem('ActionIcon')(
+            _x, _y, 'CardInspectorCustomAction', False, 1000)
+
+        _action.setup_icon('melee', _custom_data[action_name])
+
+        UIElement.find_current_ui(
+            'CardInspector').actions_values.append(_action)
+
+        return action_image.get('No Action')
 
     else:
         return action_image.get(action_name)

@@ -165,7 +165,7 @@ class CustomSettingAreaBox(UIElement):
         )
 
         self.add_child(UIElement.get_ui_elem('ActionIcon')(
-            self.job, True).setup_icon('melee', _action_data))
+            0, 0, self.job, True).setup_icon('melee', _action_data))
 
         self.add_child(UIElement.get_ui_elem('TextField')(
             156,

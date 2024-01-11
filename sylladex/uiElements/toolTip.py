@@ -1,6 +1,7 @@
 import pygame as pg
 
 from uiElement import UIElement, Apperance
+import settings
 
 
 class ToolTip(UIElement):
@@ -11,11 +12,16 @@ class ToolTip(UIElement):
             "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
         _width = self.font.render(self.text, True, (0, 0, 0)).get_width() + 12
 
+        if pos[0] + 12 + _width >= settings.SCREEN_WIDTH:
+            _x = pos[0] - _width - 12
+        else:
+            _x = pos[0] + 12
+
         super().__init__(
-            pos[0]+12,
-            pos[1]+15,
+            _x,
+            pos[1] + 15,
             'ToolTip',
-            999)
+            1010)
 
         self.apperance = Apperance(
             self,

@@ -21,6 +21,8 @@ class CardInspector(UIElement):
         self.code_data = code_data
         self.to_be_rect = settings.SCREEN_WIDTH-346
 
+        self.actions_values = []
+
         self.apperance = Apperance(
             self,
             [346, 447],
@@ -33,13 +35,13 @@ class CardInspector(UIElement):
                 [codeDatabase.find_grist_image_small(
                     self.code_data.grist), [116, 146]],
                 [codeDatabase.get_action_image(
-                    self.code_data.action_1), [51, 232]],
+                    self.code_data.action_1, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 232), [51, 232]],
                 [codeDatabase.get_action_image(
-                    self.code_data.action_2), [51, 256]],
+                    self.code_data.action_2, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 256), [51, 256]],
                 [codeDatabase.get_action_image(
-                    self.code_data.action_3), [183, 232]],
+                    self.code_data.action_3, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 232), [183, 232]],
                 [codeDatabase.get_action_image(
-                    self.code_data.action_4), [183, 256]]
+                    self.code_data.action_4, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 256), [183, 256]]
             ],
             texts=[
                 ['NAME', [36, 48], 'center', '#000000'],
@@ -100,6 +102,9 @@ class CardInspector(UIElement):
             'CardInspectorCheck')(159, 232, 'Action3', self.action_desc))
         self.add_child(UIElement.get_ui_elem(
             'CardInspectorCheck')(159, 257, 'Action4', self.action_desc))
+
+        for _action in self.actions_values:
+            self.add_child(_action)
 
         _images = self.apperance.kwargs['images']
         for _index, _eff in enumerate(codeDatabase.grist_data.get(self.code_data.grist).get('Effective')):
