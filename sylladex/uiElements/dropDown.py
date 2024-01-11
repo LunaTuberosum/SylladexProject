@@ -35,8 +35,10 @@ class DropDown(UIElement):
                 self,
                 self.size,
                 [self.size, self.base_color, [0, 0]],
-                texts=[[self.current_option, [self.size[0] / 2,
-                                              self.size[1] / 2], 'center', '#000000']]
+                texts=[
+                    [self.current_option, [self.size[0] / 2,
+                                           self.size[1] / 2], 'center', '#000000']
+                ]
             )
         elif self.show_type == 'Image':
             self.apperance = Apperance(

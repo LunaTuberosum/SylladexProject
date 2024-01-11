@@ -11,7 +11,7 @@
     },
     "ACTION1": {
         "AS": {
-            "NAME": "SASSINATE",
+            "NAME": "",
             "COST": "/",
             "DAMAGE": "/",
             "DESCRIPTION": "/"

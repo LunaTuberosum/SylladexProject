@@ -136,10 +136,15 @@ def main(screen, clock):
                         if _clicked_c:
                             _clicked_c.on_click()
 
-                # elif event.button == 2:
-                #     for _card in BaseCard.get_cards():
-                #         if _card.rect.collidepoint(event.pos):
-                #             _card.on_middleClick()
+                elif event.button == 2:
+                    _clicked_card = []
+                    for _card in BaseCard.get_cards():
+                        if _card.rect.collidepoint(event.pos):
+                            _clicked_card.append(_card)
+
+                    _clicked_c = BaseCard.find_highest_card(_clicked_card)
+                    if _clicked_c:
+                        _clicked_c.on_middle_click()
 
                 elif event.button == 3:
                     for _elem in UIElement.get_group("ui"):

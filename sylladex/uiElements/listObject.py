@@ -81,11 +81,9 @@ class ListObject(UIElement):
         self.redraw_card()
 
     def update(self):
-        #     if self.prev_tick > 0:
-        #         if pg.time.get_ticks() - self.prev_tick >= 500:
-        #             if self.capta_card.shaking == False:
-        #                 self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png').convert_alpha()
-        #                 self.capta_card.kind_image()
+        if self.prev_tick > 0:
+            if pg.time.get_ticks() - self.prev_tick >= 500:
+                self.capta_card.highlight = True
 
         if self.rect.y >= 196 and self.rect.y <= 757:
             self.interactable = True
@@ -201,9 +199,9 @@ class ListObject(UIElement):
         )
 
     def hover(self):
-        # if self.capta_card:
-        #     if self.prev_tick == 0:
-        #         self.prev_tick = pg.time.get_ticks()
+        if self.capta_card:
+            if self.prev_tick == 0:
+                self.prev_tick = pg.time.get_ticks()
 
         if self.writing == False:
             self.hovering = True
@@ -211,13 +209,11 @@ class ListObject(UIElement):
 
     def no_hover(self):
         if self.writing == False:
+            if self.hovering == False and self.capta_card:
+                self.capta_card.highlight = False
+                self.prev_tick = 0
             self.hovering = False
             self.redraw_card()
-
-        # if self.capta_card:
-        #     self.prev_tick = 0
-        #     self.capta_card.image = pg.image.load(f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png').convert_alpha()
-        #     self.capta_card.kind_image()
 
     def on_click(self):
         if UIElement.get_ui_elem('RemoveCardButton').get_eject() and self.interactable:

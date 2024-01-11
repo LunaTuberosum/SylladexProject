@@ -12,7 +12,7 @@
             "action_2": "ARISE",
             "action_3": "ARRIVE",
             "action_4": "ARF",
-            "cardID": 0
+            "cardID": 1
         },
         "Empty": false
     },
@@ -29,7 +29,7 @@
             "action_2": "ACQUIRE",
             "action_3": "ACCEDE",
             "action_4": "ACCESSORIZE",
-            "cardID": 0
+            "cardID": 2
         },
         "Empty": false
     },
@@ -39,14 +39,14 @@
             "code": "cccccccc",
             "tier": "3",
             "kind": "Brushkind",
-            "grist": "URANIUM",
+            "grist": "DIAMOND",
             "trait_1": "HOT",
             "trait_2": "EXQUISITE",
             "action_1": "ACKNOWLEDGE",
             "action_2": "ACCLAIM",
             "action_3": "ACCUMULATE",
             "action_4": "ACQUIRE",
-            "cardID": 0
+            "cardID": 27
         },
         "Empty": false
     },
@@ -63,7 +63,7 @@
             "action_2": "ASSESS",
             "action_3": "ASSAULT",
             "action_4": "ASTRICT",
-            "cardID": 0
+            "cardID": 4
         },
         "Empty": false
     },
@@ -80,7 +80,7 @@
             "action_2": "ASSIMILATE",
             "action_3": "ASTRICT",
             "action_4": "ASSIMILATE",
-            "cardID": 0
+            "cardID": 5
         },
         "Empty": false
     },
@@ -97,7 +97,7 @@
             "action_2": "ASPHIXIATE",
             "action_3": "ASSEMBLE",
             "action_4": "ASSURE",
-            "cardID": 0
+            "cardID": 6
         },
         "Empty": false
     },
@@ -107,14 +107,14 @@
             "code": "gggggggg",
             "tier": "7",
             "kind": "Shovelkind",
-            "grist": "MARBLE",
+            "grist": "ZILLIUM",
             "trait_1": "SHARP",
             "trait_2": "TRICKSTER",
             "action_1": "ASSIGN",
             "action_2": "ASTOUND",
             "action_3": "ASTONISH",
             "action_4": "ASSURE",
-            "cardID": 0
+            "cardID": 27
         },
         "Empty": false
     },
@@ -131,7 +131,7 @@
             "action_2": "ASSIST",
             "action_3": "ASSERT",
             "action_4": "ASTONISH",
-            "cardID": 0
+            "cardID": 8
         },
         "Empty": false
     },
@@ -148,7 +148,7 @@
             "action_2": "ASTRICT",
             "action_3": "ASTRICT",
             "action_4": "ASSEMBLE",
-            "cardID": 0
+            "cardID": 9
         },
         "Empty": false
     },
@@ -165,7 +165,7 @@
             "action_2": "ARCHIVE",
             "action_3": "AGGRAVATE",
             "action_4": "ARCHIVE",
-            "cardID": 0
+            "cardID": 10
         },
         "Empty": false
     },
@@ -182,7 +182,7 @@
             "action_2": "ASSAULT",
             "action_3": "AGGRESS",
             "action_4": "ASSIMILATE",
-            "cardID": 10
+            "cardID": 11
         },
         "Empty": false
     },
@@ -199,7 +199,7 @@
             "action_2": "ARDOR",
             "action_3": "ARF",
             "action_4": "ARMAMENTIFY",
-            "cardID": 0
+            "cardID": 12
         },
         "Empty": false
     },
@@ -216,7 +216,7 @@
             "action_2": "ARROGATE",
             "action_3": "ARCHIVE",
             "action_4": "ARDOR",
-            "cardID": 0
+            "cardID": 13
         },
         "Empty": false
     },
@@ -233,7 +233,7 @@
             "action_2": "AGGRAVATE",
             "action_3": "ASTOUND",
             "action_4": "ASSIGN",
-            "cardID": 0
+            "cardID": 14
         },
         "Empty": false
     },
@@ -250,7 +250,7 @@
             "action_2": "ASPHIXIATE",
             "action_3": "ASSAULT",
             "action_4": "ASSASSINATE",
-            "cardID": 0
+            "cardID": 15
         },
         "Empty": false
     },
@@ -267,7 +267,7 @@
             "action_2": "ASSIMILATE",
             "action_3": "ASSEVERATE",
             "action_4": "ASSERT",
-            "cardID": 0
+            "cardID": 16
         },
         "Empty": false
     },
@@ -284,7 +284,7 @@
             "action_2": "AGGRESS",
             "action_3": "AGGREGATE",
             "action_4": "ACERBATE",
-            "cardID": 0
+            "cardID": 17
         },
         "Empty": false
     },
@@ -301,7 +301,7 @@
             "action_2": "AGGREGATE",
             "action_3": "ACKNOWLEDGE",
             "action_4": "ACCELERATE",
-            "cardID": 0
+            "cardID": 18
         },
         "Empty": false
     },
@@ -318,7 +318,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 19
         },
         "Empty": false
     },
@@ -335,7 +335,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 20
         },
         "Empty": false
     },
@@ -352,7 +352,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 21
         },
         "Empty": false
     },
@@ -362,14 +362,14 @@
             "code": "vvvvvvvv",
             "tier": "6",
             "kind": "Glasseskind",
-            "grist": "COBALT",
+            "grist": "ZILLIUM",
             "trait_1": "SHARP",
             "trait_2": "TRICKSTER",
-            "action_1": "No Action",
-            "action_2": "No Action",
-            "action_3": "No Action",
-            "action_4": "No Action",
-            "cardID": 0
+            "action_1": "ACCELERATE",
+            "action_2": "ACKNOWLEDGE",
+            "action_3": "ACTUALIZE",
+            "action_4": "ACUPRESSURE",
+            "cardID": 27
         },
         "Empty": false
     },
@@ -386,7 +386,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 23
         },
         "Empty": false
     },
@@ -403,7 +403,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 24
         },
         "Empty": false
     },
@@ -420,7 +420,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 25
         },
         "Empty": false
     },
@@ -437,7 +437,7 @@
             "action_2": "No Action",
             "action_3": "No Action",
             "action_4": "No Action",
-            "cardID": 0
+            "cardID": 26
         },
         "Empty": false
     },
@@ -450,10 +450,10 @@
             "grist": "ARTIFACT",
             "trait_1": "TRAIT1",
             "trait_2": "TRAIT3",
-            "action_1": "ASSASSINATE",
-            "action_2": "ASSASSINATE",
-            "action_3": "ASSASSINATE",
-            "action_4": "ASSASSINATE",
+            "action_1": "No Action",
+            "action_2": "No Action",
+            "action_3": "No Action",
+            "action_4": "No Action",
             "cardID": 0
         },
         "Empty": false

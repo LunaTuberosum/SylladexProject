@@ -33,7 +33,7 @@ class BaseCard(pg.sprite.Sprite):
             colorKey=True,
             images=[
                 [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png', [
-                    0, 0]],
+                    5, 6]],
             ]
         )
 
@@ -42,6 +42,7 @@ class BaseCard(pg.sprite.Sprite):
         self.prevAnimTick = 0
 
         self.shaking = False
+        self.highlight = False
         self.prev_pos = None
 
     def create_code_data(self, inputs: dict):
@@ -64,7 +65,7 @@ class BaseCard(pg.sprite.Sprite):
                 self.code_data.kind), [15, 25]]
         else:
             return [UIElement.CodeDatabase.find_kind_image(
-                self.code_data.kind), [5, 25]]
+                self.code_data.kind), [10, 31]]
 
     def hover(self):
         self.hovering = True
@@ -74,17 +75,13 @@ class BaseCard(pg.sprite.Sprite):
         self.hovering = False
         self.redraw_card()
 
-    # def on_middle_click(self):
-    #     for elem in UIElement.get_group('ui'):
-    #         if isinstance(elem, UIElement.get_uiElem('CardInspector')):
-    #             UIElement.remove_fromGroup(elem)
-    #             elem.kill()
-    #             for child in elem.children:
-    #                 UIElement.remove_fromGroup(child)
-    #                 child.kill()
-    #     UIElement.get_uiElem('CardInspectorCheck').checks = []
+    def on_middle_click(self):
+        _elem = UIElement.find_current_ui('CardInspector')
+        if _elem:
+            UIElement.remove_from_group(_elem)
+        UIElement.get_ui_elem('CardInspectorCheck').checks = []
 
-    #     UIElement.get_uiElem('CardInspector')(self.codeData)
+        UIElement.get_ui_elem('CardInspector')(self.code_data)
 
     def on_click(self):
         BaseCard.grabbed_card.add(self)
@@ -124,7 +121,15 @@ class BaseCard(pg.sprite.Sprite):
         CardOutline.destroy_outline()
 
     def redraw_card(self):
-        if self.selected:
+        if self.highlight:
+            self.apperance.change_images(
+                [
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png', [
+                        5, 6]],
+                    self.kind_image()
+                ])
+
+        elif self.selected:
             self.apperance.change_images(
                 [
                     [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png', [
@@ -136,7 +141,7 @@ class BaseCard(pg.sprite.Sprite):
             self.apperance.change_images(
                 [
                     [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png', [
-                        0, 0]],
+                        5, 6]],
                     self.kind_image()
                 ])
 
@@ -144,7 +149,7 @@ class BaseCard(pg.sprite.Sprite):
             self.apperance.change_images(
                 [
                     [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png', [
-                        0, 0]],
+                        5, 6]],
                     self.kind_image()
                 ])
 

@@ -2709,10 +2709,10 @@ action_data = {
     'ASSEMBLE': ['2', '/', 'Instant, Gain 1d4 stamina'],
     'ASSERT': ['4', '3', 'Favorable'],
     'ASSESS': ['2', '/', 'Actions are Favorable this turn'],
-    'ASSEVERATE': ['0', '/', 'Instant, an action_image targetting another character targets you instead'],
+    'ASSEVERATE': ['0', '/', 'Instant, an action targetting another character targets you instead'],
     'ASSIGN': ['1', '/', 'Actions made against target are Favorable until next turn.'],
     'ASSIMILATE': ['0', '/', 'Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
-    'ASSIST': ['1', '/', 'Instant, Reuse, give an action_image Favorable'],
+    'ASSIST': ['1', '/', 'Instant, Reuse, give an action Favorable'],
     'ASSURE': ['3', '2', 'Favorable, reuse'],
     'ASTONISH': ['2', '1', 'Instant'],
     'ASTOUND': ['3', '2', 'Instant'],
@@ -2731,7 +2731,7 @@ action_data = {
     'ARRAIGN': ['1', '1', 'Unfavorable, reuse'],
     'ARRANGE': ['3', '1', 'Favorable'],
     'ARREST': ['2', '/', 'Grapple'],
-    'ARRIVE': ['1', '1', 'Action must be first action_image used on your turn'],
+    'ARRIVE': ['1', '1', 'Action must be first action used on your turn'],
     'ARROGATE': ['2', '2', 'Unfavorable, reuse'],
     'ARSENALIZE': ['2', '/', 'All actions are favorable this turn'],
     'ARTICULATE': ['4', '2', 'Favorable'],
@@ -2741,14 +2741,14 @@ action_data = {
     'ACCEDE': ['2', '1', 'BD'],
     'ACCELERATE': ['2', '/', 'Until start of next turn, all actions cost 1 less stamina to use (cannot be lower than 1)'],
     'ACCESSORIZE': ['4', '/', 'Change armor'],
-    'ACCLAIM': ['0', '/', 'Instant, an action_image targetting another character targets you instead'],
-    'ACCLIMATE': ['3', '1', 'Instant, Cancel an action_image targetting you'],
+    'ACCLAIM': ['0', '/', 'Instant, an action targetting another character targets you instead'],
+    'ACCLIMATE': ['3', '1', 'Instant, Cancel an action targetting you'],
     'ACCOMPLISH': ['2', '/', 'All actions are favorable this turn'],
     'ACCOUNT': ['0', '/', 'Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
     'ACCUMULATE': ['2', '/', 'Next stamina roll is favorable'],
     'ACCUSE': ['3', '3', 'Unfavorable, Instant'],
     'ACERBATE': ['2', '2', 'Unfavorable, Instant'],
-    'ACKNOWLEDGE': ['2', '/', 'Instant, cancel an action_image'],
+    'ACKNOWLEDGE': ['2', '/', 'Instant, cancel an action'],
     'ACQUAINT': ['1', '/', 'Actions against target are favorable until next turn'],
     'ACQUIRE': ['2', '/', 'Gain 1d4 stamina'],
     'ACTUALIZE': ['1', '/', 'All actions deal BD this turn'],
@@ -2912,6 +2912,27 @@ grist_image = {
     'NONE': 'sylladex/uiElements/asset/GRISTS/NONE.png'
 }
 
+grist_image_small = {
+    'ALL': 'sylladex/uiElements/asset/GRISTS/SMALL/All.png',
+    'AMBER': 'sylladex/uiElements/asset/GRISTS/SMALL/Amber.png',
+    'AMETHYST': 'sylladex/uiElements/asset/GRISTS/SMALL/Amethyst.png',
+    'ARTIFACT': 'sylladex/uiElements/asset/GRISTS/SMALL/Artifact.png',
+    'BUILD': 'sylladex/uiElements/asset/GRISTS/SMALL/Build.png',
+    'CAULK': 'sylladex/uiElements/asset/GRISTS/SMALL/Caulk.png',
+    'CHALK': 'sylladex/uiElements/asset/GRISTS/SMALL/Chalk.png',
+    'COBALT': 'sylladex/uiElements/asset/GRISTS/SMALL/Cobalt.png',
+    'DIAMOND': 'sylladex/uiElements/asset/GRISTS/SMALL/Diamond.png',
+    'GARNET': 'sylladex/uiElements/asset/GRISTS/SMALL/Garnet.png',
+    'IRON': 'sylladex/uiElements/asset/GRISTS/SMALL/Iron.png',
+    'MARBLE': 'sylladex/uiElements/asset/GRISTS/SMALL/Marble.png',
+    'RUBY': 'sylladex/uiElements/asset/GRISTS/SMALL/Ruby.png',
+    'SHALE': 'sylladex/uiElements/asset/GRISTS/SMALL/Shale.png',
+    'TAR': 'sylladex/uiElements/asset/GRISTS/SMALL/Tar.png',
+    'URANIUM': 'sylladex/uiElements/asset/GRISTS/SMALL/Uranium.png',
+    'ZILLIUM': 'sylladex/uiElements/asset/GRISTS/SMALL/Zillium.png',
+    'NONE': 'sylladex/uiElements/asset/GRISTS/SMALL/NONE.png'
+}
+
 kind_image = {
     'Armorkind': 'sylladex/uiElements/asset/KINDS/ArmorKind.png',
     'Artifactkind': 'sylladex/uiElements/asset/KINDS/ArtifactKind.png',
@@ -3001,47 +3022,47 @@ kind_image_small = {
     'Customkind': 'sylladex/uiElements/asset/KINDS/SMALL/CustomKind.png',
     'Dartkind': 'sylladex/uiElements/asset/KINDS/SMALL/DartKind.png',
     'Dicekind': 'sylladex/uiElements/asset/KINDS/SMALL/DiceKind.png',
-    'Fankind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Fistkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Flshlghtkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Fncysntakind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Furniturekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Glasseskind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Hammerkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Hatkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Hckystckkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Knifekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Lancekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Moduskind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Nailkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Needlekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Paperkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Pencilkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Picturekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Pistolkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Plierkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Puppetkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Razorkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Riflekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Rockkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.PNG',
-    'Sawkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Scissorkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Scrwdrvrkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Scythekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Shoekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Shotgunkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Shovelkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Sicklekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Spearkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Staplerkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Thrwstarkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Tridentkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Umbrellakind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Utensilkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Vehiclekind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Wandkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Wrenchkind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
-    'Yoyokind': 'sylladex/uiElements/asset/KINDS/SMALL/Customkind.png',
+    'Fankind': 'sylladex/uiElements/asset/KINDS/SMALL/FanKind.png',
+    'Fistkind': 'sylladex/uiElements/asset/KINDS/SMALL/FistKind.png',
+    'Flshlghtkind': 'sylladex/uiElements/asset/KINDS/SMALL/FlshlghtKind.png',
+    'Fncysntakind': 'sylladex/uiElements/asset/KINDS/SMALL/FncysntaKind.png',
+    'Furniturekind': 'sylladex/uiElements/asset/KINDS/SMALL/FurnitureKind.png',
+    'Glasseskind': 'sylladex/uiElements/asset/KINDS/SMALL/GlassesKind.png',
+    'Hammerkind': 'sylladex/uiElements/asset/KINDS/SMALL/HammerKind.png',
+    'Hatkind': 'sylladex/uiElements/asset/KINDS/SMALL/HatKind.png',
+    'Hckystckkind': 'sylladex/uiElements/asset/KINDS/SMALL/HckystckKind.png',
+    'Knifekind': 'sylladex/uiElements/asset/KINDS/SMALL/KnifeKind.png',
+    'Lancekind': 'sylladex/uiElements/asset/KINDS/SMALL/LanceKind.png',
+    'Moduskind': 'sylladex/uiElements/asset/KINDS/SMALL/ModusKind.png',
+    'Nailkind': 'sylladex/uiElements/asset/KINDS/SMALL/NailKind.png',
+    'Needlekind': 'sylladex/uiElements/asset/KINDS/SMALL/NeedleKind.png',
+    'Paperkind': 'sylladex/uiElements/asset/KINDS/SMALL/PaperKind.png',
+    'Pencilkind': 'sylladex/uiElements/asset/KINDS/SMALL/PencilKind.png',
+    'Picturekind': 'sylladex/uiElements/asset/KINDS/SMALL/PictureKind.png',
+    'Pistolkind': 'sylladex/uiElements/asset/KINDS/SMALL/PistolKind.png',
+    'Plierkind': 'sylladex/uiElements/asset/KINDS/SMALL/PlierKind.png',
+    'Puppetkind': 'sylladex/uiElements/asset/KINDS/SMALL/PuppetKind.png',
+    'Razorkind': 'sylladex/uiElements/asset/KINDS/SMALL/RazorKind.png',
+    'Riflekind': 'sylladex/uiElements/asset/KINDS/SMALL/RifleKind.png',
+    'Rockkind': 'sylladex/uiElements/asset/KINDS/SMALL/RockKind.PNG',
+    'Sawkind': 'sylladex/uiElements/asset/KINDS/SMALL/SawKind.png',
+    'Scissorkind': 'sylladex/uiElements/asset/KINDS/SMALL/ScissorKind.png',
+    'Scrwdrvrkind': 'sylladex/uiElements/asset/KINDS/SMALL/ScrwdrvrKind.png',
+    'Scythekind': 'sylladex/uiElements/asset/KINDS/SMALL/ScytheKind.png',
+    'Shoekind': 'sylladex/uiElements/asset/KINDS/SMALL/ShoeKind.png',
+    'Shotgunkind': 'sylladex/uiElements/asset/KINDS/SMALL/ShotgunKind.png',
+    'Shovelkind': 'sylladex/uiElements/asset/KINDS/SMALL/ShovelKind.png',
+    'Sicklekind': 'sylladex/uiElements/asset/KINDS/SMALL/SickleKind.png',
+    'Spearkind': 'sylladex/uiElements/asset/KINDS/SMALL/SpearKind.png',
+    'Staplerkind': 'sylladex/uiElements/asset/KINDS/SMALL/StaplerKind.png',
+    'Thrwstarkind': 'sylladex/uiElements/asset/KINDS/SMALL/ThrwstarKind.png',
+    'Tridentkind': 'sylladex/uiElements/asset/KINDS/SMALL/TridentKind.png',
+    'Umbrellakind': 'sylladex/uiElements/asset/KINDS/SMALL/UmbrellaKind.png',
+    'Utensilkind': 'sylladex/uiElements/asset/KINDS/SMALL/UtensilKind.png',
+    'Vehiclekind': 'sylladex/uiElements/asset/KINDS/SMALL/VehicleKind.png',
+    'Wandkind': 'sylladex/uiElements/asset/KINDS/SMALL/WandKind.png',
+    'Wrenchkind': 'sylladex/uiElements/asset/KINDS/SMALL/WrenchKind.png',
+    'Yoyokind': 'sylladex/uiElements/asset/KINDS/SMALL/YoyoKind.png',
 }
 
 action_image = {
@@ -3119,8 +3140,13 @@ def read_code(name, code_num, tier, list_obj):
     _grist = get_code_value(_code_array[1], '2')
     _trait1 = get_code_value(_code_array[2], '3')
     _trait2 = get_code_value(_code_array[3], '4')
+    if _trait2 == 'TRICKSTER':
+        _grist = 'ZILLIUM'
 
-    _wType = get_weapon_type(_kind)
+    elif _trait2 == 'EXQUISITE':
+        _grist = 'DIAMOND'
+
+    _wType = get_weapon_type(_kind, _trait2)
     _action1 = get_action_name(_code_array[4], '5', _wType)
     _action2 = get_action_name(_code_array[5], '6', _wType)
     _action3 = get_action_name(_code_array[6], '7', _wType)
@@ -3130,14 +3156,22 @@ def read_code(name, code_num, tier, list_obj):
         name, code_num, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
 
 
-def get_action_info(action_name):
+def get_action_info(action_name: str, w_type: str):
     if action_data.get(action_name):
         return action_data.get(action_name)
     else:
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)
 
-        print(action_name)
+        if w_type == 'MELEE':
+            return [_custom_data[action_name]['AS']['COST'], _custom_data[action_name]['AS']['DMG'], _custom_data[action_name]['AS']['DESCRIPTION']]
+
+        elif w_type == 'RANGED':
+            return [_custom_data[action_name]['AR']['COST'], _custom_data[action_name]['AR']['DMG'], _custom_data[action_name]['AR']['DESCRIPTION']]
+
+        elif w_type == 'MAGIC':
+            return [_custom_data[action_name]['AC']['COST'], _custom_data[action_name]['AC']['DMG'], _custom_data[action_name]['AC']['DESCRIPTION']]
+
         raise Exception(f'Cant find data for action_name {action_name}')
 
 
@@ -3155,7 +3189,6 @@ def get_action_name(symbol, position, wType):
                 elif wType == 'MAGIC':
                     _type_ab = 'AC'
 
-                print(code_cypher.get(symbol).get(position).get(wType))
                 if code_cypher.get(symbol).get(position).get(wType) == 'ACTION1':
                     if _custom_data['ACTION1'][_type_ab]['NAME'] == '':
                         return 'No Action'
@@ -3186,24 +3219,20 @@ def get_action_name(symbol, position, wType):
         raise Exception(f'Couldn\'t find {symbol}')
 
 
-def get_action_image(action_name, base_object, pos):
+def get_action_image(action_name):
     with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
         _custom_data = json.load(_custom_data_file)
 
     if action_name == 'No Action':
-        _action_image = pg.image.load(
-            action_image.get('No Action')).convert_alpha()
-        base_object.image.blit(_action_image, pos)
+        return action_image.get('No Action')
 
-    elif action_name == _custom_data[2].split(',')[0]:
+    # elif action_name == _custom_data[2].split(',')[0]:
 
-        base_object.children.append(UIElement.get_ui_elem('ActionIcon')(
-            base_object.rect.x+pos[0], base_object.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', action_name))
+    #     base_object.children.append(UIElement.get_ui_elem('ActionIcon')(
+    #         base_object.rect.x+pos[0], base_object.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', action_name))
 
     else:
-        _action_image = pg.image.load(
-            action_image.get(action_name)).convert_alpha()
-        base_object.image.blit(_action_image, pos)
+        return action_image.get(action_name)
 
 
 def find_kind_image(kind_name):
@@ -3221,9 +3250,31 @@ def find_kind_image(kind_name):
             raise Exception(f'Could not find image for {kind_name}')
 
 
+def find_kind_image_small(kind_name):
+    if kind_image_small.get(kind_name):
+        return kind_image_small.get(kind_name)
+    else:
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
+
+        if kind_name == 'KIND1':
+            return kind_image_small.get(_custom_data['KIND1']['ICON'])
+        elif kind_name == 'KIND2':
+            return kind_image_small.get(_custom_data['KIND2']['ICON'])
+        else:
+            raise Exception(f'Could not find image for {kind_name}')
+
+
 def find_grist_image(grist_name):
     if grist_image.get(grist_name):
         return grist_image.get(grist_name)
+    else:
+        raise Exception(f'Could not find image for {grist_name}')
+
+
+def find_grist_image_small(grist_name):
+    if grist_image_small.get(grist_name):
+        return grist_image_small.get(grist_name)
     else:
         raise Exception(f'Could not find image for {grist_name}')
 
@@ -3239,70 +3290,80 @@ def get_code_value(symbol, position):
         raise Exception(f'Could not find {symbol}')
 
 
-def get_trat_1_data(trait, kind_name, tier):
-    _wType = get_weapon_type(kind_name)
-    _tier_level = str((tier//4)+1)
+def get_trait_1_data(code_data: object):
+    _wType = get_weapon_type(code_data.kind, code_data.trait_2)
+    _tier_level = str((int(code_data.tier)//4)+1)
     if _tier_level == '5':
         _tier_level = '4'
 
-    if trait_1_desc.get(trait):
+    if trait_1_desc.get(code_data.trait_1):
         if _wType != 'NA':
-            if trait_1_desc.get(trait).get('WEAPON'):
-                if trait_1_desc.get(trait).get('WEAPON').get(_tier_level):
-                    return trait_1_desc.get(trait).get('WEAPON').get(_tier_level)
+            if trait_1_desc.get(code_data.trait_1).get('WEAPON'):
+                if trait_1_desc.get(code_data.trait_1).get('WEAPON').get(_tier_level):
+                    return trait_1_desc.get(code_data.trait_1).get('WEAPON').get(_tier_level)
                 else:
                     raise Exception('Invalid tier level')
             else:
                 raise Exception(
-                    f'Could not find weapon kind_name for {kind_name}')
+                    f'Could not find weapon kind name for {code_data.kind}')
         else:
-            if trait_1_desc.get(trait).get('ITEM'):
-                if trait_1_desc.get(trait).get('ITEM').get(_tier_level):
-                    return trait_1_desc.get(trait).get('ITEM').get(_tier_level)
+            if trait_1_desc.get(code_data.trait_1).get('ITEM'):
+                if trait_1_desc.get(code_data.trait_1).get('ITEM').get(_tier_level):
+                    return trait_1_desc.get(code_data.trait_1).get('ITEM').get(_tier_level)
                 else:
                     raise Exception('Invalid tier level')
             else:
                 raise Exception(
-                    f'Could not find weapon kind_name for {kind_name}')
+                    f'Could not find weapon kind name for {code_data.kind}')
     else:
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)
-        if _custom_data[5].split(',')[0] == trait:
-            return _custom_data[5].split(',')[int(_tier_level)]
-        elif _custom_data[6].split(',')[0] == trait:
-            return _custom_data[6].split(',')[int(_tier_level)]
-
-        raise Exception(f'Could not find trait {trait}')
 
 
-def get_trat_2_data(trait, kind_name, tier):
-    _wType = get_weapon_type(kind_name)
-    _tier_level = str(tier//4)
-    if _tier_level == '0':
-        _tier_level = '1'
+        if _tier_level == '1':
+            return _custom_data[code_data.trait_1]['1-4']
+        elif _tier_level == '2':
+            return _custom_data[code_data.trait_1]['5-8']
+        elif _tier_level == '3':
+            return _custom_data[code_data.trait_1]['9-12']
+        elif _tier_level == '4':
+            return _custom_data[code_data.trait_1]['13-16']
 
-    if trait_2_desc.get(trait):
-        if trait_2_desc.get(trait).get(_tier_level):
-            if trait_2_desc.get(trait).get(_tier_level).get(_wType):
 
-                return trait_2_desc.get(trait).get(_tier_level).get(_wType)
+def get_trait_2_data(code_data: object):
+    _wType = get_weapon_type(code_data.kind, code_data.trait_2)
+    _tier_level = str((int(code_data.tier)//4)+1)
+    if _tier_level == '5':
+        _tier_level = '4'
+
+    if trait_2_desc.get(code_data.trait_2):
+        if trait_2_desc.get(code_data.trait_2).get(_tier_level):
+            if trait_2_desc.get(code_data.trait_2).get(_tier_level).get(_wType):
+
+                return trait_2_desc.get(code_data.trait_2).get(_tier_level).get(_wType)
             else:
                 raise Exception(
-                    f'Could not find weapon kind_name for {kind_name}')
+                    f'Could not find weapon kind_name for {code_data.kind}')
         else:
             raise Exception('Invalid tier level')
     else:
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)
-        if _custom_data[7].split(',')[0] == trait:
-            return _custom_data[7].split(',')[int(_tier_level)]
-        elif _custom_data[8].split(',')[0] == trait:
-            return _custom_data[8].split(',')[int(_tier_level)]
 
-        raise Exception(f'Could not find trait {trait}')
+        if _tier_level == '1':
+            return _custom_data[code_data.trait_2]['1-4']
+        elif _tier_level == '2':
+            return _custom_data[code_data.trait_2]['5-8']
+        elif _tier_level == '3':
+            return _custom_data[code_data.trait_2]['9-12']
+        elif _tier_level == '4':
+            return _custom_data[code_data.trait_2]['13-16']
 
 
-def get_weapon_type(weaponkind):
+def get_weapon_type(weaponkind, trait_2):
+    if (trait_2 == 'TRICKSTER'):
+        return 'MAGIC'
+
     if weaponkind_type.get(weaponkind):
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)

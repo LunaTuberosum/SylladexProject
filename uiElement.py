@@ -271,6 +271,8 @@ class UIElement(pg.sprite.Sprite):
             for _child in elem.children:
                 cls.remove_from_group(_child)
 
+        elem.kill()
+
     @classmethod
     def has_children(cls, elem: object) -> bool:
         if len(elem.children) > 0:

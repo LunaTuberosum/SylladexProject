@@ -1,32 +1,42 @@
-from uiElement import UIElement
+from uiElement import Apperance, UIElement
 
 import pygame as pg
 
+
 class CardInspectorCheck(UIElement):
-    __checks = []
 
-    def __init__(self, x, y, job):
-        super().__init__(x, y, (24, 24), f'CardInspectorCheck({job})', (255,255,255))
+    def __init__(self, x: int, y: int, job: str, exit_command: object):
+        super().__init__(
+            x,
+            y,
+            f'CardInspectorCheck({job})',
+            1000
+        )
 
-        self.create_appearance([[16, 16], '#434343', [4,4]], [[12, 12], '#ffffff', [6, 6]], colorKey = True)
-
-        CardInspectorCheck.__checks.append(self)
-        UIElement.get_group('layer').change_layer(self, 4)
+        self.apperance = Apperance(
+            self,
+            [24, 24],
+            [[16, 16], '#434343', [4, 4]],
+            [[12, 12], '#D8DDFF', [6, 6]],
+            colorKey=True
+        )
 
         self.job = job
+        self.exit_command = exit_command
 
         self.selected = False
 
     def on_click(self):
         if self.selected == False:
-            for _check in CardInspectorCheck.__checks:
-                if _check.selected == True:
-                    _check.selected = False
-                    _check.create_appearance([[16, 16], '#434343', [4,4]], [[12, 12], '#ffffff', [6, 6]], colorKey = True)
-            self.selected = True
-            self.create_appearance([[16, 16], '#434343', [4,4]], colorKey = True)
-        
-        else: 
-            self.selected = False
-            self.create_appearance([[16, 16], '#434343', [4,4]], [[12, 12], '#ffffff', [6, 6]], colorKey = True)
 
+            UIElement.find_current_ui('CardInspector').uncheck_all()
+
+            self.selected = True
+            self.apperance.size_color_pos = [
+                [[16, 16], '#434343', [4, 4]]
+            ]
+            self.apperance.reload_apperance()
+            self.exit_command(self)
+
+        else:
+            UIElement.find_current_ui('CardInspector').uncheck_all()
