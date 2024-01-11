@@ -1,59 +1,111 @@
+import json
 import pygame as pg
 import pickle
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class GristCache(UIBase):
-    def __init__(self, x):
-        super().__init__(x, 626, (719,452), 'GristCache', '#999999')
+class GristCache(UIElement):
+    def __init__(self):
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/fontstuck.ttf", 18)
+        super().__init__(
+            -392 if UIElement.find_current_ui('SideBar') else -719,
+            626,
+            'GristCache',
+            2
+        )
 
-        self.create_appearance([[713, 446], '#CCCCCC', [0, 6]], texts = [['GRIST CACHE', [525, 25], 'left', '#FFFFFF']])
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 36)
 
-        self.children = []
+        self.apperance = Apperance(
+            self,
+            (719, 452),
+            [[719, 452], '#999999', [0, 0]],
+            [[713, 446], '#CCCCCC', [0, 6]],
+            texts=[['GRIST CACHE', [525, 25], 'left', '#FFFFFF']]
+        )
 
-        self.children.append(UIBase.get_uiElem('GristCacheLimit')(x))
+        self.add_child(UIElement.get_ui_elem('GristCacheLimit')(212, 16))
 
-        for index, grist in enumerate(['Build', 'Shale', 'Ruby', 'Cobalt', 'Chalk', 'Marble', 'Iron', 'Amber', 'Caulk', 'Tar', 'Uranium', 'Amethyst', 'Garnet', 'Artifact', 'Zillium', 'Diamond']):
-            if index < 4: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*index), 692, grist))
-            elif index < 8: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-4)), 789, grist))
-            elif index < 12: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-8)), 885, grist))
-            elif index < 16: self.children.append(UIBase.get_uiElem('GristInfoBox')((self.rect.x+9)+(174*(index-12)), 982, grist))
+        for _index, grist in enumerate(
+            ['Build', 'Shale', 'Ruby', 'Cobalt',
+             'Chalk', 'Marble', 'Iron', 'Amber',
+             'Caulk', 'Tar', 'Uranium', 'Amethyst',
+             'Garnet', 'Artifact', 'Zillium', 'Diamond']):
 
-        self.load_list()
+            if _index < 4:
+                self.add_child(
+                    UIElement.get_ui_elem('GristInfoBox')(
+                        (9)+(174*_index),
+                        66,
+                        grist))
+            elif _index < 8:
+                self.add_child(
+                    UIElement.get_ui_elem('GristInfoBox')(
+                        (9)+(174*(_index-4)),
+                        163,
+                        grist))
+            elif _index < 12:
+                self.add_child(
+                    UIElement.get_ui_elem('GristInfoBox')(
+                        (9)+(174*(_index-8)),
+                        259,
+                        grist))
+            elif _index < 16:
+                self.add_child(
+                    UIElement.get_ui_elem('GristInfoBox')(
+                        (9)+(174*(_index-12)),
+                        356,
+                        grist))
+
+        self.load_cache()
+
+        if UIElement.check_for_ui('SideBar'):
+            self.to_be_rect = UIElement.find_current_ui('SideBar').rect.right
+        else:
+            self.to_be_rect = 0
+
+    def update(self):
+
+        if self.to_be_rect != self.rect.x:
+            UIElement.move_element(self, [UIElement.lerp(
+                self.rect.x, self.to_be_rect, 0.2), 626])
+            UIElement.find_current_ui(
+                'GristCacheButton').rect.x = self.rect.right
+
+        else:
+            if self.to_be_rect == -719 or self.to_be_rect == -392:
+                UIElement.remove_from_group(self)
 
     def save_cache(self):
-        tempData = []
-        UIBase.get_uiElem('ConsoleMessage')('Saved Cache')
+        with open('sylladex/uiElements/data/gristData.json', 'r') as _grist_data_file:
+            _grist_data = json.load(_grist_data_file)
 
-        for index, child in enumerate(self.children):
-            if index > 0:
-                tempData.append(child.children[0].text)
+        for _child in self.children:
+            if not isinstance(_child, UIElement.get_ui_elem('GristInfoBox')):
+                _grist_data['CacheLimit'] = _child.limit_num
+                continue
 
-        with open('sylladex/uiElements/data/uiCache.plk', 'wb') as saveCache:
-            pickle.dump(tempData, saveCache, -1)
+            _grist_data['Grist'][_child.grist] = _child.children[0].text
 
-    def load_list(self):
-        with open('sylladex/uiElements/data/uiCache.plk', 'rb') as saveCache:
-            tempData = pickle.load(saveCache)
+        _new_grist_data = json.dumps(_grist_data, indent=4)
 
-        
-        for index, data in enumerate(tempData):
-            self.children[index+1].children[0].text = data
-            self.children[index+1].children[0].draw()
-            self.children[index+1].children[0].no_hover()
-    
-    def repositionChildren(self):
+        with open('sylladex/uiElements/data/gristData.json', 'w') as _grist_data_file:
+            _grist_data_file.write(_new_grist_data)
 
-        for index, child in enumerate(self.children):
-            if index == 0: child.rect.x = self.rect.x+212
-            elif index < 5: child.rect.x = (self.rect.x+9) + (174*(index - 1))
-            elif index < 9: child.rect.x = (self.rect.x+9) + (174*(index - 5))
-            elif index < 13: child.rect.x = (self.rect.x+9) + (174*(index - 9))
-            elif index < 17: child.rect.x = (self.rect.x+9) + (174*(index - 13))
+        UIElement.get_ui_elem('ConsoleMessage')('Saved Cache')
 
-            if index > 0:
-                child.children[0].rect.x = child.rect.x+53
-                
+    def load_cache(self):
+
+        with open('sylladex/uiElements/data/gristData.json', 'r') as _grist_data_file:
+            _grist_data = json.load(_grist_data_file)
+
+        for _child in self.children:
+            if not isinstance(_child, UIElement.get_ui_elem('GristInfoBox')):
+                _child.change_cache_limit(_grist_data['CacheLimit'])
+                continue
+
+            _child.children[0].text = _grist_data['Grist'][_child.grist]
+
+            _child.children[0].reload_text()

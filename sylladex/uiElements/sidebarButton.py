@@ -1,126 +1,115 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class SidebarButton(UIBase):
+class SideBarButton(UIElement):
     def __init__(self):
-        super().__init__(0, 536, (70,70), 'SideBarButton', (0,0,0))
+        super().__init__(0, 536,  'SideBarButton', 1)
 
-        self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
+        self.apperance = Apperance(
+            self,
+            [70, 70],
+            [[64, 64], 'ModusBackground', [0, 6]],
+            [[64, 64], 'ModusAccent', [6, 0]],
+            colorKey=True,
+            images=[
+                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
+                    6, 0]]
+            ]
+        )
 
-        self.toolTipText = "Opens Side Bar"
+        self.tool_tip_text = "Opens Side Bar"
 
         self.hovering = False
-        self.inactive = False
 
     def hover(self):
-        if self.toolTipText == 'Opens Side Bar':
-            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER.png', [6, 0])
-        elif self.toolTipText == 'Closes Side Bar':
-            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_HOVER_REVERESED.png', [6, 0])
         self.hovering = True
+        self.reload_image()
 
     def no_hover(self):
-        if self.toolTipText == 'Opens Side Bar':
-            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0])
-        elif self.toolTipText == 'Closes Side Bar':
-            self.reload_image(f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0])
         self.hovering = False
+        self.reload_image()
 
-    def update(self):
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('CustomSettingMenu')):
-                self.inactive = True
-                return
-        self.inactive = False
+    def reload_image(self):
+        if self.hovering == False:
+            if self.tool_tip_text == 'Opens Side Bar':
+                self.apperance.change_images(
+                    [
+                        [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
+                            6, 0]]
+                    ])
+            elif self.tool_tip_text == 'Closes Side Bar':
+                self.apperance.change_images(
+                    [
+                        [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [
+                            6, 0]]
+                    ])
+        else:
+            if self.tool_tip_text == 'Opens Side Bar':
+                self.apperance.change_images(
+                    [
+                        [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_HOVER.png', [
+                            6, 0]]
+                    ])
+            elif self.tool_tip_text == 'Closes Side Bar':
+                self.apperance.change_images(
+                    [
+                        [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_HOVER_REVERESED.png', [
+                            6, 0]]
+                    ])
 
     def on_click(self):
-        if self.inactive == False:
-            if self.toolTipText == 'Opens Side Bar':
-                self.toolTipText = 'Closes Side Bar'
-                self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0]])
-                self.rect.x = 319
+        if self.tool_tip_text == 'Opens Side Bar':
+            self.tool_tip_text = 'Closes Side Bar'
+            self.apperance.change_images(
+                [
+                    [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [
+                        6, 0]]
+                ])
+            self.rect.x = 319
 
-                UIBase.get_uiElem('SideBar')()
+            UIElement.get_ui_elem('SideBar')()
 
-                UIBase.get_uiElem('AddCardButton')()
-                UIBase.get_uiElem('RemoveCardButton')()
-                UIBase.get_uiElem('EditCardButton')()
+            # UIElement.get_ui_elem('AddCardButton')()
+            # UIElement.get_ui_elem('RemoveCardButton')()
 
-                UIBase.get_uiElem('TextField')(242, 142, 53, 48, 3, "numOfCards", "The Number of Cards in you Sylladex", "Num")
-                UIBase.get_uiElem('CardList')(24, 196, (249, 649))
+            # UIElement.get_ui_elem('CardList')(24, 196, (249, 649))
 
-                UIBase.get_uiElem('ModusCard')(33, 910, (72, 96), "STACK_MODUS.png", "STACK")
-                UIBase.get_uiElem('ModusCard')(121, 910, (72, 96), "QUEUE_MODUS.png", "QUEUE")
-                UIBase.get_uiElem('ModusCard')(209, 910, (72, 96), "TREE_MODUS.png", "TREE")
+        #     for elem in UIElement.get_group("ui"):
+        #         if isinstance(elem, UIElement.get_ui_elem('GristCacheButton')):
+        #             elem.rect.x = 326
+        #             for elem2 in UIElement.get_group('ui'):
+        #                 if isinstance(elem2, UIElement.get_ui_elem('GristCache')):
+        #                     elem.rect.x = 1038
+        #                     elem2.rect.x = 326
+        #                     elem2.repositionChildren()
+        #         if isinstance(elem, UIElement.get_ui_elem('CardList')):
+        #             elem.start_list()
 
-                for elem in UIBase.get_group("ui"):
-                    if isinstance(elem, UIBase.get_uiElem('GristCacheButton')):
-                        elem.rect.x = 326
-                        for elem2 in UIBase.get_group('ui'):
-                            if isinstance(elem2, UIBase.get_uiElem('GristCache')):
-                                elem.rect.x = 1038
-                                elem2.rect.x = 326
-                                elem2.repositionChildren()
-                    if isinstance(elem, UIBase.get_uiElem('CardList')):
-                        elem.start_list()
+        #         if isinstance(elem, UIElement.get_ui_elem('ScrollBar')):
+        #             UIElement.uiElements.remove(elem)
+        #             UIElement.uiLayers.remove(elem)
+        #             elem.kill()
 
-                    if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                        UIBase.uiElements.remove(elem)
-                        UIBase.uiLayers.remove(elem)
-                        elem.kill()
+        #         if isinstance(elem, UIElement.get_ui_elem('CustomSettingButton')):
+        #             elem.rect.x = 326
 
-                    if isinstance(elem, UIBase.get_uiElem('CustomSettingButton')):
-                        elem.rect.x = 326
+        elif self.tool_tip_text == 'Closes Side Bar':
+            self.tool_tip_text = 'Opens Side Bar'
+            self.apperance.change_images(
+                [
+                    [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
+                        6, 0]]
+                ])
+            self.rect.x = 0
 
-            elif self.toolTipText == 'Closes Side Bar':
-                self.toolTipText = 'Opens Side Bar'
-                self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON.png', [6, 0]])
-                self.rect.x = 0
+            UIElement.find_current_ui('SideBar').to_be_rect = -326
+            UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
+            UIElement.get_ui_elem('EditCardButton').change_edit(False)
 
-                for elem in UIBase.get_group("ui"):
-
-                    if isinstance(elem, UIBase.get_uiElem('SideBar')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('GristCacheButton')):
-                        elem.rect.x = 0
-                        for elem2 in UIBase.get_group('ui'):
-                            if isinstance(elem2, UIBase.get_uiElem('GristCache')):
-                                elem.rect.x = 713
-                                elem2.rect.x = 0
-                                elem2.repositionChildren()
-                    elif isinstance(elem, UIBase.get_uiElem('CustomSettingButton')):
-                        elem.rect.x = 0
-                                
-                    elif isinstance(elem, UIBase.get_uiElem('TextField')):
-                        if elem.job == 'numOfCards' or elem.job == 'nameOverlay' or elem.job == 'codeOverlay' or elem.job == 'tierOverlay':
-                            UIBase.remove_fromGroup(elem)
-                            elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('CardList')):
-                        for card in elem.children:
-                            card.kill()
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('ModusCard')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('AddCardButton')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('RemoveCardButton')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('EditCardButton')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-                    elif isinstance(elem, UIBase.get_uiElem('FinishButton')):
-                        UIBase.remove_fromGroup(elem)
-                        elem.kill()
-
-    def reloadSelf(self):
-        self.create_appearance([[64, 64], UIBase.modusBackground, [0, 6]], [[64, 64], UIBase.modusAccent, [6, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/{UIBase.get_modus()}/SIDE_BAR_ICON_REVERESED.png', [6, 0]])
-
+            if UIElement.check_for_ui('GristCache'):
+                if UIElement.find_current_ui('GristCache').to_be_rect != -392:
+                    UIElement.find_current_ui('GristCache').to_be_rect = 0
+                else:
+                    UIElement.find_current_ui('GristCache').to_be_rect = -719

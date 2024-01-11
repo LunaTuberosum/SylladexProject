@@ -1,0 +1,80 @@
+{
+    "KIND1": {
+        "ICON": "Bunnykind",
+        "NAME": "SLEEPYKIND",
+        "TYPE": "MELEE"
+    },
+    "KIND2": {
+        "ICON": "Customkind",
+        "NAME": "CUSTOMKIND 2",
+        "TYPE": "NA"
+    },
+    "ACTION1": {
+        "AS": {
+            "NAME": "BRACADBRA",
+            "COST": "/",
+            "DAMAGE": "/",
+            "DESCRIPTION": "CAST SHITTY RAINBOW SPELLS "
+        },
+        "AR": {
+            "NAME": "RTIFYUI",
+            "COST": "/",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AC": {
+            "NAME": "KNOWLEDGE",
+            "COST": "/",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        }
+    },
+    "ACTION2": {
+        "AS": {
+            "NAME": "SIMI",
+            "COST": "/",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AR": {
+            "NAME": "",
+            "COST": "/",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        },
+        "AC": {
+            "NAME": "",
+            "COST": "/",
+            "DAMAGE": "/",
+            "DESCRIPTION": "/"
+        }
+    },
+    "TRAIT1": {
+        "NAME": "PUPPYBOY",
+        "1-4": "THE OBJECT IS CUTE. ",
+        "5-8": "THE OBJECT IS CUTE AND HAS PUPPY EARS. ",
+        "9-12": "THE OBJECT IS CUTE, HAS PUPPY EARS, AND BITES. ",
+        "13-16": "THE OBJECT, HAS PUPPY EARS, BITES, AND LOVES TO BARK. "
+    },
+    "TRAIT2": {
+        "NAME": "CUSTOM TRAIT 2",
+        "1-4": "/",
+        "5-8": "/",
+        "9-12": "/",
+        "13-16": "/"
+    },
+    "TRAIT3": {
+        "NAME": "BUNNYGIRL",
+        "1-4": "THE OBJECT IS CUTE.",
+        "5-8": "THE OBJECT IS CUTE AND HAS BUNNY EARS.",
+        "9-12": "THE OBJECT IS CUTE, HAS BUNNY EARS, AND EATS CARROTS.",
+        "13-16": "THE OBJECT IS CUTE, HAS BUNNY EARS, EATS CARROTS, AND LOVES TO JUMP AROUND."
+    },
+    "TRAIT4": {
+        "NAME": "CUSTOM TRAIT 4",
+        "1-4": "/",
+        "5-8": "/",
+        "9-12": "/",
+        "13-16": "/"
+    }
+}

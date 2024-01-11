@@ -1,32 +1,38 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class ConsoleMessage(UIBase):
-    consoleMessages = []
+class ConsoleMessage(UIElement):
+    __current_messages = []
 
     def __init__(self, text):
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-        self.txt_surface = self.font.render(text, False, 'white')
+        super().__init__(
+            pg.display.get_surface().get_width()-((len(text)*11.5)+25),
+            pg.display.get_surface().get_height()-40,
+            f'ConsoleMessage ({text})',
+            999
+        )
 
-        super().__init__(pg.display.get_surface().get_width()-(self.txt_surface.get_width()+30), pg.display.get_surface().get_height()-40, (self.txt_surface.get_width()+20,30), 'ConsoleMessage ()', (50,50,50))
+        self.font = pg.font.Font(
+            'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf', 24)
 
-        if len(ConsoleMessage.consoleMessages) > 0:
-            self.rect.y = ConsoleMessage.consoleMessages[-1].rect.y - 40
+        self.apperance = Apperance(
+            self,
+            [15+(len(text)*11.5), 30],
+            [[15+(len(text)*11.5), 30], (50, 50, 50), [0, 0]],
+            alpha=130,
+            texts=[[text, [10, 15], 'left', '#ffffff']]
+        )
 
-        ConsoleMessage.consoleMessages.append(self)
+        if len(ConsoleMessage.__current_messages) > 0:
+            self.rect.y = ConsoleMessage.__current_messages[-1].rect.y - 40
 
-        self.image.set_alpha(130)
-        self.image.blit(self.txt_surface, [10, 5])
-
-        self.prevTick = pg.time.get_ticks()
+        ConsoleMessage.__current_messages.append(self)
 
     def update(self):
-        if pg.time.get_ticks() - self.prevTick >= 1000:
-            self.kill()
-            ConsoleMessage.consoleMessages.remove(self)
-            #Fade to the right
-        
-
+        if self.current_tick >= 1000:
+            UIElement.remove_from_group(self)
+            ConsoleMessage.__current_messages.remove(self)
+            # Fade to the right

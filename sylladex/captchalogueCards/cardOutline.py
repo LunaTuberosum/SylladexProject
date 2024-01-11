@@ -1,31 +1,40 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import Apperance, UIElement
 
 
 class CardOutline(pg.sprite.Sprite):
-    currentOutline = pg.sprite.GroupSingle()
+    current_outline = pg.sprite.GroupSingle()
 
     def __init__(self, parent):
-        super().__init__(CardOutline.currentOutline, UIBase.get_group('layer'))
-        UIBase.get_group('layer').change_layer(self, -2)
+        super().__init__(CardOutline.current_outline, UIElement.get_group('layer'))
+        UIElement.get_group('layer').change_layer(self, -1)
 
-        self.focusedCard = parent
+        self.focused_card = parent
 
-        self.image = pg.image.load(f'sylladex/captchalogueCards/assets/MISC/CAPTA_OUTLINE.png').convert_alpha()
-        self.rect = self.image.get_rect(topleft=(self.focusedCard.rect.x - 15, self.focusedCard.rect.y - 15))
+        self.rect = [self.focused_card.rect.x -
+                     15, self.focused_card.rect.y - 15]
+
+        self.apperance = Apperance(
+            self,
+            [85, 116],
+            colorKey=True,
+            images=[
+                [f'sylladex/captchalogueCards/assets/MISC/CAPTA_OUTLINE.png', [
+                    0, 0]],
+            ]
+        )
 
     @classmethod
     def destroy_outline(cls):
-        for outline in CardOutline.currentOutline: 
-            UIBase.get_group('layer').remove(outline)
-            CardOutline.currentOutline.remove(outline)
+        for outline in CardOutline.current_outline:
+            UIElement.get_group('layer').remove(outline)
+            CardOutline.current_outline.remove(outline)
             outline.kill()
 
     @classmethod
     def move_outline(cls, card):
-        for outline in CardOutline.currentOutline:
-            outline.focusedCard = card
+        for outline in CardOutline.current_outline:
+            outline.focused_card = card
             outline.rect.x = card.rect.x - 15
             outline.rect.y = card.rect.y - 15
-

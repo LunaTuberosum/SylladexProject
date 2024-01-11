@@ -1,19 +1,32 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
+import settings
 
 
-class ToolTip(UIBase):
-    def __init__(self, pos, text):
+class ToolTip(UIElement):
+    def __init__(self, pos: list, text: str):
         self.text = text
 
-        self.font = pg.font.Font("sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
-        self.txt_surface = self.font.render(text, True, (0,0,0))
+        self.font = pg.font.Font(
+            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
+        _width = self.font.render(self.text, True, (0, 0, 0)).get_width() + 12
 
-        width = self.txt_surface.get_width() + 6
-        height = self.txt_surface.get_height() + 6
+        if pos[0] + 12 + _width >= settings.SCREEN_WIDTH:
+            _x = pos[0] - _width - 12
+        else:
+            _x = pos[0] + 12
 
-        super().__init__(pos[0]+12, pos[1]+15, (width, height), 'ToolTip', (210,210,210))
+        super().__init__(
+            _x,
+            pos[1] + 15,
+            'ToolTip',
+            1010)
 
-        self.image.blit(self.txt_surface, [3, 3])
-    
+        self.apperance = Apperance(
+            self,
+            [_width, 30],
+            [[_width, 30], '#D2D2D2', [0, 0]],
+            texts=[[self.text, [6, 15],
+                    'left', '#000000']]
+        )

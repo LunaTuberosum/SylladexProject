@@ -1,65 +1,82 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class GristCacheButton(UIBase):
+class GristCacheButton(UIElement):
     def __init__(self):
-        super().__init__(0, 928, (70,70), 'GristCacheButton', (0,0,0))
 
-        self.create_appearance([[64, 64], '#999999', [0, 6]], [[64, 64], '#D9D9D9', [6, 0]], colorKey = True, image = ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]])
+        super().__init__(
+            0,
+            928,
+            'GristCacheButton',
+            1
+        )
 
-        self.toolTipText = "Opens Grist Cache" 
+        self.apperance = Apperance(
+            self,
+            (70, 70),
+            [[64, 64], '#999999', [0, 6]],
+            [[64, 64], '#D9D9D9', [6, 0]],
+            colorKey=True,
+            images=[
+                ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+            ]
+        )
+
+        self.tool_tip_text = "Opens Grist Cache"
 
         self.hovering = False
 
     def hover(self):
-        if self.toolTipText == 'Closes Grist Cache':
-            self.reload_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
+        if self.tool_tip_text == 'Closes Grist Cache':
+            self.apperance.change_images(
+                [
+                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                ])
         else:
-            self.reload_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
+            self.apperance.change_images(
+                [
+                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
+                ])
         self.hovering = True
 
     def no_hover(self):
-        if self.toolTipText == 'Closes Grist Cache':
-            self.reload_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
+        if self.tool_tip_text == 'Closes Grist Cache':
+            self.apperance.change_images(
+                [
+                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
+                ])
         else:
-            self.reload_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
+            self.apperance.change_images(
+                [
+                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                ])
         self.hovering = False
-        
+
     def on_click(self):
-        if self.toolTipText == 'Opens Grist Cache':
-            self.toolTipText = 'Closes Grist Cache'
-            self.reload_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0])
-            
-            self.rect.x = 713
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('SideBar')):
-                    self.rect.x = 1038
-                    UIBase.get_uiElem('GristCache')(325)
-                    return
-                    
-            UIBase.get_uiElem('GristCache')(0)
+        if self.tool_tip_text == 'Opens Grist Cache':
 
-        elif self.toolTipText == 'Closes Grist Cache':
-            self.toolTipText = 'Opens Grist Cache'
-            self.reload_image('sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0])
+            self.tool_tip_text = 'Closes Grist Cache'
+            self.apperance.change_images(
+                [
+                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
+                ])
 
-            self.rect.x = 0
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem ,UIBase.get_uiElem('GristCache')):
-                    for child in elem.children:
-                        if hasattr(child, 'children'):
-                            for child2 in child.children:
-                                UIBase.remove_fromGroup(child2)
-                                child2.kill()
-                        UIBase.remove_fromGroup(child)
-                        child.kill()
-                    UIBase.remove_fromGroup(elem)
-                    elem.kill()
+            if UIElement.check_for_ui('SideBar'):
+                UIElement.get_ui_elem('GristCache')()
+            else:
+                UIElement.get_ui_elem('GristCache')()
 
-                if isinstance(elem, UIBase.get_uiElem('SideBar')):
-                    self.rect.x = 326
+        elif self.tool_tip_text == 'Closes Grist Cache':
 
-             
-            
+            self.tool_tip_text = 'Opens Grist Cache'
+            self.apperance.change_images(
+                [
+                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                ])
+
+            if UIElement.check_for_ui('SideBar'):
+                UIElement.find_current_ui('GristCache').to_be_rect = -392
+            else:
+                UIElement.find_current_ui('GristCache').to_be_rect = -719

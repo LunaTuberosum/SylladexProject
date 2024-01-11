@@ -1,41 +1,77 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class ModusCard(UIBase):
-    def __init__(self, x, y, size, image, modus):
+class ModusCard(UIElement):
+    def __init__(self, x, modus):
 
         self.modus = modus
-        self.toolTipText = f'Changes the modus to {self.modus} MODUS'
+        self.tool_tip_text = f'Changes the modus to {self.modus} MODUS'
 
-        super().__init__(x, y, size, f'ModusCard ({self.modus})', (0,0,0))
+        super().__init__(
+            x,
+            910,
+            f'ModusCard ({self.modus})',
+            11
+        )
 
-        self.create_appearance([size, (0,0,0), [0, 0]], colorKey = True, image = [f'sylladex/uiElements/asset/MISC/{image}', [0,0]])
+        self.apperance = Apperance(
+            self,
+            [78, 102],
+            colorKey=True,
+            images=[
+                [f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS.png', [6, 6]]
+            ]
+        )
 
         self.hovering = False
-        
-        if UIBase.get_modus() == self.modus:
+
+        if UIElement.get_modus() == self.modus:
             self.current = True
-            self.image = pg.image.load(f"sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png").convert_alpha()
-            self.rect.y -= 3
-            self.rect.x -= 3
+            self.apperance.change_images(
+                [
+                    [f'sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png', [0, 0]]
+                ])
+            self.rect.y = 907
         else:
             self.current = False
 
+        self.to_be_rect = self.rect.y
+
+    def update(self):
+
+        if self.to_be_rect != self.rect.y:
+
+            UIElement.move_element(self, [self.rect.x, UIElement.lerp(
+                self.rect.y, self.to_be_rect, 0.2)])
+
     def on_click(self):
-        for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.get_uiElem('ModusCard')):
+        UIElement.set_modus(self.modus)
+        for elem in UIElement.get_group("ui"):
+            if isinstance(elem, UIElement.get_ui_elem('ModusCard')):
                 if elem == self:
-                    elem.image = pg.image.load(f"sylladex/uiElements/asset/MISC/{self.modus}_MODUS_ACTIVE.png").convert_alpha()
-                    UIBase.set_modus(self.modus)
+                    elem.apperance.change_images(
+                        [
+                            [f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS_ACTIVE.png', [0, 0]]
+                        ])
+                    elem.rect.y = 907
                 else:
-                    elem.image = pg.image.load(f"sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png").convert_alpha()
+                    elem.apperance.change_images(
+                        [
+                            [f'sylladex/uiElements/asset/MISC/{elem.modus}_MODUS.png', [6, 6]]
+                        ])
+                    elem.rect.y = 910
+
+            elem.apperance.reload_apperance()
+            if hasattr(elem, 'reload_image'):
+                elem.reload_image()
 
     def hover(self):
-        self.rect.y = 898
+        self.rect.y = 900
+        self.to_be_rect = 900
         self.hovering = True
 
     def no_hover(self):
-        self.rect.y = 910
+        self.to_be_rect = 910
         self.hovering = False

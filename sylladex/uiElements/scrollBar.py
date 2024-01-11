@@ -1,26 +1,44 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class ScrollBar(UIBase):
-    selected = False
+class ScrollBar(UIElement):
+    __selected = False
 
-    def __init__(self):
-        if len(UIBase.get_uiElem('CardList').children) == 0:
-            size = 0
-        else:
-            if len(UIBase.get_uiElem('CardList').children) > 9:
-                sections = 625 / len(UIBase.get_uiElem('CardList').children) 
-                size = sections * 8
-            else:
-                size = 0
+    def __init__(self, x, y):
 
-        super().__init__(273, 196, (23, size), 'ScrollBar', '#999999')
+        super().__init__(
+            x,
+            y,
+            'ScrollBar',
+            11
+        )
 
-        self.rectTemp = self.rect.y
+        self.apperance = Apperance(
+            self,
+            [23, 0],
+            [[23, 0], '#999999', [0, 0]]
+        )
+        self.update_size()
+
+        self.rect_temp = self.rect.y
 
         self.hovering = False
+
+    def update_size(self):
+        if len(UIElement.get_ui_elem('CardList').get_list()) == 0:
+            _size = 0
+        else:
+            if len(UIElement.get_ui_elem('CardList').get_list()) > 9:
+                _sections = 625 / \
+                    len(UIElement.get_ui_elem('CardList').get_list())
+                _size = _sections * 8
+            else:
+                _size = 0
+
+        self.apperance.change_size(
+            [23, _size], [[[23, _size], '#999999', [0, 0]]])
 
     def hover(self):
         self.image.fill('#D9D9D9')
@@ -31,91 +49,61 @@ class ScrollBar(UIBase):
         self.hovering = False
 
     def on_click(self):
-        self.selected = True 
+        ScrollBar.set_selected(True)
 
     def move_bar(self, pos):
-        checkNum = 625 / len(UIBase.get_uiElem('CardList').children)
-        self.rect.y = pos[1]
-        if self.rect.y < 196:
-            self.rect.y = 196
-            for cardItem in UIBase.get_uiElem('CardList').children:
-                cardItem.rect.y = 196 + (70 * UIBase.get_uiElem('CardList').children.index(cardItem))
-                if cardItem.children:
-                    cardItem.place_children()
+        _check_num = 625 / len(UIElement.get_ui_elem('CardList').get_list())
+        self.rect.move_ip([0, pos])
 
-        elif self.rect.y + self.rect.h > 821:
+        _move_amount = [0, 0]
+
+        if self.rect.y <= 196:
+            self.rect.y = 196
+            _move_amount = [0, 196]
+
+        elif self.rect.y + self.rect.h >= 821:
             self.rect.y = 821 - self.rect.h
-            for cardItem in UIBase.get_uiElem('CardList').children:
-                cardItem.rect.y = 196 - (70 * ((len(UIBase.get_uiElem('CardList').children)-9) - UIBase.get_uiElem('CardList').children.index(cardItem)))
-                if cardItem.children:
-                    cardItem.place_children()
+            _move_amount = [0, 196]
 
         else:
-            tempNum = checkNum
-            allChecks = []
-            for newCheck in range(0, len(UIBase.get_uiElem('CardList').children)-9):
-                allChecks.append(tempNum + 196)
-                tempNum += checkNum
+            _num = _check_num
+            _all_checks = []
+            for _new_check in range(0, len(UIElement.get_ui_elem('CardList').get_list())-9):
+                _all_checks.append(_num + 196)
+                _num += _check_num
 
-            for check in allChecks:
-                if self.rect.y >= check:
+            for _check in _all_checks:
+                if self.rect.y >= _check:
+                    if UIElement.get_ui_elem('CardList').get_list()[0].rect.y > 196 - (70 * _all_checks.index(_check)):
+                        _move_amount = [0, -70]
 
-                    if UIBase.get_uiElem('CardList').children[0].rect.y > 196 - (70 * allChecks.index(check)):
-                        
-                        for cardItem in UIBase.get_uiElem('CardList').children:
-                            cardItem.rect.y -= 70
-                            if cardItem.children:
-                                cardItem.place_children()
-                
-                if self.rect.y <= check:
+                if self.rect.y <= _check:
+                    if UIElement.get_ui_elem('CardList').get_list()[0].rect.y < 196 - (70 * _all_checks.index(_check)):
+                        _move_amount = [0, 70]
 
-                    if UIBase.get_uiElem('CardList').children[0].rect.y < 196 - (70 * allChecks.index(check)):
-                        
-                        for cardItem in UIBase.get_uiElem('CardList').children:
-                            cardItem.rect.y += 70
-                            if cardItem.children:
-                                cardItem.place_children()
-                
+        for _list_obj in UIElement.get_ui_elem('CardList').get_list():
+            _indv_move_amount = [_list_obj.rect.x,  _list_obj.rect.y]
+
+            if self.rect.y == 196:
+                _indv_move_amount[1] = (70 * UIElement.get_ui_elem(
+                    'CardList').get_list().index(_list_obj))
+
+            elif self.rect.y == 821 - self.rect.h:
+                _indv_move_amount[1] = -(70 * ((len(UIElement.get_ui_elem('CardList').get_list(
+                ))-9) - UIElement.get_ui_elem('CardList').get_list().index(_list_obj)))
+
+            _indv_move_amount[0] += _move_amount[0]
+            _indv_move_amount[1] += _move_amount[1]
+
+            UIElement.move_element(_list_obj, _indv_move_amount)
 
     def move_bar_wheel(self, rel):
-        checkNum = 625 / len(UIBase.get_uiElem('CardList').children)
-        self.rect.y += rel * 10
-        if self.rect.y < 196:
-            self.rect.y = 196
-            for cardItem in UIBase.get_uiElem('CardList').children:
-                cardItem.rect.y = 196 + (70 * UIBase.get_uiElem('CardList').children.index(cardItem))
-                if cardItem.children:
-                    cardItem.place_children()
+        self.move_bar(rel * 10)
 
-        elif self.rect.y + self.rect.h > 821:
-            self.rect.y = 821 - self.rect.h
-            for cardItem in UIBase.get_uiElem('CardList').children:
-                cardItem.rect.y = 196 - (70 * ((len(UIBase.get_uiElem('CardList').children)-9) - UIBase.get_uiElem('CardList').children.index(cardItem)))
-                if cardItem.children:
-                    cardItem.place_children()
+    @classmethod
+    def get_selected(cls):
+        return cls.__selected
 
-        else:
-            tempNum = checkNum
-            allChecks = []
-            for newCheck in range(0, len(UIBase.get_uiElem('CardList').children)-9):
-                allChecks.append(tempNum + 196)
-                tempNum += checkNum
-
-            for check in allChecks:
-                if self.rect.y >= check:
-
-                    if UIBase.get_uiElem('CardList').children[0].rect.y > 196 - (70 * allChecks.index(check)):
-                        
-                        for cardItem in UIBase.get_uiElem('CardList').children:
-                            cardItem.rect.y -= 70
-                            if cardItem.children:
-                                cardItem.place_children()
-
-                if self.rect.y <= check:
-
-                    if UIBase.get_uiElem('CardList').children[0].rect.y < 196 - (70 * allChecks.index(check)):
-                        
-                        for cardItem in UIBase.get_uiElem('CardList').children:
-                            cardItem.rect.y += 70
-                            if cardItem.children:
-                                cardItem.place_children()
+    @classmethod
+    def set_selected(cls, new_selected):
+        cls.__selected = new_selected

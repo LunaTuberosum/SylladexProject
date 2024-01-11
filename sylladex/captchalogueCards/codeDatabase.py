@@ -1,1943 +1,1944 @@
+import json
 from random import *
 from math import *
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement
 
-codeCypher = {
+code_cypher = {
 
     # SPEACIAL CHARACTERS
     '!': {
-        '1': 'Customkind 1', 
-        '2': 'ARTIFACT', 
-        '3': 'CUSTOM TRAIT 1', 
-        '4': 'CUSTOM TRAIT 3', 
+        '1': 'KIND1',
+        '2': 'ARTIFACT',
+        '3': 'TRAIT1',
+        '4': 'TRAIT3',
         '5': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
             'NA': 'No Action'
-            }, 
-        '6': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
-            'NA': 'No Action'
-            },  
-        '7': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
-            'NA': 'No Action'
-            },  
-        '8': {
-            'MELEE': 'CUSTOM 1 MELEE',
-            'RANGED': 'CUSTOM 1 RANGED',
-            'MAGIC': 'CUSTOM 1 MAGIC',
-            'NA': 'No Action'
-            }, 
         },
+        '6': {
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
+            'NA': 'No Action'
+        },
+        '7': {
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
+            'NA': 'No Action'
+        },
+        '8': {
+            'MELEE': 'ACTION1',
+            'RANGED': 'ACTION1',
+            'MAGIC': 'ACTION1',
+            'NA': 'No Action'
+        },
+    },
     '?': {
-        '1': 'Customkind 2', 
-        '2': 'ARTIFACT', 
-        '3': 'CUSTOM TRAIT 2', 
-        '4': 'CUSTOM TRAIT 4', 
+        '1': 'KIND2',
+        '2': 'ARTIFACT',
+        '3': 'TRAIT2',
+        '4': 'TRAIT4',
         '5': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
             'NA': 'No Action'
-            }, 
-        '6': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
-            'NA': 'No Action'
-            },  
-        '7': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
-            'NA': 'No Action'
-            },  
-        '8': {
-            'MELEE': 'CUSTOM 2 MELEE',
-            'RANGED': 'CUSTOM 2 RANGED',
-            'MAGIC': 'CUSTOM 2 MAGIC',
-            'NA': 'No Action'
-            }, 
         },
+        '6': {
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
+            'NA': 'No Action'
+        },
+        '7': {
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
+            'NA': 'No Action'
+        },
+        '8': {
+            'MELEE': 'ACTION2',
+            'RANGED': 'ACTION2',
+            'MAGIC': 'ACTION2',
+            'NA': 'No Action'
+        },
+    },
 
     # NUMBERED CHARCTERS
     '0': {
-        '1': 'Artifactkind', 
-        '2': 'ARTIFACT', 
-        '3': 'NONE', 
-        '4': 'NONE', 
+        '1': 'Artifactkind',
+        '2': 'ARTIFACT',
+        '3': 'NONE',
+        '4': 'NONE',
         '5': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            }, 
         },
+    },
     '1': {
-        '1': 'Moduskind', 
-        '2': 'ARTIFACT', 
-        '3': 'NONE', 
-        '4': 'NONE', 
+        '1': 'Moduskind',
+        '2': 'ARTIFACT',
+        '3': 'NONE',
+        '4': 'NONE',
         '5': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'No Action',
             'RANGED': 'No Action',
             'MAGIC': 'No Action',
             'NA': 'No Action'
-            }, 
         },
+    },
     '2': {
-        '1': 'Hammerkind', 
-        '2': 'URANIUM', 
-        '3': 'NONE', 
-        '4': 'NONE', 
+        '1': 'Hammerkind',
+        '2': 'URANIUM',
+        '3': 'NONE',
+        '4': 'NONE',
         '5': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCMILATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
         },
+    },
     '3': {
-        '1': 'Needlekind', 
-        '2': 'AMETHYST', 
-        '3': 'FOOD', 
-        '4': 'LIGHT', 
+        '1': 'Needlekind',
+        '2': 'AMETHYST',
+        '3': 'FOOD',
+        '4': 'LIGHT',
         '5': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
         },
+    },
     '4': {
-        '1': 'Bladekind', 
-        '2': 'GARNET', 
-        '3': 'CANDY', 
-        '4': 'GRIMDARK', 
+        '1': 'Bladekind',
+        '2': 'GARNET',
+        '3': 'CANDY',
+        '4': 'GRIMDARK',
         '5': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARESENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            }, 
         },
+    },
     '5': {
-        '1': 'Riflekind', 
-        '2': 'IRON', 
-        '3': 'MEAT', 
-        '4': 'COMPUTER', 
+        '1': 'Riflekind',
+        '2': 'IRON',
+        '3': 'MEAT',
+        '4': 'COMPUTER',
         '5': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCMILATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     '6': {
-        '1': 'Utensilkind', 
-        '2': 'MARBLE', 
-        '3': 'BOUNCY', 
-        '4': 'SENTIENT', 
+        '1': 'Utensilkind',
+        '2': 'MARBLE',
+        '3': 'BOUNCY',
+        '4': 'SENTIENT',
         '5': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            }, 
         },
+    },
     '7': {
-        '1': 'Fistkind', 
-        '2': 'CHALK', 
-        '3': 'STICKY', 
-        '4': 'MAGICAL', 
+        '1': 'Fistkind',
+        '2': 'CHALK',
+        '3': 'STICKY',
+        '4': 'MAGICAL',
         '5': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
         },
+    },
     '8': {
-        '1': 'Puppetkind', 
-        '2': 'SHALE', 
-        '3': 'HOT', 
-        '4': 'EXQUISITE', 
+        '1': 'Puppetkind',
+        '2': 'SHALE',
+        '3': 'HOT',
+        '4': 'EXQUISITE',
         '5': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            }, 
         },
+    },
     '9': {
-        '1': 'Pistolkind', 
-        '2': 'COBALT', 
-        '3': 'COLD', 
-        '4': 'ROCKET', 
+        '1': 'Pistolkind',
+        '2': 'COBALT',
+        '3': 'COLD',
+        '4': 'ROCKET',
         '5': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
+        },
     },
 
     # UPPERCASE CHARACTERS
     'A': {
-        '1': 'Lancekind', 
-        '2': 'RUBY', 
-        '3': 'ELECTRIC', 
-        '4': 'SPIRITUAL', 
+        '1': 'Lancekind',
+        '2': 'RUBY',
+        '3': 'ELECTRIC',
+        '4': 'SPIRITUAL',
         '5': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSOTIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCMILATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            }, 
+        },
     },
     'B': {
-        '1': 'Thrwstarkind', 
-        '2': 'CAULK', 
-        '3': 'IRRADAITED', 
-        '4': 'SHITTY', 
+        '1': 'Thrwstarkind',
+        '2': 'CAULK',
+        '3': 'IRRADAITED',
+        '4': 'SHITTY',
         '5': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'C': {
-        '1': 'Sicklekind', 
-        '2': 'TAR', 
-        '3': 'SHARP', 
-        '4': 'TRICKSTER', 
+        '1': 'Sicklekind',
+        '2': 'TAR',
+        '3': 'SHARP',
+        '4': 'TRICKSTER',
         '5': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'D': {
-        '1': 'Clawkind', 
-        '2': 'AMBER', 
-        '3': 'ROCKET', 
-        '4': 'SCIENTIFIC', 
+        '1': 'Clawkind',
+        '2': 'AMBER',
+        '3': 'ROCKET',
+        '4': 'SCIENTIFIC',
         '5': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            }, 
+        },
     },
     'E': {
-        '1': 'Chainsawkind', 
-        '2': 'URANIUM', 
-        '3': 'COMPUTER', 
-        '4': 'STORAGE', 
+        '1': 'Chainsawkind',
+        '2': 'URANIUM',
+        '3': 'COMPUTER',
+        '4': 'STORAGE',
         '5': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'F': {
-        '1': 'Canekind', 
-        '2': 'AMETHYST', 
-        '3': 'LIGHT SOURCE', 
-        '4': 'HEAVY', 
+        '1': 'Canekind',
+        '2': 'AMETHYST',
+        '3': 'LIGHT SOURCE',
+        '4': 'HEAVY',
         '5': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            }, 
         },
+    },
     'G': {
-        '1': 'Dicekind', 
-        '2': 'GARNET', 
-        '3': 'STORAGE', 
-        '4': 'LIGHT SOURCE', 
+        '1': 'Dicekind',
+        '2': 'GARNET',
+        '3': 'STORAGE',
+        '4': 'LIGHT SOURCE',
         '5': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'H': {
-        '1': 'Bowkind', 
-        '2': 'IRON', 
-        '3': 'NONE', 
-        '4': 'NONE', 
+        '1': 'Bowkind',
+        '2': 'IRON',
+        '3': 'NONE',
+        '4': 'NONE',
         '5': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'I': {
-        '1': 'Clubkind', 
-        '2': 'MARBLE', 
-        '3': 'FOOD', 
-        '4': 'LIGHT', 
+        '1': 'Clubkind',
+        '2': 'MARBLE',
+        '3': 'FOOD',
+        '4': 'LIGHT',
         '5': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },
         },
+    },
     'J': {
-        '1': 'Wandkind', 
-        '2': 'CHALK', 
-        '3': 'CANDY', 
-        '4': 'GRIMDARK', 
+        '1': 'Wandkind',
+        '2': 'CHALK',
+        '3': 'CANDY',
+        '4': 'GRIMDARK',
         '5': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'K': {
-        '1': 'Spearkind', 
-        '2': 'SHALE', 
-        '3': 'MEAT', 
-        '4': 'COMPUTER', 
+        '1': 'Spearkind',
+        '2': 'SHALE',
+        '3': 'MEAT',
+        '4': 'COMPUTER',
         '5': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'L': {
-        '1': 'Bunnykind', 
-        '2': 'COBALT', 
-        '3': 'BOUNCY', 
-        '4': 'SENTIENT', 
+        '1': 'Bunnykind',
+        '2': 'COBALT',
+        '3': 'BOUNCY',
+        '4': 'SENTIENT',
         '5': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'M': {
-        '1': 'Paperkind', 
-        '2': 'RUBY', 
-        '3': 'STICKY', 
-        '4': 'MAGICAL', 
+        '1': 'Paperkind',
+        '2': 'RUBY',
+        '3': 'STICKY',
+        '4': 'MAGICAL',
         '5': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
         },
+    },
     'N': {
-        '1': 'Fncysntakind', 
-        '2': 'CAULK', 
-        '3': 'HOT', 
-        '4': 'EXQUISITE', 
+        '1': 'Fncysntakind',
+        '2': 'CAULK',
+        '3': 'HOT',
+        '4': 'EXQUISITE',
         '5': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'O': {
-        '1': 'Umbrellakind', 
-        '2': 'TAR', 
-        '3': 'COLD', 
-        '4': 'ROCKET', 
+        '1': 'Umbrellakind',
+        '2': 'TAR',
+        '3': 'COLD',
+        '4': 'ROCKET',
         '5': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'P': {
-        '1': 'Broomkind', 
-        '2': 'AMBER', 
-        '3': 'ELECTRIC', 
-        '4': 'SPIRTITUAL', 
+        '1': 'Broomkind',
+        '2': 'AMBER',
+        '3': 'ELECTRIC',
+        '4': 'SPIRTITUAL',
         '5': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'Q': {
-        '1': 'Flshlghtkind', 
-        '2': 'URANIUM', 
-        '3': 'SHARP', 
-        '4': 'TRICKSTER', 
+        '1': 'Flshlghtkind',
+        '2': 'URANIUM',
+        '3': 'SHARP',
+        '4': 'TRICKSTER',
         '5': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'R': {
-        '1': 'Sawkind', 
-        '2': 'AMETHYST', 
-        '3': 'ROCKET', 
-        '4': 'SCIENTIFIC', 
+        '1': 'Sawkind',
+        '2': 'AMETHYST',
+        '3': 'ROCKET',
+        '4': 'SCIENTIFIC',
         '5': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'S': {
-        '1': 'Wrenchkind', 
-        '2': 'GARNET', 
-        '3': 'COMPUTER', 
-        '4': 'STORAGE', 
+        '1': 'Wrenchkind',
+        '2': 'GARNET',
+        '3': 'COMPUTER',
+        '4': 'STORAGE',
         '5': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            }, 
         },
+    },
     'T': {
-        '1': 'Scrwdrvrkind', 
-        '2': 'IRON', 
-        '3': 'LIGHT SOURCE', 
-        '4': 'HEAVY', 
+        '1': 'Scrwdrvrkind',
+        '2': 'IRON',
+        '3': 'LIGHT SOURCE',
+        '4': 'HEAVY',
         '5': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'U': {
-        '1': 'Plierkind', 
-        '2': 'MARBLE', 
-        '3': 'STORAGE', 
-        '4': 'LIGHT SOURCE', 
+        '1': 'Plierkind',
+        '2': 'MARBLE',
+        '3': 'STORAGE',
+        '4': 'LIGHT SOURCE',
         '5': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            }, 
         },
+    },
     'V': {
-        '1': 'Nailkind', 
-        '2': 'CHALK', 
-        '3': 'STORAGE', 
-        '4': 'LIGHT SOURCE', 
+        '1': 'Nailkind',
+        '2': 'CHALK',
+        '3': 'STORAGE',
+        '4': 'LIGHT SOURCE',
         '5': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'W': {
-        '1': 'Crowbarkind', 
-        '2': 'SHALE', 
-        '3': 'NONE', 
-        '4': 'NONE', 
+        '1': 'Crowbarkind',
+        '2': 'SHALE',
+        '3': 'NONE',
+        '4': 'NONE',
         '5': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'X': {
-        '1': 'Bookkind', 
-        '2': 'COBALT', 
-        '3': 'FOOD', 
-        '4': 'LIGHT', 
+        '1': 'Bookkind',
+        '2': 'COBALT',
+        '3': 'FOOD',
+        '4': 'LIGHT',
         '5': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            }, 
         },
+    },
     'Y': {
-        '1': 'Yoyokind', 
-        '2': 'RUBY', 
-        '3': 'CANDY', 
-        '4': 'GRIMDARK', 
+        '1': 'Yoyokind',
+        '2': 'RUBY',
+        '3': 'CANDY',
+        '4': 'GRIMDARK',
         '5': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'Z': {
-        '1': 'Staplerkind', 
-        '2': 'CAULK', 
-        '3': 'MEAT', 
-        '4': 'COMPUTER', 
+        '1': 'Staplerkind',
+        '2': 'CAULK',
+        '3': 'MEAT',
+        '4': 'COMPUTER',
         '5': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            }, 
         },
+    },
 
     # LOWERCASE CHARACTERS
     'a': {
-        '1': 'Shotgunkind', 
-        '2': 'TAR', 
-        '3': 'BOUNCY', 
-        '4': 'SENTIENT', 
+        '1': 'Shotgunkind',
+        '2': 'TAR',
+        '3': 'BOUNCY',
+        '4': 'SENTIENT',
         '5': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'b': {
-        '1': 'Pencilkind', 
-        '2': 'AMBER', 
-        '3': 'HOT', 
-        '4': 'MAGICAL', 
+        '1': 'Pencilkind',
+        '2': 'AMBER',
+        '3': 'HOT',
+        '4': 'MAGICAL',
         '5': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'c': {
-        '1': 'Brushkind', 
-        '2': 'URANIUM', 
-        '3': 'HOT', 
-        '4': 'EXQUISITE', 
+        '1': 'Brushkind',
+        '2': 'URANIUM',
+        '3': 'HOT',
+        '4': 'EXQUISITE',
         '5': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'd': {
-        '1': 'Scythekind', 
-        '2': 'AMETHYST', 
-        '3': 'COLD', 
-        '4': 'ROCKET', 
+        '1': 'Scythekind',
+        '2': 'AMETHYST',
+        '3': 'COLD',
+        '4': 'ROCKET',
         '5': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'e': {
-        '1': 'Scissorkind', 
-        '2': 'GARNET', 
-        '3': 'ELECTRIC', 
-        '4': 'SPIRITUAL', 
+        '1': 'Scissorkind',
+        '2': 'GARNET',
+        '3': 'ELECTRIC',
+        '4': 'SPIRITUAL',
         '5': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            }, 
+        },
     },
     'f': {
-        '1': 'Knifekind', 
-        '2': 'IRON', 
-        '3': 'IRRADAITED', 
-        '4': 'SHITTY', 
+        '1': 'Knifekind',
+        '2': 'IRON',
+        '3': 'IRRADAITED',
+        '4': 'SHITTY',
         '5': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'g': {
-        '1': 'Shovelkind', 
-        '2': 'MARBLE', 
-        '3': 'SHARP', 
-        '4': 'TRICKSTER', 
+        '1': 'Shovelkind',
+        '2': 'MARBLE',
+        '3': 'SHARP',
+        '4': 'TRICKSTER',
         '5': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'h': {
-        '1': 'Cordkind', 
-        '2': 'CHALK', 
-        '3': 'ROCKET', 
-        '4': 'SCIENTIFIC', 
+        '1': 'Cordkind',
+        '2': 'CHALK',
+        '3': 'ROCKET',
+        '4': 'SCIENTIFIC',
         '5': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'i': {
-        '1': 'Axekind', 
-        '2': 'SHALE', 
-        '3': 'COMPUTER', 
-        '4': 'STORAGE', 
+        '1': 'Axekind',
+        '2': 'SHALE',
+        '3': 'COMPUTER',
+        '4': 'STORAGE',
         '5': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
         },
+    },
     'j': {
-        '1': 'Dartkind', 
-        '2': 'COBALT', 
-        '3': 'LIGHT SOURCE', 
-        '4': 'HEAVY', 
+        '1': 'Dartkind',
+        '2': 'COBALT',
+        '3': 'LIGHT SOURCE',
+        '4': 'HEAVY',
         '5': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'k': {
-        '1': 'Chainkind', 
-        '2': 'RUBY', 
-        '3': 'STORAGE', 
-        '4': 'LIGHT SOURCE', 
+        '1': 'Chainkind',
+        '2': 'RUBY',
+        '3': 'STORAGE',
+        '4': 'LIGHT SOURCE',
         '5': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            }, 
         },
+    },
     'l': {
-        '1': 'Ballkind', 
-        '2': 'CAULK', 
-        '3': 'NONE', 
-        '4': 'NONE', 
+        '1': 'Ballkind',
+        '2': 'CAULK',
+        '3': 'NONE',
+        '4': 'NONE',
         '5': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'm': {
-        '1': 'Rockkind', 
-        '2': 'TAR', 
-        '3': 'FOOD', 
-        '4': 'LIGHT', 
+        '1': 'Rockkind',
+        '2': 'TAR',
+        '3': 'FOOD',
+        '4': 'LIGHT',
         '5': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASS',
             'RANGED': 'ARCHIVE',
             'MAGIC': 'ACCESSORIZE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            }, 
         },
+    },
     'n': {
-        '1': 'Hckystckkind', 
-        '2': 'AMBER', 
-        '3': 'CANDY', 
-        '4': 'GRIMDARK', 
+        '1': 'Hckystckkind',
+        '2': 'AMBER',
+        '3': 'CANDY',
+        '4': 'GRIMDARK',
         '5': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'o': {
-        '1': 'Tridentkind', 
-        '2': 'URANIUM', 
-        '3': 'MEAT', 
-        '4': 'COMPUTER', 
+        '1': 'Tridentkind',
+        '2': 'URANIUM',
+        '3': 'MEAT',
+        '4': 'COMPUTER',
         '5': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            }, 
         },
+    },
     'p': {
-        '1': 'Razorkind', 
-        '2': 'AMETHYST', 
-        '3': 'BOUNCY', 
-        '4': 'SENTIENT', 
+        '1': 'Razorkind',
+        '2': 'AMETHYST',
+        '3': 'BOUNCY',
+        '4': 'SENTIENT',
         '5': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'q': {
-        '1': 'Fankind', 
-        '2': 'GARNET', 
-        '3': 'HOT', 
-        '4': 'MAGICAL', 
+        '1': 'Fankind',
+        '2': 'GARNET',
+        '3': 'HOT',
+        '4': 'MAGICAL',
         '5': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'r': {
-        '1': 'Cardkind', 
-        '2': 'IRON', 
-        '3': 'HOT', 
-        '4': 'EXQUISITE', 
+        '1': 'Cardkind',
+        '2': 'IRON',
+        '3': 'HOT',
+        '4': 'EXQUISITE',
         '5': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     's': {
-        '1': 'Armorkind', 
-        '2': 'MARBLE', 
-        '3': 'COLD', 
-        '4': 'ROCKET', 
+        '1': 'Armorkind',
+        '2': 'MARBLE',
+        '3': 'COLD',
+        '4': 'ROCKET',
         '5': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     't': {
-        '1': 'Shoekind', 
-        '2': 'CHALK', 
-        '3': 'ELECTRIC', 
-        '4': 'SPIRITUAL', 
+        '1': 'Shoekind',
+        '2': 'CHALK',
+        '3': 'ELECTRIC',
+        '4': 'SPIRITUAL',
         '5': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSEVERATE',
             'RANGED': 'ARRAIGN',
             'MAGIC': 'ACERBATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'u': {
-        '1': 'Hatkind', 
-        '2': 'SHALE', 
-        '3': 'IRRADAITED', 
-        '4': 'SHITTY', 
+        '1': 'Hatkind',
+        '2': 'SHALE',
+        '3': 'IRRADAITED',
+        '4': 'SHITTY',
         '5': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSEMBLE',
             'RANGED': 'ARISE',
             'MAGIC': 'ACCOUNT',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASPHIXIATE',
             'RANGED': 'ARBITRATE',
             'MAGIC': 'ACCEDE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'v': {
-        '1': 'Glasseskind', 
-        '2': 'COBALT', 
-        '3': 'SHARP', 
-        '4': 'TRICKSTER', 
+        '1': 'Glasseskind',
+        '2': 'COBALT',
+        '3': 'SHARP',
+        '4': 'TRICKSTER',
         '5': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSIGN',
             'RANGED': 'ARRANGE',
             'MAGIC': 'ACKNOWLEDGE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSURE',
             'RANGED': 'ARROGATE',
             'MAGIC': 'ACTUALIZE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTRICT',
             'RANGED': 'ARTILLERATE',
             'MAGIC': 'ACUPRESSURE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'w': {
-        '1': 'Picturekind', 
-        '2': 'RUBY', 
-        '3': 'ROCKET', 
-        '4': 'SCIENTIFIC', 
+        '1': 'Picturekind',
+        '2': 'RUBY',
+        '3': 'ROCKET',
+        '4': 'SCIENTIFIC',
         '5': {
             'MELEE': 'AGGRAVATE',
             'RANGED': 'AGGRAVATE',
             'MAGIC': 'AGGRAVATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASPIRE',
             'RANGED': 'ARBORIZE',
             'MAGIC': 'ACCELERATE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGREGATE',
             'RANGED': 'AGGREGATE',
             'MAGIC': 'AGGREGATE',
             'NA': 'No Action'
-            }, 
+        },
     },
     'x': {
-        '1': 'Bustkind', 
-        '2': 'CAULK', 
-        '3': 'COMPUTER', 
-        '4': 'STORAGE', 
+        '1': 'Bustkind',
+        '2': 'CAULK',
+        '3': 'COMPUTER',
+        '4': 'STORAGE',
         '5': {
             'MELEE': 'ASSIST',
             'RANGED': 'ARRIVE',
             'MAGIC': 'ACQUIRE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSERT',
             'RANGED': 'ARITHMETIZE',
             'MAGIC': 'ACCUMULATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'AGGRESS',
             'RANGED': 'AGGRESS',
             'MAGIC': 'AGGRESS',
             'NA': 'No Action'
-            }, 
         },
+    },
     'y': {
-        '1': 'Furniturekind', 
-        '2': 'TAR', 
-        '3': 'LIGHT SOURCE', 
-        '4': 'HEAVY', 
+        '1': 'Furniturekind',
+        '2': 'TAR',
+        '3': 'LIGHT SOURCE',
+        '4': 'HEAVY',
         '5': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASTONISH',
             'RANGED': 'ARSENALIZE',
             'MAGIC': 'ACTUATE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSAIL',
             'RANGED': 'ARDOR',
             'MAGIC': 'ACCLAIM',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASSAULT',
             'RANGED': 'ARGUFY',
             'MAGIC': 'ACCOMPLISH',
             'NA': 'No Action'
-            }, 
         },
+    },
     'z': {
-        '1': 'Vehiclekind', 
-        '2': 'AMBER', 
-        '3': 'STORAGE', 
-        '4': 'LIGHT SOURCE', 
+        '1': 'Vehiclekind',
+        '2': 'AMBER',
+        '3': 'STORAGE',
+        '4': 'LIGHT SOURCE',
         '5': {
             'MELEE': 'ASSASSINATE',
             'RANGED': 'ARF',
             'MAGIC': 'ACCLIMATE',
             'NA': 'No Action'
-            }, 
+        },
         '6': {
             'MELEE': 'ASSESS',
             'RANGED': 'ARMAMENTIFY',
             'MAGIC': 'ACCUSE',
             'NA': 'No Action'
-            },  
+        },
         '7': {
             'MELEE': 'ASSIMILATE',
             'RANGED': 'ARREST',
             'MAGIC': 'ACQUAINT',
             'NA': 'No Action'
-            },  
+        },
         '8': {
             'MELEE': 'ASTOUND',
             'RANGED': 'ARTICULATE',
             'MAGIC': 'ACUERE',
             'NA': 'No Action'
-            }, 
         },
+    },
 }
 
-weaponType = {
-    'Customkind 1': 'NA',
-    'Customkind 2': 'NA',
+weaponkind_type = {
+    'KIND1': 'NA',
+    'KIND2': 'NA',
     'Artifactkind': 'NA',
     'Moduskind': 'NA',
     'Hammerkind': 'MELEE',
@@ -2002,7 +2003,7 @@ weaponType = {
     'Vehiclekind': 'NA'
 }
 
-trait1Desc = {
+trait_1_desc = {
     'NONE': {
         'WEAPON': {
             '1': '/',
@@ -2215,8 +2216,8 @@ trait1Desc = {
     }
 }
 
-trait2Desc = {
-    'NONE': {    
+trait_2_desc = {
+    'NONE': {
         '1': {
             'MELEE': '/',
             'RANGED': '/',
@@ -2242,7 +2243,7 @@ trait2Desc = {
             'NA': '/'
         }
     },
-    'LIGHT': {    
+    'LIGHT': {
         '1': {
             'MELEE': 'WHILE EQUIPPED, ADVANTAGE ON AGL CHECKS, USE AGL ON STRIKE CHECK INSTEAD OF STR',
             'RANGED': 'WHILE EQUIPPED, ADVANTAGE ON AGL CHECKS, USE AGL ON STRIKE CHECK INSTEAD OF STR',
@@ -2268,7 +2269,7 @@ trait2Desc = {
             'NA': 'WHILE EQUIPPED, ADVANTAGE ON AGL CHECKS, AG1 +3'
         }
     },
-    'GRIMDARK': {    
+    'GRIMDARK': {
         '1': {
             'MELEE': 'REQUIRES +1 IMG TO EQUIP, 1d12 CHANCE TO DEAL BD ON HIT, WEAPON IS CONSIDERED A MAGIC WEAPON',
             'RANGED': 'REQUIRES +1 IMG TO EQUIP, 1d12 CHANCE TO DEAL BD ON HIT, WEAPON IS CONSIDERED A MAGIC WEAPON',
@@ -2295,34 +2296,32 @@ trait2Desc = {
         }
     },
     'COMPUTER': {
-        'WEAPON' : {
-            '1': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-            '2': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-            '3': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-            },
-            '4': {
-                'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
-                'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
-   },
-        }
+        '1': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
+        '2': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
+        '3': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
+        '4': {
+            'MELEE': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'RANGED': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'MAGIC': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB',
+            'NA': 'CAN BE USED TO MESSAGE WITH PESTERCHUM AND PLAY SBURB'
+        },
     },
-    'SENTIENT': {    
+    'SENTIENT': {
         '1': {
             'MELEE': 'ARTIFACT CAN THINK, FEEL EMOTIONS, AND HAS THE INTELLIGENCE OF AN ANIMAL',
             'RANGED': 'ARTIFACT CAN THINK, FEEL EMOTIONS, AND HAS THE INTELLIGENCE OF AN ANIMAL',
@@ -2348,7 +2347,7 @@ trait2Desc = {
             'NA': 'ARTIFACT CAN THINK, FEEL EMOTIONS, SPEAK, HAS A HIGHER INTELLIGENCE THAN A PERSON AND THINKS ITS BETTER THAN YOU'
         }
     },
-    'MAGICAL': {    
+    'MAGICAL': {
         '1': {
             'MELEE': 'WHILE EQUIPPED, ADVANTAGE ON IMG CHECKS, WEAPON IS CONSIDERED A MAGIC WEAPON',
             'RANGED': 'WHILE EQUIPPED, ADVANTAGE ON IMG CHECKS, WEAPON IS CONSIDERED A MAGIC WEAPON',
@@ -2374,7 +2373,7 @@ trait2Desc = {
             'NA': 'WHILE EQUIPPED, ADVANTAGE ON IMG CHECKS, IMG +3'
         }
     },
-    'EXQUISITE': {    
+    'EXQUISITE': {
         '1': {
             'MELEE': 'PRIMARY GRIST TYPE IS DIAMOND GRIST, GRIST COST IS DOUBLED',
             'RANGED': 'PRIMARY GRIST TYPE IS DIAMOND GRIST, GRIST COST IS DOUBLED',
@@ -2400,7 +2399,7 @@ trait2Desc = {
             'NA': 'PRIMARY GRIST TYPE IS DIAMOND GRIST, GRIST COST IS DOUBLED'
         }
     },
-    'ROCKET': {    
+    'ROCKET': {
         '1': {
             'MELEE': 'WHILE EQUIPPED, ADVANTAGE ON AGL CHECKS',
             'RANGED': 'WHILE EQUIPPED, ADVANTAGE ON AGL CHECKS',
@@ -2452,7 +2451,7 @@ trait2Desc = {
             'NA': 'WHILE EQUIPPED, ADVANTAGE ON CHA CHECKS, CHA + 3'
         },
     },
-    'SHITTY': {    
+    'SHITTY': {
         '1': {
             'MELEE': 'PRIMARY GRIST TYPE IS ARTIFACT GRIST AND ITEM TIER IS 1',
             'RANGED': 'PRIMARY GRIST TYPE IS ARTIFACT GRIST AND ITEM TIER IS 1',
@@ -2478,7 +2477,7 @@ trait2Desc = {
             'NA': 'PRIMARY GRIST TYPE IS ARTIFACT GRIST AND ITEM TIER IS 1'
         }
     },
-    'TRICKSTER': {    
+    'TRICKSTER': {
         '1': {
             'MELEE': 'PRIMARY GRIST TYPE IS ZILLIUM GRIST, WEAPON IS CONSIDERED A MAGIC WEAPON',
             'RANGED': 'PRIMARY GRIST TYPE IS ZILLIUM GRIST, WEAPON IS CONSIDERED A MAGIC WEAPON',
@@ -2504,7 +2503,7 @@ trait2Desc = {
             'NA': 'PRIMARY GRIST TYPE IS ZILLIUM GRIST'
         }
     },
-    'SCIENTIFIC': {    
+    'SCIENTIFIC': {
         '1': {
             'MELEE': 'WHILE EQUIPPED, ADVANTAGE ON INT CHECKS, USE INT ON STRIKE CHECK INSTEAD OF STR',
             'RANGED': 'WHILE EQUIPPED, ADVANTAGE ON INT CHECKS',
@@ -2530,7 +2529,7 @@ trait2Desc = {
             'NA': 'WHILE EQUIPPED, ADVANTAGE ON INT CHECKS, INT + 3'
         }
     },
-    'STORAGE': {    
+    'STORAGE': {
         '1': {
             'MELEE': 'OTHER ITEMS CAN BE STORED WITHIN THIS ITEM',
             'RANGED': 'OTHER ITEMS CAN BE STORED WITHIN THIS ITEM',
@@ -2556,7 +2555,7 @@ trait2Desc = {
             'NA': 'OTHER ITEMS CAN BE STORED WITHIN THIS ITEM'
         }
     },
-    'HEAVY': {    
+    'HEAVY': {
         '1': {
             'MELEE': 'REQUIRES +1 STR TO EQUIP, 1d12 CHANCE TO DEAL BD ON HIT',
             'RANGED': 'REQUIRES +1 STR TO EQUIP, 1d12 CHANCE TO DEAL BD ON HIT',
@@ -2582,7 +2581,7 @@ trait2Desc = {
             'NA': 'REQUIRES +4 STR TO EQUIP, 1d6 CHANCE TO DEAL BD ON HIT'
         }
     },
-    'LIGHT SOURCE': {    
+    'LIGHT SOURCE': {
         '1': {
             'MELEE': 'LIGHTS UP ROOM OR AREA',
             'RANGED': 'LIGHTS UP ROOM OR AREA',
@@ -2610,154 +2609,154 @@ trait2Desc = {
     }
 }
 
-gristData = {
+grist_data = {
 
     # SPECIAL GRISTS
     'ARTIFACT': {
-        'Effective': ['ZILLIUM','ZILLIUM','ZILLIUM','ZILLIUM' ],
-        'Diseffective': ['ALL','ALL','ALL','ALL' ]
+        'Effective': ['ZILLIUM', 'ZILLIUM', 'ZILLIUM', 'ZILLIUM'],
+        'Diseffective': ['ALL', 'ALL', 'ALL', 'ALL']
     },
     'BUILD': {
-        'Effective': ['NONE','NONE','NONE','NONE' ],
-        'Diseffective': ['NONE','NONE','NONE','NONE' ]
+        'Effective': ['NONE', 'NONE', 'NONE', 'NONE'],
+        'Diseffective': ['NONE', 'NONE', 'NONE', 'NONE']
     },
 
     # GUSHER GRISTS
     'URANIUM': {
-        'Effective': ['AMETHYST','IRON','COBALT','AMBER'],
-        'Diseffective': ['GARNET','CHALK','SHALE','TAR']
+        'Effective': ['AMETHYST', 'IRON', 'COBALT', 'AMBER'],
+        'Diseffective': ['GARNET', 'CHALK', 'SHALE', 'TAR']
     },
     'AMETHYST': {
-        'Effective': ['GARNET','MARBLE','RUBY','TAR'],
-        'Diseffective': ['URANIUM','IRON','COBALT','CAULK']
+        'Effective': ['GARNET', 'MARBLE', 'RUBY', 'TAR'],
+        'Diseffective': ['URANIUM', 'IRON', 'COBALT', 'CAULK']
     },
     'GARNET': {
-        'Effective': ['URANIUM','CHALK','SHALE','CAULK'],
-        'Diseffective': ['AMETHYST','MARBLE','RUBY','TAR']
+        'Effective': ['URANIUM', 'CHALK', 'SHALE', 'CAULK'],
+        'Diseffective': ['AMETHYST', 'MARBLE', 'RUBY', 'TAR']
     },
 
     # MATERIAL GRISTS
     'IRON': {
-        'Effective': ['AMETHYST','MARBLE','COBALT','AMBER'],
-        'Diseffective': ['URANIUM','CHALK','RUBY','TAR']
+        'Effective': ['AMETHYST', 'MARBLE', 'COBALT', 'AMBER'],
+        'Diseffective': ['URANIUM', 'CHALK', 'RUBY', 'TAR']
     },
     'MARBLE': {
-        'Effective': ['GARNET','CHALK','SHALE','CAULK'],
-        'Diseffective': ['AMETHYST','IRON','COBALT','AMBER']
+        'Effective': ['GARNET', 'CHALK', 'SHALE', 'CAULK'],
+        'Diseffective': ['AMETHYST', 'IRON', 'COBALT', 'AMBER']
     },
     'CHALK': {
-        'Effective': ['URANIUM','IRON','RUBY','TAR'],
-        'Diseffective': ['GARNET','MARBLE','SHALE','CAULK']
+        'Effective': ['URANIUM', 'IRON', 'RUBY', 'TAR'],
+        'Diseffective': ['GARNET', 'MARBLE', 'SHALE', 'CAULK']
     },
 
     # GEM GUSHER GRISTs
     'SHALE': {
-        'Effective': ['URANIUM','CHALK','COBALT','CAULK'],
-        'Diseffective': ['GARNET','MARBLE','RUBY','AMBER']
+        'Effective': ['URANIUM', 'CHALK', 'COBALT', 'CAULK'],
+        'Diseffective': ['GARNET', 'MARBLE', 'RUBY', 'AMBER']
     },
     'COBALT': {
-        'Effective': ['AMETHYST','MARBLE','RUBY','TAR'],
-        'Diseffective': ['URANIUM','IRON','SHALE','CAULK']
+        'Effective': ['AMETHYST', 'MARBLE', 'RUBY', 'TAR'],
+        'Diseffective': ['URANIUM', 'IRON', 'SHALE', 'CAULK']
     },
     'RUBY': {
-        'Effective': ['GARNET','IRON','SHALE','AMBER'],
-        'Diseffective': ['AMETHYST','CHALK','COBALT','TAR']
+        'Effective': ['GARNET', 'IRON', 'SHALE', 'AMBER'],
+        'Diseffective': ['AMETHYST', 'CHALK', 'COBALT', 'TAR']
     },
 
     # COMPONENT GRISTS
     'CAULK': {
-        'Effective': ['AMETHYST','CHALK','COBALT','AMBER'],
-        'Diseffective': ['GARNET','MARBLE','SHALE','TAR']
+        'Effective': ['AMETHYST', 'CHALK', 'COBALT', 'AMBER'],
+        'Diseffective': ['GARNET', 'MARBLE', 'SHALE', 'TAR']
     },
     'TAR': {
-        'Effective': ['URANIUM','IRON','RUBY','CAULK'],
-        'Diseffective': ['AMETHYST','CHALK','COBALT','AMBER']
+        'Effective': ['URANIUM', 'IRON', 'RUBY', 'CAULK'],
+        'Diseffective': ['AMETHYST', 'CHALK', 'COBALT', 'AMBER']
     },
     'AMBER': {
-        'Effective': ['GARNET','MARBLE','SHALE','TAR'],
-        'Diseffective': ['URANIUM','IRON','RUBY','CAULK']
+        'Effective': ['GARNET', 'MARBLE', 'SHALE', 'TAR'],
+        'Diseffective': ['URANIUM', 'IRON', 'RUBY', 'CAULK']
     },
 
     # EX SPECIAL GRISTS
     'DIAMOND': {
-        'Effective': ['NONE','NONE','NONE','NONE'],
-        'Diseffective': ['NONE','NONE','NONE','NONE']
+        'Effective': ['NONE', 'NONE', 'NONE', 'NONE'],
+        'Diseffective': ['NONE', 'NONE', 'NONE', 'NONE']
     },
     'ZILLIUM': {
-        'Effective': ['ALL','ALL','ALL','ALL' ],
-        'Diseffective': ['ARTIFACT','ARTIFACT','ARTIFACT','ARTIFACT' ]
+        'Effective': ['ALL', 'ALL', 'ALL', 'ALL'],
+        'Diseffective': ['ARTIFACT', 'ARTIFACT', 'ARTIFACT', 'ARTIFACT']
     }
 }
 
-actionData = {
+action_data = {
     #  NAME       CST DMG DESC
-    'No Action': ['/','/','/'],
+    'No Action': ['/', '/', '/'],
 
     # BASIC ATTACKS
-    'AGGREGATE': ['0','/','Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
-    'AGGRESS': ['3','2','Reuse'],
-    'AGGRAVATE': ['4','3','Reuse'],
-    
+    'AGGREGATE': ['0', '/', 'Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
+    'AGGRESS': ['3', '2', 'Reuse'],
+    'AGGRAVATE': ['4', '3', 'Reuse'],
+
     # MELEE ATTACKS
-    'ASPHIXIATE': ['5','3','Grapple'],
-    'ASPIRE': ['2','/','Next stamina roll is favorablE'],
-    'ASS': ['1','/','Unfavorable, BD'],
-    'ASSAIL': ['2','2','Unfavorable, reuse'],
-    'ASSASSINATE': ['5','3','favorable, BD'],
-    'ASSAULT': ['3','3','Unfavorable, reuse'],
-    'ASSEMBLE': ['2','/','Instant, Gain 1d4 stamina'],
-    'ASSERT': ['4','3','Favorable'],
-    'ASSESS': ['2','/','Actions are Favorable this turn'],
-    'ASSEVERATE': ['0','/','Instant, an action targetting another character targets you instead'],
-    'ASSIGN': ['1','/','Actions made against target are Favorable until next turn.'],
-    'ASSIMILATE': ['0','/','Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
-    'ASSIST': ['1','/','Instant, Reuse, give an action Favorable'],
-    'ASSURE': ['3','2','Favorable, reuse'],
-    'ASTONISH': ['2','1','Instant'],
-    'ASTOUND': ['3','2','Instant'],
-    'ASTRICT': ['2','/','Grapple'],
+    'ASPHIXIATE': ['5', '3', 'Grapple'],
+    'ASPIRE': ['2', '/', 'Next stamina roll is favorablE'],
+    'ASS': ['1', '/', 'Unfavorable, BD'],
+    'ASSAIL': ['2', '2', 'Unfavorable, reuse'],
+    'ASSASSINATE': ['5', '3', 'favorable, BD'],
+    'ASSAULT': ['3', '3', 'Unfavorable, reuse'],
+    'ASSEMBLE': ['2', '/', 'Instant, Gain 1d4 stamina'],
+    'ASSERT': ['4', '3', 'Favorable'],
+    'ASSESS': ['2', '/', 'Actions are Favorable this turn'],
+    'ASSEVERATE': ['0', '/', 'Instant, an action targetting another character targets you instead'],
+    'ASSIGN': ['1', '/', 'Actions made against target are Favorable until next turn.'],
+    'ASSIMILATE': ['0', '/', 'Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
+    'ASSIST': ['1', '/', 'Instant, Reuse, give an action Favorable'],
+    'ASSURE': ['3', '2', 'Favorable, reuse'],
+    'ASTONISH': ['2', '1', 'Instant'],
+    'ASTOUND': ['3', '2', 'Instant'],
+    'ASTRICT': ['2', '/', 'Grapple'],
 
     # RANGED ATTACKS
-    'ARBITRATE': ['1','1','Unfavorable, reuse'],
-    'ARBORIZE': ['1','/','BD, Reuse'],
-    'ARCHIVE': ['0','/','Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
-    'ARDOR': ['2','/','Instant, gain 1d4 stamina'],
-    'ARF': ['1','/','Unfavorable, BD'],
-    'ARGUFY': ['3','3','Unfavorable, reuse'],
-    'ARISE': ['2','/','Next stamina roll is favorable'],
-    'ARITHMETIZE': ['5','3','Favorable, BD'],
-    'ARMAMENTIFY': ['1','/','Actions targetting you are unfavorable until next turn'],
-    'ARRAIGN': ['1','1','Unfavorable, reuse'],
-    'ARRANGE': ['3','1','Favorable'],
-    'ARREST': ['2','/','Grapple'],
-    'ARRIVE': ['1','1','Action must be first action used on your turn'],
-    'ARROGATE': ['2','2','Unfavorable, reuse'],
-    'ARSENALIZE': ['2','/','All actions are favorable this turn'],
-    'ARTICULATE': ['4','2','Favorable'],
-    'ARTILLERATE': ['2','/','All actions deal BD this turn'],
+    'ARBITRATE': ['1', '1', 'Unfavorable, reuse'],
+    'ARBORIZE': ['1', '/', 'BD, Reuse'],
+    'ARCHIVE': ['0', '/', 'Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
+    'ARDOR': ['2', '/', 'Instant, gain 1d4 stamina'],
+    'ARF': ['1', '/', 'Unfavorable, BD'],
+    'ARGUFY': ['3', '3', 'Unfavorable, reuse'],
+    'ARISE': ['2', '/', 'Next stamina roll is favorable'],
+    'ARITHMETIZE': ['5', '3', 'Favorable, BD'],
+    'ARMAMENTIFY': ['1', '/', 'Actions targetting you are unfavorable until next turn'],
+    'ARRAIGN': ['1', '1', 'Unfavorable, reuse'],
+    'ARRANGE': ['3', '1', 'Favorable'],
+    'ARREST': ['2', '/', 'Grapple'],
+    'ARRIVE': ['1', '1', 'Action must be first action used on your turn'],
+    'ARROGATE': ['2', '2', 'Unfavorable, reuse'],
+    'ARSENALIZE': ['2', '/', 'All actions are favorable this turn'],
+    'ARTICULATE': ['4', '2', 'Favorable'],
+    'ARTILLERATE': ['2', '/', 'All actions deal BD this turn'],
 
     # MAGIC ATTACKS
-    'ACCEDE': ['2','1','BD'],
-    'ACCELERATE': ['2','/','Until start of next turn, all actions cost 1 less stamina to use (cannot be lower than 1)'],
-    'ACCESSORIZE': ['4','/','Change armor'],
-    'ACCLAIM': ['0','/','Instant, an action targetting another character targets you instead'],
-    'ACCLIMATE': ['3','1','Instant, Cancel an action targetting you'],
-    'ACCOMPLISH': ['2','/','All actions are favorable this turn'],
-    'ACCOUNT': ['0','/','Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
-    'ACCUMULATE': ['2','/','Next stamina roll is favorable'],
-    'ACCUSE': ['3','3','Unfavorable, Instant'],
-    'ACERBATE': ['2','2','Unfavorable, Instant'],
-    'ACKNOWLEDGE': ['2','/','Instant, cancel an action'],
-    'ACQUAINT': ['1','/','Actions against target are favorable until next turn'],
-    'ACQUIRE': ['2','/','Gain 1d4 stamina'],
-    'ACTUALIZE': ['1','/','All actions deal BD this turn'],
-    'ACTUATE': ['1','/','Actions targetting you are unfavorable until next turn'],
-    'ACUERE': ['1','1','Unfavorable, Instant'],
-    'ACUPRESSURE': ['1','/','BD, reuse, instant'],
+    'ACCEDE': ['2', '1', 'BD'],
+    'ACCELERATE': ['2', '/', 'Until start of next turn, all actions cost 1 less stamina to use (cannot be lower than 1)'],
+    'ACCESSORIZE': ['4', '/', 'Change armor'],
+    'ACCLAIM': ['0', '/', 'Instant, an action targetting another character targets you instead'],
+    'ACCLIMATE': ['3', '1', 'Instant, Cancel an action targetting you'],
+    'ACCOMPLISH': ['2', '/', 'All actions are favorable this turn'],
+    'ACCOUNT': ['0', '/', 'Instant, any unused stamina from this turn is added to your stamina roll on your next turn'],
+    'ACCUMULATE': ['2', '/', 'Next stamina roll is favorable'],
+    'ACCUSE': ['3', '3', 'Unfavorable, Instant'],
+    'ACERBATE': ['2', '2', 'Unfavorable, Instant'],
+    'ACKNOWLEDGE': ['2', '/', 'Instant, cancel an action'],
+    'ACQUAINT': ['1', '/', 'Actions against target are favorable until next turn'],
+    'ACQUIRE': ['2', '/', 'Gain 1d4 stamina'],
+    'ACTUALIZE': ['1', '/', 'All actions deal BD this turn'],
+    'ACTUATE': ['1', '/', 'Actions targetting you are unfavorable until next turn'],
+    'ACUERE': ['1', '1', 'Unfavorable, Instant'],
+    'ACUPRESSURE': ['1', '/', 'BD, reuse, instant'],
 
 }
 
-damgeNum = {
+tier_damage_num = {
     '1': {
         '1': '5',
         '2': '10',
@@ -2888,9 +2887,9 @@ damgeNum = {
     }
 }
 
-## IMAGE DATABSES
+# IMAGE DATABSES
 
-grist = {
+grist_image = {
     'ALL': 'sylladex/uiElements/asset/GRISTS/All.png',
     'AMBER': 'sylladex/uiElements/asset/GRISTS/Amber.png',
     'AMETHYST': 'sylladex/uiElements/asset/GRISTS/Amethyst.png',
@@ -2911,74 +2910,160 @@ grist = {
     'NONE': 'sylladex/uiElements/asset/GRISTS/NONE.png'
 }
 
-kind = {
-    'Artifactkind': 'sylladex/uiElements/asset/KINDS/ArtifactKind.png',
-    'Moduskind': 'sylladex/uiElements/asset/KINDS/ModusKind.png',
-    'Customkind': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
-    'Hammerkind': 'sylladex/uiElements/asset/KINDS/HammerKind.png',
-    'Needlekind': 'sylladex/uiElements/asset/KINDS/NeedleKind.png',
-    'Bladekind': 'sylladex/uiElements/asset/KINDS/BladeKind.png',
-    'Riflekind': 'sylladex/uiElements/asset/KINDS/RifleKind.png',
-    'Utensilkind': 'sylladex/uiElements/asset/KINDS/UtensilKind.png',
-    'Fistkind': 'sylladex/uiElements/asset/KINDS/FistKind.png',
-    'Puppetkind': 'sylladex/uiElements/asset/KINDS/PuppetKind.png',
-    'Pistolkind': 'sylladex/uiElements/asset/KINDS/PistolKind.png',
-    'Lancekind': 'sylladex/uiElements/asset/KINDS/LanceKind.png',
-    'Thrwstarkind': 'sylladex/uiElements/asset/KINDS/ThrwstarKind.png',
-    'Sicklekind': 'sylladex/uiElements/asset/KINDS/SickleKind.png',
-    'Clawkind': 'sylladex/uiElements/asset/KINDS/ClawKind.png',
-    'Chainsawkind': 'sylladex/uiElements/asset/KINDS/ChainsawKind.png',
-    'Canekind': 'sylladex/uiElements/asset/KINDS/CaneKind.png',
-    'Dicekind': 'sylladex/uiElements/asset/KINDS/DiceKind.png',
-    'Bowkind': 'sylladex/uiElements/asset/KINDS/BowKind.png',
-    'Clubkind': 'sylladex/uiElements/asset/KINDS/ClubKind.png',
-    'Wandkind': 'sylladex/uiElements/asset/KINDS/WandKind.png',
-    'Spearkind': 'sylladex/uiElements/asset/KINDS/SpearKind.png',
-    'Bunnykind': 'sylladex/uiElements/asset/KINDS/BunnyKind.png',
-    'Paperkind': 'sylladex/uiElements/asset/KINDS/PaperKind.png',
-    'Fncysntakind': 'sylladex/uiElements/asset/KINDS/FncysntaKind.png',
-    'Umbrellakind': 'sylladex/uiElements/asset/KINDS/UmbrellaKind.png',
-    'Broomkind': 'sylladex/uiElements/asset/KINDS/BroomKind.png',
-    'Flshlghtkind': 'sylladex/uiElements/asset/KINDS/FlshlghtKind.png',
-    'Sawkind': 'sylladex/uiElements/asset/KINDS/SawKind.png',
-    'Wrenchkind': 'sylladex/uiElements/asset/KINDS/WrenchKind.png',
-    'Scrwdrvrkind': 'sylladex/uiElements/asset/KINDS/ScrwdrvrKind.png',
-    'Plierkind': 'sylladex/uiElements/asset/KINDS/PlierKind.png',
-    'Nailkind': 'sylladex/uiElements/asset/KINDS/NailKind.png',
-    'Crowbarkind': 'sylladex/uiElements/asset/KINDS/CrowbarKind.png',
-    'Bookkind': 'sylladex/uiElements/asset/KINDS/BookKind.png',
-    'Yoyokind': 'sylladex/uiElements/asset/KINDS/YoyoKind.png',
-    'Staplerkind': 'sylladex/uiElements/asset/KINDS/StaplerKind.png',
-    'Shotgunkind': 'sylladex/uiElements/asset/KINDS/ShotgunKind.png',
-    'Pencilkind': 'sylladex/uiElements/asset/KINDS/PencilKind.png',
-    'Brushkind': 'sylladex/uiElements/asset/KINDS/BrushKind.png',
-    'Scythekind': 'sylladex/uiElements/asset/KINDS/ScytheKind.png',
-    'Scissorkind': 'sylladex/uiElements/asset/KINDS/ScissorKind.png',
-    'Knifekind': 'sylladex/uiElements/asset/KINDS/KnifeKind.png',
-    'Shovelkind': 'sylladex/uiElements/asset/KINDS/ShovelKind.png',
-    'Cordkind': 'sylladex/uiElements/asset/KINDS/CordKind.png',
-    'Axekind': 'sylladex/uiElements/asset/KINDS/AxeKind.png',
-    'Dartkind': 'sylladex/uiElements/asset/KINDS/DartKind.png',
-    'Chainkind': 'sylladex/uiElements/asset/KINDS/ChainKind.png',
-    'Ballkind': 'sylladex/uiElements/asset/KINDS/BallKind.png',
-    'Rockkind': 'sylladex/uiElements/asset/KINDS/RockKind.PNG',
-    'Hckystckkind': 'sylladex/uiElements/asset/KINDS/HckystckKind.png',
-    'Tridentkind': 'sylladex/uiElements/asset/KINDS/TridentKind.png',
-    'Razorkind': 'sylladex/uiElements/asset/KINDS/RazorKind.png',
-    'Fankind': 'sylladex/uiElements/asset/KINDS/FanKind.png',
-    'Cardkind': 'sylladex/uiElements/asset/KINDS/CardKind.png',
-    'Armorkind': 'sylladex/uiElements/asset/KINDS/ArmorKind.png',
-    'Shoekind': 'sylladex/uiElements/asset/KINDS/ShoeKind.png',
-    'Hatkind': 'sylladex/uiElements/asset/KINDS/HatKind.png',
-    'Glasseskind': 'sylladex/uiElements/asset/KINDS/GlassesKind.png',
-    'Picturekind': 'sylladex/uiElements/asset/KINDS/PictureKind.png',
-    'Bustkind': 'sylladex/uiElements/asset/KINDS/BustKind.png',
-    'Furniturekind': 'sylladex/uiElements/asset/KINDS/FurnitureKind.png',
-    'Vehiclekind': 'sylladex/uiElements/asset/KINDS/VehicleKind.png',
-    'None': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
+grist_image_small = {
+    'ALL': 'sylladex/uiElements/asset/GRISTS/SMALL/All.png',
+    'AMBER': 'sylladex/uiElements/asset/GRISTS/SMALL/Amber.png',
+    'AMETHYST': 'sylladex/uiElements/asset/GRISTS/SMALL/Amethyst.png',
+    'ARTIFACT': 'sylladex/uiElements/asset/GRISTS/SMALL/Artifact.png',
+    'BUILD': 'sylladex/uiElements/asset/GRISTS/SMALL/Build.png',
+    'CAULK': 'sylladex/uiElements/asset/GRISTS/SMALL/Caulk.png',
+    'CHALK': 'sylladex/uiElements/asset/GRISTS/SMALL/Chalk.png',
+    'COBALT': 'sylladex/uiElements/asset/GRISTS/SMALL/Cobalt.png',
+    'DIAMOND': 'sylladex/uiElements/asset/GRISTS/SMALL/Diamond.png',
+    'GARNET': 'sylladex/uiElements/asset/GRISTS/SMALL/Garnet.png',
+    'IRON': 'sylladex/uiElements/asset/GRISTS/SMALL/Iron.png',
+    'MARBLE': 'sylladex/uiElements/asset/GRISTS/SMALL/Marble.png',
+    'RUBY': 'sylladex/uiElements/asset/GRISTS/SMALL/Ruby.png',
+    'SHALE': 'sylladex/uiElements/asset/GRISTS/SMALL/Shale.png',
+    'TAR': 'sylladex/uiElements/asset/GRISTS/SMALL/Tar.png',
+    'URANIUM': 'sylladex/uiElements/asset/GRISTS/SMALL/Uranium.png',
+    'ZILLIUM': 'sylladex/uiElements/asset/GRISTS/SMALL/Zillium.png',
+    'NONE': 'sylladex/uiElements/asset/GRISTS/SMALL/NONE.png'
 }
 
-action = {
+kind_image = {
+    'Armorkind': 'sylladex/uiElements/asset/KINDS/ArmorKind.png',
+    'Artifactkind': 'sylladex/uiElements/asset/KINDS/ArtifactKind.png',
+    'Axekind': 'sylladex/uiElements/asset/KINDS/AxeKind.png',
+    'Ballkind': 'sylladex/uiElements/asset/KINDS/BallKind.png',
+    'Bladekind': 'sylladex/uiElements/asset/KINDS/BladeKind.png',
+    'Bookkind': 'sylladex/uiElements/asset/KINDS/BookKind.png',
+    'Bowkind': 'sylladex/uiElements/asset/KINDS/BowKind.png',
+    'Broomkind': 'sylladex/uiElements/asset/KINDS/BroomKind.png',
+    'Brushkind': 'sylladex/uiElements/asset/KINDS/BrushKind.png',
+    'Bunnykind': 'sylladex/uiElements/asset/KINDS/BunnyKind.png',
+    'Bustkind': 'sylladex/uiElements/asset/KINDS/BustKind.png',
+    'Canekind': 'sylladex/uiElements/asset/KINDS/CaneKind.png',
+    'Cardkind': 'sylladex/uiElements/asset/KINDS/CardKind.png',
+    'Chainkind': 'sylladex/uiElements/asset/KINDS/ChainKind.png',
+    'Chainsawkind': 'sylladex/uiElements/asset/KINDS/ChainsawKind.png',
+    'Clawkind': 'sylladex/uiElements/asset/KINDS/ClawKind.png',
+    'Clubkind': 'sylladex/uiElements/asset/KINDS/ClubKind.png',
+    'Cordkind': 'sylladex/uiElements/asset/KINDS/CordKind.png',
+    'Crowbarkind': 'sylladex/uiElements/asset/KINDS/CrowbarKind.png',
+    'Customkind': 'sylladex/uiElements/asset/KINDS/CustomKind.png',
+    'Dartkind': 'sylladex/uiElements/asset/KINDS/DartKind.png',
+    'Dicekind': 'sylladex/uiElements/asset/KINDS/DiceKind.png',
+    'Fankind': 'sylladex/uiElements/asset/KINDS/FanKind.png',
+    'Fistkind': 'sylladex/uiElements/asset/KINDS/FistKind.png',
+    'Flshlghtkind': 'sylladex/uiElements/asset/KINDS/FlshlghtKind.png',
+    'Fncysntakind': 'sylladex/uiElements/asset/KINDS/FncysntaKind.png',
+    'Furniturekind': 'sylladex/uiElements/asset/KINDS/FurnitureKind.png',
+    'Glasseskind': 'sylladex/uiElements/asset/KINDS/GlassesKind.png',
+    'Hammerkind': 'sylladex/uiElements/asset/KINDS/HammerKind.png',
+    'Hatkind': 'sylladex/uiElements/asset/KINDS/HatKind.png',
+    'Hckystckkind': 'sylladex/uiElements/asset/KINDS/HckystckKind.png',
+    'Knifekind': 'sylladex/uiElements/asset/KINDS/KnifeKind.png',
+    'Lancekind': 'sylladex/uiElements/asset/KINDS/LanceKind.png',
+    'Moduskind': 'sylladex/uiElements/asset/KINDS/ModusKind.png',
+    'Nailkind': 'sylladex/uiElements/asset/KINDS/NailKind.png',
+    'Needlekind': 'sylladex/uiElements/asset/KINDS/NeedleKind.png',
+    'Paperkind': 'sylladex/uiElements/asset/KINDS/PaperKind.png',
+    'Pencilkind': 'sylladex/uiElements/asset/KINDS/PencilKind.png',
+    'Picturekind': 'sylladex/uiElements/asset/KINDS/PictureKind.png',
+    'Pistolkind': 'sylladex/uiElements/asset/KINDS/PistolKind.png',
+    'Plierkind': 'sylladex/uiElements/asset/KINDS/PlierKind.png',
+    'Puppetkind': 'sylladex/uiElements/asset/KINDS/PuppetKind.png',
+    'Razorkind': 'sylladex/uiElements/asset/KINDS/RazorKind.png',
+    'Riflekind': 'sylladex/uiElements/asset/KINDS/RifleKind.png',
+    'Rockkind': 'sylladex/uiElements/asset/KINDS/RockKind.PNG',
+    'Sawkind': 'sylladex/uiElements/asset/KINDS/SawKind.png',
+    'Scissorkind': 'sylladex/uiElements/asset/KINDS/ScissorKind.png',
+    'Scrwdrvrkind': 'sylladex/uiElements/asset/KINDS/ScrwdrvrKind.png',
+    'Scythekind': 'sylladex/uiElements/asset/KINDS/ScytheKind.png',
+    'Shoekind': 'sylladex/uiElements/asset/KINDS/ShoeKind.png',
+    'Shotgunkind': 'sylladex/uiElements/asset/KINDS/ShotgunKind.png',
+    'Shovelkind': 'sylladex/uiElements/asset/KINDS/ShovelKind.png',
+    'Sicklekind': 'sylladex/uiElements/asset/KINDS/SickleKind.png',
+    'Spearkind': 'sylladex/uiElements/asset/KINDS/SpearKind.png',
+    'Staplerkind': 'sylladex/uiElements/asset/KINDS/StaplerKind.png',
+    'Thrwstarkind': 'sylladex/uiElements/asset/KINDS/ThrwstarKind.png',
+    'Tridentkind': 'sylladex/uiElements/asset/KINDS/TridentKind.png',
+    'Umbrellakind': 'sylladex/uiElements/asset/KINDS/UmbrellaKind.png',
+    'Utensilkind': 'sylladex/uiElements/asset/KINDS/UtensilKind.png',
+    'Vehiclekind': 'sylladex/uiElements/asset/KINDS/VehicleKind.png',
+    'Wandkind': 'sylladex/uiElements/asset/KINDS/WandKind.png',
+    'Wrenchkind': 'sylladex/uiElements/asset/KINDS/WrenchKind.png',
+    'Yoyokind': 'sylladex/uiElements/asset/KINDS/YoyoKind.png',
+}
+
+kind_image_small = {
+    'Armorkind': 'sylladex/uiElements/asset/KINDS/SMALL/ArmorKind.png',
+    'Artifactkind': 'sylladex/uiElements/asset/KINDS/SMALL/ArtifactKind.png',
+    'Axekind': 'sylladex/uiElements/asset/KINDS/SMALL/AxeKind.png',
+    'Ballkind': 'sylladex/uiElements/asset/KINDS/SMALL/BallKind.png',
+    'Bladekind': 'sylladex/uiElements/asset/KINDS/SMALL/BladeKind.png',
+    'Bookkind': 'sylladex/uiElements/asset/KINDS/SMALL/BookKind.png',
+    'Bowkind': 'sylladex/uiElements/asset/KINDS/SMALL/BowKind.png',
+    'Broomkind': 'sylladex/uiElements/asset/KINDS/SMALL/BroomKind.png',
+    'Brushkind': 'sylladex/uiElements/asset/KINDS/SMALL/BrushKind.png',
+    'Bunnykind': 'sylladex/uiElements/asset/KINDS/SMALL/BunnyKind.png',
+    'Bustkind': 'sylladex/uiElements/asset/KINDS/SMALL/BustKind.png',
+    'Canekind': 'sylladex/uiElements/asset/KINDS/SMALL/CaneKind.png',
+    'Cardkind': 'sylladex/uiElements/asset/KINDS/SMALL/CardKind.png',
+    'Chainkind': 'sylladex/uiElements/asset/KINDS/SMALL/ChainKind.png',
+    'Chainsawkind': 'sylladex/uiElements/asset/KINDS/SMALL/ChainsawKind.png',
+    'Clawkind': 'sylladex/uiElements/asset/KINDS/SMALL/ClawKind.png',
+    'Clubkind': 'sylladex/uiElements/asset/KINDS/SMALL/ClubKind.png',
+    'Cordkind': 'sylladex/uiElements/asset/KINDS/SMALL/CordKind.png',
+    'Crowbarkind': 'sylladex/uiElements/asset/KINDS/SMALL/CrowbarKind.png',
+    'Customkind': 'sylladex/uiElements/asset/KINDS/SMALL/CustomKind.png',
+    'Dartkind': 'sylladex/uiElements/asset/KINDS/SMALL/DartKind.png',
+    'Dicekind': 'sylladex/uiElements/asset/KINDS/SMALL/DiceKind.png',
+    'Fankind': 'sylladex/uiElements/asset/KINDS/SMALL/FanKind.png',
+    'Fistkind': 'sylladex/uiElements/asset/KINDS/SMALL/FistKind.png',
+    'Flshlghtkind': 'sylladex/uiElements/asset/KINDS/SMALL/FlshlghtKind.png',
+    'Fncysntakind': 'sylladex/uiElements/asset/KINDS/SMALL/FncysntaKind.png',
+    'Furniturekind': 'sylladex/uiElements/asset/KINDS/SMALL/FurnitureKind.png',
+    'Glasseskind': 'sylladex/uiElements/asset/KINDS/SMALL/GlassesKind.png',
+    'Hammerkind': 'sylladex/uiElements/asset/KINDS/SMALL/HammerKind.png',
+    'Hatkind': 'sylladex/uiElements/asset/KINDS/SMALL/HatKind.png',
+    'Hckystckkind': 'sylladex/uiElements/asset/KINDS/SMALL/HckystckKind.png',
+    'Knifekind': 'sylladex/uiElements/asset/KINDS/SMALL/KnifeKind.png',
+    'Lancekind': 'sylladex/uiElements/asset/KINDS/SMALL/LanceKind.png',
+    'Moduskind': 'sylladex/uiElements/asset/KINDS/SMALL/ModusKind.png',
+    'Nailkind': 'sylladex/uiElements/asset/KINDS/SMALL/NailKind.png',
+    'Needlekind': 'sylladex/uiElements/asset/KINDS/SMALL/NeedleKind.png',
+    'Paperkind': 'sylladex/uiElements/asset/KINDS/SMALL/PaperKind.png',
+    'Pencilkind': 'sylladex/uiElements/asset/KINDS/SMALL/PencilKind.png',
+    'Picturekind': 'sylladex/uiElements/asset/KINDS/SMALL/PictureKind.png',
+    'Pistolkind': 'sylladex/uiElements/asset/KINDS/SMALL/PistolKind.png',
+    'Plierkind': 'sylladex/uiElements/asset/KINDS/SMALL/PlierKind.png',
+    'Puppetkind': 'sylladex/uiElements/asset/KINDS/SMALL/PuppetKind.png',
+    'Razorkind': 'sylladex/uiElements/asset/KINDS/SMALL/RazorKind.png',
+    'Riflekind': 'sylladex/uiElements/asset/KINDS/SMALL/RifleKind.png',
+    'Rockkind': 'sylladex/uiElements/asset/KINDS/SMALL/RockKind.PNG',
+    'Sawkind': 'sylladex/uiElements/asset/KINDS/SMALL/SawKind.png',
+    'Scissorkind': 'sylladex/uiElements/asset/KINDS/SMALL/ScissorKind.png',
+    'Scrwdrvrkind': 'sylladex/uiElements/asset/KINDS/SMALL/ScrwdrvrKind.png',
+    'Scythekind': 'sylladex/uiElements/asset/KINDS/SMALL/ScytheKind.png',
+    'Shoekind': 'sylladex/uiElements/asset/KINDS/SMALL/ShoeKind.png',
+    'Shotgunkind': 'sylladex/uiElements/asset/KINDS/SMALL/ShotgunKind.png',
+    'Shovelkind': 'sylladex/uiElements/asset/KINDS/SMALL/ShovelKind.png',
+    'Sicklekind': 'sylladex/uiElements/asset/KINDS/SMALL/SickleKind.png',
+    'Spearkind': 'sylladex/uiElements/asset/KINDS/SMALL/SpearKind.png',
+    'Staplerkind': 'sylladex/uiElements/asset/KINDS/SMALL/StaplerKind.png',
+    'Thrwstarkind': 'sylladex/uiElements/asset/KINDS/SMALL/ThrwstarKind.png',
+    'Tridentkind': 'sylladex/uiElements/asset/KINDS/SMALL/TridentKind.png',
+    'Umbrellakind': 'sylladex/uiElements/asset/KINDS/SMALL/UmbrellaKind.png',
+    'Utensilkind': 'sylladex/uiElements/asset/KINDS/SMALL/UtensilKind.png',
+    'Vehiclekind': 'sylladex/uiElements/asset/KINDS/SMALL/VehicleKind.png',
+    'Wandkind': 'sylladex/uiElements/asset/KINDS/SMALL/WandKind.png',
+    'Wrenchkind': 'sylladex/uiElements/asset/KINDS/SMALL/WrenchKind.png',
+    'Yoyokind': 'sylladex/uiElements/asset/KINDS/SMALL/YoyoKind.png',
+}
+
+action_image = {
     'No Action': 'sylladex/uiElements/asset/ACTION/NO ACTION.png',
     'ACCEDE': 'sylladex/uiElements/asset/ACTION/ACCEDE.png',
     'ACCELERATE': 'sylladex/uiElements/asset/ACTION/ACCELERATE.png',
@@ -3041,430 +3126,245 @@ action = {
 
 }
 
-def read_code(name, codeNum, tier, listObj):
-    if len(codeNum) >= 9:
+
+def read_code(name: str, code_num: str, tier: str, list_obj: object):
+    if len(code_num) >= 9:
         raise Exception('Codes can not be longer than 8 characters')
-    elif len(codeNum) <= 7:
+    elif len(code_num) <= 7:
         raise Exception('Codes must be 8 characters long')
-    codeArray = list(codeNum)
+    _code_array = list(code_num)
 
-    
-    _kind = get_codeValue(codeArray[0], '1')
-    _grist = get_codeValue(codeArray[1], '2')
-    _trait1 = get_codeValue(codeArray[2], '3')
-    _trait2 = get_codeValue(codeArray[3], '4')
+    _kind = get_code_value(_code_array[0], '1')
+    _grist = get_code_value(_code_array[1], '2')
+    _trait1 = get_code_value(_code_array[2], '3')
+    _trait2 = get_code_value(_code_array[3], '4')
+    if _trait2 == 'TRICKSTER':
+        _grist = 'ZILLIUM'
 
-    wType = get_weaponType(_kind)
-    _action1 = get_actionName(codeArray[4], '5', wType)
-    _action2 = get_actionName(codeArray[5], '6', wType)
-    _action3 = get_actionName(codeArray[6], '7', wType)
-    _action4 = get_actionName(codeArray[7], '8', wType)
+    elif _trait2 == 'EXQUISITE':
+        _grist = 'DIAMOND'
 
-    listObj.codeData = UIBase.CodeData(name, codeNum, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
+    elif _trait2 == 'SHITTY':
+        _grist = 'ARTIFACT'
+        tier = '1'
 
-def get_actionInfo(action):
-    if actionData.get(action):
-        return actionData.get(action)
+    _wType = get_weapon_type(_kind, _trait2)
+    _action1 = get_action_name(_code_array[4], '5', _wType)
+    _action2 = get_action_name(_code_array[5], '6', _wType)
+    _action3 = get_action_name(_code_array[6], '7', _wType)
+    _action4 = get_action_name(_code_array[7], '8', _wType)
+
+    list_obj.code_data = UIElement.CodeData(
+        name, code_num, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
+
+
+def get_action_info(action_name: str, w_type: str):
+    if action_data.get(action_name):
+        return action_data.get(action_name)
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.readlines()
-        if customData[3].spit(',')[0] == action:
-            return [customData[3].spit(',')[1], customData[3].spit(',')[2], customData[3].spit(',')[3]]
-        elif customData[3].spit(',')[4] == action:
-            return [customData[3].spit(',')[5], customData[3].spit(',')[6], customData[3].spit(',')[7]]
-        elif customData[4].spit(',')[0] == action:
-            return [customData[4].spit(',')[1], customData[4].spit(',')[2], customData[4].spit(',')[3]]
-        elif customData[4].spit(',')[4] == action:
-            return [customData[4].spit(',')[5], customData[4].spit(',')[6], customData[4].spit(',')[7]]
-        elif customData[5].spit(',')[0] == action:
-            return [customData[5].spit(',')[1], customData[5].spit(',')[2], customData[3].spit(',')[3]]
-        elif customData[5].spit(',')[4] == action:
-            return [customData[5].spit(',')[5], customData[5].spit(',')[6], customData[3].spit(',')[7]]
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
-        raise Exception(f'Cant find data for action {action}')
+        if w_type == 'MELEE':
+            return [_custom_data[action_name]['AS']['COST'], _custom_data[action_name]['AS']['DAMAGE'], _custom_data[action_name]['AS']['DESCRIPTION']]
 
-def get_actionName(symbol, position, wType):
-    if codeCypher.get(symbol):
-        if codeCypher.get(symbol).get(position):
-            if codeCypher.get(symbol).get(position).get(wType):
-                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 MELEE':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                        customData = database.readlines()
-                    if customData[2].split(',')[0] == 'AS':
-                        return 'No Action'
-                    else:
-                        return customData[2].split(',')[0]
+        elif w_type == 'RANGED':
+            return [_custom_data[action_name]['AR']['COST'], _custom_data[action_name]['AR']['DAMAGE'], _custom_data[action_name]['AR']['DESCRIPTION']]
 
-                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 2 MELEE':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                        customData = database.readlines()
-                    if customData[2].split(',')[4] == 'AS':
-                        return 'No Action'
-                    else:
-                        return customData[2].split(',')[4]
+        elif w_type == 'MAGIC':
+            return [_custom_data[action_name]['AC']['COST'], _custom_data[action_name]['AC']['DAMAGE'], _custom_data[action_name]['AC']['DESCRIPTION']]
 
-                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 RANGED':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                        customData = database.readlines()
-                    if customData[3].split(',')[0] == 'AR':
-                        return 'No Action'
-                    else:
-                        return customData[3].split(',')[0]
+        raise Exception(f'Cant find data for action_name {action_name}')
 
-                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 2 RANGED':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                        customData = database.readlines()
-                    if customData[3].split(',')[4] == 'AR':
-                        return 'No Action'
-                    else:
-                        return customData[3].split(',')[4]
 
-                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 1 MAGIC':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                        customData = database.readlines()
-                    if customData[4].split(',')[0] == 'AC':
-                        return 'No Action'
-                    else:
-                        return customData[4].split(',')[0]
-
-                if codeCypher.get(symbol).get(position).get(wType) == 'CUSTOM 3 MAGIC':
-                    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                        customData = database.readlines()
-                    if customData[4].split(',')[4] == 'AC':
-                        return 'No Action'
-                    else:
-                        return customData[4].split(',')[4]
-                else:
-                    return codeCypher.get(symbol).get(position).get(wType)
+def get_action_name(symbol, position, wType):
+    if code_cypher.get(symbol):
+        if code_cypher.get(symbol).get(position):
+            if code_cypher.get(symbol).get(position).get(wType):
+                return code_cypher.get(symbol).get(position).get(wType)
             else:
-                raise Exception(f'Couldn\'t find {wType} action at {position} in {symbol}')
+                raise Exception(
+                    f'Couldn\'t find {wType} action_image at {position} in {symbol}')
         else:
             raise Exception(f'Couldn\'t find {position} in {symbol}')
     else:
         raise Exception(f'Couldn\'t find {symbol}')
 
-def get_actionImage(actionName, baseObject, pos):
-    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-        customData = database.readlines()
-    
-    if actionName == 'No Action':
-        actionImage = pg.image.load(action.get('No Action')).convert_alpha()
-        baseObject.image.blit(actionImage, pos)
 
-    elif actionName == customData[2].split(',')[0]:
+def get_action_image(action_name: str, w_type: str, _x: int, _y: int):
+    with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+        _custom_data = json.load(_custom_data_file)
 
-        baseObject.children.append(UIBase.get_uiElem('ActionIcon')(baseObject.rect.x+pos[0], baseObject.rect.y+pos[1], 'CardInspecorCustomAction', True, 'MELEE', actionName))
+    if action_name == 'No Action':
+        return action_image.get('No Action')
+
+    elif action_name[:6] == 'ACTION':
+
+        _action = UIElement.get_ui_elem('ActionIcon')(
+            _x, _y, 'CardInspectorCustomAction', False, 1000)
+
+        _action.setup_icon('melee', _custom_data[action_name])
+
+        UIElement.find_current_ui(
+            'CardInspector').actions_values.append(_action)
+
+        return action_image.get('No Action')
 
     else:
-        actionImage = pg.image.load(action.get(actionName)).convert_alpha()
-        baseObject.image.blit(actionImage, pos)
+        return action_image.get(action_name)
 
-def find_kindImage(kindName):
-    if kind.get(kindName):
-        return kind.get(kindName)
+
+def find_kind_image(kind_name):
+    if kind_image.get(kind_name):
+        return kind_image.get(kind_name)
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.readlines()
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
-        if kindName == customData[0].split(',')[0]:
-            return kind.get(customData[1].split(',')[0])
-        elif kindName == customData[0].split(',')[2]:
-            return kind.get(customData[1].split(',')[1])
+        if kind_name == 'KIND1':
+            return kind_image.get(_custom_data['KIND1']['ICON'])
+        elif kind_name == 'KIND2':
+            return kind_image.get(_custom_data['KIND2']['ICON'])
         else:
-            raise Exception(f'Could not find image for {kindName}')
+            raise Exception(f'Could not find image for {kind_name}')
 
-def find_gristImage(gristName):
-    if grist.get(gristName):
-        return grist.get(gristName)
+
+def find_kind_image_small(kind_name):
+    if kind_image_small.get(kind_name):
+        return kind_image_small.get(kind_name)
     else:
-        raise Exception(f'Could not find image for {gristName}')
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
-def get_codeValue(symbol, position):
-    if codeCypher.get(symbol):
-        if codeCypher.get(symbol).get(position):
-            with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-                customData = database.readlines()
-            if codeCypher.get(symbol).get(position) == 'Customkind 1':
+        if kind_name == 'KIND1':
+            return kind_image_small.get(_custom_data['KIND1']['ICON'])
+        elif kind_name == 'KIND2':
+            return kind_image_small.get(_custom_data['KIND2']['ICON'])
+        else:
+            raise Exception(f'Could not find image for {kind_name}')
 
-                return customData[0].split(',')[0]
-            elif codeCypher.get(symbol).get(position) == 'Customkind 2':
 
-                return customData[0].split(',')[2]
-            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 1':
+def find_grist_image(grist_name):
+    if grist_image.get(grist_name):
+        return grist_image.get(grist_name)
+    else:
+        raise Exception(f'Could not find image for {grist_name}')
 
-                return customData[5].split(',')[0]
-            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 2':
 
-                return customData[6].split(',')[0]
-            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 3':
+def find_grist_image_small(grist_name):
+    if grist_image_small.get(grist_name):
+        return grist_image_small.get(grist_name)
+    else:
+        raise Exception(f'Could not find image for {grist_name}')
 
-                return customData[7].split(',')[0]
-            elif codeCypher.get(symbol).get(position) == 'CUSTOM TRAIT 4':
 
-                return customData[8].split(',')[0]
-            else:
-                return codeCypher.get(symbol).get(position)
+def get_code_value(symbol, position):
+    if code_cypher.get(symbol):
+        if code_cypher.get(symbol).get(position):
+
+            return code_cypher.get(symbol).get(position)
         else:
             raise Exception(f'Could not find position {position} in {symbol}')
     else:
         raise Exception(f'Could not find {symbol}')
 
-def get_trat1Data(trait, kind, tier):
-    wType = get_weaponType(kind)
-    tierLevel = str((tier//4)+1)
-    if tierLevel == '5': tierLevel = '4'
 
-    if trait1Desc.get(trait):
-        if wType != 'NA':
-            if trait1Desc.get(trait).get('WEAPON'):
-                if trait1Desc.get(trait).get('WEAPON').get(tierLevel):
-                    return trait1Desc.get(trait).get('WEAPON').get(tierLevel)
+def get_trait_1_data(code_data: object):
+    _wType = get_weapon_type(code_data.kind, code_data.trait_2)
+    _tier_level = str((int(code_data.tier)//4)+1)
+    if _tier_level == '5':
+        _tier_level = '4'
+
+    if trait_1_desc.get(code_data.trait_1):
+        if _wType != 'NA':
+            if trait_1_desc.get(code_data.trait_1).get('WEAPON'):
+                if trait_1_desc.get(code_data.trait_1).get('WEAPON').get(_tier_level):
+                    return trait_1_desc.get(code_data.trait_1).get('WEAPON').get(_tier_level)
                 else:
                     raise Exception('Invalid tier level')
             else:
-                raise Exception(f'Could not find weapon kind for {kind}')
+                raise Exception(
+                    f'Could not find weapon kind name for {code_data.kind}')
         else:
-            if trait1Desc.get(trait).get('ITEM'):
-                if trait1Desc.get(trait).get('ITEM').get(tierLevel):
-                    return trait1Desc.get(trait).get('ITEM').get(tierLevel)
+            if trait_1_desc.get(code_data.trait_1).get('ITEM'):
+                if trait_1_desc.get(code_data.trait_1).get('ITEM').get(_tier_level):
+                    return trait_1_desc.get(code_data.trait_1).get('ITEM').get(_tier_level)
                 else:
                     raise Exception('Invalid tier level')
             else:
-                raise Exception(f'Could not find weapon kind for {kind}')
+                raise Exception(
+                    f'Could not find weapon kind name for {code_data.kind}')
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.readlines()
-        if customData[5].split(',')[0] == trait:
-            return customData[5].split(',')[int(tierLevel)]
-        elif customData[6].split(',')[0] == trait:
-            return customData[6].split(',')[int(tierLevel)]
-        
-        raise Exception(f'Could not find trait {trait}')
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
-def get_trat2Data(trait, kind, tier):
-    wType = get_weaponType(kind)
-    tierLevel = str(tier//4)
-    if tierLevel == '0': tierLevel = '1'
+        if _tier_level == '1':
+            return _custom_data[code_data.trait_1]['1-4']
+        elif _tier_level == '2':
+            return _custom_data[code_data.trait_1]['5-8']
+        elif _tier_level == '3':
+            return _custom_data[code_data.trait_1]['9-12']
+        elif _tier_level == '4':
+            return _custom_data[code_data.trait_1]['13-16']
 
-    if trait2Desc.get(trait):
-        if trait2Desc.get(trait).get(tierLevel):
-            if trait2Desc.get(trait).get(tierLevel).get(wType):
 
-                return trait2Desc.get(trait).get(tierLevel).get(wType)
+def get_trait_2_data(code_data: object):
+    _wType = get_weapon_type(code_data.kind, code_data.trait_2)
+    _tier_level = str((int(code_data.tier)//4)+1)
+    if _tier_level == '5':
+        _tier_level = '4'
+
+    if trait_2_desc.get(code_data.trait_2):
+        if trait_2_desc.get(code_data.trait_2).get(_tier_level):
+            if trait_2_desc.get(code_data.trait_2).get(_tier_level).get(_wType):
+
+                return trait_2_desc.get(code_data.trait_2).get(_tier_level).get(_wType)
             else:
-                raise Exception(f'Could not find weapon kind for {kind}')
+                raise Exception(
+                    f'Could not find weapon kind_name for {code_data.kind}')
         else:
             raise Exception('Invalid tier level')
     else:
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.readlines()
-        if customData[7].split(',')[0] == trait:
-            return customData[7].split(',')[int(tierLevel)]
-        elif customData[8].split(',')[0] == trait:
-            return customData[8].split(',')[int(tierLevel)]
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
 
-        raise Exception(f'Could not find trait {trait}')
-        
-def get_weaponType(weaponKind):
-    if weaponType.get(weaponKind):
-        with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-            customData = database.readlines()
+        if _tier_level == '1':
+            return _custom_data[code_data.trait_2]['1-4']
+        elif _tier_level == '2':
+            return _custom_data[code_data.trait_2]['5-8']
+        elif _tier_level == '3':
+            return _custom_data[code_data.trait_2]['9-12']
+        elif _tier_level == '4':
+            return _custom_data[code_data.trait_2]['13-16']
 
-        if weaponKind == customData[0].split(',')[0]:
-            return customData[0].split(',')[1]
-        elif weaponKind == customData[0].split(',')[2]:
-            return customData[0].split(',')[3]
+
+def get_weapon_type(weaponkind: str, trait_2: str):
+    if trait_2 == 'TRICKSTER':
+        return 'MAGIC'
+    elif trait_2 == 'MAGICAL':
+        return 'MAGIC'
+    elif trait_2 == 'GRIMDARK':
+        return 'MAGIC'
+
+    if weaponkind_type.get(weaponkind):
+        with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
+            _custom_data = json.load(_custom_data_file)
+
+        if weaponkind == 'KIND1':
+            return _custom_data['KIND1']['TYPE']
+        elif weaponkind == 'KIND2':
+            return _custom_data['KIND2']['TYPE']
         else:
-            return weaponType.get(weaponKind)
-    else:    
-        raise Exception(f'Could not find type for {weaponKind}')
-        
-def get_damageNumValue(tier, value):
-    if damgeNum.get(tier):
-        if damgeNum.get(tier).get(value):
-            return damgeNum.get(tier).get(value)
-        else:   
-            raise Exception(f'Could not find value {value} in {tier}') 
+            return weaponkind_type.get(weaponkind)
+    else:
+        raise Exception(f'Could not find type for {weaponkind}')
+
+
+def get_tier_damage_num(tier, value):
+    if tier_damage_num.get(tier):
+        if tier_damage_num.get(tier).get(value):
+            return tier_damage_num.get(tier).get(value)
+        else:
+            raise Exception(f'Could not find value {value} in {tier}')
     else:
         raise Exception(f'Could not find tier {tier}')
-
-def change_codeValue(whichCustom, newCodeValue):
-
-    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'r') as database:
-        customData = database.readlines()
-
-    customLine1 = customData[0].split(',')
-    customLine2 = customData[1].split(',')
-    customLine3 = customData[2].split(',')
-    customLine4 = customData[3].split(',')
-    customLine5 = customData[4].split(',')
-    customLine6 = customData[5].split(',')
-    customLine7 = customData[6].split(',')
-    customLine8 = customData[7].split(',')
-    customLine9 = customData[8].split(',')
-
-    line1 = f'{customLine1[0]},{customLine1[1]},{customLine1[2]},{customLine1[3]},\n'
-    line2 = f'{customLine2[0]},{customLine2[1]},\n'
-    line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
-    line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-    line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
-    line6 = f'{customLine6[0]},{customLine6[1]},{customLine6[2]},{customLine6[3]},{customLine6[4]},\n'
-    line7 = f'{customLine7[0]},{customLine7[1]},{customLine7[2]},{customLine7[3]},{customLine7[4]},\n'
-    line8 = f'{customLine8[0]},{customLine8[1]},{customLine8[2]},{customLine8[3]},{customLine8[4]},\n'
-    line9 = f'{customLine9[0]},{customLine9[1]},{customLine9[2]},{customLine9[3]},{customLine9[4]}'
-
-    with open('sylladex/captchalogueCards/data/codeDatabase.txt', 'w') as database:
-
-        # Customkind changing
-        if whichCustom == 'Customkind 1':
-            line1 = f'{newCodeValue},{customLine1[1]},{customLine1[2]},{customLine1[3]},\n'
-
-        elif whichCustom == 'Customkind 2':
-            line1 = f'{customLine1[0]},{customLine1[1]},{newCodeValue},{customLine1[3]},\n'
-
-        elif whichCustom == f'{customLine1[0]} Type':
-            line1 = f'{customLine1[0]},{newCodeValue},{customLine1[2]},{customLine1[3]},\n'
-            
-        elif whichCustom == f'{customLine1[2]} Type':
-            line1 = f'{customLine1[0]},{customLine1[1]},{customLine1[2]},{newCodeValue},\n'
-           
-        # Customkind icon changing
-        elif whichCustom == f'{customLine1[0]} Icon':
-            line2 = f'{newCodeValue},{customLine2[1]},\n' 
-           
-        elif whichCustom == f'{customLine1[2]} Icon':
-            line2 = f'{customLine2[0]},{newCodeValue},\n'
-            
-        # Melee action changing
-        elif whichCustom == 'Melee 1 Name':
-            line3 = f'{newCodeValue},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
-            
-        elif whichCustom == 'Melee 2 Name':
-            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{newCodeValue},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
-
-        elif whichCustom == 'Melee 1 Cost':
-            line3 = f'{customLine3[0]},{newCodeValue},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
-            
-        elif whichCustom == 'Melee 2 Cost':
-            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{newCodeValue},{customLine3[6]},{customLine3[7]},\n'
-            
-        elif whichCustom == 'Melee 1 Dmg':
-            line3 = f'{customLine3[0]},{customLine3[1]},{newCodeValue},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
-            
-        elif whichCustom == 'Melee 2 Dmg':
-            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{newCodeValue},{customLine3[7]},\n'
-            
-        elif whichCustom == 'Melee 1 Desc':
-            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{newCodeValue},{customLine3[4]},{customLine3[5]},{customLine3[6]},{customLine3[7]},\n'
-            
-        elif whichCustom == 'Melee 2 Desc':
-            line3 = f'{customLine3[0]},{customLine3[1]},{customLine3[2]},{customLine3[3]},{customLine3[4]},{customLine3[5]},{customLine3[6]},{newCodeValue},\n'
-
-        # Ranged action changing
-        elif whichCustom == 'Ranged 1 Name':
-            line4 = f'{newCodeValue},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-            
-        elif whichCustom == 'Ranged 2 Name':
-            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{newCodeValue},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-
-        elif whichCustom == 'Ranged 1 Cost':
-            line4 = f'{customLine4[0]},{newCodeValue},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-
-        elif whichCustom == 'Ranged 2 Cost':
-            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{newCodeValue},{customLine4[6]},{customLine4[7]},\n'
-
-        elif whichCustom == 'Ranged 1 Dmg':
-            line4 = f'{customLine4[0]},{customLine4[1]},{newCodeValue},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-
-        elif whichCustom == 'Ranged 2 Dmg':
-            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{newCodeValue},{customLine4[7]},\n'
-
-        elif whichCustom == 'Ranged 1 Desc':
-            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{newCodeValue},{customLine4[4]},{customLine4[5]},{customLine4[6]},{customLine4[7]},\n'
-            
-        elif whichCustom == 'Ranged 2 Desc':
-            line4 = f'{customLine4[0]},{customLine4[1]},{customLine4[2]},{customLine4[3]},{customLine4[4]},{customLine4[5]},{customLine4[6]},{newCodeValue},\n'
-
-        # Magic action changing
-        elif whichCustom == 'Magic 1 Name':
-            line5 = f'{newCodeValue},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
-            
-        elif whichCustom == 'Magic 2 Name':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{newCodeValue},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
-
-        elif whichCustom == 'Magic 1 Cost':
-            line5 = f'{customLine5[0]},{newCodeValue},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
-
-        elif whichCustom == 'Magic 2 Cost':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{newCodeValue},{customLine5[6]},{customLine5[7]},\n'
-
-        elif whichCustom == 'Magic 1 Dmg':
-            line5 = f'{customLine5[0]},{customLine5[1]},{newCodeValue},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
-
-        elif whichCustom == 'Magic 2 Dmg':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{newCodeValue},{customLine5[7]},\n'
-
-        elif whichCustom == 'Magic 1 Desc':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{newCodeValue},{customLine5[4]},{customLine5[5]},{customLine5[6]},{customLine5[7]},\n'
-            
-        elif whichCustom == 'Magic 2 Desc':
-            line5 = f'{customLine5[0]},{customLine5[1]},{customLine5[2]},{customLine5[3]},{customLine5[4]},{customLine5[5]},{customLine5[6]},{newCodeValue},\n'
-
-        # Custom trait 1 changing
-        elif whichCustom == 'Trait 1 Name':
-            line6 = f'{newCodeValue},{customLine6[1]},{customLine6[2]},{customLine6[3]},{customLine6[4]},\n'
-        elif whichCustom == 'Trait 1 1-4':
-            line6 = f'{customLine6[0]},{newCodeValue},{customLine6[2]},{customLine6[3]},{customLine6[4]},\n'
-        elif whichCustom == 'Trait 1 5-8':
-            line6 = f'{customLine6[0]},{customLine6[1]},{newCodeValue},{customLine6[3]},{customLine6[4]},\n'
-        elif whichCustom == 'Trait 1 9-12':
-            line6 = f'{customLine6[0]},{customLine6[1]},{customLine6[2]},{newCodeValue},{customLine6[4]},\n'
-        elif whichCustom == 'Trait 1 13-16':
-            line6 = f'{customLine6[0]},{customLine6[1]},{customLine6[2]},{customLine6[3]},{newCodeValue},\n'
-        
-        # Custom trait 2 changing
-        elif whichCustom == 'Trait 2 Name':
-            line7 = f'{newCodeValue},{customLine7[1]},{customLine7[2]},{customLine7[3]},{customLine7[4]},\n'
-        elif whichCustom == 'Trait 2 1-4':
-            line7 = f'{customLine7[0]},{newCodeValue},{customLine7[2]},{customLine7[3]},{customLine7[4]},\n'
-        elif whichCustom == 'Trait 2 5-8':
-            line7 = f'{customLine7[0]},{customLine7[1]},{newCodeValue},{customLine7[3]},{customLine7[4]},\n'
-        elif whichCustom == 'Trait 2 9-12':
-            line7 = f'{customLine7[0]},{customLine7[1]},{customLine7[2]},{newCodeValue},{customLine7[4]},\n'
-        elif whichCustom == 'Trait 2 13-16':
-            line7 = f'{customLine7[0]},{customLine7[1]},{customLine7[2]},{customLine7[3]},{newCodeValue},\n'
-        
-        # Custom trait 3 changing
-        elif whichCustom == 'Trait 3 Name':
-            line8 = f'{newCodeValue},{customLine8[1]},{customLine8[2]},{customLine8[3]},{customLine8[4]},\n'
-        elif whichCustom == 'Trait 3 1-4':
-            line8 = f'{customLine8[0]},{newCodeValue},{customLine8[2]},{customLine8[3]},{customLine8[4]},\n'
-        elif whichCustom == 'Trait 3 5-8':
-            line8 = f'{customLine8[0]},{customLine8[1]},{newCodeValue},{customLine8[3]},{customLine8[4]},\n'
-        elif whichCustom == 'Trait 3 9-12':
-            line8 = f'{customLine8[0]},{customLine8[1]},{customLine8[2]},{newCodeValue},{customLine8[4]},\n'
-        elif whichCustom == 'Trait 3 13-16':
-            line8 = f'{customLine8[0]},{customLine8[1]},{customLine8[2]},{customLine8[3]},{newCodeValue},\n'
-        
-        # Custom trait 4 changing
-        elif whichCustom == 'Trait 4 Name':
-            line9 = f'{newCodeValue},{customLine9[1]},{customLine9[2]},{customLine9[3]},{customLine9[4]}'
-        elif whichCustom == 'Trait 4 1-4':
-            line9 = f'{customLine9[0]},{newCodeValue},{customLine9[2]},{customLine9[3]},{customLine9[4]}'
-        elif whichCustom == 'Trait 4 5-8':
-            line9 = f'{customLine9[0]},{customLine9[1]},{newCodeValue},{customLine9[3]},{customLine9[4]}'
-        elif whichCustom == 'Trait 4 9-12':
-            line9 = f'{customLine9[0]},{customLine9[1]},{customLine9[2]},{newCodeValue},{customLine9[4]}'
-        elif whichCustom == 'Trait 4 9-12':
-            line9 = f'{customLine9[0]},{customLine9[1]},{customLine9[2]},{customLine9[3]},{newCodeValue}'
-
-
-        database.writelines([line1,line2,line3,line4,line5,line6,line7,line8,line9])
-        UIBase.get_uiElem('ConsoleMessage')('Saved Custom Settings')
-
-    for elem in UIBase.get_group('ui'):
-        if isinstance(elem, UIBase.get_uiElem('CardList')):
-            for child in elem.children:
-                child.redraw_card((255,255,255))
-
-    

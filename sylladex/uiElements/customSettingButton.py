@@ -1,51 +1,59 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class CustomSettingButton(UIBase):
+class CustomSettingButton(UIElement):
     def __init__(self):
-        super().__init__(0, 50, (70,70), 'CustomSettingButton', (0,0,0))
 
-        self.create_appearance([[64, 64], '#666666', [0, 6]], [[64, 64], '#1155CC', [6, 0]], colorKey = True, image = ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]])
+        super().__init__(
+            0,
+            50,
+            'CustomSettingButton',
+            1
+        )
 
-        self.toolTipText = 'Open custom card code settings'
+        self.apperance = Apperance(
+            self,
+            [70, 70],
+            [[64, 64], '#666666', [0, 6]],
+            [[64, 64], '#1155CC', [6, 0]],
+            colorKey=True,
+            images=[
+                ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [
+                    18, 12]]
+            ]
+        )
+
+        self.tool_tip_text = 'Open custom card code settings'
         self.hovering = False
-    
+
     def hover(self):
-        self.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12])
+        self.apperance.change_images(
+            [
+                ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12]]
+            ])
         self.hovering = True
 
     def no_hover(self):
-        self.reload_image('sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12])
+        self.apperance.change_images(
+            [
+                ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]]
+            ])
         self.hovering = False
 
     def on_click(self):
-        if self.toolTipText == 'Open custom card code settings':
-            self.rect.x = 342
-            self.toolTipText = 'Close custom card code settings'
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('SideBar')):
-                    UIBase.get_uiElem('CustomSettingMenu')(326)
-                    self.rect.x = 668
-                    return
-            UIBase.get_uiElem('CustomSettingMenu')(0)
+        if self.tool_tip_text == 'Open custom card code settings':
+            self.tool_tip_text = 'Close custom card code settings'
 
-        elif self.toolTipText == 'Close custom card code settings':
+            UIElement.get_ui_elem('CustomSettingMenu')()
 
-            self.rect.x = 0
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('CustomSettingMenu')):
-                    UIBase.remove_fromGroup(elem)
-                    elem.kill()
-                    for child in elem.children:
-                        UIBase.remove_fromGroup(child)
-                        child.kill()
-                        if hasattr(child, 'children'):
-                            for child in child.children:
-                                UIBase.remove_fromGroup(child)
-                                child.kill()
-                elif isinstance(elem, UIBase.get_uiElem('SideBar')):
-                    self.rect.x = 326        
-            
-            self.toolTipText = 'Open custom card code settings'
+        elif self.tool_tip_text == 'Close custom card code settings':
+
+            if UIElement.find_current_ui('SideBar'):
+                UIElement.find_current_ui('CustomSettingMenu').to_be_rect = -22
+            else:
+                UIElement.find_current_ui(
+                    'CustomSettingMenu').to_be_rect = -348
+
+            self.tool_tip_text = 'Open custom card code settings'

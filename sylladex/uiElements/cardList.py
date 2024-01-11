@@ -1,96 +1,141 @@
-### 9 items can fit before scroll
+# 9 items can fit before scroll
+import json
 import pygame as pg
 import pickle
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 from ..captchalogueCards.baseCard import BaseCard
 
 
-class CardList(UIBase):
-    children = []
+class CardList(UIElement):
+    __list = []
 
-    def __init__(self, x, y, size):
-        super().__init__(x, y, size, 'CardList', '#A4A4A4')
-        self.uiLayers.change_layer(self, -1)
-    
-    @classmethod
-    def add_toList(cls):
-        cls.children.append(UIBase.get_uiElem('ListObject')())
-        card = cls.children[len(cls.children)-1]
-        UIBase.add_toGroup(card)
-        UIBase.uiLayers.change_layer(card, -1)
-        cls.place_list()
-        cls.save_list()
+    def __init__(self, x, y):
+
+        super().__init__(
+            x,
+            y,
+            'CardList',
+            11
+        )
+
+        self.apperance = Apperance(
+            self,
+            [249, 625],
+            [[249, 625], '#A4A4A4', [0, 0]],
+        )
+
+        self.start_list()
 
     @classmethod
-    def remove_fromList(cls, TextField):
-        if cls.children[len(cls.children)-1].empty == True:
-            cls.children[len(cls.children)-1].kill()
-            cls.children.remove(cls.children[len(cls.children)-1])
-            cls.save_list()
+    def get_list(cls):
+        return cls.__list
+
+    @classmethod
+    def add_multi_to_list(cls):
+        _num = int(UIElement.find_current_ui(
+            'TextField', 'TextField (numOfCards)').text)
+        _dif = _num - len(cls.get_list())
+
+        if _dif < 0:
+            for i in range(abs(_dif)):
+                cls.remove_from_list()
         else:
-            UIBase.get_uiElem('PopUp')("You can only remove empty cards. Eject cards first")
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
-                    elem.text = str(len(cls.children))
-                    elem.draw()
-                    elem.no_hover()
+            for i in range(_dif):
+                cls._add_to_list()
+
+        cls.save_list()
+        UIElement.find_current_ui('CardList').place_list()
+        UIElement.find_current_ui('ScrollBar').update_size()
+        UIElement.find_current_ui('ScrollBar').rect.y = 196
+
+    @classmethod
+    def _add_to_list(cls):
+        cls.get_list().append(UIElement.get_ui_elem('ListObject')())
+
+    @classmethod
+    def remove_from_list(cls):
+        if cls.get_list()[len(cls.get_list())-1].empty == True:
+            cls.get_list()[len(cls.get_list())-1].kill()
+            cls.get_list().remove(cls.get_list()[len(cls.get_list())-1])
+        else:
+            UIElement.get_ui_elem('PopUp')(
+                "You can only remove empty cards. Eject cards first")
+            for _elem in UIElement.get_group('ui'):
+                if isinstance(_elem, UIElement.get_ui_elem('TextField')) and _elem.job == 'numOfCards':
+                    _elem.text = str(len(cls.get_list()))
+                    _elem.reload_text()
             return
-    
+
     @classmethod
     def save_list(cls):
-        UIBase.get_uiElem('ConsoleMessage')('Saved List')
-        tempList = []
-        for card in cls.children:
-            tempList.append([card.codeData, card.empty])
+        _card_list = {}
 
-        with open('sylladex/uiElements/data/uiList.plk', 'wb') as saveList:
-            pickle.dump(tempList, saveList, -1)
+        for _index, _card in enumerate(cls.get_list()):
+            _card_list[_index + 1] = {'CodeData': {}, 'Empty': True}
+            _card_data = _card_list[_index + 1]
+
+            _card_data['CodeData']['name'] = _card.code_data.name
+            _card_data['CodeData']['code'] = _card.code_data.code
+            _card_data['CodeData']['tier'] = _card.code_data.tier
+
+            _card_data['CodeData']['kind'] = _card.code_data.kind
+            _card_data['CodeData']['grist'] = _card.code_data.grist
+            _card_data['CodeData']['trait_1'] = _card.code_data.trait_1
+            _card_data['CodeData']['trait_2'] = _card.code_data.trait_2
+            _card_data['CodeData']['action_1'] = _card.code_data.action_1
+            _card_data['CodeData']['action_2'] = _card.code_data.action_2
+            _card_data['CodeData']['action_3'] = _card.code_data.action_3
+            _card_data['CodeData']['action_4'] = _card.code_data.action_4
+
+            _card_data['CodeData']['cardID'] = _card.code_data.cardID
+
+            _card_data['Empty'] = _card.empty
+
+        _new_card_list = json.dumps(_card_list, indent=4)
+
+        with open('sylladex/uiElements/data/cardList.json', 'w') as _card_list_file:
+            _card_list_file.write(_new_card_list)
+
+        UIElement.get_ui_elem('ConsoleMessage')('Saved List')
 
     @classmethod
     def load_list(cls):
-        with open('sylladex/uiElements/data/uiList.plk', 'rb') as saveList:
-            tempList = pickle.load(saveList)
+        with open('sylladex/uiElements/data/cardList.json', 'r') as _card_list_file:
+            _card_list = json.load(_card_list_file)
 
-        cls.children.clear()
+        cls.get_list().clear()
 
-        for card in tempList:
-            obj = UIBase.get_uiElem('ListObject')()
+        for _card_num in _card_list:
+            _card = _card_list[_card_num]
+            _obj = UIElement.get_ui_elem('ListObject')()
 
-            
-            if card[0]:
-                obj.codeData = card[0]
+            _obj.create_code_data(_card['CodeData'])
 
-                for _card in BaseCard.get_cardGroup():
-                    if _card.codeData == obj.codeData:
-                        obj.captaCard = _card
-                        break
-                obj.redraw_card('#FFFFFF')
+            for _c in BaseCard.get_cards():
+                if _c.code_data.cardID == _obj.code_data.cardID:
+                    _obj.capta_card = _c
+                    break
 
-            obj.empty = card[1]
-            cls.children.append(obj)
+            _obj.empty = _card['Empty']
+            _obj.redraw_card()
+            cls.get_list().append(_obj)
 
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('TextField')) and elem.job == 'numOfCards':
-                elem.text = str(len(cls.children))
-                elem.draw()
-                elem.no_hover()
+        for _elem in UIElement.get_group('ui'):
+            if isinstance(_elem, UIElement.get_ui_elem('TextField')) and _elem.job == 'numOfCards':
+                _elem.text = str(len(cls.get_list()))
+                _elem.reload_text()
+                break
 
-    def start_list(self):
-        self.load_list()
-        for card in self.children:
-            UIBase.add_toGroup(card)
-            UIBase.uiLayers.change_layer(card, -1)
-        self.place_list()
+    @classmethod
+    def start_list(cls):
+        cls.load_list()
+        UIElement.find_current_ui('CardList').place_list()
 
     def place_list(self):
-        offset = 70
-        for card in self.children:
-            
-            card.rect.y = 127 + offset
-            offset += 70
-        for elem in UIBase.get_group("ui"):
-            if isinstance(elem, UIBase.get_uiElem('ScrollBar')):
-                UIBase.remove_fromGroup(elem)
-                elem.kill()
-        UIBase.get_uiElem('ScrollBar')()
+        _offset = 70
+        for _card in self.get_list():
+
+            _card.rect.x = self.rect.x
+            _card.rect.y = 127 + _offset
+            _offset += 70

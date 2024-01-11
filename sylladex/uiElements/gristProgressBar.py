@@ -1,36 +1,44 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class GristProgressBar(UIBase):
-    def __init__(self, parent):
+class GristProgressBar(UIElement):
+    def __init__(self, parent: object):
         self.parent = parent
-        self.prevAmount = self.parent.children[0].text
+        self.prev_amount = 0
 
-        for elem in UIBase.get_group('ui'):
-            if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
-                self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
-                break
+        self.progress = 0
 
-        super().__init__(self.parent.rect.x+59, self.parent.rect.y+30, (99*self.progress,12), f'GristProgressBar ({self.parent.grist})', (67,178,222))
+        super().__init__(59,
+                         30,
+                         f'GristProgressBar ({self.parent.grist})',
+                         4
+                         )
+
+        self.apperance = Apperance(
+            self,
+            (99, 12),
+            [[99*self.progress, 12], (67, 178, 222), [0, 0]],
+            colorKey=True
+        )
 
     def update(self):
-        if self.parent.children[0].text != self.prevAmount:
-            self.prevAmount = self.parent.children[0].text
-            for elem in UIBase.get_group('ui'):
-                if isinstance(elem, UIBase.get_uiElem('GristCacheLimit')):
-                    if self.parent.children[0].text == '':
-                        self.progress = 0
-                        break
-                    elif int(self.parent.children[0].text) > int(elem.limitNum):
-                        self.progress = 1
-                        break
+        if self.parent.children[0].text != self.prev_amount:
 
-                    else:
-                        self.progress = int(self.parent.children[0].text) / int(elem.limitNum)
-                        break
+            if self.parent.children[0].text == '':
+                self.prev_amount = '0'
 
-            self.image = pg.Surface((99*self.progress, 12))
-            self.image.fill((76,178,222))
-        
+                self.progress = 0
+
+            else:
+                self.prev_amount = self.parent.children[0].text
+
+                self.progress = int(self.parent.children[0].text) / int(
+                    UIElement.find_current_ui('GristCacheLimit').limit_num)
+
+            self.apperance.size_color_pos = [
+                [[99*self.progress, 12], (67, 178, 222), [0, 0]]
+            ]
+
+            self.apperance.reload_apperance()

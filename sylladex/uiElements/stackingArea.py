@@ -1,14 +1,21 @@
 import pygame as pg
 
-from baseUI import UIBase
+from uiElement import UIElement, Apperance
 
 
-class StackingArea(UIBase):
+class StackingArea(UIElement):
     def __init__(self):
-        super().__init__(0, 0, (1920, 36), 'StackingArea', (0,0,0))
 
-        self.create_appearance([[1920, 36], UIBase.modusBackground, [0,0]], [[1920, 24], UIBase.modusForground, [0,0]])
+        super().__init__(
+            0,
+            0,
+            'StackingArea',
+            0
+        )
 
-    def reloadSelf(self):
-        self.create_appearance([[1920, 36], UIBase.modusBackground, [0,0]], [[1920, 24], UIBase.modusForground, [0,0]])
-
+        self.apperance = Apperance(
+            self,
+            [1920, 36],
+            [[1920, 36], 'ModusBackground', [0, 0]],
+            [[1920, 24], 'ModusForeground', [0, 0]]
+        )
