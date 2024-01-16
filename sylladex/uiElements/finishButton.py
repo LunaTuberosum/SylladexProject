@@ -71,7 +71,7 @@ class FinishButton(UIElement):
 
         self.card.writing = False
         _id = self.card.code_data.cardID
-        UIElement.CodeDatabase.read_code(
+        UIElement.code_database.read_code(
             self.card.children[0].text, self.card.children[1].text, self.card.children[2].text, self.card)
         self.card.code_data.cardID = _id
 

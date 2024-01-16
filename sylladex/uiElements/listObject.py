@@ -1,9 +1,8 @@
 import pygame as pg
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from sylladex.captchalogueCards.baseCard import BaseCard
 
 from uiElement import UIElement, Apperance
-from sylladex.captchalogueCards import codeDatabase
 
 
 @dataclass
@@ -140,7 +139,7 @@ class ListObject(UIElement):
                 ]
 
                 self.apperance.change_images([
-                    [UIElement.CodeDatabase.find_kind_image(
+                    [UIElement.code_database.find_kind_image(
                         self.code_data.kind), [185, 3]]
                 ])
                 self.apperance.kwargs['imageAlpha'] = 125

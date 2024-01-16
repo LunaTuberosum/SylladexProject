@@ -120,8 +120,8 @@ class UIElement(pg.sprite.Sprite):
 
     __current_ui = {}
 
-    CodeDatabase = None
-    CodeData = None
+    code_database = None
+    code_data = None
 
     def __init__(
         self,

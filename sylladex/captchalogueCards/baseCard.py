@@ -23,7 +23,7 @@ class BaseCard(pg.sprite.Sprite):
         self.hovering = False
         self.selected = False
 
-        self.code_data = UIElement.CodeData()
+        self.code_data = UIElement.code_data()
 
         self.rect = pos
 
@@ -61,10 +61,10 @@ class BaseCard(pg.sprite.Sprite):
 
     def kind_image(self) -> list:
         if self.selected == True:
-            return [UIElement.CodeDatabase.find_kind_image(
+            return [UIElement.code_database.find_kind_image(
                 self.code_data.kind), [15, 25]]
         else:
-            return [UIElement.CodeDatabase.find_kind_image(
+            return [UIElement.code_database.find_kind_image(
                 self.code_data.kind), [10, 31]]
 
     def hover(self):

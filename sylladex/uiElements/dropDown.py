@@ -148,7 +148,7 @@ class DropDown(UIElement):
                             self.options[_i],
                             startLayer=UIElement.get_group(
                                 'layer').get_layer_of_sprite(self) + 1,
-                            lookup=UIElement.CodeDatabase.kind_image_small,
+                            lookup=UIElement.code_database.kind_image_small,
                             baseColors=[
                                 '#C9DAF8',
                                 '#D9E2F1',

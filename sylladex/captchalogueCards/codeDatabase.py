@@ -3154,7 +3154,7 @@ def read_code(name: str, code_num: str, tier: str, list_obj: object):
     _action3 = get_action_name(_code_array[6], '7', _wType)
     _action4 = get_action_name(_code_array[7], '8', _wType)
 
-    list_obj.code_data = UIElement.CodeData(
+    list_obj.code_data = UIElement.code_data(
         name, code_num, tier, _kind, _grist, _trait1, _trait2, _action1, _action2, _action3, _action4)
 
 

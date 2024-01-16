@@ -55,11 +55,11 @@ class CustomSettingAreaBox(UIElement):
             [24, 24],
             f'{self.job}Icon',
             f'The icon of custom {self.job}',
-            list(UIElement.CodeDatabase.kind_image_small.keys()),
+            list(UIElement.code_database.kind_image_small.keys()),
             _kind_data['ICON'],
             'Image',
             startLayer=8,
-            lookup=UIElement.CodeDatabase.kind_image_small,
+            lookup=UIElement.code_database.kind_image_small,
             grid=[9, 7],
             baseColors=[
                 '#C9DAF8',
@@ -118,7 +118,7 @@ class CustomSettingAreaBox(UIElement):
                 if '!' in _card.code_data.code or '?' in _card.code_data.code:
                     _id = _card.code_data.cardID
 
-                    UIElement.CodeDatabase.read_code(
+                    UIElement.code_database.read_code(
                         _card.code_data.name, _card.code_data.code, _card.code_data.tier, _card)
 
                     _card.code_data.cardID = _id

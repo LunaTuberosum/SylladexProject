@@ -82,7 +82,7 @@ class StackManager():
 
         for _code_num in _stack_data:
             _code = _stack_data[_code_num]['CodeData']
-            _code_data = UIElement.CodeData(
+            _code_data = UIElement.code_data(
                 _code['name'], _code['code'], _code['tier'], _code['kind'], _code['grist'], _code['trait_1'], _code['trait_2'], _code['action_1'], _code['action_2'], _code['action_3'], _code['action_4'], _code['cardID'])
 
             for card in all_cards:

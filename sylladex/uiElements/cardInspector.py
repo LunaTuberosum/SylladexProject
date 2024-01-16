@@ -3,7 +3,6 @@ import pygame as pg
 
 from uiElement import Apperance, UIElement
 import settings
-from sylladex.captchalogueCards import codeDatabase
 
 
 class CardInspector(UIElement):
@@ -30,24 +29,24 @@ class CardInspector(UIElement):
             images=[
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/CARD_INSPECTOR.png', [
                     0, 0]],
-                [codeDatabase.find_kind_image_small(
+                [UIElement.code_database.find_kind_image_small(
                     self.code_data.kind), [92, 121]],
-                [codeDatabase.find_grist_image_small(
+                [UIElement.code_database.find_grist_image_small(
                     self.code_data.grist), [116, 146]],
-                [codeDatabase.get_action_image(
-                    self.code_data.action_1, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 232), [51, 232]],
-                [codeDatabase.get_action_image(
-                    self.code_data.action_2, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 256), [51, 256]],
-                [codeDatabase.get_action_image(
-                    self.code_data.action_3, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 232), [183, 232]],
-                [codeDatabase.get_action_image(
-                    self.code_data.action_4, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 256), [183, 256]]
+                [UIElement.code_database.get_action_image(
+                    self.code_data.action_1, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 232), [51, 232]],
+                [UIElement.code_database.get_action_image(
+                    self.code_data.action_2, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 256), [51, 256]],
+                [UIElement.code_database.get_action_image(
+                    self.code_data.action_3, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 232), [183, 232]],
+                [UIElement.code_database.get_action_image(
+                    self.code_data.action_4, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 256), [183, 256]]
             ],
             texts=[
                 ['NAME', [36, 48], 'center', '#000000'],
                 [self.code_data.name, [
                     65, 48], 'left', '#000000'],
-                [codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2), [
+                [UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), [
                     281, 84], 'center', '#000000'],
                 ['TRAIT 1', [46, 84], 'center', '#000000'],
                 [self.check_for_custom(self.code_data.trait_1), [
@@ -63,13 +62,13 @@ class CardInspector(UIElement):
                 ['EFFECTIVE', [68, 184], 'center', '#000000'],
                 ['INEFFECTIVE', [68, 209], 'center', '#000000'],
                 ['INSPECT INFORMATION', [159, 305], 'center', '#000000'],
-                [codeDatabase.get_tier_damage_num(self.code_data.tier, '1'), [
+                [UIElement.code_database.get_tier_damage_num(self.code_data.tier, '1'), [
                     286, 121], 'center', '#000000'],
-                [codeDatabase.get_tier_damage_num(self.code_data.tier, '2'), [
+                [UIElement.code_database.get_tier_damage_num(self.code_data.tier, '2'), [
                     286, 146], 'center', '#000000'],
-                [codeDatabase.get_tier_damage_num(self.code_data.tier, '3'), [
+                [UIElement.code_database.get_tier_damage_num(self.code_data.tier, '3'), [
                     286, 171], 'center', '#000000'],
-                [codeDatabase.get_tier_damage_num(self.code_data.tier, 'BD'), [
+                [UIElement.code_database.get_tier_damage_num(self.code_data.tier, 'BD'), [
                     286, 196], 'center', '#000000'],
                 ['CST', [30, 332], 'center', '#000000'],
                 ['DMG', [30, 362], 'center', '#000000'],
@@ -107,14 +106,14 @@ class CardInspector(UIElement):
             self.add_child(_action)
 
         _images = self.apperance.kwargs['images']
-        for _index, _eff in enumerate(codeDatabase.grist_data.get(self.code_data.grist).get('Effective')):
+        for _index, _eff in enumerate(UIElement.code_database.grist_data.get(self.code_data.grist).get('Effective')):
             _images.append(
-                [codeDatabase.find_grist_image_small(
+                [UIElement.code_database.find_grist_image_small(
                     _eff), [127+(25*_index), 171]]
             )
 
-        for _index, _diseff in enumerate(codeDatabase.grist_data.get(self.code_data.grist).get('Diseffective')):
-            _images.append([codeDatabase.find_grist_image_small(
+        for _index, _diseff in enumerate(UIElement.code_database.grist_data.get(self.code_data.grist).get('Diseffective')):
+            _images.append([UIElement.code_database.find_grist_image_small(
                 _diseff), [127+(25*_index), 197]])
 
         self.apperance.change_images(_images)
@@ -190,10 +189,10 @@ class CardInspector(UIElement):
     def trait_desc(self, check: object):
         if check.job == 'Trait1':
             _lines_and_pos = self.line_positions(
-                codeDatabase.get_trait_1_data(self.code_data))
+                UIElement.code_database.get_trait_1_data(self.code_data))
         elif check.job == 'Trait2':
             _lines_and_pos = self.line_positions(
-                codeDatabase.get_trait_2_data(self.code_data))
+                UIElement.code_database.get_trait_2_data(self.code_data))
 
         _text = self.apperance.kwargs['texts']
 
@@ -208,20 +207,20 @@ class CardInspector(UIElement):
 
     def action_desc(self, check: object):
         if check.job == 'Action1':
-            _action_info = codeDatabase.get_action_info(
-                self.code_data.action_1, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
+            _action_info = UIElement.code_database.get_action_info(
+                self.code_data.action_1, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
 
         elif check.job == 'Action2':
-            _action_info = codeDatabase.get_action_info(
-                self.code_data.action_2, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
+            _action_info = UIElement.code_database.get_action_info(
+                self.code_data.action_2, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
 
         elif check.job == 'Action3':
-            _action_info = codeDatabase.get_action_info(
-                self.code_data.action_3, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
+            _action_info = UIElement.code_database.get_action_info(
+                self.code_data.action_3, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
 
         elif check.job == 'Action4':
-            _action_info = codeDatabase.get_action_info(
-                self.code_data.action_4, codeDatabase.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
+            _action_info = UIElement.code_database.get_action_info(
+                self.code_data.action_4, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2))
 
         _lines_and_pos = self.line_positions(_action_info[2])
 

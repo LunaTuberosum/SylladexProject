@@ -7,8 +7,8 @@ from uiElement import UIElement
 from sylladex.captchalogueCards import codeDatabase
 from sylladex.uiElements.listObject import CodeData
 
-UIElement.CodeDatabase = codeDatabase
-UIElement.CodeData = CodeData
+UIElement.code_database = codeDatabase
+UIElement.code_data = CodeData
 
 pg.init()
 
