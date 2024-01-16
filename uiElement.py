@@ -23,6 +23,8 @@ class Apperance():
         }
     }
 
+    scale = 1
+
     def __init__(
         self,
         obj: object,
@@ -53,7 +55,7 @@ class Apperance():
             self.obj.image.set_colorkey('#D8DDFF')
 
         for _rect in self.size_color_pos:
-            _rect_ = pg.Surface(_rect[0])
+            _rect_ = pg.Surface([_rect[0][0] // Apperance.scale, _rect[0][1] // Apperance.scale])
             if _rect[1] == 'ModusBackground':
                 _rect_.fill(Apperance.__modus_color.get(
                     UIElement.get_modus()).get('background'))
@@ -65,7 +67,7 @@ class Apperance():
                     UIElement.get_modus()).get('accent'))
             else:
                 _rect_.fill(_rect[1])
-            self.obj.image.blit(_rect_, _rect[2])
+            self.obj.image.blit(_rect_, [_rect[2][0] // Apperance.scale, _rect[2][1] // Apperance.scale])
 
         if 'alpha' in self.kwargs:
             self.obj.image.set_alpha(self.kwargs['alpha'])
@@ -73,9 +75,12 @@ class Apperance():
         if 'images' in self.kwargs:
             for _image in self.kwargs['images']:
                 _img = pg.image.load(_image[0]).convert_alpha()
+
+                _img = pg.transform.scale(_img, (_img.get_width() // Apperance.scale, _img.get_height() // Apperance.scale))
+
                 if 'imageAlpha' in self.kwargs:
                     _img.set_alpha(self.kwargs['imageAlpha'])
-                self.obj.image.blit(_img, _image[1])
+                self.obj.image.blit(_img, [_image[1][0] // Apperance.scale, _image[1][1] // Apperance.scale])
 
         if 'texts' in self.kwargs:
             for _text in self.kwargs['texts']:
@@ -105,10 +110,21 @@ class Apperance():
         self.kwargs['images'] = images
         self.reload_apperance()
 
-    def change_size(self, size: list, new_size_color_pos: list):
+    def change_size_color_pos(self, size: list, new_size_color_pos: list):
         self.base_size = size
         self.size_color_pos = new_size_color_pos
         self.reload_apperance()
+
+    @classmethod
+    def change_size(cls):
+        cls.scale = 2
+
+        for _elem in UIElement.get_group('ui'):
+            _elem.apperance.base_size = [_elem.apperance.base_size[0] // cls.scale, _elem.apperance.base_size[1] // cls.scale]
+            _elem.rect.x = _elem.rect.x // 2
+            _elem.rect.y = _elem.rect.y // 2
+
+            _elem.apperance.reload_apperance()
 
 
 # Class that holds data for all UIElements

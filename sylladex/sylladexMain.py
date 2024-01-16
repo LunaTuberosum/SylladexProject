@@ -1,6 +1,6 @@
 import pygame as pg
 
-from uiElement import UIElement
+from uiElement import Apperance, UIElement
 from .captchalogueCards.stackManager import StackManager
 
 from .captchalogueCards.cardOutline import CardOutline
@@ -222,6 +222,9 @@ def main(screen, clock):
                     BaseCard.save_cards()
                     UIElement.get_ui_elem('ConsoleMessage')(
                         'Saved new center')
+                    
+                elif event.mod == pg.KMOD_LSHIFT and event.key == pg.K_EQUALS:
+                    Apperance.change_size()
 
                 elif event.key == pg.K_HOME:
                     UIElement.find_current_ui('CenterObj').recenter()

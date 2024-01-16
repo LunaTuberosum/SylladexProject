@@ -37,7 +37,7 @@ class ScrollBar(UIElement):
             else:
                 _size = 0
 
-        self.apperance.change_size(
+        self.apperance.change_size_color_pos(
             [23, _size], [[[23, _size], '#999999', [0, 0]]])
 
     def hover(self):
