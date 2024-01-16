@@ -34,13 +34,13 @@ class CardInspector(UIElement):
                 [UIElement.code_database.find_grist_image_small(
                     self.code_data.grist), [116, 146]],
                 [UIElement.code_database.get_action_image(
-                    self.code_data.action_1, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 232), [51, 232]],
+                    self.code_data.action_1, 51, 232), [51, 232]],
                 [UIElement.code_database.get_action_image(
-                    self.code_data.action_2, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 51, 256), [51, 256]],
+                    self.code_data.action_2, 51, 256), [51, 256]],
                 [UIElement.code_database.get_action_image(
-                    self.code_data.action_3, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 232), [183, 232]],
+                    self.code_data.action_3, 183, 232), [183, 232]],
                 [UIElement.code_database.get_action_image(
-                    self.code_data.action_4, UIElement.code_database.get_weapon_type(self.code_data.kind, self.code_data.trait_2), 183, 256), [183, 256]]
+                    self.code_data.action_4, 183, 256), [183, 256]]
             ],
             texts=[
                 ['NAME', [36, 48], 'center', '#000000'],

@@ -1,7 +1,6 @@
 import json
 from random import *
 from math import *
-import pygame as pg
 
 from uiElement import UIElement
 
@@ -3177,7 +3176,7 @@ def get_action_info(action_name: str, w_type: str):
         raise Exception(f'Cant find data for action_name {action_name}')
 
 
-def get_action_name(symbol, position, wType):
+def get_action_name(symbol: str, position: str, wType: str):
     if code_cypher.get(symbol):
         if code_cypher.get(symbol).get(position):
             if code_cypher.get(symbol).get(position).get(wType):
@@ -3191,7 +3190,7 @@ def get_action_name(symbol, position, wType):
         raise Exception(f'Couldn\'t find {symbol}')
 
 
-def get_action_image(action_name: str, w_type: str, _x: int, _y: int):
+def get_action_image(action_name: str, _x: int, _y: int):
     with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
         _custom_data = json.load(_custom_data_file)
 
@@ -3214,7 +3213,7 @@ def get_action_image(action_name: str, w_type: str, _x: int, _y: int):
         return action_image.get(action_name)
 
 
-def find_kind_image(kind_name):
+def find_kind_image(kind_name: str):
     if kind_image.get(kind_name):
         return kind_image.get(kind_name)
     else:
@@ -3229,7 +3228,7 @@ def find_kind_image(kind_name):
             raise Exception(f'Could not find image for {kind_name}')
 
 
-def find_kind_image_small(kind_name):
+def find_kind_image_small(kind_name: str):
     if kind_image_small.get(kind_name):
         return kind_image_small.get(kind_name)
     else:
@@ -3244,21 +3243,21 @@ def find_kind_image_small(kind_name):
             raise Exception(f'Could not find image for {kind_name}')
 
 
-def find_grist_image(grist_name):
+def find_grist_image(grist_name: str):
     if grist_image.get(grist_name):
         return grist_image.get(grist_name)
     else:
         raise Exception(f'Could not find image for {grist_name}')
 
 
-def find_grist_image_small(grist_name):
+def find_grist_image_small(grist_name: str):
     if grist_image_small.get(grist_name):
         return grist_image_small.get(grist_name)
     else:
         raise Exception(f'Could not find image for {grist_name}')
 
 
-def get_code_value(symbol, position):
+def get_code_value(symbol: str, position: str):
     if code_cypher.get(symbol):
         if code_cypher.get(symbol).get(position):
 
@@ -3360,7 +3359,7 @@ def get_weapon_type(weaponkind: str, trait_2: str):
         raise Exception(f'Could not find type for {weaponkind}')
 
 
-def get_tier_damage_num(tier, value):
+def get_tier_damage_num(tier: str, value: str):
     if tier_damage_num.get(tier):
         if tier_damage_num.get(tier).get(value):
             return tier_damage_num.get(tier).get(value)
