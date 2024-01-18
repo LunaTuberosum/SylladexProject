@@ -63,10 +63,12 @@ class GristCacheButton(UIElement):
                     ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
                 ])
 
-            if UIElement.check_for_ui('SideBar'):
-                UIElement.get_ui_elem('GristCache')()
-            else:
-                UIElement.get_ui_elem('GristCache')()
+            _cache = UIElement.find_current_ui('GristCache')
+            if _cache:
+                _cache.to_be_rect = UIElement.find_current_ui('SideBar').rect.right if UIElement.check_for_ui('SideBar') else 0
+                return
+
+            UIElement.get_ui_elem('GristCache')()
 
         elif self.tool_tip_text == 'Closes Grist Cache':
 

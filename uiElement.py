@@ -139,6 +139,7 @@ class UIElement(pg.sprite.Sprite):
         self.obj_name = obj_name
         self.tool_tip_text = ''
         self.hovering = False
+        self.interactable = True
 
         self.children = []
 
@@ -166,6 +167,9 @@ class UIElement(pg.sprite.Sprite):
         pass
 
     def no_hover(self):
+        pass
+
+    def remove_self(self):
         pass
 
     @classmethod
@@ -264,8 +268,7 @@ class UIElement(pg.sprite.Sprite):
 
     @classmethod
     def remove_from_group(cls, elem: object):
-        cls.get_group("ui").remove(elem)
-        cls.get_group("layer").remove(elem)
+        elem.remove_self()
 
         if cls.has_children(elem):
             for _child in elem.children:

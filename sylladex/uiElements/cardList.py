@@ -27,6 +27,10 @@ class CardList(UIElement):
 
         self.start_list()
 
+    def remove_self(self):
+        for _card in CardList.get_list():
+            UIElement.remove_from_group(_card)
+
     @classmethod
     def get_list(cls):
         return cls.__list

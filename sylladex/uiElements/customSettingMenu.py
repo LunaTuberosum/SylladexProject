@@ -8,7 +8,7 @@ class CustomSettingMenu(UIElement):
     def __init__(self):
 
         super().__init__(
-            -22 if UIElement.find_current_ui('SideBar') else -348,
+            0 if UIElement.find_current_ui('SideBar') else -348,
             38,
             'CustomSettingMenu',
             6
@@ -62,10 +62,7 @@ class CustomSettingMenu(UIElement):
         self.add_child(UIElement.get_ui_elem('CustomSettingAreaBox')(
             12, 654, "TRAITS", 'tier 13-16'))
 
-        if UIElement.find_current_ui('SideBar'):
-            self.to_be_rect = 326
-        else:
-            self.to_be_rect = 0
+        self.to_be_rect = 326 if UIElement.find_current_ui('SideBar') else 0
 
     def update(self):
         if self.rect.x != self.to_be_rect:

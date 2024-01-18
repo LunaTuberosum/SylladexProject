@@ -46,14 +46,18 @@ class CustomSettingButton(UIElement):
         if self.tool_tip_text == 'Open custom card code settings':
             self.tool_tip_text = 'Close custom card code settings'
 
+            _custom = UIElement.find_current_ui('CustomSettingMenu')
+            if _custom:
+                _custom.to_be_rect = UIElement.find_current_ui('SideBar').rect.right if UIElement.find_current_ui('SideBar') else 0
+                return
             UIElement.get_ui_elem('CustomSettingMenu')()
 
         elif self.tool_tip_text == 'Close custom card code settings':
 
+            self.tool_tip_text = 'Open custom card code settings'
             if UIElement.find_current_ui('SideBar'):
                 UIElement.find_current_ui('CustomSettingMenu').to_be_rect = -22
             else:
                 UIElement.find_current_ui(
                     'CustomSettingMenu').to_be_rect = -348
 
-            self.tool_tip_text = 'Open custom card code settings'

@@ -61,10 +61,7 @@ class GristCache(UIElement):
 
         self.load_cache()
 
-        if UIElement.check_for_ui('SideBar'):
-            self.to_be_rect = UIElement.find_current_ui('SideBar').rect.right
-        else:
-            self.to_be_rect = 0
+        self.to_be_rect = UIElement.find_current_ui('SideBar').rect.right if UIElement.check_for_ui('SideBar') else 0
 
     def update(self):
 

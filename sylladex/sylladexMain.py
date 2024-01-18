@@ -263,6 +263,8 @@ def main(screen, clock):
         _hovered_element = []
         _tooled_element = []
         for _elem in UIElement.get_group("ui"):
+            if not UIElement.get_group('ui').has(_elem):
+                continue
             _elem.current_tick += _elem.clock.tick(30)
             _elem.no_hover()
 
@@ -341,10 +343,13 @@ def main(screen, clock):
 
         clock.tick(30)
         screen.fill('#B7B7B7')
-        UIElement.get_group("ui").draw(screen)
+        update_screen(screen)
 
         _temp_group = pg.sprite.LayeredUpdates()
         for _card in BaseCard.get_cards():
+            if hasattr(_card, 'interactable'):
+                if not _card.interactable:
+                    continue
             _temp_group.add(_card)
             _temp_group.change_layer(_card, -_card.rect.y)
         _temp_group.draw(screen)
@@ -355,3 +360,14 @@ def main(screen, clock):
         UIElement.get_group("layer").draw(screen)
         BaseCard.grabbed_card.draw(screen)
         pg.display.flip()
+
+def update_screen(screen):
+    _elem_pass = pg.sprite.LayeredUpdates()
+
+    for _elem in UIElement.get_group('ui'):
+        if _elem.interactable:
+            _elem_pass.add(_elem)
+            _elem_pass.change_layer(_elem, UIElement.get_group('layer').get_layer_of_sprite(_elem))
+
+    _elem_pass.draw(screen)
+    _elem_pass.empty()

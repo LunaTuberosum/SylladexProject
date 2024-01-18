@@ -50,7 +50,6 @@ class ListObject(UIElement):
                 ['-', [190, 49], 'left', '#000000']]
         )
 
-        self.interactable = True
         self.prev_pos = None
         self.grabbed = False
         self.hovering = False
