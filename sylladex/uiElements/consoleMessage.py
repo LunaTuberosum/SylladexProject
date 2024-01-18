@@ -15,14 +15,14 @@ class ConsoleMessage(UIElement):
             999
         )
 
-        self.font = pg.font.Font(
-            'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf', 24)
-
         self.apperance = Apperance(
             self,
             [15+(len(text)*11.5), 30],
             [[15+(len(text)*11.5), 30], (50, 50, 50), [0, 0]],
             alpha=130,
+            fonts=[
+                ['sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf', 24]
+            ],
             texts=[[text, [10, 15], 'left', '#ffffff']]
         )
 

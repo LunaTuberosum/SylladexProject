@@ -104,7 +104,7 @@ class SideBarButton(UIElement):
                 ])
             self.rect.x = 0
 
-            UIElement.find_current_ui('SideBar').to_be_rect = -326
+            UIElement.find_current_ui('SideBar').to_be_rect = -UIElement.find_current_ui('SideBar').rect.width
             UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
             UIElement.get_ui_elem('EditCardButton').change_edit(False)
 

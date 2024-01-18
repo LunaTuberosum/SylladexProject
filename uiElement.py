@@ -33,7 +33,7 @@ class Apperance():
         **kwargs
     ):
 
-        self.base_size = base_size
+        self.base_size = [base_size[0] // Apperance.scale, base_size[1] // Apperance.scale]
 
         self.obj = obj
         self.obj.image = pg.Surface(self.base_size)
@@ -83,28 +83,43 @@ class Apperance():
                 self.obj.image.blit(_img, [_image[1][0] // Apperance.scale, _image[1][1] // Apperance.scale])
 
         if 'texts' in self.kwargs:
-            for _text in self.kwargs['texts']:
+            if not 'fonts' in self.kwargs:
+                raise Exception('Objects with text must assign at least one font')
 
+            for _text in self.kwargs['texts']:
                 if len(_text) == 5:
-                    self.obj.font = pg.font.Font(_text[4][0], _text[4][1])
+                    _font = self.kwargs['fonts'][_text[4]]
+                else:
+                    _font = self.kwargs['fonts'][0]
+
+                self.font = pg.font.Font(_font[0], _font[1] // Apperance.scale)
 
                 if _text[3] == 'ModusBackground':
-                    _text_ = self.obj.font.render(_text[0], True,
+                    _text_ = self.font.render(_text[0], True,
                                                   Apperance.__modus_color.get(UIElement.get_modus()).get('background'))
                 elif _text[3] == 'ModusForeground':
-                    _text_ = self.obj.font.render(_text[0], True,
+                    _text_ = self.font.render(_text[0], True,
                                                   Apperance.__modus_color.get(UIElement.get_modus()).get('foreground'))
                 elif _text[3] == 'ModusAccent':
-                    _text_ = self.obj.font.render(_text[0], True,
+                    _text_ = self.font.render(_text[0], True,
                                                   Apperance.__modus_color.get(UIElement.get_modus()).get('accent'))
                 else:
-                    _text_ = self.obj.font.render(_text[0], True, _text[3])
+                    _text_ = self.font.render(_text[0], True, _text[3])
+
                 if _text[2] == 'center':
-                    self.obj.image.blit(_text_, [
-                                        _text[1][0]-(_text_.get_width()/2), (_text[1][1]-(_text_.get_height()/2))])
+                    self.obj.image.blit(
+                        _text_, [
+                            (_text[1][0] // Apperance.scale)-(_text_.get_width() / 2), 
+                            (_text[1][1] // Apperance.scale)-(_text_.get_height() / 2)
+                        ]
+                    )
                 elif _text[2] == 'left':
                     self.obj.image.blit(
-                        _text_, [_text[1][0], (_text[1][1]-(_text_.get_height()/2))])
+                        _text_, [
+                            _text[1][0] // Apperance.scale, 
+                            (_text[1][1] // Apperance.scale)-(_text_.get_height()/2)
+                        ]
+                    )
 
     def change_images(self, images: list):
         self.kwargs['images'] = images
@@ -167,13 +182,13 @@ class UIElement(pg.sprite.Sprite):
     def add_child(self, elem):
         self.children.append(elem)
 
-        elem.rect.x += self.rect.x
-        elem.rect.y += self.rect.y
+        elem.rect.x = (elem.rect.x // Apperance.scale) + self.rect.x
+        elem.rect.y = (elem.rect.y // Apperance.scale) + self.rect.y
 
         if UIElement.has_children(elem):
             for child in elem.children:
-                child.rect.x += self.rect.x
-                child.rect.y += self.rect.y
+                child.rect.x = (child.rect.x // Apperance.scale) + self.rect.x
+                child.rect.y = (child.rect.y // Apperance.scale) + self.rect.y
 
     def on_click(self):
         pass

@@ -13,9 +13,6 @@ class SideBar(UIElement):
             10
         )
 
-        self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 36)
-
         self.apperance = Apperance(
             self,
             [326, 1080],
@@ -30,6 +27,9 @@ class SideBar(UIElement):
             [[278, 199], 'ModusBackground', [24, 857]],
             [[278, 199], '#A4A4A4', [18, 851]],
             colorKey=True,
+            fonts=[
+                ["sylladex/uiElements/asset/MISC/fontstuck.ttf", 36]
+            ],
             texts=[
                 ['SYLLADEX', [24, 20], 'left', '#FFFFFF'],
                 ['NUM OF CARDS', [133, 170], 'center', '#000000'],
@@ -43,24 +43,24 @@ class SideBar(UIElement):
             110, 48))
         self.add_child(UIElement.get_ui_elem('EditCardButton')(
             218, 48))
-        self.add_child(UIElement.get_ui_elem('TextField')(
-            242,
-            142,
-            [53, 48],
-            "numOfCards",
-            "The Number of Cards in you Sylladex",
-            3,
-            startLayer=11,
-            textType='Num',
-            align='center',
-            fontSize=24,
-            exitCommand=UIElement.get_ui_elem('CardList').add_multi_to_list
-        ))
+        # self.add_child(UIElement.get_ui_elem('TextField')(
+        #     242,
+        #     142,
+        #     [53, 48],
+        #     "numOfCards",
+        #     "The Number of Cards in you Sylladex",
+        #     3,
+        #     startLayer=11,
+        #     textType='Num',
+        #     align='center',
+        #     fontSize=24,
+        #     exitCommand=UIElement.get_ui_elem('CardList').add_multi_to_list
+        # ))
 
-        self.add_child(UIElement.get_ui_elem('CardList')(
-            24, 196))
-        self.add_child(UIElement.get_ui_elem('ScrollBar')(
-            273, 196))
+        # self.add_child(UIElement.get_ui_elem('CardList')(
+        #     24, 196))
+        # self.add_child(UIElement.get_ui_elem('ScrollBar')(
+        #     273, 196))
 
         self.add_child(UIElement.get_ui_elem('ModusCard')
                        (33, "STACK"))
@@ -73,7 +73,7 @@ class SideBar(UIElement):
             if UIElement.find_current_ui('GristCache').to_be_rect != -719:
                 UIElement.find_current_ui('GristCache').to_be_rect = 326
             else:
-                UIElement.find_current_ui('GristCache').to_be_rect = -392
+                UIElement.find_current_ui('GristCache').to_be_rect = -self.rect.width
 
         self.to_be_rect = 0
 
@@ -82,7 +82,7 @@ class SideBar(UIElement):
 
             UIElement.move_element(
                 self, [UIElement.lerp(self.rect.x, self.to_be_rect, 0.2), 0])
-            UIElement.find_current_ui('CardList').place_list()
+            # UIElement.find_current_ui('CardList').place_list()
 
             if not UIElement.find_current_ui('GristCache'):
                 UIElement.find_current_ui(
@@ -92,5 +92,5 @@ class SideBar(UIElement):
                     'CustomSettingButton').rect.x = self.rect.right
             UIElement.find_current_ui('SideBarButton').rect.x = self.rect.right
         else:
-            if self.to_be_rect == -326:
+            if self.to_be_rect == -self.rect.width:
                 UIElement.remove_from_group(self)
