@@ -446,5 +446,21 @@
             "action_4": "ACTION1",
             "cardID": 28
         }
+    },
+    "29": {
+        "CodeData": {
+            "name": "as",
+            "code": "asasasas",
+            "tier": "12",
+            "kind": "Shotgunkind",
+            "grist": "MARBLE",
+            "trait_1": "BOUNCY",
+            "trait_2": "ROCKET",
+            "action_1": "AGGRESS",
+            "action_2": "ARBORIZE",
+            "action_3": "ARRIVE",
+            "action_4": "AGGRAVATE",
+            "cardID": 29
+        }
     }
 }

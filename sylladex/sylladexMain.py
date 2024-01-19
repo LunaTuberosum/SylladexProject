@@ -1,3 +1,4 @@
+import inspect
 import pygame as pg
 
 from uiElement import UIElement
@@ -6,84 +7,14 @@ from .captchalogueCards.stackManager import StackManager
 from .captchalogueCards.cardOutline import CardOutline
 from .captchalogueCards.baseCard import BaseCard
 
-from .uiElements.actionIcon import ActionIcon
-from .uiElements.addCardButton import AddCardButton
-from .uiElements.cardInspector import CardInspector
-from .uiElements.cardInspectorButton import CardInspectorButton
-from .uiElements.cardInspectorCheck import CardInspectorCheck
-from .uiElements.cardList import CardList
-from .uiElements.centerObj import CenterObj
-from .uiElements.consoleMessage import ConsoleMessage
-from .uiElements.customSettingAreaBox import CustomSettingAreaBox
-from .uiElements.customSettingButton import CustomSettingButton
-from .uiElements.customSettingMenu import CustomSettingMenu
-from .uiElements.customSettingSectionName import CustomSettingSectionName
-from .uiElements.debugInspector import DebugInspector
-from .uiElements.dropDown import DropDown
-from .uiElements.dropDownBackground import DropDownBackground
-from .uiElements.dropDownOption import DropDownOption
-from .uiElements.editCardButton import EditCardButton
-from .uiElements.escapeMenu import EscapeMenu
-from .uiElements.escapeMenuOption import EscapeMenuOption
-from .uiElements.gristCache import GristCache
-from .uiElements.gristCacheButton import GristCacheButton
-from .uiElements.gristCacheLimit import GristCacheLimit
-from .uiElements.gristInfoBox import GristInfoBox
-from .uiElements.gristProgressBar import GristProgressBar
-from .uiElements.listObject import ListObject
-from .uiElements.longTextField import LongTextField
-from .uiElements.modusCard import ModusCard
-from .uiElements.popUp import PopUp
-from .uiElements.removeCardButton import RemoveCardButton
-from .uiElements.scrollBar import ScrollBar
-from .uiElements.sideBar import SideBar
-from .uiElements.sidebarButton import SideBarButton
-from .uiElements.stackingArea import StackingArea
-from .uiElements.textField import TextField
-from .uiElements.toggleButton import ToggleButton
-from .uiElements.toolTip import ToolTip
-from .uiElements.finishButton import FinishButton
+from . import uiElements
 
-UIElement.add_current_ui([
-    ActionIcon,
-    AddCardButton,
-    CardInspector,
-    CardInspectorButton,
-    CardInspectorCheck,
-    CardList,
-    CenterObj,
-    ConsoleMessage,
-    CustomSettingAreaBox,
-    CustomSettingButton,
-    CustomSettingMenu,
-    CustomSettingSectionName,
-    DebugInspector,
-    DropDown,
-    DropDownBackground,
-    DropDownOption,
-    EditCardButton,
-    EscapeMenu,
-    EscapeMenuOption,
-    GristCache,
-    GristCacheButton,
-    GristCacheLimit,
-    GristInfoBox,
-    GristProgressBar,
-    ListObject,
-    LongTextField,
-    ModusCard,
-    PopUp,
-    RemoveCardButton,
-    ScrollBar,
-    SideBar,
-    SideBarButton,
-    StackingArea,
-    TextField,
-    ToggleButton,
-    ToolTip,
-    FinishButton,
-])
-
+for _class_name, _class_obj in inspect.getmembers(uiElements):
+    if _class_name == '__doc__':
+        continue
+    for _class in dir(_class_obj):
+        if _class_name.upper() == _class.upper():
+            UIElement.add_current_ui(getattr(_class_obj, _class))
 
 def main(screen, clock):
 

@@ -192,9 +192,8 @@ class UIElement(pg.sprite.Sprite):
                      elem.rect.y + _child_offsets[_index][1]])
 
     @classmethod
-    def add_current_ui(cls, ui_array: list):
-        for _elem in ui_array:
-            cls.__current_ui[f'{_elem.__name__}'] = _elem
+    def add_current_ui(cls, _elem_class: object):
+        cls.__current_ui[f'{_elem_class.__name__}'] = _elem_class
 
     @classmethod
     def get_ui_elem(cls, elem: str) -> object:
