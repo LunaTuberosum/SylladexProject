@@ -345,29 +345,40 @@ def main(screen, clock):
         screen.fill('#B7B7B7')
         update_screen(screen)
 
-        _temp_group = pg.sprite.LayeredUpdates()
-        for _card in BaseCard.get_cards():
-            if hasattr(_card, 'interactable'):
-                if not _card.interactable:
-                    continue
-            _temp_group.add(_card)
-            _temp_group.change_layer(_card, -_card.rect.y)
-        _temp_group.draw(screen)
-        _temp_group.empty()
-        if UIElement.get_modus() == 'STACK' and StackManager.get_length():
-            StackManager.get_stack().draw(screen)
-        CardOutline.current_outline.draw(screen)
-        UIElement.get_group("layer").draw(screen)
-        BaseCard.grabbed_card.draw(screen)
         pg.display.flip()
 
 def update_screen(screen):
-    _elem_pass = pg.sprite.LayeredUpdates()
+
+    _card_pass = pg.sprite.LayeredUpdates()
+    for _card in BaseCard.get_cards():
+        _card_pass.add(_card)
+        _card_pass.change_layer(_card, -_card.rect.y)
+
+    _card_pass.draw(screen)
+    _card_pass.empty()
+
+    _elem_pass = pg.sprite.Group()
 
     for _elem in UIElement.get_group('ui'):
         if _elem.interactable:
             _elem_pass.add(_elem)
-            _elem_pass.change_layer(_elem, UIElement.get_group('layer').get_layer_of_sprite(_elem))
 
     _elem_pass.draw(screen)
     _elem_pass.empty()
+
+    if UIElement.get_modus() == 'STACK' and StackManager.get_length():
+        StackManager.get_stack().draw(screen)
+
+    CardOutline.current_outline.draw(screen)
+
+    _layering_pass = pg.sprite.LayeredUpdates()
+
+    for _elem in UIElement.get_group('layer'):
+        if _elem.interactable:
+            _layering_pass.add(_elem)
+            _layering_pass.change_layer(_elem, UIElement.get_group('layer').get_layer_of_sprite(_elem))
+
+    _layering_pass.draw(screen)
+    _layering_pass.empty()
+
+    BaseCard.grabbed_card.draw(screen)

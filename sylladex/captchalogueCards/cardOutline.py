@@ -25,6 +25,8 @@ class CardOutline(pg.sprite.Sprite):
             ]
         )
 
+        self.interactable = False
+
     @classmethod
     def destroy_outline(cls):
         for outline in CardOutline.current_outline:
