@@ -1,21 +1,11 @@
 {
-    "CacheLimit": "20480",
     "Grist": {
-        "Build": "20480",
-        "Shale": "1234",
-        "Ruby": "0",
-        "Cobalt": "0",
-        "Chalk": "0",
-        "Marble": "0",
-        "Iron": "14234",
-        "Amber": "300",
-        "Caulk": "0",
-        "Tar": "10",
-        "Uranium": "0",
-        "Amethyst": "0",
-        "Garnet": "0",
+        "Build": "10",
         "Artifact": "0",
         "Zillium": "0",
-        "Diamond": "20480"
+        "Diamond": "0",
+        "Drop": "0",
+        "Block": "0",
+        "Gusher": "0"
     }
 }

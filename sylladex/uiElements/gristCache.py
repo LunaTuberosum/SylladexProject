@@ -1,6 +1,5 @@
 import json
 import pygame as pg
-import pickle
 
 from uiElement import UIElement, Apperance
 
@@ -9,8 +8,8 @@ class GristCache(UIElement):
     def __init__(self):
 
         super().__init__(
-            -392 if UIElement.find_current_ui('SideBar') else -719,
-            626,
+            -392 if UIElement.find_current_ui('SideBar') else -732,
+            803,
             'GristCache',
             2
         )
@@ -20,59 +19,79 @@ class GristCache(UIElement):
 
         self.apperance = Apperance(
             self,
-            (719, 452),
-            [[719, 452], '#999999', [0, 0]],
-            [[713, 446], '#CCCCCC', [0, 6]],
-            texts=[['GRIST CACHE', [525, 25], 'left', '#FFFFFF']]
+            [744, 277],
+            [[744, 277], '#666666', [0, 0]],
+            [[732, 242], '#999999', [0, 24]],
+            [[174, 42], '#666666', [558, 24]],
+            [[114, 42], '#666666', [618, 66]],
+            [[546, 48], '#CCCCCC', [0, 12]],
+            [[606, 199], '#CCCCCC', [0, 54]],
+            [[114, 157], '#CCCCCC', [606, 96]],
+            [[174, 42], '#D8DDFF', [570, 0]],
+            [[114, 42], '#D8DDFF', [630, 42]],
+            colorKey=True,
+            texts=[
+                ['GRIST CACHE', [38, 34], 'left', '#000000']
+            ]
         )
 
-        self.add_child(UIElement.get_ui_elem('GristCacheLimit')(212, 16))
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            12,
+            54,
+            'Build'
+        ))
 
-        for _index, grist in enumerate(
-            ['Build', 'Shale', 'Ruby', 'Cobalt',
-             'Chalk', 'Marble', 'Iron', 'Amber',
-             'Caulk', 'Tar', 'Uranium', 'Amethyst',
-             'Garnet', 'Artifact', 'Zillium', 'Diamond']):
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            190,
+            54,
+            'Artifact'
+        ))
 
-            if _index < 4:
-                self.add_child(
-                    UIElement.get_ui_elem('GristInfoBox')(
-                        (9)+(174*_index),
-                        66,
-                        grist))
-            elif _index < 8:
-                self.add_child(
-                    UIElement.get_ui_elem('GristInfoBox')(
-                        (9)+(174*(_index-4)),
-                        163,
-                        grist))
-            elif _index < 12:
-                self.add_child(
-                    UIElement.get_ui_elem('GristInfoBox')(
-                        (9)+(174*(_index-8)),
-                        259,
-                        grist))
-            elif _index < 16:
-                self.add_child(
-                    UIElement.get_ui_elem('GristInfoBox')(
-                        (9)+(174*(_index-12)),
-                        356,
-                        grist))
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            364,
+            54,
+            'Zillium'
+        ))
+
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            12,
+            151,
+            'Drop'
+        ))
+
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            190,
+            151,
+            'Block'
+        ))
+
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            364,
+            151,
+            'Gusher'
+        ))
+
+        self.add_child(UIElement.get_ui_elem('GristInfoBox')(
+            538,
+            151,
+            'Diamond'
+        ))
 
         self.load_cache()
 
-        self.to_be_rect = UIElement.find_current_ui('SideBar').rect.right if UIElement.check_for_ui('SideBar') else 0
+        self.to_be_rect = UIElement.find_current_ui(
+            'SideBar').rect.right if UIElement.check_for_ui('SideBar') else 0
 
     def update(self):
 
         if self.to_be_rect != self.rect.x:
             UIElement.move_element(self, [UIElement.lerp(
-                self.rect.x, self.to_be_rect, 0.2), 626])
+                self.rect.x, self.to_be_rect, 0.2), self.rect.y])
             UIElement.find_current_ui(
                 'GristCacheButton').rect.x = self.rect.right
 
         else:
-            if self.to_be_rect == -719 or self.to_be_rect == -392:
+            if self.to_be_rect < 0 and self.rect.x - self.to_be_rect:
                 UIElement.remove_from_group(self)
 
     def save_cache(self):
@@ -80,10 +99,6 @@ class GristCache(UIElement):
             _grist_data = json.load(_grist_data_file)
 
         for _child in self.children:
-            if not isinstance(_child, UIElement.get_ui_elem('GristInfoBox')):
-                _grist_data['CacheLimit'] = _child.limit_num
-                continue
-
             _grist_data['Grist'][_child.grist] = _child.children[0].text
 
         _new_grist_data = json.dumps(_grist_data, indent=4)
@@ -99,10 +114,6 @@ class GristCache(UIElement):
             _grist_data = json.load(_grist_data_file)
 
         for _child in self.children:
-            if not isinstance(_child, UIElement.get_ui_elem('GristInfoBox')):
-                _child.change_cache_limit(_grist_data['CacheLimit'])
-                continue
-
             _child.children[0].text = _grist_data['Grist'][_child.grist]
 
             _child.children[0].reload_text()

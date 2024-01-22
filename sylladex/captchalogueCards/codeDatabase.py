@@ -2889,45 +2889,13 @@ tier_damage_num = {
 # IMAGE DATABSES
 
 grist_image = {
-    'ALL': 'sylladex/uiElements/asset/GRISTS/All.png',
-    'AMBER': 'sylladex/uiElements/asset/GRISTS/Amber.png',
-    'AMETHYST': 'sylladex/uiElements/asset/GRISTS/Amethyst.png',
-    'ARTIFACT': 'sylladex/uiElements/asset/GRISTS/Artifact.png',
     'BUILD': 'sylladex/uiElements/asset/GRISTS/Build.png',
-    'CAULK': 'sylladex/uiElements/asset/GRISTS/Caulk.png',
-    'CHALK': 'sylladex/uiElements/asset/GRISTS/Chalk.png',
-    'COBALT': 'sylladex/uiElements/asset/GRISTS/Cobalt.png',
-    'DIAMOND': 'sylladex/uiElements/asset/GRISTS/Diamond.png',
-    'GARNET': 'sylladex/uiElements/asset/GRISTS/Garnet.png',
-    'IRON': 'sylladex/uiElements/asset/GRISTS/Iron.png',
-    'MARBLE': 'sylladex/uiElements/asset/GRISTS/Marble.png',
-    'RUBY': 'sylladex/uiElements/asset/GRISTS/Ruby.png',
-    'SHALE': 'sylladex/uiElements/asset/GRISTS/Shale.png',
-    'TAR': 'sylladex/uiElements/asset/GRISTS/Tar.png',
-    'URANIUM': 'sylladex/uiElements/asset/GRISTS/Uranium.png',
+    'ARTIFACT': 'sylladex/uiElements/asset/GRISTS/Artifact.png',
     'ZILLIUM': 'sylladex/uiElements/asset/GRISTS/Zillium.png',
-    'NONE': 'sylladex/uiElements/asset/GRISTS/NONE.png'
-}
-
-grist_image_small = {
-    'ALL': 'sylladex/uiElements/asset/GRISTS/SMALL/All.png',
-    'AMBER': 'sylladex/uiElements/asset/GRISTS/SMALL/Amber.png',
-    'AMETHYST': 'sylladex/uiElements/asset/GRISTS/SMALL/Amethyst.png',
-    'ARTIFACT': 'sylladex/uiElements/asset/GRISTS/SMALL/Artifact.png',
-    'BUILD': 'sylladex/uiElements/asset/GRISTS/SMALL/Build.png',
-    'CAULK': 'sylladex/uiElements/asset/GRISTS/SMALL/Caulk.png',
-    'CHALK': 'sylladex/uiElements/asset/GRISTS/SMALL/Chalk.png',
-    'COBALT': 'sylladex/uiElements/asset/GRISTS/SMALL/Cobalt.png',
-    'DIAMOND': 'sylladex/uiElements/asset/GRISTS/SMALL/Diamond.png',
-    'GARNET': 'sylladex/uiElements/asset/GRISTS/SMALL/Garnet.png',
-    'IRON': 'sylladex/uiElements/asset/GRISTS/SMALL/Iron.png',
-    'MARBLE': 'sylladex/uiElements/asset/GRISTS/SMALL/Marble.png',
-    'RUBY': 'sylladex/uiElements/asset/GRISTS/SMALL/Ruby.png',
-    'SHALE': 'sylladex/uiElements/asset/GRISTS/SMALL/Shale.png',
-    'TAR': 'sylladex/uiElements/asset/GRISTS/SMALL/Tar.png',
-    'URANIUM': 'sylladex/uiElements/asset/GRISTS/SMALL/Uranium.png',
-    'ZILLIUM': 'sylladex/uiElements/asset/GRISTS/SMALL/Zillium.png',
-    'NONE': 'sylladex/uiElements/asset/GRISTS/SMALL/NONE.png'
+    'DROP': 'sylladex/uiElements/asset/GRISTS/Drop.png',
+    'BLOCK': 'sylladex/uiElements/asset/GRISTS/Block.png',
+    'GUSHER': 'sylladex/uiElements/asset/GRISTS/Gusher.png',
+    'DIAMOND': 'sylladex/uiElements/asset/GRISTS/Diamond.png',
 }
 
 kind_image = {
