@@ -8,7 +8,7 @@ class GristCacheButton(UIElement):
 
         super().__init__(
             0,
-            928,
+            948,
             'GristCacheButton',
             1
         )
@@ -20,7 +20,7 @@ class GristCacheButton(UIElement):
             [[64, 64], '#D9D9D9', [6, 0]],
             colorKey=True,
             images=[
-                ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                ['sylladex/uiElements/asset/GRISTS/Gusher.png', [22, 16]]
             ]
         )
 
@@ -32,12 +32,12 @@ class GristCacheButton(UIElement):
         if self.tool_tip_text == 'Closes Grist Cache':
             self.apperance.change_images(
                 [
-                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                    ['sylladex/uiElements/asset/GRISTS/Gusher.png', [22, 16]]
                 ])
         else:
             self.apperance.change_images(
                 [
-                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
+                    ['sylladex/uiElements/asset/GRISTS/Build.png', [22, 16]]
                 ])
         self.hovering = True
 
@@ -45,12 +45,12 @@ class GristCacheButton(UIElement):
         if self.tool_tip_text == 'Closes Grist Cache':
             self.apperance.change_images(
                 [
-                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
+                    ['sylladex/uiElements/asset/GRISTS/Build.png', [22, 16]]
                 ])
         else:
             self.apperance.change_images(
                 [
-                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                    ['sylladex/uiElements/asset/GRISTS/Gusher.png', [22, 16]]
                 ])
         self.hovering = False
 
@@ -60,12 +60,13 @@ class GristCacheButton(UIElement):
             self.tool_tip_text = 'Closes Grist Cache'
             self.apperance.change_images(
                 [
-                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON_HOVER.png', [6, 0]]
+                    ['sylladex/uiElements/asset/GRISTS/Build.png', [22, 16]]
                 ])
 
             _cache = UIElement.find_current_ui('GristCache')
             if _cache:
-                _cache.to_be_rect = UIElement.find_current_ui('SideBar').rect.right if UIElement.check_for_ui('SideBar') else 0
+                _cache.to_be_rect = UIElement.find_current_ui(
+                    'SideBar').rect.right if UIElement.check_for_ui('SideBar') else 0
                 return
 
             UIElement.get_ui_elem('GristCache')()
@@ -75,10 +76,14 @@ class GristCacheButton(UIElement):
             self.tool_tip_text = 'Opens Grist Cache'
             self.apperance.change_images(
                 [
-                    ['sylladex/uiElements/asset/MISC/GRIST_CACHE_ICON.png', [6, 0]]
+                    ['sylladex/uiElements/asset/GRISTS/Gusher.png', [22, 16]]
                 ])
 
+            _cache = UIElement.find_current_ui('GristCache')
+
             if UIElement.check_for_ui('SideBar'):
-                UIElement.find_current_ui('GristCache').to_be_rect = -392
+                _cache.to_be_rect = UIElement.find_current_ui(
+                    'SideBar').rect.width - _cache.rect.width
             else:
-                UIElement.find_current_ui('GristCache').to_be_rect = -719
+                UIElement.find_current_ui(
+                    'GristCache').to_be_rect = -_cache.rect.width
