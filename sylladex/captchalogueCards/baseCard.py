@@ -3,6 +3,7 @@ import pickle
 import pygame as pg
 
 import math
+from sylladex.captchalogueCards.codeData import CodeData
 
 from uiElement import UIElement, Apperance
 from .cardOutline import CardOutline
@@ -23,7 +24,7 @@ class BaseCard(pg.sprite.Sprite):
         self.hovering = False
         self.selected = False
 
-        self.code_data = UIElement.code_data()
+        self.code_data = CodeData()
 
         self.rect = pos
 
@@ -48,7 +49,6 @@ class BaseCard(pg.sprite.Sprite):
     def create_code_data(self, inputs: dict):
         self.code_data.name = inputs['name']
         self.code_data.code = inputs['code']
-        self.code_data.tier = inputs['tier']
         self.code_data.kind = inputs['kind']
         self.code_data.grist = inputs['grist']
         self.code_data.trait_1 = inputs['trait_1']
@@ -297,7 +297,6 @@ class BaseCard(pg.sprite.Sprite):
 
             _card_data['CodeData']['name'] = _card.code_data.name
             _card_data['CodeData']['code'] = _card.code_data.code
-            _card_data['CodeData']['tier'] = _card.code_data.tier
 
             _card_data['CodeData']['kind'] = _card.code_data.kind
             _card_data['CodeData']['grist'] = _card.code_data.grist

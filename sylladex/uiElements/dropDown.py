@@ -114,7 +114,7 @@ class DropDown(UIElement):
                 self.rect.h,
                 [(self.collum_num * self.rect.w),
                  6 + (self.row_num * self.rect.h)],
-                '#1C4587',
+                self.selected_color,
                 UIElement.get_group(
                     'layer').get_layer_of_sprite(self)
             ))
@@ -133,11 +133,7 @@ class DropDown(UIElement):
                             self.options[_i],
                             startLayer=UIElement.get_group(
                                 'layer').get_layer_of_sprite(self) + 1,
-                            baseColors=[
-                                '#C9DAF8',
-                                '#D9E2F1',
-                                '#9CB0D5'
-                            ]
+                            baseColors=self.kwargs['baseColors']
                         ))
                     elif self.show_type == 'Image':
                         self.add_child(UIElement.get_ui_elem('DropDownOption')(
@@ -149,11 +145,7 @@ class DropDown(UIElement):
                             startLayer=UIElement.get_group(
                                 'layer').get_layer_of_sprite(self) + 1,
                             lookup=UIElement.code_database.kind_image_small,
-                            baseColors=[
-                                '#C9DAF8',
-                                '#D9E2F1',
-                                '#9CB0D5'
-                            ]
+                            baseColors=self.kwargs['BaseColors']
                         ))
                     _y += self.rect.h
                     _i += 1

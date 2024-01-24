@@ -1,26 +1,7 @@
 import pygame as pg
-from dataclasses import dataclass
 from sylladex.captchalogueCards.baseCard import BaseCard
 
 from uiElement import UIElement, Apperance
-
-
-@dataclass
-class CodeData():
-    name: str = "-"
-    code: str = "-"
-    tier: str = "-"
-
-    kind: str = ''
-    grist: str = ''
-    trait_1: str = ''
-    trait_2: str = ''
-    action_1: str = ''
-    action_2: str = ''
-    action_3: str = ''
-    action_4: str = ''
-
-    cardID: int = 0
 
 
 class ListObject(UIElement):
@@ -47,7 +28,7 @@ class ListObject(UIElement):
             texts=[
                 ['-', [6, 15], 'left', '#000000'],
                 ['-', [6, 49], 'left', '#000000'],
-                ['-', [190, 49], 'left', '#000000']]
+            ]
         )
 
         self.prev_pos = None
@@ -55,28 +36,12 @@ class ListObject(UIElement):
         self.hovering = False
         self.writing = False
 
-        self.empty = True
         self.capta_card = None
 
-        self.code_data = CodeData()
+        self.name = '-'
+        self.code = '-'
 
         self.prev_tick = 0
-
-    def create_code_data(self, inputs: dict):
-        self.code_data.name = inputs['name']
-        self.code_data.code = inputs['code']
-        self.code_data.tier = inputs['tier']
-        self.code_data.kind = inputs['kind']
-        self.code_data.grist = inputs['grist']
-        self.code_data.trait_1 = inputs['trait_1']
-        self.code_data.trait_2 = inputs['trait_2']
-        self.code_data.action_1 = inputs['action_1']
-        self.code_data.action_2 = inputs['action_2']
-        self.code_data.action_3 = inputs['action_3']
-        self.code_data.action_4 = inputs['action_4']
-        self.code_data.cardID = inputs['cardID']
-
-        self.redraw_card()
 
     def update(self):
         if self.prev_tick > 0:
@@ -104,20 +69,8 @@ class ListObject(UIElement):
             _color = '#D1D1D1'
 
         if self.writing == False:
-            if self.capta_card:
-                self.apperance.size_color_pos = [
-                    [[249, 64], _color, [0, 0]],
-                    [[64, 64], 'ModusAccent', [185, 0]]
-                ]
-                self.apperance.kwargs['imageAlpha'] = 125
 
-                self.apperance.kwargs['texts'] = [
-                    [self.code_data.name, [6, 15], 'left', '#000000'],
-                    [self.code_data.code, [6, 49], 'left', '#000000'],
-                    [self.code_data.tier, [150, 49], 'left', '#000000']
-                ]
-
-            elif self.code_data.code == "-":
+            if self.code == "-":
                 self.apperance.size_color_pos = [
                     [[249, 64], _color, [0, 0]],
                 ]
@@ -129,7 +82,6 @@ class ListObject(UIElement):
                 self.apperance.kwargs['texts'] = [
                     ['-', [6, 15], 'left', '#000000'],
                     ['-', [6, 49], 'left', '#000000'],
-                    ['-', [150, 49], 'left', '#000000']
                 ]
 
             else:
@@ -139,14 +91,13 @@ class ListObject(UIElement):
 
                 self.apperance.change_images([
                     [UIElement.code_database.find_kind_image(
-                        self.code_data.kind), [185, 3]]
+                        UIElement.code_database.get_code_value(self.code[0], '1')), [185, 3]]
                 ])
                 self.apperance.kwargs['imageAlpha'] = 125
 
                 self.apperance.kwargs['texts'] = [
-                    [self.code_data.name, [6, 15], 'left', '#000000'],
-                    [self.code_data.code, [6, 49], 'left', '#000000'],
-                    [self.code_data.tier, [150, 49], 'left', '#000000']
+                    [self.name, [6, 15], 'left', '#000000'],
+                    [self.code, [6, 49], 'left', '#000000'],
                 ]
 
             self.apperance.reload_apperance()
@@ -256,7 +207,7 @@ class ListObject(UIElement):
             self.children[2].reload_text()
 
         elif self.interactable == True:
-            if self.empty == False:
+            if self.code != '-':
                 self.grabbed = True
                 self.prev_pos = self.rect.topleft
                 UIElement.get_group('layer').change_layer(self, 999)
@@ -265,8 +216,9 @@ class ListObject(UIElement):
         if pos[0] > UIElement.find_current_ui('CardList').rect.right:
             if self.capta_card == None:
                 self.capta_card = BaseCard(pos)
-                self.code_data.cardID = self.capta_card.cardID
-                self.capta_card.code_data = self.code_data
+                UIElement.code_database.read_code(
+                    self.name, self.code, self.capta_card)
+                self.capta_card.code_data.cardID = self.capta_card.cardID
 
                 BaseCard.save_cards()
                 UIElement.find_current_ui('CardList').save_list()

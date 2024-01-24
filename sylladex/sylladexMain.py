@@ -16,6 +16,7 @@ for _class_name, _class_obj in inspect.getmembers(uiElements):
         if _class_name.upper() == _class.upper():
             UIElement.add_current_ui(getattr(_class_obj, _class))
 
+
 def main(screen, clock):
 
     global_prev_tick = pg.time.get_ticks()
@@ -131,10 +132,9 @@ def main(screen, clock):
             elif event.type == pg.MOUSEWHEEL:
                 for _elem in UIElement.get_group("ui"):
                     if isinstance(_elem, UIElement.get_ui_elem('CardList')):
-                        if _elem.rect.collidepoint(pg.mouse.get_pos()):
-                            for _elem in UIElement.get_group("ui"):
-                                if isinstance(_elem, UIElement.get_ui_elem('ScrollBar')):
-                                    _elem.move_bar_wheel(-event.y)
+                        if _elem.rect.collidepoint(pg.mouse.get_pos()) and len(_elem.get_list()):
+                            UIElement.find_current_ui(
+                                'ScrollBar').move_bar_wheel(-event.y)
 
             if event.type == pg.KEYDOWN:
                 if event.mod == pg.KMOD_LCTRL and event.key == pg.K_i:
@@ -278,6 +278,7 @@ def main(screen, clock):
 
         pg.display.flip()
 
+
 def update_screen(screen):
 
     _card_pass = pg.sprite.LayeredUpdates()
@@ -307,7 +308,8 @@ def update_screen(screen):
     for _elem in UIElement.get_group('layer'):
         if _elem.interactable:
             _layering_pass.add(_elem)
-            _layering_pass.change_layer(_elem, UIElement.get_group('layer').get_layer_of_sprite(_elem))
+            _layering_pass.change_layer(_elem, UIElement.get_group(
+                'layer').get_layer_of_sprite(_elem))
 
     _layering_pass.draw(screen)
     _layering_pass.empty()

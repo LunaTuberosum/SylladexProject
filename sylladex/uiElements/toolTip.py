@@ -21,12 +21,13 @@ class ToolTip(UIElement):
             _x,
             pos[1] + 15,
             'ToolTip',
-            1010)
+            1010
+        )
 
         self.apperance = Apperance(
             self,
             [_width, 30],
-            [[_width, 30], '#D2D2D2', [0, 0]],
+            [[_width, 30], '#CCCCCC', [0, 0]],
             texts=[[self.text, [6, 15],
                     'left', '#000000']]
         )

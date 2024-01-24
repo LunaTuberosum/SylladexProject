@@ -49,8 +49,8 @@ class DropDownOption(UIElement):
                 'Drop down option with image show type needs a look up.')
 
         if 'baseColors' in self.kwargs:
-            self.base_color = self.kwargs['baseColors'][0]
-            self.hover_color = self.kwargs['baseColors'][1]
+            self.base_color = self.kwargs['baseColors'][1]
+            self.hover_color = self.kwargs['baseColors'][0]
             self.selected_color = self.kwargs['baseColors'][2]
         else:
             self.base_color = (255, 255, 255)

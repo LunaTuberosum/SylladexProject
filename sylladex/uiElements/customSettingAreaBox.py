@@ -106,7 +106,7 @@ class CustomSettingAreaBox(UIElement):
             baseColors=[
                 '#C9DAF8',
                 '#D9E2F1',
-                '#9CB0D5'
+                '#1C4587'
             ],
             exitCommand=self.save_kind_data
         ))
@@ -165,7 +165,7 @@ class CustomSettingAreaBox(UIElement):
         )
 
         self.add_child(UIElement.get_ui_elem('ActionIcon')(
-            0, 0, self.job, True).setup_icon('melee', _action_data))
+            0, 0, self.job, True).setup_icon('ASSESS'))
 
         self.add_child(UIElement.get_ui_elem('TextField')(
             156,

@@ -26,6 +26,35 @@ class CardInspectorCheck(UIElement):
         self.tool_tip_text = f'Look at information about {self.job}'
 
         self.selected = False
+        self.hovering = False
+
+    def redraw(self):
+        if self.selected:
+            self.apperance.size_color_pos = [
+                [[16, 16], '#434343', [4, 4]]
+            ]
+
+        elif self.hovering:
+            self.apperance.size_color_pos = [
+                [[16, 16], '#434343', [4, 4]],
+                [[12, 12], '#7A7A7A', [6, 6]]
+            ]
+
+        else:
+            self.apperance.size_color_pos = [
+                [[16, 16], '#434343', [4, 4]],
+                [[12, 12], '#D8DDFF', [6, 6]]
+            ]
+        self.apperance.reload_apperance()
+
+    def hover(self):
+        self.hovering = True
+        self.redraw()
+
+    def no_hover(self):
+
+        self.hovering = False
+        self.redraw()
 
     def on_click(self):
         if self.selected == False:
@@ -33,10 +62,7 @@ class CardInspectorCheck(UIElement):
             UIElement.find_current_ui('CardInspector').uncheck_all()
 
             self.selected = True
-            self.apperance.size_color_pos = [
-                [[16, 16], '#434343', [4, 4]]
-            ]
-            self.apperance.reload_apperance()
+            self.redraw()
             self.exit_command(self)
 
         else:

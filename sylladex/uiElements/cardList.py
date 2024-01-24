@@ -76,25 +76,11 @@ class CardList(UIElement):
         _card_list = {}
 
         for _index, _card in enumerate(cls.get_list()):
-            _card_list[_index + 1] = {'CodeData': {}, 'Empty': True}
+            _card_list[_index + 1] = {'name': '-', 'code': ''}
             _card_data = _card_list[_index + 1]
 
-            _card_data['CodeData']['name'] = _card.code_data.name
-            _card_data['CodeData']['code'] = _card.code_data.code
-            _card_data['CodeData']['tier'] = _card.code_data.tier
-
-            _card_data['CodeData']['kind'] = _card.code_data.kind
-            _card_data['CodeData']['grist'] = _card.code_data.grist
-            _card_data['CodeData']['trait_1'] = _card.code_data.trait_1
-            _card_data['CodeData']['trait_2'] = _card.code_data.trait_2
-            _card_data['CodeData']['action_1'] = _card.code_data.action_1
-            _card_data['CodeData']['action_2'] = _card.code_data.action_2
-            _card_data['CodeData']['action_3'] = _card.code_data.action_3
-            _card_data['CodeData']['action_4'] = _card.code_data.action_4
-
-            _card_data['CodeData']['cardID'] = _card.code_data.cardID
-
-            _card_data['Empty'] = _card.empty
+            _card_data['name'] = _card.name
+            _card_data['code'] = _card.code
 
         _new_card_list = json.dumps(_card_list, indent=4)
 
@@ -114,14 +100,9 @@ class CardList(UIElement):
             _card = _card_list[_card_num]
             _obj = UIElement.get_ui_elem('ListObject')()
 
-            _obj.create_code_data(_card['CodeData'])
+            _obj.code = _card['code']
+            _obj.name = _card['name']
 
-            for _c in BaseCard.get_cards():
-                if _c.code_data.cardID == _obj.code_data.cardID:
-                    _obj.capta_card = _c
-                    break
-
-            _obj.empty = _card['Empty']
             _obj.redraw_card()
             cls.get_list().append(_obj)
 

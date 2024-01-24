@@ -28,6 +28,9 @@ class ActionIcon(UIElement):
         self.melee_color = '#FF4B2D'
         self.ranged_color = '#9B38F4'
         self.magic_color = '#6688FE'
+        self.no_color = '#6D6D6D'
+        self.basic_color = '#38F43D'
+        self.buff_color = '#f1c232'
 
         self.current_color = self.melee_color
         self.prefix = 'AS'
@@ -45,24 +48,33 @@ class ActionIcon(UIElement):
         )
 
     def _change_type(self, new_type: str):
-        if new_type == "melee":
+        if new_type == "AS":
             self.current_color = self.melee_color
             self.prefix = 'AS'
-        elif new_type == "ranged":
+        elif new_type == "AR":
             self.current_color = self.ranged_color
             self.prefix = 'AR'
-        elif new_type == "magic":
+        elif new_type == "AC":
             self.current_color = self.magic_color
             self.prefix = 'AC'
+        elif new_type == "AG":
+            self.current_color = self.basic_color
+            self.prefix = 'AG'
+        elif new_type == "NO":
+            self.current_color = self.no_color
+            self.prefix = 'NO '
+        elif new_type == "AB":
+            self.current_color = self.buff_color
+            self.prefix = 'AB'
 
         self.apperance.size_color_pos = [
             [[107, 22], self.current_color, [0, 1]],
             [[101, 18], '#FFFFFF', [3, 3]],
         ]
 
-    def setup_icon(self, _type: str, textData: str) -> object:
-        self._change_type(_type)
-        self.text = textData[self.prefix]['NAME']
+    def setup_icon(self, text: str) -> object:
+        self._change_type(text[:2])
+        self.text = text[2:]
 
         self.reload_text()
 
