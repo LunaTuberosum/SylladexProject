@@ -2,7 +2,7 @@
     "KIND1": {
         "ICON": "Bunnykind",
         "NAME": "SLEEPYKIND",
-        "TYPE": "MELEE"
+        "TYPE": "NA"
     },
     "KIND2": {
         "ICON": "Customkind",

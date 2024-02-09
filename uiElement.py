@@ -1,3 +1,4 @@
+import json
 import math
 import pygame as pg
 
@@ -5,22 +6,20 @@ import pygame as pg
 
 
 class Apperance():
+    with open('sylladex/uiElements/data/modusData.json') as _modus_data_file:
+        _mouds_data = json.load(_modus_data_file)
+
+    with open('sylladex/uiElements/data/modusColors.json') as _modus_colors_file:
+        _modus_colors = json.load(_modus_colors_file)
+
+    for _modus in _mouds_data:
+        if _mouds_data[_modus]["Active"] == True:
+            _current_modus = _mouds_data[_modus]['Color']
+
     __modus_color = {
-        'STACK': {
-            'background': '#9B2448',
-            'foreground': '#FF00DC',
-            'accent': '#FF61DC'
-        },
-        'QUEUE': {
-            'background': '#CF560C',
-            'foreground': '#FF6000',
-            'accent': '#FF912B'
-        },
-        'TREE': {
-            'background': '#7CA619',
-            'foreground': '#96FF00',
-            'accent': '#CDFF2B'
-        }
+        'background': _modus_colors.get(_current_modus).get('background'),
+        'foreground': _modus_colors.get(_current_modus).get('foreground'),
+        'accent': _modus_colors.get(_current_modus).get('accent')
     }
 
     def __init__(
@@ -55,14 +54,11 @@ class Apperance():
         for _rect in self.size_color_pos:
             _rect_ = pg.Surface(_rect[0])
             if _rect[1] == 'ModusBackground':
-                _rect_.fill(Apperance.__modus_color.get(
-                    UIElement.get_modus()).get('background'))
+                _rect_.fill(Apperance.__modus_color.get('background'))
             elif _rect[1] == 'ModusForeground':
-                _rect_.fill(Apperance.__modus_color.get(
-                    UIElement.get_modus()).get('foreground'))
+                _rect_.fill(Apperance.__modus_color.get('foreground'))
             elif _rect[1] == 'ModusAccent':
-                _rect_.fill(Apperance.__modus_color.get(
-                    UIElement.get_modus()).get('accent'))
+                _rect_.fill(Apperance.__modus_color.get('accent'))
             else:
                 _rect_.fill(_rect[1])
             self.obj.image.blit(_rect_, _rect[2])
@@ -75,6 +71,25 @@ class Apperance():
                 _img = pg.image.load(_image[0]).convert_alpha()
                 if 'imageAlpha' in self.kwargs:
                     _img.set_alpha(self.kwargs['imageAlpha'])
+
+                if len(_image) == 3:
+                    _color_img = pg.Surface(_img.get_size())
+                    match (_image[2]):
+                        case 'ModusBackground':
+                            _color_img.fill(
+                                Apperance.__modus_color.get('background'))
+                        case 'ModusForeground':
+                            _color_img.fill(
+                                Apperance.__modus_color.get('foreground'))
+                        case 'ModusAccent':
+                            _color_img.fill(
+                                Apperance.__modus_color.get('accent'))
+                        case _:
+                            _color_img.fill(_image[2])
+
+                    _img.blit(_color_img, [0, 0],
+                              special_flags=pg.BLEND_RGB_MULT)
+
                 self.obj.image.blit(_img, _image[1])
 
         if 'texts' in self.kwargs:
@@ -85,13 +100,13 @@ class Apperance():
 
                 if _text[3] == 'ModusBackground':
                     _text_ = self.obj.font.render(_text[0], True,
-                                                  Apperance.__modus_color.get(UIElement.get_modus()).get('background'))
+                                                  Apperance.__modus_color.get('background'))
                 elif _text[3] == 'ModusForeground':
                     _text_ = self.obj.font.render(_text[0], True,
-                                                  Apperance.__modus_color.get(UIElement.get_modus()).get('foreground'))
+                                                  Apperance.__modus_color.get('foreground'))
                 elif _text[3] == 'ModusAccent':
                     _text_ = self.obj.font.render(_text[0], True,
-                                                  Apperance.__modus_color.get(UIElement.get_modus()).get('accent'))
+                                                  Apperance.__modus_color.get('accent'))
                 else:
                     _text_ = self.obj.font.render(_text[0], True, _text[3])
                 if _text[2] == 'center':
@@ -167,6 +182,8 @@ class UIElement(pg.sprite.Sprite):
         pass
 
     def no_hover(self):
+        if not self.hovering:
+            return
         pass
 
     def remove_self(self):

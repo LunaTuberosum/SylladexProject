@@ -43,29 +43,29 @@ class DebugInspector(UIElement):
                        10, 20], 'left', '#FFFFFF'])
 
         y = 30
-        if hasattr(self.current_inspectie, 'code_data'):
-            _params.append([f'Card Data:', [
-                           10, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        # if hasattr(self.current_inspectie, 'code_data'):
+        #     _params.append([f'Card Data:', [
+        #                    10, y + (len(_params) * 20)], 'left', '#FFFFFF'])
 
-            _params.append([f'Code: {self.current_inspectie.code_data.code}', [
-                           20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Kind: {self.current_inspectie.code_data.kind}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Grist: {self.current_inspectie.code_data.grist}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Trait 1: {self.current_inspectie.code_data.trait_1}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Trait 2: {self.current_inspectie.code_data.trait_2}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Action 1: {self.current_inspectie.code_data.action_1}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Action 2: {self.current_inspectie.code_data.action_2}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Action 3: {self.current_inspectie.code_data.action_3}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            _params.append([f'Action 4: {self.current_inspectie.code_data.action_4}', [
-                20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
-            y += 10
+        #     _params.append([f'Code: {self.current_inspectie.code_data.code}', [
+        #                    20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Kind: {self.current_inspectie.code_data.kind}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Grist: {self.current_inspectie.code_data.grist}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Trait 1: {self.current_inspectie.code_data.trait_1}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Trait 2: {self.current_inspectie.code_data.trait_2}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Action 1: {self.current_inspectie.code_data.action_1}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Action 2: {self.current_inspectie.code_data.action_2}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Action 3: {self.current_inspectie.code_data.action_3}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     _params.append([f'Action 4: {self.current_inspectie.code_data.action_4}', [
+        #         20, y + (len(_params) * 20)], 'left', '#FFFFFF'])
+        #     y += 10
 
         _params.append([f'HasToolTip: {self.current_inspectie.tool_tip_text != ""}', [
             10, y + (len(_params) * 20)], 'left', '#FFFFFF'])

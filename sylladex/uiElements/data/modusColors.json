@@ -1,0 +1,17 @@
+{
+    "NULL": {
+        "foreground": "#999999",
+        "background": "#666666",
+        "accent": "#D9D9D9"
+    },
+    "FUSIA": {
+        "foreground": "#FF00DC",
+        "background": "#9B2448",
+        "accent": "#FF61DC"
+    },
+    "BLUE": {
+        "foreground": "#06B6FF",
+        "background": "#1193D6",
+        "accent": "#43B2DE"
+    }
+}

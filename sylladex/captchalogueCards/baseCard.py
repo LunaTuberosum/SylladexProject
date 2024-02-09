@@ -21,7 +21,7 @@ class BaseCard(pg.sprite.Sprite):
     ):
         super().__init__(BaseCard.get_cards())
 
-        self.hovering = False
+        self.hovering = True
         self.selected = False
 
         self.code_data = CodeData()
@@ -33,8 +33,12 @@ class BaseCard(pg.sprite.Sprite):
             [90, 122],
             colorKey=True,
             images=[
-                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png', [
-                    5, 6]],
+                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                    0, 0], 'ModusForeground'],
+                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                    0, 0], 'ModusBackground'],
+                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                    0, 0]],
             ]
         )
 
@@ -62,16 +66,18 @@ class BaseCard(pg.sprite.Sprite):
     def kind_image(self) -> list:
         if self.selected == True:
             return [UIElement.code_database.find_kind_image(
-                self.code_data.kind), [15, 25]]
+                self.code_data.kind), [12, 25]]
         else:
             return [UIElement.code_database.find_kind_image(
-                self.code_data.kind), [10, 31]]
+                self.code_data.kind), [5, 25]]
 
     def hover(self):
         self.hovering = True
         self.redraw_card()
 
     def no_hover(self):
+        if not self.hovering:
+            return
         self.hovering = False
         self.redraw_card()
 
@@ -124,32 +130,48 @@ class BaseCard(pg.sprite.Sprite):
         if self.highlight:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png', [
-                        5, 6]],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                        0, 0], 'ModusAccent'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                        0, 0], 'ModusBackground'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                        0, 0]],
                     self.kind_image()
                 ])
 
         elif self.selected:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_UP.png', [
-                        0, 0]],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE_UP.png', [
+                        0, 0], 'ModusAccent'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                        8, 2], 'ModusBackground'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                        8, 2]],
                     self.kind_image()
                 ])
 
         elif self.hovering:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_HIGHLIGHT.png', [
-                        5, 6]],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                        0, 0], 'ModusAccent'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                        0, 0], 'ModusBackground'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                        0, 0]],
                     self.kind_image()
                 ])
 
         else:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA.png', [
-                        5, 6]],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                        0, 0], 'ModusForeground'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                        0, 0], 'ModusBackground'],
+                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                        0, 0]],
                     self.kind_image()
                 ])
 

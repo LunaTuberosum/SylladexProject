@@ -1,6 +1,7 @@
 import pygame as pg
 
 from uiElement import UIElement, Apperance
+import settings
 
 
 class DropDown(UIElement):
@@ -17,7 +18,11 @@ class DropDown(UIElement):
         self.size = size
 
         self.job = job
-        self.options = options
+        _options = []
+        for _opt in options:
+            if _opt != '':
+                _options.append(_opt)
+        self.options = _options
         self.current_option = defult_option
 
         self.hovering = False
@@ -109,48 +114,98 @@ class DropDown(UIElement):
         if len(self.children) > 0:
             self.exit_field()
         else:
-            self.add_child(UIElement.get_ui_elem('DropDownBackground')(
-                6,
-                self.rect.h,
-                [(self.collum_num * self.rect.w),
-                 6 + (self.row_num * self.rect.h)],
-                self.selected_color,
-                UIElement.get_group(
-                    'layer').get_layer_of_sprite(self)
-            ))
+            if (6 + (self.row_num * self.rect.h)) + self.rect.bottom > settings.SCREEN_HEIGHT:
+                self.up_options()
+            else:
+                self.down_options()
 
-            _i = 0
-            _x = 0
+    def up_options(self):
+        self.add_child(UIElement.get_ui_elem('DropDownBackground')(
+            6,
+            -(6 + (self.row_num * self.rect.h)),
+            [(self.collum_num * self.rect.w),
+                6 + (self.row_num * self.rect.h) + (self.rect.h // 2)],
+            self.selected_color,
+            UIElement.get_group(
+                'layer').get_layer_of_sprite(self) - 1
+        ))
+
+        _i = 0
+        _x = 0
+        _y = -(self.row_num * self.rect.h)
+        for _col in range(self.collum_num):
+            for _row in range(self.row_num):
+                if self.show_type == 'Text':
+                    self.add_child(UIElement.get_ui_elem('DropDownOption')(
+                        _x,
+                        _y,
+                        self.size,
+                        self.show_type,
+                        self.options[_i],
+                        startLayer=UIElement.get_group(
+                            'layer').get_layer_of_sprite(self) + 1,
+                        baseColors=self.kwargs['baseColors']
+                    ))
+                elif self.show_type == 'Image':
+                    self.add_child(UIElement.get_ui_elem('DropDownOption')(
+                        _x,
+                        _y,
+                        self.size,
+                        self.show_type,
+                        self.options[_i],
+                        startLayer=UIElement.get_group(
+                            'layer').get_layer_of_sprite(self) + 1,
+                        lookup=UIElement.code_database.kind_image_small,
+                        baseColors=self.kwargs['BaseColors']
+                    ))
+                _y += self.rect.h
+                _i += 1
+            _x += self.rect.w
+            _y = -(self.row_num * self.rect.h)
+
+    def down_options(self):
+        self.add_child(UIElement.get_ui_elem('DropDownBackground')(
+            6,
+            self.rect.h,
+            [(self.collum_num * self.rect.w),
+                6 + (self.row_num * self.rect.h)],
+            self.selected_color,
+            UIElement.get_group(
+                'layer').get_layer_of_sprite(self)
+        ))
+
+        _i = 0
+        _x = 0
+        _y = self.rect.h
+        for _col in range(self.collum_num):
+            for _row in range(self.row_num):
+                if self.show_type == 'Text':
+                    self.add_child(UIElement.get_ui_elem('DropDownOption')(
+                        _x,
+                        _y,
+                        self.size,
+                        self.show_type,
+                        self.options[_i],
+                        startLayer=UIElement.get_group(
+                            'layer').get_layer_of_sprite(self) + 1,
+                        baseColors=self.kwargs['baseColors']
+                    ))
+                elif self.show_type == 'Image':
+                    self.add_child(UIElement.get_ui_elem('DropDownOption')(
+                        _x,
+                        _y,
+                        self.size,
+                        self.show_type,
+                        self.options[_i],
+                        startLayer=UIElement.get_group(
+                            'layer').get_layer_of_sprite(self) + 1,
+                        lookup=UIElement.code_database.kind_image_small,
+                        baseColors=self.kwargs['BaseColors']
+                    ))
+                _y += self.rect.h
+                _i += 1
+            _x += self.rect.w
             _y = self.rect.h
-            for _col in range(self.collum_num):
-                for _row in range(self.row_num):
-                    if self.show_type == 'Text':
-                        self.add_child(UIElement.get_ui_elem('DropDownOption')(
-                            _x,
-                            _y,
-                            self.size,
-                            self.show_type,
-                            self.options[_i],
-                            startLayer=UIElement.get_group(
-                                'layer').get_layer_of_sprite(self) + 1,
-                            baseColors=self.kwargs['baseColors']
-                        ))
-                    elif self.show_type == 'Image':
-                        self.add_child(UIElement.get_ui_elem('DropDownOption')(
-                            _x,
-                            _y,
-                            self.size,
-                            self.show_type,
-                            self.options[_i],
-                            startLayer=UIElement.get_group(
-                                'layer').get_layer_of_sprite(self) + 1,
-                            lookup=UIElement.code_database.kind_image_small,
-                            baseColors=self.kwargs['BaseColors']
-                        ))
-                    _y += self.rect.h
-                    _i += 1
-                _x += self.rect.w
-                _y = self.rect.h
 
     def exit_field(self):
         if self.exit_command:

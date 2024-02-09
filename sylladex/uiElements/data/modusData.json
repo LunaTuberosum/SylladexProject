@@ -1,0 +1,17 @@
+{
+    "1": {
+        "Code": "11001111",
+        "Color": "FUSIA",
+        "Active": false
+    },
+    "2": {
+        "Code": "1nqB1111",
+        "Color": "BLUE",
+        "Active": true
+    },
+    "3" : {
+        "Code": "-",
+        "Color": "NULL",
+        "Active": false
+    }
+}

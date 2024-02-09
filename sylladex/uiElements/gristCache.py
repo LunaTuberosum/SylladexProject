@@ -91,7 +91,7 @@ class GristCache(UIElement):
                 'GristCacheButton').rect.x = self.rect.right
 
         else:
-            if self.to_be_rect < 0 and self.rect.x - self.to_be_rect:
+            if self.to_be_rect < 0 and self.rect.x == self.to_be_rect:
                 UIElement.remove_from_group(self)
 
     def save_cache(self):

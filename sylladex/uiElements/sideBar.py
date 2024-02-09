@@ -1,3 +1,4 @@
+import json
 import pygame as pg
 
 from uiElement import UIElement, Apperance
@@ -62,12 +63,15 @@ class SideBar(UIElement):
         self.add_child(UIElement.get_ui_elem('ScrollBar')(
             273, 196))
 
-        self.add_child(UIElement.get_ui_elem('ModusCard')
-                       (33, "STACK"))
-        self.add_child(UIElement.get_ui_elem('ModusCard')
-                       (121, "QUEUE"))
-        self.add_child(UIElement.get_ui_elem('ModusCard')
-                       (209, "TREE"))
+        with open('sylladex/uiElements/data/modusData.json', 'r') as _modus_data_file:
+            _modus_data = json.load(_modus_data_file)
+
+        self.add_child(UIElement.get_ui_elem('ModusCard')(
+            33, _modus_data['1']['Code'], _modus_data['1']['Color'], _modus_data['1']['Active']))
+        self.add_child(UIElement.get_ui_elem('ModusCard')(
+            121, _modus_data['2']['Code'], _modus_data['2']['Color'], _modus_data['2']['Active']))
+        self.add_child(UIElement.get_ui_elem('ModusCard')(
+            209, _modus_data['3']['Code'], _modus_data['3']['Color'], _modus_data['3']['Active']))
 
         if UIElement.check_for_ui('GristCache'):
             if UIElement.find_current_ui('GristCache').to_be_rect != -719:
