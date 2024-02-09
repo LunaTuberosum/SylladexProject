@@ -59,9 +59,9 @@ class ModusAddCard(UIElement):
         print((k if k != 'NULL' else '') for k in _modus_colors.keys())
 
         self.add_child(UIElement.get_ui_elem('DropDown')(
-            240,
+            234,
             336,
-            [84, 24],
+            [90, 24],
             f'modusColor',
             f'The color for a new modus',
             [
@@ -141,8 +141,8 @@ class ModusAddCard(UIElement):
             [[144, 24], self.side_color, [192, 348]],
 
             # Color
-            [[60, 24], '#B7B7B7', [180, 336]],
-            [[84, 24], '#D9D9D9', [240, 336]],
+            [[54, 24], '#B7B7B7', [180, 336]],
+            [[90, 24], '#D9D9D9', [234, 336]],
         ]
 
     def change_color(self):

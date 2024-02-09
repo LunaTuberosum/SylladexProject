@@ -15,6 +15,7 @@ class ModusCard(UIElement):
 
         self.main_color = _modus_colors[self.color]['foreground']
         self.side_color = _modus_colors[self.color]['background']
+        self.text_color = _modus_colors[self.color]['text']
 
         super().__init__(
             x,
@@ -63,9 +64,9 @@ class ModusCard(UIElement):
 
             self.apperance.kwargs['texts'] = [
                 [UIElement.code_database.get_trait_info(
-                    UIElement.code_database.get_code_value(self.code[2], '3'), 'SORT NAME'), [37, 46], 'center', '#FFFFFF'],
+                    UIElement.code_database.get_code_value(self.code[2], '3'), 'SORT NAME'), [37, 46], 'center', self.text_color],
                 [UIElement.code_database.get_trait_info(
-                    UIElement.code_database.get_code_value(self.code[3], '4'), 'RETRIEVE NAME'), [37, 56], 'center', '#FFFFFF']
+                    UIElement.code_database.get_code_value(self.code[3], '4'), 'RETRIEVE NAME'), [37, 56], 'center', self.text_color]
             ]
         else:
             self.apperance.size_color_pos = [

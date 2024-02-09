@@ -2,16 +2,79 @@
     "NULL": {
         "foreground": "#999999",
         "background": "#666666",
-        "accent": "#D9D9D9"
+        "accent": "#D9D9D9",
+        "text": "#ffffff"
     },
     "FUSIA": {
         "foreground": "#FF00DC",
         "background": "#9B2448",
-        "accent": "#FF61DC"
+        "accent": "#FF61DC",
+        "text": "#ffffff"
     },
     "BLUE": {
         "foreground": "#06B6FF",
         "background": "#1193D6",
-        "accent": "#43B2DE"
+        "accent": "#43B2DE",
+        "text": "#ffffff"
+    },
+    "GREEN": {
+        "foreground": "#4f8b0a",
+        "background": "#234000",
+        "accent": "#7ca619",
+        "text": "#ffffff"
+    },
+    "YELLOW": {
+        "foreground": "#ffff00",
+        "background": "#f1c232",
+        "accent": "#ffe134",
+        "text": "#000000"
+    },
+    "ORANGE": {
+        "foreground": "#ff6000",
+        "background": "#cf560c",
+        "accent": "#ff873f",
+        "text": "#ffffff"
+    },
+    "RED": {
+        "foreground": "#ff0000",
+        "background": "#cc0000",
+        "accent": "#ff2b2b",
+        "text": "#ffffff"
+    },
+    "INDIGO": {
+        "foreground": "#6764c8",
+        "background": "#04009a",
+        "accent": "#7b79c3",
+        "text": "#ffffff"
+    },
+    "GREY": {
+        "foreground": "#8b8b8b",
+        "background": "#666666",
+        "accent": "#a2a2a2",
+        "text": "#ffffff"
+    },
+    "PURPLE": {
+        "foreground": "#b849fe",
+        "background": "#9c29e6",
+        "accent": "#c871ff",
+        "text": "#000000"
+    },
+    "LIGHT GREEN": {
+        "foreground": "#96ff00",
+        "background": "#7ca619",
+        "accent": "#cbff82",
+        "text": "#000000"
+    },
+    "TAN": {
+        "foreground": "#e6d4a4",
+        "background": "#5b4f3d",
+        "accent": "#fff1cb",
+        "text": "#000000"
+    },
+    "LEATHER": {
+        "foreground": "#8a5520",
+        "background": "#673218",
+        "accent": "#bf762d",
+        "text": "#ffffff"
     }
 }

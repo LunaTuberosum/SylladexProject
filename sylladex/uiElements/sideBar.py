@@ -32,7 +32,7 @@ class SideBar(UIElement):
             [[278, 199], '#A4A4A4', [18, 851]],
             colorKey=True,
             texts=[
-                ['SYLLADEX', [24, 20], 'left', '#FFFFFF'],
+                ['SYLLADEX', [24, 20], 'left', 'ModusText'],
                 ['NUM OF CARDS', [133, 170], 'center', '#000000'],
                 ['FETCH MODUS', [21, 871], 'left', '#FFFFFF']
             ]

@@ -19,7 +19,8 @@ class Apperance():
     __modus_color = {
         'background': _modus_colors.get(_current_modus).get('background'),
         'foreground': _modus_colors.get(_current_modus).get('foreground'),
-        'accent': _modus_colors.get(_current_modus).get('accent')
+        'accent': _modus_colors.get(_current_modus).get('accent'),
+        'text': _modus_colors.get(_current_modus).get('text')
     }
 
     def __init__(
@@ -107,6 +108,9 @@ class Apperance():
                 elif _text[3] == 'ModusAccent':
                     _text_ = self.obj.font.render(_text[0], True,
                                                   Apperance.__modus_color.get('accent'))
+                elif _text[3] == 'ModusText':
+                    _text_ = self.obj.font.render(_text[0], True,
+                                                  Apperance.__modus_color.get('text'))
                 else:
                     _text_ = self.obj.font.render(_text[0], True, _text[3])
                 if _text[2] == 'center':
