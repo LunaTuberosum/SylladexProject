@@ -24,7 +24,7 @@ class EditCardButton(UIElement):
             colorKey=True,
             images=[
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/EDIT_CARD_ICON.png', [
-                    8, 2]]
+                    8, 2], 'ModusBackground']
             ])
 
         self.tool_tip_text = 'Edit a Card from your Sylladex'
@@ -50,7 +50,7 @@ class EditCardButton(UIElement):
             self.apperance.change_images(
                 [
                     [f'sylladex/uiElements/asset/{UIElement.get_modus()}/EDIT_CARD_ICON.png', [
-                        8, 2]]
+                        8, 2], 'ModusBackground']
                 ])
 
         else:
@@ -58,7 +58,7 @@ class EditCardButton(UIElement):
             self.apperance.change_images(
                 [
                     [f'sylladex/uiElements/asset/{UIElement.get_modus()}/EDIT_CARD_ICON_HOVER.png', [
-                        8, 2]]
+                        8, 2], 'ModusForeground']
                 ])
 
     def hover(self):

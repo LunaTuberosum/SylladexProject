@@ -996,7 +996,7 @@ trait_data = {
     },
     'PLANT': {
         'INTERACTION': 'Target gets 1 VIT, Stress',
-        'MODUS SORT': 'The first item CAPTCHALOGUED is the ROOT CARD. Any more items that are picked up are Branches attached to an existing card. Each card may have up to two branches of their own. Branches with no further branches of their own are called Leaf Cards. Leaf cards are considered to be on top of the STACK.',
+        'MODUS SORT': 'The first item CAPTCHALOGUED is the ROOT CARD. Cards without their own branches are called Leaf Cards. Leaf cards are considered to be on top of the STACK.',
         'MODUS RETRIEVE': 'In addition to basic STACK rules, Any item can be retrieved from a STACK, but doing so will launch all items below it. Items launched this way do not make STRIKE CHECKS.',
         'STRIKE': 'Whenever you roll a DMG die, this item gets 1 VIT',
         'EQUIPPED': 'At the start of your turn, this item gets 1dX VIT',

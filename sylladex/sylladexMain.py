@@ -71,6 +71,15 @@ def main(screen, clock):
                             _clicked_c.on_click()
 
                 elif event.button == 2:
+                    _clicked = []
+                    for _elem in UIElement.get_group('ui'):
+                        if _elem.rect.collidepoint(event.pos):
+                            _clicked.append(_elem)
+
+                    _clicked = UIElement.find_highest_elem(_clicked)
+                    if _clicked:
+                        _clicked.on_middle_click()
+
                     _clicked_card = []
                     for _card in BaseCard.get_cards():
                         if _card.rect.collidepoint(event.pos):
@@ -81,9 +90,14 @@ def main(screen, clock):
                         _clicked_c.on_middle_click()
 
                 elif event.button == 3:
-                    for _elem in UIElement.get_group("ui"):
-                        if hasattr(_elem, "on_altClick") and _elem.rect.collidepoint(event.pos):
-                            _elem.on_altClick()
+                    _clicked = []
+                    for _elem in UIElement.get_group('ui'):
+                        if _elem.rect.collidepoint(event.pos):
+                            _clicked.append(_elem)
+
+                    _clicked = UIElement.find_highest_elem(_clicked)
+                    if _clicked:
+                        _clicked.on_right_click()
 
             elif event.type == pg.MOUSEBUTTONUP:
                 for _card in BaseCard.get_cards():

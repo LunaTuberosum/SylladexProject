@@ -28,8 +28,8 @@ class SideBar(UIElement):
             [[54, 48], '#999999', [242, 142]],
             [[249, 625], '#D8DDFF', [24, 196]],
             [[23, 625], '#B7B7B7', [273, 196]],
-            [[278, 199], 'ModusBackground', [24, 857]],
-            [[278, 199], '#A4A4A4', [18, 851]],
+            [[284, 199], 'ModusBackground', [21, 857]],
+            [[284, 199], '#A4A4A4', [15, 851]],
             colorKey=True,
             texts=[
                 ['SYLLADEX', [24, 20], 'left', 'ModusText'],
@@ -67,11 +67,11 @@ class SideBar(UIElement):
             _modus_data = json.load(_modus_data_file)
 
         self.add_child(UIElement.get_ui_elem('ModusCard')(
-            33, _modus_data['1']['Code'], _modus_data['1']['Color'], _modus_data['1']['Active']))
+            20, _modus_data['1']['Code'], _modus_data['1']['Color'], _modus_data['1']['Active'], '1'))
         self.add_child(UIElement.get_ui_elem('ModusCard')(
-            121, _modus_data['2']['Code'], _modus_data['2']['Color'], _modus_data['2']['Active']))
+            112, _modus_data['2']['Code'], _modus_data['2']['Color'], _modus_data['2']['Active'], '2'))
         self.add_child(UIElement.get_ui_elem('ModusCard')(
-            209, _modus_data['3']['Code'], _modus_data['3']['Color'], _modus_data['3']['Active']))
+            204, _modus_data['3']['Code'], _modus_data['3']['Color'], _modus_data['3']['Active'], '3'))
 
         if UIElement.check_for_ui('GristCache'):
             if UIElement.find_current_ui('GristCache').to_be_rect != -719:

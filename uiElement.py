@@ -129,8 +129,25 @@ class Apperance():
         self.size_color_pos = new_size_color_pos
         self.reload_apperance()
 
+    @classmethod
+    def change_modus(cls, new_modus: str):
+        with open('sylladex/uiElements/data/modusColors.json') as _modus_colors_file:
+            _modus_colors = json.load(_modus_colors_file)
+
+        cls.__modus_color = {
+            'background': _modus_colors.get(new_modus).get('background'),
+            'foreground': _modus_colors.get(new_modus).get('foreground'),
+            'accent': _modus_colors.get(new_modus).get('accent'),
+            'text': _modus_colors.get(new_modus).get('text')
+        }
+        for _elem in UIElement.get_group('ui'):
+            _elem.apperance.reload_apperance()
+
+        for _card in UIElement.base_card.get_cards():
+            _card.redraw_card()
 
 # Class that holds data for all UIElements
+
 
 class UIElement(pg.sprite.Sprite):
     __modus = "STACK"
@@ -141,6 +158,7 @@ class UIElement(pg.sprite.Sprite):
 
     code_database = None
     code_data = None
+    base_card = None
 
     def __init__(
         self,

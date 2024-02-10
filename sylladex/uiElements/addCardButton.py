@@ -21,7 +21,7 @@ class AddCardButton(UIElement):
             colorKey=True,
             image=[
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [
-                    6, 0]]
+                    6, 0], 'ModusBackground']
             ]
         )
 
@@ -49,7 +49,7 @@ class AddCardButton(UIElement):
             self.apperance.change_images(
                 [
                     [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON.png', [
-                        8, 2]]
+                        8, 2], 'ModusBackground']
                 ])
 
         else:
@@ -57,7 +57,7 @@ class AddCardButton(UIElement):
             self.apperance.change_images(
                 [
                     [f'sylladex/uiElements/asset/{UIElement.get_modus()}/ADD_CARD_ICON_HOVER.png', [
-                        8, 2]]
+                        8, 2], 'ModusForeground']
                 ])
 
     def hover(self):
@@ -67,6 +67,7 @@ class AddCardButton(UIElement):
         self.reload_image()
 
     def no_hover(self):
+        super().no_hover()
         if self.writing == True:
             return
         self.hovering = False
@@ -86,7 +87,7 @@ class AddCardButton(UIElement):
                     child.kill()
                 _card.children.clear()
                 return
-            if _card.empty == True:
+            if _card.code == '-':
                 if _card.interactable == True:
                     self.writing = True
                     self.reload_image()

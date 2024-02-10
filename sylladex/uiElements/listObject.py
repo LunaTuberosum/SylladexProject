@@ -131,18 +131,6 @@ class ListObject(UIElement):
                 startLayer=13,
                 baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
             ))
-        self.add_child(
-            UIElement.get_ui_elem('TextField')(
-                150,
-                35,
-                [33, 28],
-                "tierOverlay",
-                "Input the tier of the Captchalogue Card (1-16)",
-                1,
-                textType='Num',
-                startLayer=13,
-                baseColors=[(230, 230, 230), (200, 200, 200), (170, 170, 170)]
-            ))
 
         self.add_child(
             UIElement.get_ui_elem('FinishButton')(
@@ -172,7 +160,7 @@ class ListObject(UIElement):
             return
 
         if UIElement.get_ui_elem('RemoveCardButton').get_eject() and self.interactable:
-            if self.empty:
+            if self.code == '-':
                 UIElement.get_ui_elem('PopUp')(
                     "You can\'t eject an empty card")
                 return
@@ -184,7 +172,8 @@ class ListObject(UIElement):
 
             UIElement.get_ui_elem('RemoveCardButton').change_eject(False)
             self.empty = True
-            self.code_data = CodeData()
+            self.code = '-'
+            self.name = ''
             self.redraw_card()
 
             UIElement.find_current_ui('RemoveCardButton').reload_image()

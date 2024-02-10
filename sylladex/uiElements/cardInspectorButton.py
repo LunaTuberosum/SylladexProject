@@ -21,7 +21,7 @@ class CardInspectorButton(UIElement):
             colorKey=True,
             images=[
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
-                    6, 0]]
+                    6, 0], 'ModusBackground']
             ]
         )
 
@@ -34,7 +34,7 @@ class CardInspectorButton(UIElement):
         self.apperance.change_images(
             [
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_HOVER.png', [
-                    6, 0]]
+                    6, 0], 'ModusForeground']
             ])
         self.hovering = True
 
@@ -42,7 +42,7 @@ class CardInspectorButton(UIElement):
         self.apperance.change_images(
             [
                 [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
-                    6, 0]]
+                    6, 0], 'ModusBackground']
             ])
         self.hovering = False
 

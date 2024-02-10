@@ -103,6 +103,10 @@ class CardList(UIElement):
             _obj.code = _card['code']
             _obj.name = _card['name']
 
+            for _c in UIElement.base_card.get_cards():
+                if _c.code_data.code == _obj.code:
+                    _obj.capta_card = _c
+
             _obj.redraw_card()
             cls.get_list().append(_obj)
 

@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 from uiElement import Apperance, UIElement
 
@@ -55,32 +56,11 @@ class FinishButton(UIElement):
                 'Codes must be a 8 characters long')
             return
 
-        elif len(self.card.children[2].text) == 0:
-            UIElement.get_ui_elem('PopUp')(
-                'Codes must be a 8 characters long')
-            return
-
-        if int(self.card.children[2].text) > 16:
-            UIElement.get_ui_elem('PopUp')(
-                "Tier can be no higher than 16")
-            return
-        elif int(self.card.children[2].text) == 0:
-            UIElement.get_ui_elem('PopUp')(
-                "Tier must be at least 1")
-            return
-
         self.card.writing = False
-        _id = self.card.code_data.cardID
-        UIElement.code_database.read_code(
-            self.card.children[0].text, self.card.children[1].text, self.card.children[2].text, self.card)
-        self.card.code_data.cardID = _id
-
-        if self.card.capta_card:
-            self.card.capta_card.code_data = self.card.code_data
-            self.card.capta_card.redraw_card()
+        self.card.name = self.card.children[0].text
+        self.card.code = self.card.children[1].text
 
         self.card.redraw_card()
-        self.card.empty = False
         for child in self.card.children:
             child.kill()
         self.card.children.clear()
@@ -89,3 +69,9 @@ class FinishButton(UIElement):
         _add = UIElement.find_current_ui('AddCardButton')
         _add.writing = False
         _add.reload_image()
+
+        # if UIElement.base_card.get_length() == 0:
+        self.card.capta_card = UIElement.base_card([random.randrange(400, 1500), random.randrange(
+            0, 800)], self.card.name, self.card.code)
+
+        UIElement.base_card.save_cards()

@@ -1,12 +1,14 @@
 import pygame as pg
 import settings
 from sylladex import sylladexMain
+from sylladex.captchalogueCards.baseCard import BaseCard
 
 from uiElement import UIElement
 
 from sylladex.captchalogueCards import codeDatabase
 
 UIElement.code_database = codeDatabase
+UIElement.base_card = BaseCard
 
 pg.init()
 

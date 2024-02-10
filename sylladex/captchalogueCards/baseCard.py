@@ -18,13 +18,15 @@ class BaseCard(pg.sprite.Sprite):
     def __init__(
             self,
             pos: list,
+            name: str,
+            code: str
     ):
         super().__init__(BaseCard.get_cards())
 
         self.hovering = True
         self.selected = False
 
-        self.code_data = CodeData()
+        UIElement.code_database.read_code(name, code, self)
 
         self.rect = pos
 
@@ -49,19 +51,6 @@ class BaseCard(pg.sprite.Sprite):
         self.shaking = False
         self.highlight = False
         self.prev_pos = None
-
-    def create_code_data(self, inputs: dict):
-        self.code_data.name = inputs['name']
-        self.code_data.code = inputs['code']
-        self.code_data.kind = inputs['kind']
-        self.code_data.grist = inputs['grist']
-        self.code_data.trait_1 = inputs['trait_1']
-        self.code_data.trait_2 = inputs['trait_2']
-        self.code_data.action_1 = inputs['action_1']
-        self.code_data.action_2 = inputs['action_2']
-        self.code_data.action_3 = inputs['action_3']
-        self.code_data.action_4 = inputs['action_4']
-        self.code_data.cardID = inputs['cardID']
 
     def kind_image(self) -> list:
         if self.selected == True:
@@ -314,22 +303,11 @@ class BaseCard(pg.sprite.Sprite):
         _card_list = {}
 
         for _index, _card in enumerate(BaseCard.get_cards()):
-            _card_list[_index + 1] = {'CodeData': {}, 'TopLeft': []}
+            _card_list[_index + 1] = {'name': '', 'code': '', 'TopLeft': []}
             _card_data = _card_list[_index + 1]
 
-            _card_data['CodeData']['name'] = _card.code_data.name
-            _card_data['CodeData']['code'] = _card.code_data.code
-
-            _card_data['CodeData']['kind'] = _card.code_data.kind
-            _card_data['CodeData']['grist'] = _card.code_data.grist
-            _card_data['CodeData']['trait_1'] = _card.code_data.trait_1
-            _card_data['CodeData']['trait_2'] = _card.code_data.trait_2
-            _card_data['CodeData']['action_1'] = _card.code_data.action_1
-            _card_data['CodeData']['action_2'] = _card.code_data.action_2
-            _card_data['CodeData']['action_3'] = _card.code_data.action_3
-            _card_data['CodeData']['action_4'] = _card.code_data.action_4
-
-            _card_data['CodeData']['cardID'] = _card.code_data.cardID
+            _card_data['name'] = _card.code_data.name
+            _card_data['code'] = _card.code_data.code
 
             _card_data['TopLeft'] = _card.rect.topleft
 
@@ -349,8 +327,7 @@ class BaseCard(pg.sprite.Sprite):
         for _card_num in _card_data:
             _card = _card_data[_card_num]
 
-            _obj = BaseCard(_card['TopLeft'])
-            _obj.create_code_data(_card['CodeData'])
+            _obj = BaseCard(_card['TopLeft'], _card['name'], _card['code'])
 
         if UIElement.get_modus() == 'STACK':
             StackManager.load_stack(BaseCard.get_cards())

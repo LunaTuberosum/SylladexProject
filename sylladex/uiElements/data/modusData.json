@@ -2,14 +2,14 @@
     "1": {
         "Code": "11001111",
         "Color": "FUSIA",
-        "Active": false
-    },
-    "2": {
-        "Code": "1nqB1111",
-        "Color": "LEATHER",
         "Active": true
     },
-    "3" : {
+    "2": {
+        "Code": "-",
+        "Color": "NULL",
+        "Active": false
+    },
+    "3": {
         "Code": "-",
         "Color": "NULL",
         "Active": false
