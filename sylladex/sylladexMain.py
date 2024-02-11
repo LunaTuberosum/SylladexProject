@@ -312,8 +312,8 @@ def update_screen(screen):
     _elem_pass.draw(screen)
     _elem_pass.empty()
 
-    if UIElement.get_modus() == 'STACK' and StackManager.get_length():
-        StackManager.get_stack().draw(screen)
+    # if UIElement.get_modus() == 'STACK' and StackManager.get_length():
+    #     StackManager.get_stack().draw(screen)
 
     CardOutline.current_outline.draw(screen)
 

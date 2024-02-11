@@ -8,7 +8,7 @@ class CardInspectorButton(UIElement):
     def __init__(self, current_inspect):
         super().__init__(
             -70,
-            188,
+            227,
             'CardInspectorButton',
             999
         )
@@ -20,7 +20,7 @@ class CardInspectorButton(UIElement):
             [[64, 64], 'ModusAccent', [6, 0]],
             colorKey=True,
             images=[
-                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
+                [f'sylladex/uiElements/asset/ICONS/SIDE_BAR_ICON.png', [
                     6, 0], 'ModusBackground']
             ]
         )
@@ -33,7 +33,7 @@ class CardInspectorButton(UIElement):
     def hover(self):
         self.apperance.change_images(
             [
-                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON_HOVER.png', [
+                [f'sylladex/uiElements/asset/ICONS/SIDE_BAR_ICON_HOVER.png', [
                     6, 0], 'ModusForeground']
             ])
         self.hovering = True
@@ -41,7 +41,7 @@ class CardInspectorButton(UIElement):
     def no_hover(self):
         self.apperance.change_images(
             [
-                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/SIDE_BAR_ICON.png', [
+                [f'sylladex/uiElements/asset/ICONS/SIDE_BAR_ICON.png', [
                     6, 0], 'ModusBackground']
             ])
         self.hovering = False

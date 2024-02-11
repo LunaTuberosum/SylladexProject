@@ -18,7 +18,7 @@ class CustomSettingAreaBox(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 18)
 
         with open('sylladex/captchalogueCards/data/customData.json', 'r') as _custom_data_file:
             _custom_data = json.load(_custom_data_file)

@@ -150,7 +150,6 @@ class Apperance():
 
 
 class UIElement(pg.sprite.Sprite):
-    __modus = "STACK"
     __ui_elements = pg.sprite.Group()
     __ui_layers = pg.sprite.LayeredUpdates()
 
@@ -259,17 +258,6 @@ class UIElement(pg.sprite.Sprite):
                     else:
                         continue
                 return _elem
-
-    @classmethod
-    def set_modus(cls, _modus: str):
-        cls.__modus = _modus
-
-        for _elem in cls.get_group('ui'):
-            _elem.apperance.reload_apperance()
-
-    @classmethod
-    def get_modus(cls) -> str:
-        return cls.__modus
 
     @classmethod
     def get_group(cls, whichGroup: str) -> pg.sprite.Group | pg.sprite.LayeredUpdates:

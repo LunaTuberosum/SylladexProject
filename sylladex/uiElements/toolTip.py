@@ -9,7 +9,7 @@ class ToolTip(UIElement):
         self.text = text
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 24)
         _width = self.font.render(self.text, True, (0, 0, 0)).get_width() + 12
 
         if pos[0] + 12 + _width >= settings.SCREEN_WIDTH:

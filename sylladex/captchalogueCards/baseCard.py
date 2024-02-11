@@ -35,11 +35,11 @@ class BaseCard(pg.sprite.Sprite):
             [90, 122],
             colorKey=True,
             images=[
-                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                [f'sylladex/captchalogueCards/assets/CARD/CAPTA_BASE.png', [
                     0, 0], 'ModusForeground'],
-                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                [f'sylladex/captchalogueCards/assets/CARD/CAPTA_SHADOW.png', [
                     0, 0], 'ModusBackground'],
-                [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                [f'sylladex/captchalogueCards/assets/CARD/CAPTA_TOP.png', [
                     0, 0]],
             ]
         )
@@ -84,12 +84,12 @@ class BaseCard(pg.sprite.Sprite):
     def on_click(self):
         BaseCard.grabbed_card.add(self)
 
-        if UIElement.get_modus() == 'STACK':
-            for card in StackManager.get_stack():
-                if card == self and self == StackManager.get_top_card():
-                    StackManager.remove_from_stack(self)
-                    self.selected = True
-                    return
+        # if UIElement.get_modus() == 'STACK':
+        #     for card in StackManager.get_stack():
+        #         if card == self and self == StackManager.get_top_card():
+        #             StackManager.remove_from_stack(self)
+        #             self.selected = True
+        #             return
 
         self.selected = True
         self.redraw_card()
@@ -122,11 +122,11 @@ class BaseCard(pg.sprite.Sprite):
         if self.highlight:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_BASE.png', [
                         0, 0], 'ModusAccent'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_SHADOW.png', [
                         0, 0], 'ModusBackground'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_TOP.png', [
                         0, 0]],
                     self.kind_image()
                 ])
@@ -134,11 +134,11 @@ class BaseCard(pg.sprite.Sprite):
         elif self.selected:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE_UP.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_BASE_UP.png', [
                         0, 0], 'ModusAccent'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_SHADOW.png', [
                         8, 2], 'ModusBackground'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_TOP.png', [
                         8, 2]],
                     self.kind_image()
                 ])
@@ -146,11 +146,11 @@ class BaseCard(pg.sprite.Sprite):
         elif self.hovering:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_BASE.png', [
                         0, 0], 'ModusAccent'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_SHADOW.png', [
                         0, 0], 'ModusBackground'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_TOP.png', [
                         0, 0]],
                     self.kind_image()
                 ])
@@ -158,11 +158,11 @@ class BaseCard(pg.sprite.Sprite):
         else:
             self.apperance.change_images(
                 [
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_BASE.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_BASE.png', [
                         0, 0], 'ModusForeground'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_SHADOW.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_SHADOW.png', [
                         0, 0], 'ModusBackground'],
-                    [f'sylladex/captchalogueCards/assets/{UIElement.get_modus()}/CAPTA_TOP.png', [
+                    [f'sylladex/captchalogueCards/assets/CARD/CAPTA_TOP.png', [
                         0, 0]],
                     self.kind_image()
                 ])
@@ -191,23 +191,23 @@ class BaseCard(pg.sprite.Sprite):
         all_dis = []
 
         for card in BaseCard.get_cards():
-            if UIElement.get_modus() == 'STACK':
-                if StackManager.get_length() > 0:
-                    if card == StackManager.get_top_card():
-                        if CardOutline.current_outline:
-                            CardOutline.move_outline(card)
-                        else:
-                            CardOutline(card)
-                        return
+            # if UIElement.get_modus() == 'STACK':
+            #     if StackManager.get_length() > 0:
+            #         if card == StackManager.get_top_card():
+            #             if CardOutline.current_outline:
+            #                 CardOutline.move_outline(card)
+            #             else:
+            #                 CardOutline(card)
+            #             return
 
-                x = self.rect.x
-                y = self.rect.y
-                x2 = card.rect.x
-                y2 = card.rect.y
-                distance = [int(math.sqrt((x2 - x)**2+(y2 - y)**2)), card]
+            x = self.rect.x
+            y = self.rect.y
+            x2 = card.rect.x
+            y2 = card.rect.y
+            distance = [int(math.sqrt((x2 - x)**2+(y2 - y)**2)), card]
 
-                if distance[0] != 0:
-                    all_dis.append(distance)
+            if distance[0] != 0:
+                all_dis.append(distance)
 
         if len(all_dis) == 0:
             return
@@ -331,8 +331,5 @@ class BaseCard(pg.sprite.Sprite):
             _card = _card_data[_card_num]
 
             _obj = BaseCard(_card['TopLeft'], _card['name'], _card['code'])
-
-        if UIElement.get_modus() == 'STACK':
-            StackManager.load_stack(BaseCard.get_cards())
 
         UIElement.get_ui_elem('ConsoleMessage')('Loaded Cards')

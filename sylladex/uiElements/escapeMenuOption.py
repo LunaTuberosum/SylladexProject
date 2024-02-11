@@ -15,7 +15,7 @@ class EscapeMenuOption(UIElement):
 
         self.text = text
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 26)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 26)
 
         self.prefix = '> '
         self.big_prefix = '==> '

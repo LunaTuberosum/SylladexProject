@@ -23,7 +23,7 @@ class RemoveCardButton(UIElement):
             [[64, 64], 'ModusAccent', [8, 2]],
             colorKey=True,
             images=[
-                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON.png', [
+                [f'sylladex/uiElements/asset/ICONS/REMOVE_CARD_ICON.png', [
                     8, 2], 'ModusBackground']
             ])
 
@@ -49,7 +49,7 @@ class RemoveCardButton(UIElement):
 
             self.apperance.change_images(
                 [
-                    [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON.png', [
+                    [f'sylladex/uiElements/asset/ICONS/REMOVE_CARD_ICON.png', [
                         8, 2], 'ModusBackground']
                 ])
 
@@ -57,7 +57,7 @@ class RemoveCardButton(UIElement):
 
             self.apperance.change_images(
                 [
-                    [f'sylladex/uiElements/asset/{UIElement.get_modus()}/REMOVE_CARD_ICON_HOVER.png', [
+                    [f'sylladex/uiElements/asset/ICONS/REMOVE_CARD_ICON_HOVER.png', [
                         8, 2], 'ModusForeground']
                 ])
 

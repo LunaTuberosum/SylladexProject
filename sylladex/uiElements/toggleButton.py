@@ -18,7 +18,7 @@ class ToggleButton(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 18)
 
         self.apperance = Apperance(
             self,

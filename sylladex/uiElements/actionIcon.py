@@ -23,7 +23,7 @@ class ActionIcon(UIElement):
             self.tool_tip_text = f'Change name of {self.job}'
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 17)
+            "sylladex/uiElements/asset/FONTS/fontstuck.ttf", 17)
 
         self.melee_color = '#FF4B2D'
         self.ranged_color = '#9B38F4'

@@ -31,7 +31,7 @@ class DropDown(UIElement):
         self.show_type = show_type
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 18)
 
         self.configure_kwargs()
 

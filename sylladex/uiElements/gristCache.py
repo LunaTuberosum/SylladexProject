@@ -15,7 +15,7 @@ class GristCache(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 36)
+            "sylladex/uiElements/asset/FONTS/fontstuck.ttf", 36)
 
         self.apperance = Apperance(
             self,

@@ -7,7 +7,7 @@ class CustomSettingSectionName(UIElement):
     def __init__(self, x: int, y: int, section: str):
         self.section = section
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 18)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 18)
 
         super().__init__(
             x,

@@ -26,7 +26,7 @@ class ModusCard(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/fontstuck.ttf", 12)
+            "sylladex/uiElements/asset/FONTS/fontstuck.ttf", 12)
 
         self.apperance = Apperance(
             self,
@@ -39,7 +39,7 @@ class ModusCard(UIElement):
             [[40, 10], self.side_color, [16, 45]],
             colorKey=True,
             images=[
-                ['sylladex/uiElements/asset/MISC/MODUS.png', [0, 0]]
+                ['sylladex/uiElements/asset/ICONS/MODUS.png', [0, 0]]
             ]
         )
 
@@ -57,7 +57,7 @@ class ModusCard(UIElement):
 
     def redraw(self):
         self.apperance.change_images([
-            ['sylladex/uiElements/asset/MISC/MODUS.png', [0, 0]]
+            ['sylladex/uiElements/asset/ICONS/MODUS.png', [0, 0]]
         ])
 
         self.apperance.size_color_pos = [
@@ -92,7 +92,7 @@ class ModusCard(UIElement):
         if self.active or self.modus_add_card:
 
             self.apperance.change_images([
-                ['sylladex/uiElements/asset/MISC/MODUS_ACTIVE.png', [0, 0]]
+                ['sylladex/uiElements/asset/ICONS/MODUS_ACTIVE.png', [0, 0]]
             ])
 
         self.apperance.reload_apperance()

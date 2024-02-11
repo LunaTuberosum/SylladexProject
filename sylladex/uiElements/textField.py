@@ -53,7 +53,7 @@ class TextField(UIElement):
         if 'textFont' in self.kwargs:
             self.text_font = self.kwargs['textFont']
         else:
-            self.text_font = 'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf'
+            self.text_font = 'sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf'
 
         self.font = pg.font.Font(self.text_font, self.font_size)
 

@@ -13,7 +13,7 @@ class GristInfoBox(UIElement):
         )
 
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 24)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 24)
         self.grist = grist
 
         self.apperance = Apperance(

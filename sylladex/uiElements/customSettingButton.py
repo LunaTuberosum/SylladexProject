@@ -20,7 +20,7 @@ class CustomSettingButton(UIElement):
             [[64, 64], '#1155CC', [6, 0]],
             colorKey=True,
             images=[
-                ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [
+                ['sylladex/uiElements/asset/ICONS/CUSTOM_SETTING_LOGO.png', [
                     18, 12]]
             ]
         )
@@ -31,14 +31,14 @@ class CustomSettingButton(UIElement):
     def hover(self):
         self.apperance.change_images(
             [
-                ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12]]
+                ['sylladex/uiElements/asset/ICONS/CUSTOM_SETTING_LOGO_HOVER.png', [18, 12]]
             ])
         self.hovering = True
 
     def no_hover(self):
         self.apperance.change_images(
             [
-                ['sylladex/uiElements/asset/MISC/CUSTOM_SETTING_LOGO.png', [18, 12]]
+                ['sylladex/uiElements/asset/ICONS/CUSTOM_SETTING_LOGO.png', [18, 12]]
             ])
         self.hovering = False
 
@@ -48,7 +48,8 @@ class CustomSettingButton(UIElement):
 
             _custom = UIElement.find_current_ui('CustomSettingMenu')
             if _custom:
-                _custom.to_be_rect = UIElement.find_current_ui('SideBar').rect.right if UIElement.find_current_ui('SideBar') else 0
+                _custom.to_be_rect = UIElement.find_current_ui(
+                    'SideBar').rect.right if UIElement.find_current_ui('SideBar') else 0
                 return
             UIElement.get_ui_elem('CustomSettingMenu')()
 
@@ -60,4 +61,3 @@ class CustomSettingButton(UIElement):
             else:
                 UIElement.find_current_ui(
                     'CustomSettingMenu').to_be_rect = -348
-

@@ -7,7 +7,7 @@ from uiElement import Apperance, UIElement
 class PopUp(UIElement):
     def __init__(self, text, question=False):
         self.font = pg.font.Font(
-            "sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf", 48)
+            "sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf", 48)
 
         super().__init__(
             660,

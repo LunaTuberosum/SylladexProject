@@ -9,24 +9,138 @@ class CardInspector(UIElement):
     def __init__(self, code_data):
         super().__init__(
             settings.SCREEN_WIDTH,
-            settings.SCREEN_HEIGHT / 2 - 219.5,
+            settings.SCREEN_HEIGHT / 2 - 219,
             'CardInspector',
             999
         )
 
         self.font = pg.font.Font(
-            'sylladex/uiElements/asset/MISC/DisposableDroidBB.ttf', 19)
+            'sylladex/uiElements/asset/FONTS/DisposableDroidBB.ttf', 19)
 
         self.code_data = code_data
-        self.to_be_rect = settings.SCREEN_WIDTH-346
+        self.to_be_rect = settings.SCREEN_WIDTH-343
 
         self.apperance = Apperance(
             self,
             [343, 537],
+
+            # Background
+            [[331, 525], 'ModusBackground', [12, 12]],
+
+            # Color Key
+            [[72, 12], '#D8DDFF', [271, 12]],
+            [[48, 12], '#D8DDFF', [295, 24]],
+            [[36, 12], '#D8DDFF', [307, 36]],
+            [[12, 12], '#D8DDFF', [331, 48]],
+
+            # Main Color
+            [[259, 525], 'ModusForeground', [0, 0]],
+            [[36, 501], 'ModusForeground', [259, 24]],
+            [[36, 477], 'ModusForeground', [295, 48]],
+
+            # Name Shadow
+            [[243, 32], 'ModusBackground', [28, 51]],
+
+            # Name
+            [[48, 32], '#B7B7B7', [12, 35]],
+            [[195, 32], '#D9D9D9', [60, 35]],
+
+            # Traits Background
+            [[219, 65], 'ModusBackground', [28, 99]],
+
+            # Traits Outline
+            [[219, 65], '#A3A3A3', [12, 83]],
+
+            # Trait 1
+            [[68, 32], '#B7B7B7', [12, 83]],
+            [[32, 32], '#B7B7B7', [81, 83]],
+            [[118, 32], '#D9D9D9', [113, 83]],
+
+            # Trait 2
+            [[68, 32], '#B7B7B7', [12, 116]],
+            [[32, 32], '#B7B7B7', [81, 116]],
+            [[118, 32], '#D9D9D9', [113, 116]],
+
+            # Type Background
+            [[56, 32], 'ModusBackground', [263, 99]],
+
+            # Type
+            [[56, 32], '#D9D9D9', [247, 83]],
+
+            # Kind Background
+            [[219, 32], 'ModusBackground', [28, 180]],
+
+            # Kind Outline
+            [[219, 32], '#A3A3A3', [12, 164]],
+
+            # Kind
+            [[80, 32], '#B7B7B7', [12, 164]],
+            [[32, 32], '#D9D9D9', [92, 164]],
+            [[106, 32], '#D9D9D9', [125, 164]],
+
+            # Grist Background
+            [[219, 32], 'ModusBackground', [28, 228]],
+
+            # Grist Outline
+            [[219, 32], '#A3A3A3', [12, 212]],
+
+            # Grist
+            [[89, 32], '#B7B7B7', [12, 212]],
+            [[32, 32], '#D9D9D9', [101, 212]],
+            [[32, 32], '#D9D9D9', [134, 212]],
+            [[64, 32], '#D9D9D9', [167, 212]],
+
+            # Action 1 & 2 Background
+            [[264, 24], 'ModusBackground', [24, 288]],
+
+            # Action 1
+            [[24, 24], '#B7B7B7', [12, 276]],
+            [[108, 24], '#D9D9D9', [36, 276]],
+
+            # Action 2
+            [[24, 24], '#B7B7B7', [144, 276]],
+            [[108, 24], '#D9D9D9', [168, 276]],
+
+            # Action 3 & 4 Background
+            [[264, 24], 'ModusBackground', [24, 324]],
+
+            # Action 3
+            [[24, 24], '#B7B7B7', [12, 312]],
+            [[108, 24], '#D9D9D9', [36, 312]],
+
+            # Action 4
+            [[24, 24], '#B7B7B7', [144, 312]],
+            [[108, 24], '#D9D9D9', [168, 312]],
+
+            # Inspect Background
+            [[291, 99], 'ModusBackground', [28, 364]],
+
+            # Inspect Outline
+            [[291, 99], '#A3A3A3', [12, 348]],
+
+            # Inspect Labels
+            [[291, 32], '#B7B7B7', [12, 348]],
+
+            # Inspect Cost
+            [[32, 32], '#B7B7B7', [12, 381]],
+            [[32, 32], '#D9D9D9', [44, 381]],
+
+            # Inspect Damage
+            [[32, 32], '#B7B7B7', [12, 415]],
+            [[32, 32], '#D9D9D9', [44, 415]],
+
+            # Inspect Description
+            [[226, 66], '#D9D9D9', [77, 381]],
+
+            # Code Background
+            [[145, 32], 'ModusBackground', [109, 479]],
+
+            # Code
+            [[48, 32], '#B7B7B7', [93, 463]],
+            [[97, 32], '#D9D9D9', [141, 463]],
+
             colorKey=True,
             images=[
-                [f'sylladex/uiElements/asset/{UIElement.get_modus()}/CARD_INSPECTOR.png', [
-                    0, 0]],
                 [UIElement.code_database.find_kind_image_small(
                     self.code_data.kind), [92, 164]],
                 [UIElement.code_database.find_grist_image(

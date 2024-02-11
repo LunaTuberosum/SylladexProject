@@ -5,8 +5,8 @@
         "Active": true
     },
     "2": {
-        "Code": "aaaaaaaa",
-        "Color": "YELLOW",
+        "Code": "-",
+        "Color": "NULL",
         "Active": false
     },
     "3": {
