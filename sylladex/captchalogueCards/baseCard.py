@@ -26,7 +26,7 @@ class BaseCard(pg.sprite.Sprite):
         self.hovering = True
         self.selected = False
 
-        UIElement.code_database.read_code(name, code, self)
+        self.create_code_data(name, code)
 
         self.rect = pos
 
@@ -51,6 +51,9 @@ class BaseCard(pg.sprite.Sprite):
         self.shaking = False
         self.highlight = False
         self.prev_pos = None
+
+    def create_code_data(self, name: str, code: str):
+        UIElement.code_database.read_code(name, code, self)
 
     def kind_image(self) -> list:
         if self.selected == True:

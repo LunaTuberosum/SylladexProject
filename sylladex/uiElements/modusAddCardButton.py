@@ -7,7 +7,7 @@ from uiElement import UIElement, Apperance
 class ModusAddCardButton(UIElement):
     def __init__(self):
         super().__init__(
-            302,
+            -46,
             169,
             f'ModusAddCardButton',
             7
@@ -30,8 +30,8 @@ class ModusAddCardButton(UIElement):
             return
         if self.to_be_rect != self.rect.x:
             UIElement.move_element(self, [UIElement.lerp(
-                self.rect.x, self.to_be_rect, 0.2), self.rect.y])
-        elif self.rect.x <= 628:
+                self.rect.x, self.to_be_rect, 0.1), self.rect.y])
+        elif self.rect.x <= -46:
             UIElement.remove_from_group(self)
 
     def on_click(self):

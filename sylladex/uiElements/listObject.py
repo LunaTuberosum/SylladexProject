@@ -78,6 +78,7 @@ class ListObject(UIElement):
                 self.apperance.change_images([
                     ["sylladex/uiElements/asset/KINDS/CustomKind.png", [185, 3]]
                 ])
+                self.apperance.kwargs['imageAlpha'] = 125
 
                 self.apperance.kwargs['texts'] = [
                     ['-', [6, 15], 'left', '#000000'],
@@ -180,20 +181,19 @@ class ListObject(UIElement):
             UIElement.find_current_ui('CardList').save_list()
 
         elif UIElement.get_ui_elem('EditCardButton').get_edit() and self.interactable:
-            if self.empty:
+            if self.code == '-':
                 UIElement.get_ui_elem('PopUp')(
                     "You can\'t edit an empty card")
                 return
 
             UIElement.get_ui_elem('EditCardButton').change_edit(False)
 
+            self.hovering = False
             self.start_card()
-            self.children[0].text = self.code_data.name
+            self.children[0].text = self.name
             self.children[0].reload_text()
-            self.children[1].text = self.code_data.code
+            self.children[1].text = self.code
             self.children[1].reload_text()
-            self.children[2].text = self.code_data.tier
-            self.children[2].reload_text()
 
         elif self.interactable == True:
             if self.code != '-':

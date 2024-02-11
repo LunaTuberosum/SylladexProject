@@ -70,6 +70,14 @@ class FinishButton(UIElement):
         _add.writing = False
         _add.reload_image()
 
+        if self.card.capta_card:
+            self.card.capta_card.create_code_data(
+                self.card.name, self.card.code)
+            self.card.capta_card.redraw_card()
+
+            UIElement.base_card.save_cards()
+            return
+
         # if UIElement.base_card.get_length() == 0:
         self.card.capta_card = UIElement.base_card([random.randrange(400, 1500), random.randrange(
             0, 800)], self.card.name, self.card.code)
