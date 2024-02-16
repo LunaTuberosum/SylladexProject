@@ -1,12 +1,25 @@
 import pygame as pg
-import sys
+import settings
+from sylladex import sylladexMain
 
-import sylladex
+from uiElement import UIElement
 
-## Running main loop
+from sylladex.captchalogueCards import codeDatabase
+from sylladex.uiElements.listObject import CodeData
 
+UIElement.code_database = codeDatabase
+UIElement.code_data = CodeData
+
+pg.init()
+
+clock = pg.time.Clock()
+
+screen = pg.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+pg.display.set_caption('SYLLADEX ALPHA 0.2')
+pg.key.set_repeat(200, 200)
+
+_icon = pg.image.load('icon.png').convert_alpha()
+
+pg.display.set_icon(_icon)
 if __name__ == '__main__':
-    # menu()
-    sylladex.main()
-    pg.quit()
-    sys.quit()
+    sylladexMain.main(screen, clock)
